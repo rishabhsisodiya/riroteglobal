@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Generator — Rirote Global</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0d1f3c;
+    --navy-light: #132440;
+    --cyan: #00b4d8;
+    --electric: #0077b6;
+    --white: #f0f4ff;
+    --muted: #8899bb;
+    --accent: #00d4ff;
+    --gold: #ffd166;
+    --red: #ff4757;
+    --green: #2ed573;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ---- TOP NAV ---- */
+  .topbar {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo { display: flex; align-items: center; gap: 12px; }
+  .topbar-logo img { height: 40px; }
+  .topbar-title { font-size: 18px; font-weight: 600; color: var(--white); }
+  .topbar-actions { display: flex; gap: 10px; }
+
+  /* ---- BUTTONS ---- */
+  .btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-primary { background: var(--electric); color: #fff; }
+  .btn-primary:hover { background: #005f99; }
+  .btn-accent { background: var(--accent); color: var(--navy); }
+  .btn-accent:hover { background: #00bde0; }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-danger { background: transparent; color: var(--red); border: 1px solid rgba(255,71,87,0.3); }
+  .btn-danger:hover { background: rgba(255,71,87,0.1); }
+  .btn-sm { padding: 6px 14px; font-size: 13px; }
+  .btn-icon { padding: 8px; border-radius: 6px; }
+
+  /* ---- LAYOUT ---- */
+  .main-wrap {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 0;
+    min-height: calc(100vh - 69px);
+  }
+
+  /* ---- SIDEBAR ---- */
+  .sidebar {
+    background: var(--navy-mid);
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .sidebar-section { margin-bottom: 28px; }
+  .sidebar-section h3 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  /* ---- FORM FIELDS ---- */
+  .field { margin-bottom: 12px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 9px 12px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--cyan);
+  }
+  .field textarea { resize: vertical; min-height: 64px; }
+  .field select option { background: var(--navy-mid); }
+
+  /* Client card list */
+  .client-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .client-card {
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .client-card:hover, .client-card.active {
+    border-color: var(--cyan);
+    background: rgba(0,180,216,0.06);
+  }
+  .client-card .cc-name { font-size: 13px; font-weight: 600; }
+  .client-card .cc-company { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .client-card-actions { display: flex; gap: 6px; margin-top: 8px; }
+
+  /* ---- INVOICE CANVAS ---- */
+  .canvas-wrap {
+    padding: 32px;
+    overflow-y: auto;
+    background: #1a2540;
+  }
+  .invoice-paper {
+    background: #fff;
+    color: #1a1a2e;
+    border-radius: 12px;
+    padding: 48px;
+    max-width: 860px;
+    margin: 0 auto;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Invoice Header */
+  .inv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+  .inv-logo img { height: 72px; }
+  .inv-meta { text-align: right; }
+  .inv-meta h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0a1628;
+    letter-spacing: -0.5px;
+  }
+  .inv-meta .inv-number { font-size: 14px; color: #555; margin-top: 4px; }
+  .inv-meta .inv-date { font-size: 13px; color: #777; margin-top: 2px; }
+
+  /* Status badge */
+  .inv-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+  }
+  .status-draft { background: #e8eaf6; color: #3949ab; }
+  .status-sent { background: #e3f2fd; color: #1565c0; }
+  .status-paid { background: #e8f5e9; color: #2e7d32; }
+
+  /* Addresses */
+  .inv-addresses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid #e8eaf0;
+  }
+  .addr-block h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #0077b6;
+    margin-bottom: 8px;
+  }
+  .addr-block .company-name { font-size: 15px; font-weight: 700; color: #1a1a2e; }
+  .addr-block p { font-size: 13px; color: #555; line-height: 1.6; margin-top: 2px; }
+  .addr-block .gstin { font-size: 12px; color: #777; margin-top: 6px; font-weight: 500; }
+
+  /* Items table */
+  .inv-items { margin-bottom: 32px; }
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table thead tr { background: #0a1628; }
+  .items-table thead th {
+    padding: 11px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+  }
+  .items-table thead th:last-child { text-align: right; }
+  .items-table thead th:nth-child(3),
+  .items-table thead th:nth-child(4) { text-align: right; }
+  .items-table tbody tr { border-bottom: 1px solid #eef0f5; }
+  .items-table tbody tr:last-child { border-bottom: none; }
+  .items-table tbody td {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: top;
+  }
+  .items-table tbody td:nth-child(3),
+  .items-table tbody td:nth-child(4),
+  .items-table tbody td:nth-child(5) { text-align: right; }
+  .item-desc { font-size: 11px; color: #888; margin-top: 2px; }
+  .items-table tfoot td {
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #444;
+  }
+  .items-table tfoot tr.total-row td {
+    padding-top: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0a1628;
+    border-top: 2px solid #0a1628;
+  }
+  .items-table tfoot tr.subtotal-row td { border-top: 1px solid #e0e3ec; padding-top: 12px; }
+  .text-right { text-align: right !important; }
+
+  /* Notes / Terms */
+  .inv-footer-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e8eaf0;
+  }
+  .inv-footer-row h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #0077b6;
+    margin-bottom: 6px;
+  }
+  .inv-footer-row p { font-size: 12px; color: #666; line-height: 1.6; }
+
+  /* ---- MODAL ---- */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    width: 480px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal h2 { font-size: 17px; margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+  /* ---- PRINT STYLES ---- */
+  @media print {
+    body { background: #fff !important; }
+    .topbar, .sidebar, .canvas-wrap > *:not(.invoice-paper) { display: none !important; }
+    .main-wrap { display: block; }
+    .canvas-wrap { padding: 0; background: #fff; }
+    .invoice-paper {
+      box-shadow: none;
+      border-radius: 0;
+      max-width: 100%;
+      padding: 24px;
+    }
+    .no-print { display: none !important; }
+  }
+
+  /* ---- TABS ---- */
+  .tab-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 7px 10px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { background: var(--electric); color: #fff; }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* Notification toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1e3a5f;
+    border: 1px solid var(--cyan);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    z-index: 300;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  .currency-badge {
+    display: inline-block;
+    background: rgba(0,180,216,0.12);
+    color: var(--cyan);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+
+  /* inline editable in preview — hidden, rendered by JS */
+  .inv-editable { outline: none; }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <img src="logo-compressed.png" alt="Rirote Global">
+    <span class="topbar-title">Invoice Generator</span>
+  </div>
+  <div class="topbar-actions">
+    <select id="currencySelect" class="btn btn-ghost" style="padding:9px 14px;cursor:pointer;">
+      <option value="USD">$ USD</option>
+      <option value="INR">₹ INR</option>
+    </select>
+    <select id="statusSelect" class="btn btn-ghost" style="padding:9px 14px;cursor:pointer;">
+      <option value="draft">Draft</option>
+      <option value="sent">Sent</option>
+      <option value="paid">Paid</option>
+    </select>
+    <button class="btn btn-ghost" onclick="printInvoice()">🖨 Print / PDF</button>
+    <button class="btn btn-primary" onclick="saveInvoice()">💾 Save Invoice</button>
+  </div>
+</div>
+
+<div class="main-wrap">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('client',this)">Client</button>
+      <button class="tab-btn" onclick="switchTab('invoice',this)">Invoice</button>
+      <button class="tab-btn" onclick="switchTab('saved',this)">Saved</button>
+    </div>
+
+    <!-- CLIENT TAB -->
+    <div id="tab-client">
+      <div class="sidebar-section">
+        <h3>Saved Clients</h3>
+        <div class="client-list" id="clientList"></div>
+        <button class="btn btn-ghost btn-sm" onclick="openClientModal()">+ Add New Client</button>
+      </div>
+      <div class="divider"></div>
+      <div class="sidebar-section">
+        <h3>Bill To</h3>
+        <div class="field"><label>Client Name</label><input id="clientName" type="text" placeholder="NimNim" oninput="updatePreview()"></div>
+        <div class="field"><label>Company</label><input id="clientCompany" type="text" placeholder="NimNim, Inc." oninput="updatePreview()"></div>
+        <div class="field"><label>Address</label><textarea id="clientAddress" rows="3" placeholder="141 Border St, Boston, MA 02128" oninput="updatePreview()"></textarea></div>
+        <div class="field"><label>Country</label><input id="clientCountry" type="text" placeholder="United States" oninput="updatePreview()"></div>
+        <div class="field"><label>GSTIN / Tax ID (optional)</label><input id="clientGSTIN" type="text" oninput="updatePreview()"></div>
+        <div class="field"><label>Email</label><input id="clientEmail" type="email" oninput="updatePreview()"></div>
+      </div>
+    </div>
+
+    <!-- INVOICE TAB -->
+    <div id="tab-invoice" style="display:none">
+      <div class="sidebar-section">
+        <h3>Invoice Details</h3>
+        <div class="field"><label>Invoice Number</label><input id="invNumber" type="text" value="INV-001" oninput="updatePreview()"></div>
+        <div class="field"><label>Invoice Date</label><input id="invDate" type="date" oninput="updatePreview()"></div>
+        <div class="field"><label>Due Date</label><input id="dueDate" type="date" oninput="updatePreview()"></div>
+        <div class="field"><label>PO / Reference (optional)</label><input id="poRef" type="text" oninput="updatePreview()"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sidebar-section">
+        <h3>Tax & Discount</h3>
+        <div class="field"><label>Tax % (e.g. GST 18 or VAT)</label><input id="taxRate" type="number" value="0" min="0" max="100" oninput="updatePreview()"></div>
+        <div class="field"><label>Discount %</label><input id="discountRate" type="number" value="0" min="0" max="100" oninput="updatePreview()"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sidebar-section">
+        <h3>Notes & Terms</h3>
+        <div class="field"><label>Notes</label><textarea id="invNotes" rows="3" placeholder="Thank you for your business!" oninput="updatePreview()"></textarea></div>
+        <div class="field"><label>Terms</label><textarea id="invTerms" rows="3" placeholder="Payment due within 30 days." oninput="updatePreview()"></textarea></div>
+      </div>
+    </div>
+
+    <!-- SAVED INVOICES TAB -->
+    <div id="tab-saved" style="display:none">
+      <div class="sidebar-section">
+        <h3>Saved Invoices</h3>
+        <div id="savedList" class="client-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVOICE CANVAS -->
+  <div class="canvas-wrap">
+    <!-- Items toolbar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;" class="no-print">
+      <span style="font-size:13px;color:var(--muted);">Live preview — edit fields on the left or click <strong style="color:var(--cyan)">+ Add Item</strong></span>
+      <button class="btn btn-accent btn-sm" onclick="addItem()">+ Add Item</button>
+    </div>
+
+    <!-- THE INVOICE PAPER -->
+    <div class="invoice-paper" id="invoicePaper">
+
+      <div class="inv-header">
+        <div class="inv-logo">
+          <img src="logo-compressed.png" alt="Rirote Global">
+        </div>
+        <div class="inv-meta">
+          <h1>INVOICE</h1>
+          <div class="inv-number" id="previewInvNumber">INV-001</div>
+          <div class="inv-date" id="previewInvDate"></div>
+          <div class="inv-date" id="previewDueDate" style="color:#0077b6;font-weight:600;"></div>
+          <div><span class="inv-status status-draft" id="previewStatus">DRAFT</span></div>
+        </div>
+      </div>
+
+      <div class="inv-addresses">
+        <div class="addr-block">
+          <h4>From</h4>
+          <div class="company-name">Rirote Global</div>
+          <p>A-19 Ganesh Nagar New Sanganer Road Sodala<br>Shyam Nagar S.O (Jaipur), Rajasthan 302019</p>
+          <p class="gstin">GSTIN: 08HJCPS6903N1ZI</p>
+        </div>
+        <div class="addr-block">
+          <h4>Bill To</h4>
+          <div class="company-name" id="previewClientName">—</div>
+          <div id="previewClientCompany" style="font-size:13px;color:#444;margin-top:2px;"></div>
+          <p id="previewClientAddress"></p>
+          <p id="previewClientCountry" style="font-size:13px;color:#555;"></p>
+          <p class="gstin" id="previewClientGSTIN" style="display:none;"></p>
+        </div>
+      </div>
+
+      <!-- LINE ITEMS -->
+      <div class="inv-items">
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th style="width:40%">Description</th>
+              <th style="width:12%">Qty</th>
+              <th style="width:18%">Rate</th>
+              <th style="width:12%">Disc %</th>
+              <th style="width:18%">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody"></tbody>
+          <tfoot id="itemsFoot"></tfoot>
+        </table>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="inv-footer-row" id="invFooter" style="display:none">
+        <div>
+          <h4>Notes</h4>
+          <p id="previewNotes"></p>
+        </div>
+        <div>
+          <h4>Terms</h4>
+          <p id="previewTerms"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADD CLIENT MODAL -->
+<div class="modal-backdrop" id="clientModal">
+  <div class="modal">
+    <h2>Add / Edit Client</h2>
+    <input type="hidden" id="editClientIndex" value="-1">
+    <div class="field"><label>Client Name *</label><input id="mc_name" type="text" placeholder="John Doe"></div>
+    <div class="field"><label>Company *</label><input id="mc_company" type="text" placeholder="Acme Inc."></div>
+    <div class="field"><label>Address</label><textarea id="mc_address" rows="2" placeholder="123 Main St, City, State ZIP"></textarea></div>
+    <div class="field"><label>Country</label><input id="mc_country" type="text" placeholder="United States"></div>
+    <div class="field"><label>GSTIN / Tax ID</label><input id="mc_gstin" type="text"></div>
+    <div class="field"><label>Email</label><input id="mc_email" type="email"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeClientModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClient()">Save Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD / EDIT ITEM MODAL -->
+<div class="modal-backdrop" id="itemModal">
+  <div class="modal">
+    <h2 id="itemModalTitle">Add Item</h2>
+    <input type="hidden" id="editItemIndex" value="-1">
+    <div class="field"><label>Item Name *</label><input id="mi_name" type="text" placeholder="Web Development Services"></div>
+    <div class="field"><label>Description (optional)</label><textarea id="mi_desc" rows="2" placeholder="Monthly retainer for frontend work"></textarea></div>
+    <div class="field"><label>Quantity</label><input id="mi_qty" type="number" value="1" min="0.01" step="0.01"></div>
+    <div class="field"><label>Rate <span id="mi_currency_label"></span></label><input id="mi_rate" type="number" value="0" min="0" step="0.01"></div>
+    <div class="field"><label>Item Discount %</label><input id="mi_disc" type="number" value="0" min="0" max="100" step="0.01"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeItemModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveItem()">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// =============================================
+// STATE
+// =============================================
+let clients = [];
+let items = [];
+let invoices = [];
+let currency = 'USD';
+let status = 'draft';
+
+const CURRENCY_SYMBOLS = { USD: '$', INR: '₹' };
+
+// =============================================
+// INIT
+// =============================================
+window.onload = () => {
+  loadFromStorage();
+  setTodayDates();
+  renderClientList();
+  renderSavedList();
+  updatePreview();
+
+  document.getElementById('currencySelect').addEventListener('change', e => {
+    currency = e.target.value;
+    updatePreview();
+  });
+  document.getElementById('statusSelect').addEventListener('change', e => {
+    status = e.target.value;
+    updatePreview();
+  });
+};
+
+function setTodayDates() {
+  const today = new Date().toISOString().slice(0,10);
+  const due = new Date(Date.now() + 30*24*60*60*1000).toISOString().slice(0,10);
+  document.getElementById('invDate').value = today;
+  document.getElementById('dueDate').value = due;
+}
+
+// =============================================
+// TABS
+// =============================================
+function switchTab(name, btn) {
+  ['client','invoice','saved'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (name === 'saved') renderSavedList();
+}
+
+// =============================================
+// CLIENTS
+// =============================================
+function openClientModal(index = -1) {
+  document.getElementById('editClientIndex').value = index;
+  if (index >= 0) {
+    const c = clients[index];
+    document.getElementById('mc_name').value = c.name;
+    document.getElementById('mc_company').value = c.company;
+    document.getElementById('mc_address').value = c.address;
+    document.getElementById('mc_country').value = c.country;
+    document.getElementById('mc_gstin').value = c.gstin || '';
+    document.getElementById('mc_email').value = c.email || '';
+  } else {
+    ['mc_name','mc_company','mc_address','mc_country','mc_gstin','mc_email'].forEach(id => document.getElementById(id).value = '');
+  }
+  document.getElementById('clientModal').classList.add('open');
+}
+
+function closeClientModal() {
+  document.getElementById('clientModal').classList.remove('open');
+}
+
+function saveClient() {
+  const name = document.getElementById('mc_name').value.trim();
+  const company = document.getElementById('mc_company').value.trim();
+  if (!name || !company) { showToast('Name and Company are required'); return; }
+  const c = {
+    name,
+    company,
+    address: document.getElementById('mc_address').value.trim(),
+    country: document.getElementById('mc_country').value.trim(),
+    gstin: document.getElementById('mc_gstin').value.trim(),
+    email: document.getElementById('mc_email').value.trim(),
+  };
+  const idx = parseInt(document.getElementById('editClientIndex').value);
+  if (idx >= 0) clients[idx] = c;
+  else clients.push(c);
+  saveToStorage();
+  renderClientList();
+  closeClientModal();
+  showToast('Client saved!');
+}
+
+function deleteClient(index) {
+  if (!confirm('Delete this client?')) return;
+  clients.splice(index, 1);
+  saveToStorage();
+  renderClientList();
+}
+
+function selectClient(index) {
+  const c = clients[index];
+  document.getElementById('clientName').value = c.name;
+  document.getElementById('clientCompany').value = c.company;
+  document.getElementById('clientAddress').value = c.address;
+  document.getElementById('clientCountry').value = c.country;
+  document.getElementById('clientGSTIN').value = c.gstin || '';
+  document.getElementById('clientEmail').value = c.email || '';
+  document.querySelectorAll('.client-card').forEach((el,i) => el.classList.toggle('active', i === index));
+  updatePreview();
+  showToast('Client loaded');
+}
+
+function renderClientList() {
+  const el = document.getElementById('clientList');
+  if (!clients.length) { el.innerHTML = '<div style="font-size:12px;color:var(--muted)">No clients yet.</div>'; return; }
+  el.innerHTML = clients.map((c, i) => `
+    <div class="client-card" id="cc-${i}">
+      <div class="cc-name">${esc(c.name)}</div>
+      <div class="cc-company">${esc(c.company)}</div>
+      <div class="client-card-actions">
+        <button class="btn btn-ghost btn-sm" onclick="selectClient(${i})">Use</button>
+        <button class="btn btn-ghost btn-sm" onclick="openClientModal(${i})">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteClient(${i})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Pre-populate default NimNim if no clients yet
+}
+
+// =============================================
+// ITEMS
+// =============================================
+function addItem(editIndex = -1) {
+  document.getElementById('editItemIndex').value = editIndex;
+  document.getElementById('itemModalTitle').textContent = editIndex >= 0 ? 'Edit Item' : 'Add Item';
+  document.getElementById('mi_currency_label').textContent = '(' + currency + ')';
+  if (editIndex >= 0) {
+    const item = items[editIndex];
+    document.getElementById('mi_name').value = item.name;
+    document.getElementById('mi_desc').value = item.desc || '';
+    document.getElementById('mi_qty').value = item.qty;
+    document.getElementById('mi_rate').value = item.rate;
+    document.getElementById('mi_disc').value = item.disc || 0;
+  } else {
+    document.getElementById('mi_name').value = '';
+    document.getElementById('mi_desc').value = '';
+    document.getElementById('mi_qty').value = 1;
+    document.getElementById('mi_rate').value = 0;
+    document.getElementById('mi_disc').value = 0;
+  }
+  document.getElementById('itemModal').classList.add('open');
+}
+
+function closeItemModal() {
+  document.getElementById('itemModal').classList.remove('open');
+}
+
+function saveItem() {
+  const name = document.getElementById('mi_name').value.trim();
+  if (!name) { showToast('Item name is required'); return; }
+  const item = {
+    name,
+    desc: document.getElementById('mi_desc').value.trim(),
+    qty: parseFloat(document.getElementById('mi_qty').value) || 1,
+    rate: parseFloat(document.getElementById('mi_rate').value) || 0,
+    disc: parseFloat(document.getElementById('mi_disc').value) || 0,
+  };
+  const idx = parseInt(document.getElementById('editItemIndex').value);
+  if (idx >= 0) items[idx] = item;
+  else items.push(item);
+  closeItemModal();
+  updatePreview();
+}
+
+function deleteItem(index) {
+  items.splice(index, 1);
+  updatePreview();
+}
+
+// =============================================
+// PREVIEW RENDERER
+// =============================================
+function updatePreview() {
+  const sym = CURRENCY_SYMBOLS[currency] || '$';
+
+  // Invoice meta
+  document.getElementById('previewInvNumber').textContent = document.getElementById('invNumber').value || 'INV-001';
+  const invD = document.getElementById('invDate').value;
+  const dueD = document.getElementById('dueDate').value;
+  document.getElementById('previewInvDate').textContent = invD ? 'Date: ' + formatDate(invD) : '';
+  document.getElementById('previewDueDate').textContent = dueD ? 'Due: ' + formatDate(dueD) : '';
+
+  // Status badge
+  const statusEl = document.getElementById('previewStatus');
+  statusEl.textContent = status.toUpperCase();
+  statusEl.className = 'inv-status status-' + status;
+
+  // Client
+  const cName = document.getElementById('clientName').value;
+  const cCompany = document.getElementById('clientCompany').value;
+  const cAddr = document.getElementById('clientAddress').value;
+  const cCountry = document.getElementById('clientCountry').value;
+  const cGSTIN = document.getElementById('clientGSTIN').value;
+
+  document.getElementById('previewClientName').textContent = cName || '—';
+  document.getElementById('previewClientCompany').textContent = cCompany;
+  document.getElementById('previewClientAddress').innerHTML = (cAddr || '').replace(/\n/g,'<br>');
+  document.getElementById('previewClientCountry').textContent = cCountry;
+  const gsEl = document.getElementById('previewClientGSTIN');
+  if (cGSTIN) { gsEl.textContent = 'GSTIN: ' + cGSTIN; gsEl.style.display = ''; }
+  else { gsEl.style.display = 'none'; }
+
+  // Items table
+  const tbody = document.getElementById('itemsBody');
+  const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+  const discRate = parseFloat(document.getElementById('discountRate').value) || 0;
+
+  let subtotal = 0;
+  tbody.innerHTML = items.map((item, i) => {
+    const lineTotal = item.qty * item.rate * (1 - item.disc/100);
+    subtotal += lineTotal;
+    return `
+      <tr>
+        <td>
+          <strong>${esc(item.name)}</strong>
+          ${item.desc ? `<div class="item-desc">${esc(item.desc)}</div>` : ''}
+        </td>
+        <td>${item.qty}</td>
+        <td class="text-right">${sym}${fmt(item.rate)}</td>
+        <td class="text-right">${item.disc > 0 ? item.disc+'%' : '—'}</td>
+        <td class="text-right" style="font-weight:600;">${sym}${fmt(lineTotal)}
+          <div class="no-print" style="margin-top:4px;display:flex;gap:4px;justify-content:flex-end;">
+            <button onclick="addItem(${i})" style="background:none;border:none;cursor:pointer;color:#0077b6;font-size:11px;">edit</button>
+            <button onclick="deleteItem(${i})" style="background:none;border:none;cursor:pointer;color:#cc3333;font-size:11px;">remove</button>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+
+  if (!items.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:28px;color:#aaa;font-size:13px;">No items yet — click <strong>+ Add Item</strong> above</td></tr>`;
+  }
+
+  // Totals
+  const discAmt = subtotal * discRate / 100;
+  const afterDisc = subtotal - discAmt;
+  const taxAmt = afterDisc * taxRate / 100;
+  const total = afterDisc + taxAmt;
+
+  let footHtml = '';
+  footHtml += `<tr class="subtotal-row"><td colspan="4" class="text-right" style="color:#555;">Subtotal</td><td class="text-right">${sym}${fmt(subtotal)}</td></tr>`;
+  if (discRate > 0) {
+    footHtml += `<tr><td colspan="4" class="text-right" style="color:#555;">Discount (${discRate}%)</td><td class="text-right" style="color:#cc3333;">−${sym}${fmt(discAmt)}</td></tr>`;
+  }
+  if (taxRate > 0) {
+    footHtml += `<tr><td colspan="4" class="text-right" style="color:#555;">Tax (${taxRate}%)</td><td class="text-right">${sym}${fmt(taxAmt)}</td></tr>`;
+  }
+  footHtml += `<tr class="total-row"><td colspan="4" class="text-right">Total <span style="font-size:12px;font-weight:400;color:#555;">${currency}</span></td><td class="text-right">${sym}${fmt(total)}</td></tr>`;
+  document.getElementById('itemsFoot').innerHTML = footHtml;
+
+  // Notes / Terms
+  const notes = document.getElementById('invNotes').value;
+  const terms = document.getElementById('invTerms').value;
+  const footerRow = document.getElementById('invFooter');
+  if (notes || terms) {
+    footerRow.style.display = 'grid';
+    document.getElementById('previewNotes').innerHTML = (notes || '').replace(/\n/g,'<br>');
+    document.getElementById('previewTerms').innerHTML = (terms || '').replace(/\n/g,'<br>');
+  } else {
+    footerRow.style.display = 'none';
+  }
+}
+
+// =============================================
+// SAVE / LOAD INVOICES
+// =============================================
+function saveInvoice() {
+  const invNum = document.getElementById('invNumber').value.trim() || 'INV-001';
+  const inv = {
+    id: Date.now(),
+    number: invNum,
+    date: document.getElementById('invDate').value,
+    dueDate: document.getElementById('dueDate').value,
+    poRef: document.getElementById('poRef').value,
+    client: {
+      name: document.getElementById('clientName').value,
+      company: document.getElementById('clientCompany').value,
+      address: document.getElementById('clientAddress').value,
+      country: document.getElementById('clientCountry').value,
+      gstin: document.getElementById('clientGSTIN').value,
+      email: document.getElementById('clientEmail').value,
+    },
+    items: [...items],
+    taxRate: parseFloat(document.getElementById('taxRate').value) || 0,
+    discountRate: parseFloat(document.getElementById('discountRate').value) || 0,
+    notes: document.getElementById('invNotes').value,
+    terms: document.getElementById('invTerms').value,
+    currency,
+    status,
+  };
+  // Replace if same number
+  const existIdx = invoices.findIndex(i => i.number === invNum);
+  if (existIdx >= 0) invoices[existIdx] = inv;
+  else invoices.push(inv);
+  saveToStorage();
+  renderSavedList();
+  showToast('Invoice ' + invNum + ' saved!');
+}
+
+function loadInvoice(index) {
+  const inv = invoices[index];
+  document.getElementById('invNumber').value = inv.number;
+  document.getElementById('invDate').value = inv.date;
+  document.getElementById('dueDate').value = inv.dueDate;
+  document.getElementById('poRef').value = inv.poRef || '';
+  document.getElementById('clientName').value = inv.client.name;
+  document.getElementById('clientCompany').value = inv.client.company;
+  document.getElementById('clientAddress').value = inv.client.address;
+  document.getElementById('clientCountry').value = inv.client.country;
+  document.getElementById('clientGSTIN').value = inv.client.gstin || '';
+  document.getElementById('clientEmail').value = inv.client.email || '';
+  document.getElementById('taxRate').value = inv.taxRate;
+  document.getElementById('discountRate').value = inv.discountRate;
+  document.getElementById('invNotes').value = inv.notes || '';
+  document.getElementById('invTerms').value = inv.terms || '';
+  currency = inv.currency;
+  status = inv.status;
+  document.getElementById('currencySelect').value = currency;
+  document.getElementById('statusSelect').value = status;
+  items = [...inv.items];
+  updatePreview();
+  showToast('Invoice loaded: ' + inv.number);
+}
+
+function deleteInvoice(index) {
+  if (!confirm('Delete this invoice?')) return;
+  invoices.splice(index, 1);
+  saveToStorage();
+  renderSavedList();
+}
+
+function renderSavedList() {
+  const el = document.getElementById('savedList');
+  if (!invoices.length) { el.innerHTML = '<div style="font-size:12px;color:var(--muted)">No invoices saved yet.</div>'; return; }
+  el.innerHTML = invoices.map((inv, i) => `
+    <div class="client-card">
+      <div class="cc-name">${esc(inv.number)} <span class="currency-badge">${inv.currency}</span></div>
+      <div class="cc-company">${esc(inv.client.name || '—')} · ${formatDate(inv.date)}</div>
+      <div class="client-card-actions">
+        <button class="btn btn-ghost btn-sm" onclick="loadInvoice(${i})">Load</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteInvoice(${i})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// =============================================
+// PRINT
+// =============================================
+function printInvoice() {
+  window.print();
+}
+
+// =============================================
+// STORAGE
+// =============================================
+function saveToStorage() {
+  localStorage.setItem('rg_clients', JSON.stringify(clients));
+  localStorage.setItem('rg_invoices', JSON.stringify(invoices));
+}
+
+function loadFromStorage() {
+  try { clients = JSON.parse(localStorage.getItem('rg_clients')) || []; } catch { clients = []; }
+  try { invoices = JSON.parse(localStorage.getItem('rg_invoices')) || []; } catch { invoices = []; }
+
+  // Seed default client if none
+  if (!clients.length) {
+    clients.push({
+      name: 'NimNim',
+      company: 'NimNim, Inc.',
+      address: '141 Border St, Boston, MA 02128',
+      country: 'United States',
+      gstin: '',
+      email: '',
+    });
+    saveToStorage();
+  }
+}
+
+// =============================================
+// UTILS
+// =============================================
+function fmt(n) { return Number(n).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function formatDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${day} ${months[parseInt(m)-1]} ${y}`;
+}
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
