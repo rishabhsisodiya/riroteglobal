@@ -196,12 +196,18 @@
 
   /* Addresses */
   .inv-addresses {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
     gap: 32px;
     margin-bottom: 36px;
     padding-bottom: 36px;
     border-bottom: 1px solid #e8eaf0;
+  }
+  .inv-addresses .addr-block:last-child {
+    text-align: right;
+  }
+  .inv-addresses .addr-block:last-child h4 {
+    text-align: right;
   }
   .addr-block h4 {
     font-size: 10px;
