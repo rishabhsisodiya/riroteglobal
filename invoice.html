@@ -306,6 +306,11 @@
     margin: 0;
     size: A4;
   }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
   @media print {
     body { background: #fff !important; }
     .topbar, .sidebar, .canvas-wrap > *:not(.invoice-paper) { display: none !important; }
