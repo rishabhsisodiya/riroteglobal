@@ -466,7 +466,7 @@
           </select>
         </div>
         <div class="field"><label>SAC Code</label><input id="sacCode" type="text" value="998314" placeholder="e.g. 998314" oninput="updatePreview()"></div>
-        <div class="field"><label>LUT ARN <span style="font-size:10px;color:var(--muted)">(from GST portal acknowledgment)</span></label><input id="lutARN" type="text" placeholder="e.g. AD080126000XXXXXX" oninput="updatePreview()"></div>
+        <div class="field"><label>LUT ARN <span style="font-size:10px;color:var(--muted)">(from GST portal acknowledgment)</span></label><input id="lutARN" type="text" value="AD0805260270671" oninput="updatePreview()"></div>
         <div class="field"><label>Payment Terms</label><input id="paymentTerms" type="text" placeholder="Net 30 days" oninput="updatePreview()"></div>
       </div>
       <div class="divider"></div>
@@ -988,7 +988,7 @@ function loadInvoice(index) {
   document.getElementById('invTerms').value = inv.terms || '';
   document.getElementById('gstDeclaration').value = inv.gstDeclaration || 'lut';
   document.getElementById('sacCode').value = inv.sacCode || '998314';
-  document.getElementById('lutARN').value = inv.lutARN || '';
+  document.getElementById('lutARN').value = inv.lutARN || 'AD0805260270671';
   document.getElementById('paymentTerms').value = inv.paymentTerms || '';
   currency = inv.currency;
   status = inv.status;
