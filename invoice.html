@@ -451,9 +451,24 @@
       </div>
       <div class="divider"></div>
       <div class="sidebar-section">
-        <h3>Notes & Terms</h3>
+        <h3>Export / GST</h3>
+        <div class="field">
+          <label>GST Export Declaration</label>
+          <select id="gstDeclaration" onchange="updatePreview()">
+            <option value="lut">Supply under LUT — without IGST</option>
+            <option value="igst">Supply with payment of IGST</option>
+            <option value="none">Not applicable</option>
+          </select>
+        </div>
+        <div class="field"><label>SAC Code</label><input id="sacCode" type="text" value="998314" placeholder="e.g. 998314" oninput="updatePreview()"></div>
+        <div class="field"><label>LUT ARN <span style="font-size:10px;color:var(--muted)">(from GST portal acknowledgment)</span></label><input id="lutARN" type="text" placeholder="e.g. AD080126000XXXXXX" oninput="updatePreview()"></div>
+        <div class="field"><label>Payment Terms</label><input id="paymentTerms" type="text" placeholder="Net 30 days" oninput="updatePreview()"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sidebar-section">
+        <h3>Notes</h3>
         <div class="field"><label>Notes</label><textarea id="invNotes" rows="3" placeholder="Thank you for your business!" oninput="updatePreview()"></textarea></div>
-        <div class="field"><label>Terms</label><textarea id="invTerms" rows="3" placeholder="Payment due within 30 days." oninput="updatePreview()"></textarea></div>
+        <div class="field"><label>Terms & Conditions</label><textarea id="invTerms" rows="3" placeholder="All disputes subject to Jaipur jurisdiction." oninput="updatePreview()"></textarea></div>
       </div>
     </div>
 
@@ -494,8 +509,13 @@
         <div class="addr-block">
           <h4>From</h4>
           <div class="company-name">Rirote Global</div>
+          <p style="font-size:12px;color:#666;margin-top:1px;">Rohini Sankhala, Proprietor</p>
           <p>A-19 Ganesh Nagar New Sanganer Road Sodala<br>Shyam Nagar S.O (Jaipur), Rajasthan 302019</p>
           <p class="gstin">GSTIN: 08HJCPS6903N1ZI</p>
+          <p style="font-size:12px;color:#555;margin-top:4px;line-height:1.7;">
+            📞 +91 82332 35504<br>
+            ✉ riroteglobal@gmail.com
+          </p>
         </div>
         <div class="addr-block">
           <h4>Bill To</h4>
@@ -504,6 +524,18 @@
           <p id="previewClientAddress"></p>
           <p id="previewClientCountry" style="font-size:13px;color:#555;"></p>
           <p class="gstin" id="previewClientGSTIN" style="display:none;"></p>
+          <p id="previewClientEmail" style="font-size:12px;color:#0077b6;margin-top:4px;display:none;"></p>
+        </div>
+      </div>
+
+      <!-- EXPORT / GST DECLARATION -->
+      <div id="previewGSTBlock" style="margin-bottom:20px;padding:12px 16px;background:#fff8e1;border-radius:6px;border:1px solid #ffe082;display:none;">
+        <div style="font-size:12px;font-weight:700;color:#b45309;margin-bottom:6px;" id="previewGSTDeclaration"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;">
+          <span id="previewSAC" style="font-size:12px;color:#555;"></span>
+          <span id="previewLUTARN" style="font-size:12px;color:#555;"></span>
+          <span style="font-size:12px;color:#555;">Place of Supply: Rajasthan (08)</span>
+          <span id="previewPaymentTerms" style="font-size:12px;color:#555;"></span>
         </div>
       </div>
 
@@ -532,6 +564,7 @@
           <tr><td style="padding:3px 0;color:#777;">Account Number</td><td style="padding:3px 0;font-weight:600;letter-spacing:0.04em;">50200102373470</td></tr>
           <tr><td style="padding:3px 0;color:#777;">IFSC Code</td><td style="padding:3px 0;font-weight:600;">HDFC0001843</td></tr>
           <tr><td style="padding:3px 0;color:#777;">Branch</td><td style="padding:3px 0;">New Sanganer Road, Jaipur</td></tr>
+          <tr><td style="padding:3px 0;color:#777;">SWIFT / BIC</td><td style="padding:3px 0;font-weight:600;">HDFCINBBXXX</td></tr>
         </table>
       </div>
 
@@ -805,6 +838,32 @@ function updatePreview() {
   if (cGSTIN) { gsEl.textContent = 'GSTIN: ' + cGSTIN; gsEl.style.display = ''; }
   else { gsEl.style.display = 'none'; }
 
+  const emailEl = document.getElementById('previewClientEmail');
+  const cEmail = document.getElementById('clientEmail').value.trim();
+  if (cEmail) { emailEl.textContent = cEmail; emailEl.style.display = ''; }
+  else { emailEl.style.display = 'none'; }
+
+  // GST Export Declaration
+  const gstVal = document.getElementById('gstDeclaration').value;
+  const sacCode = document.getElementById('sacCode').value.trim();
+  const payTerms = document.getElementById('paymentTerms').value.trim();
+  const gstBlock = document.getElementById('previewGSTBlock');
+  const gstDeclarationTexts = {
+    lut: 'Supply of Services meant for Export under LUT without payment of IGST',
+    igst: 'Supply of Services with payment of IGST',
+    none: ''
+  };
+  if (gstVal !== 'none' || sacCode || payTerms) {
+    gstBlock.style.display = '';
+    const lutARN = document.getElementById('lutARN').value.trim();
+    document.getElementById('previewGSTDeclaration').textContent = gstDeclarationTexts[gstVal] || '';
+    document.getElementById('previewSAC').textContent = sacCode ? 'SAC Code: ' + sacCode : '';
+    document.getElementById('previewLUTARN').textContent = lutARN ? 'LUT ARN: ' + lutARN : '';
+    document.getElementById('previewPaymentTerms').textContent = payTerms ? 'Payment Terms: ' + payTerms : '';
+  } else {
+    gstBlock.style.display = 'none';
+  }
+
   // Items table
   const tbody = document.getElementById('itemsBody');
   const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
@@ -890,6 +949,10 @@ function saveInvoice() {
     discountRate: parseFloat(document.getElementById('discountRate').value) || 0,
     notes: document.getElementById('invNotes').value,
     terms: document.getElementById('invTerms').value,
+    gstDeclaration: document.getElementById('gstDeclaration').value,
+    sacCode: document.getElementById('sacCode').value,
+    lutARN: document.getElementById('lutARN').value,
+    paymentTerms: document.getElementById('paymentTerms').value,
     currency,
     status,
   };
@@ -918,6 +981,10 @@ function loadInvoice(index) {
   document.getElementById('discountRate').value = inv.discountRate;
   document.getElementById('invNotes').value = inv.notes || '';
   document.getElementById('invTerms').value = inv.terms || '';
+  document.getElementById('gstDeclaration').value = inv.gstDeclaration || 'lut';
+  document.getElementById('sacCode').value = inv.sacCode || '998314';
+  document.getElementById('lutARN').value = inv.lutARN || '';
+  document.getElementById('paymentTerms').value = inv.paymentTerms || '';
   currency = inv.currency;
   status = inv.status;
   document.getElementById('currencySelect').value = currency;
