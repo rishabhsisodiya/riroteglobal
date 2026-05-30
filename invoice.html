@@ -301,6 +301,10 @@
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
 
   /* ---- PRINT STYLES ---- */
+  @page {
+    margin: 0;
+    size: A4;
+  }
   @media print {
     body { background: #fff !important; }
     .topbar, .sidebar, .canvas-wrap > *:not(.invoice-paper) { display: none !important; }
@@ -310,7 +314,8 @@
       box-shadow: none;
       border-radius: 0;
       max-width: 100%;
-      padding: 24px;
+      padding: 32px 40px;
+      margin: 0;
     }
     .no-print { display: none !important; }
   }
