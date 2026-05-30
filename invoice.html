@@ -398,7 +398,8 @@
       <option value="sent">Sent</option>
       <option value="paid">Paid</option>
     </select>
-    <button class="btn btn-ghost" onclick="printInvoice()">🖨 Print / PDF</button>
+    <button class="btn btn-ghost" onclick="emailInvoice()">✉ Email</button>
+    <button class="btn btn-ghost" onclick="downloadPDF()">⬇ Download PDF</button>
     <button class="btn btn-primary" onclick="saveInvoice()">💾 Save Invoice</button>
   </div>
 </div>
@@ -952,6 +953,70 @@ function renderSavedList() {
 // =============================================
 function printInvoice() {
   window.print();
+}
+
+function downloadPDF() {
+  const invNum = document.getElementById('invNumber').value.trim() || 'invoice';
+  const origTitle = document.title;
+  document.title = invNum;
+  window.print();
+  document.title = origTitle;
+}
+
+function emailInvoice() {
+  const sym = CURRENCY_SYMBOLS[currency] || '$';
+  const invNum = document.getElementById('invNumber').value.trim() || 'INV-001';
+  const invDate = document.getElementById('invDate').value;
+  const dueDate = document.getElementById('dueDate').value;
+  const clientEmail = document.getElementById('clientEmail').value.trim();
+  const clientName = document.getElementById('clientName').value.trim() || 'Client';
+  const clientCompany = document.getElementById('clientCompany').value.trim();
+
+  // Calculate total
+  const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+  const discRate = parseFloat(document.getElementById('discountRate').value) || 0;
+  let subtotal = items.reduce((s, item) => s + item.qty * item.rate * (1 - item.disc/100), 0);
+  const discAmt = subtotal * discRate / 100;
+  const afterDisc = subtotal - discAmt;
+  const total = afterDisc + afterDisc * taxRate / 100;
+
+  // Build item lines
+  const itemLines = items.map(item => {
+    const amt = item.qty * item.rate * (1 - item.disc/100);
+    return `  - ${item.name} (${item.qty} x ${sym}${fmt(item.rate)}) = ${sym}${fmt(amt)}`;
+  }).join('\n');
+
+  const subject = encodeURIComponent(`Invoice ${invNum} from Rirote Global`);
+  const body = encodeURIComponent(
+`Dear ${clientName},
+
+Please find below the details for Invoice ${invNum}.
+
+Invoice Number : ${invNum}
+Invoice Date   : ${invDate ? formatDate(invDate) : ''}
+Due Date       : ${dueDate ? formatDate(dueDate) : ''}
+${clientCompany ? 'Billed To      : ' + clientCompany : ''}
+
+ITEMS:
+${itemLines || '  (no items)'}
+
+TOTAL: ${sym}${fmt(total)} ${currency}
+
+PAYMENT DETAILS:
+  Account Name   : RIROTE GLOBAL
+  Account Number : 50200102373470
+  IFSC Code      : HDFC0001843
+  Branch         : New Sanganer Road, Jaipur
+
+Please don't hesitate to reach out if you have any questions.
+
+Warm regards,
+Rirote Global
+GSTIN: 08HJCPS6903N1ZI`
+  );
+
+  const mailto = `mailto:${clientEmail}?subject=${subject}&body=${body}`;
+  window.location.href = mailto;
 }
 
 // =============================================
