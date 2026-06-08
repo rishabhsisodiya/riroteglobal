@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Rirote Global</title>
+<meta name="description" content="A portfolio of real-world projects across e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.">
+<meta name="author" content="Rirote Global">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0d1f3c;
+    --navy-card: #0f2340;
+    --cyan: #00b4d8;
+    --electric: #0077b6;
+    --blue-light: #48cae4;
+    --white: #f0f4ff;
+    --muted: #8899bb;
+    --accent: #00d4ff;
+    --gold: #ffd166;
+    --green: #06d6a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 2rem;
+    padding: 1rem 4rem;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,180,216,0.15);
+  }
+  .nav-logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.55rem; letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-logo-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.44rem; letter-spacing: 0.32em;
+    color: var(--muted); text-transform: uppercase;
+    display: block;
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+    flex: 1; justify-content: center;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--cyan); }
+  .nav-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--electric), var(--cyan));
+    color: var(--navy) !important;
+    padding: 0.55rem 1.4rem; border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 700;
+    text-decoration: none; white-space: nowrap;
+  }
+  .menu-toggle {
+    display: none; background: none; border: none;
+    cursor: pointer; padding: 0.25rem;
+  }
+  .menu-toggle span {
+    display: block; width: 24px; height: 2px;
+    background: var(--cyan); margin: 5px 0;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* ── HERO ── */
+  .page-hero {
+    padding: 10rem 4rem 6rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(0,119,182,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,180,216,0.07) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.035;
+    background-image:
+      linear-gradient(var(--cyan) 1px, transparent 1px),
+      linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 780px; }
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.28em;
+    color: var(--cyan); text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 0.95; letter-spacing: 0.03em;
+    margin-bottom: 1.6rem;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .page-title span {
+    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .page-sub {
+    font-size: 1.1rem; line-height: 1.75;
+    color: rgba(240,244,255,0.68); max-width: 580px;
+    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+  }
+
+  /* ── METRICS STRIP ── */
+  .metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(0,180,216,0.12);
+    border-top: 1px solid rgba(0,180,216,0.12);
+    border-bottom: 1px solid rgba(0,180,216,0.12);
+  }
+  .metric-item {
+    background: var(--navy);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: background 0.3s;
+  }
+  .metric-item:hover { background: var(--navy-mid); }
+  .metric-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem; letter-spacing: 0.04em;
+    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .metric-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  /* ── PROJECTS GRID ── */
+  .projects-section {
+    padding: 5rem 4rem 6rem;
+    max-width: 1400px; margin: 0 auto;
+  }
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem; letter-spacing: 0.06em; color: var(--white);
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(0,180,216,0.4), transparent);
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ── PROJECT CARD ── */
+  .project-card {
+    background: var(--navy-card);
+    border: 1px solid rgba(0,180,216,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    opacity: 0;
+    animation: fadeUp 0.6s forwards;
+  }
+  .project-card:hover {
+    border-color: rgba(0,180,216,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 30px rgba(0,180,216,0.06);
+  }
+  .card-top {
+    padding: 1.8rem 2rem 1.4rem;
+    border-bottom: 1px solid rgba(0,180,216,0.08);
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 1rem;
+  }
+  .card-meta { flex: 1; }
+  .industry-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--cyan);
+    background: rgba(0,180,216,0.08);
+    padding: 0.2rem 0.65rem; border-radius: 3px;
+    display: inline-block; margin-bottom: 0.7rem;
+    border: 1px solid rgba(0,180,216,0.2);
+  }
+  .card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.85rem; letter-spacing: 0.04em;
+    line-height: 1; color: var(--white);
+  }
+  .card-location {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.15em;
+    color: var(--muted); text-transform: uppercase;
+    margin-top: 0.35rem;
+  }
+  .card-link {
+    display: flex; align-items: center; gap: 0.4rem;
+    color: var(--cyan); text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    white-space: nowrap;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(0,180,216,0.25);
+    border-radius: 4px;
+    transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .card-link:hover {
+    background: rgba(0,180,216,0.1);
+    border-color: rgba(0,180,216,0.5);
+  }
+  .card-link svg { width: 12px; height: 12px; }
+  .card-body { padding: 1.6rem 2rem; flex: 1; display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .overview-text {
+    font-size: 0.92rem; line-height: 1.72;
+    color: rgba(240,244,255,0.68);
+  }
+
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tech-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    background: rgba(72,202,228,0.07);
+    border: 1px solid rgba(72,202,228,0.18);
+    padding: 0.22rem 0.6rem; border-radius: 3px;
+  }
+
+  .card-section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.55rem;
+  }
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+  .bullet-list li {
+    font-size: 0.88rem; line-height: 1.5;
+    color: rgba(240,244,255,0.72);
+    padding-left: 1.1rem; position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute; left: 0; top: 0.55rem;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--cyan); opacity: 0.6;
+  }
+
+  .achievements-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .achievements-list li {
+    font-size: 0.88rem; line-height: 1.5;
+    color: rgba(240,244,255,0.8);
+    padding-left: 1.4rem; position: relative;
+  }
+  .achievements-list li::before {
+    content: '✦';
+    position: absolute; left: 0;
+    color: var(--gold); font-size: 0.55rem;
+    top: 0.32rem;
+  }
+
+  .card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 5rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(0,180,216,0.1);
+  }
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px; height: 300px; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(0,119,182,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--cyan);
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    letter-spacing: 0.05em; line-height: 1.05;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  .cta-title span {
+    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-body {
+    font-size: 1.05rem; color: rgba(240,244,255,0.65);
+    max-width: 540px; margin: 0 auto 2.4rem; line-height: 1.75;
+    position: relative;
+  }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--electric), var(--cyan));
+    color: var(--navy); padding: 0.95rem 2rem;
+    border: none; border-radius: 5px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid rgba(0,180,216,0.4);
+    color: var(--cyan); background: transparent;
+    padding: 0.95rem 2rem; border-radius: 5px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover {
+    background: rgba(0,180,216,0.08);
+    border-color: rgba(0,180,216,0.7);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 1.8rem 4rem;
+    border-top: 1px solid rgba(0,180,216,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.12em;
+    color: var(--muted); text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .project-card:nth-child(1) { animation-delay: 0.05s; }
+  .project-card:nth-child(2) { animation-delay: 0.12s; }
+  .project-card:nth-child(3) { animation-delay: 0.19s; }
+  .project-card:nth-child(4) { animation-delay: 0.26s; }
+  .project-card:nth-child(5) { animation-delay: 0.33s; }
+  .project-card:nth-child(6) { animation-delay: 0.40s; }
+
+  /* ── SHOPIFY CLIENT LINKS ── */
+  .client-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .client-link-pill {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    color: var(--muted); text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.08em;
+    border: 1px solid rgba(136,153,187,0.2);
+    padding: 0.2rem 0.6rem; border-radius: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .client-link-pill:hover { color: var(--cyan); border-color: rgba(0,180,216,0.35); }
+  .client-link-pill svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.8rem; }
+    .nav-links, .nav-cta { display: none; }
+    .menu-toggle { display: block; }
+    nav.menu-open .nav-links {
+      display: flex; flex-direction: column;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(10,22,40,0.97);
+      padding: 1.5rem 2rem; gap: 1.2rem;
+      border-bottom: 1px solid rgba(0,180,216,0.15);
+    }
+    nav.menu-open .nav-cta { display: block; margin: 0.5rem 2rem 1.5rem; }
+    .page-hero { padding: 8rem 1.8rem 4rem; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .projects-section { padding: 3.5rem 1.8rem 4rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .card-cols { grid-template-columns: 1fr; gap: 1rem; }
+    .cta-section { padding: 4rem 1.8rem; }
+    footer { padding: 1.5rem 1.8rem; flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .metric-value { font-size: 2.4rem; }
+    .card-top { flex-direction: column; gap: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAV
+══════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo-link">
+    <div>
+      <span class="nav-logo-brand">Rirote Global</span>
+      <span class="nav-logo-sub">Rise with Robust Tech</span>
+    </div>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-cta-wrap">
+    <a href="index.html#contact" class="nav-cta">Hire Us</a>
+  </div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <p class="eyebrow">// Client Work &amp; Case Studies</p>
+    <h1 class="page-title">Projects That<br><span>Moved the Needle</span></h1>
+    <p class="page-sub">Real-world engineering across e-commerce, logistics, SaaS, and government — delivered end-to-end with measurable impact.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     METRICS STRIP
+══════════════════════════════════════════════ -->
+<div class="metrics">
+  <div class="metric-item">
+    <div class="metric-value">8.5+</div>
+    <div class="metric-label">Years Experience</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">10+</div>
+    <div class="metric-label">Projects Delivered</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">5+</div>
+    <div class="metric-label">Industries Served</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">2</div>
+    <div class="metric-label">Markets — India &amp; US</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PROJECTS GRID
+══════════════════════════════════════════════ -->
+<section class="projects-section">
+  <div class="section-header">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- ── 1. NIMNIM ── -->
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="industry-tag">Laundry Management / SaaS</span>
+          <h3 class="card-name">NimNim Laundry</h3>
+          <p class="card-location">&#x1F4CD; Boston, USA</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="overview-text">
+          Took over a production-critical US-based SaaS laundry management platform with stability issues. Stabilized cloud infrastructure, resolved high-priority production bugs, and led a major platform revamp — all while maintaining uptime for active customers.
+        </p>
+
+        <div>
+          <p class="card-section-label">Tech Stack</p>
+          <div class="tech-stack">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">MongoDB</span>
+            <span class="tech-pill">AWS EC2</span>
+            <span class="tech-pill">Nginx</span>
+            <span class="tech-pill">Cloudflare</span>
+          </div>
+        </div>
+
+        <div class="card-cols">
+          <div>
+            <p class="card-section-label">Responsibilities</p>
+            <ul class="bullet-list">
+              <li>Infrastructure setup &amp; configuration</li>
+              <li>Deployment management</li>
+              <li>Bug fixing &amp; hotfixes</li>
+              <li>Feature implementation</li>
+              <li>Performance optimization</li>
+            </ul>
+          </div>
+          <div>
+            <p class="card-section-label">Key Achievements</p>
+            <ul class="achievements-list">
+              <li>Stabilized a failing production environment</li>
+              <li>Delivered full platform revamp</li>
+              <li>Improved infrastructure reliability on AWS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 2. MYRIDER ── -->
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="industry-tag">Logistics / Ride Booking / Food Delivery</span>
+          <h3 class="card-name">MyRider</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="overview-text">
+          Built and maintained a unified multi-service platform supporting food delivery, parcel logistics, and ride-booking operations — architected on microservices for independent scaling of each service. Led the engineering team, drove product decisions, and owned features end-to-end from API design through to production deployment and support.
+        </p>
+
+        <div>
+          <p class="card-section-label">Tech Stack</p>
+          <div class="tech-stack">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">Redis</span>
+            <span class="tech-pill">Digital Ocean</span>
+            <span class="tech-pill">Microservices</span>
+          </div>
+        </div>
+
+        <div class="card-cols">
+          <div>
+            <p class="card-section-label">Responsibilities</p>
+            <ul class="bullet-list">
+              <li>Team management &amp; mentoring</li>
+              <li>Product management &amp; roadmap planning</li>
+              <li>Feature development</li>
+              <li>Production support</li>
+              <li>REST API development</li>
+              <li>Database design</li>
+              <li>Technical consulting</li>
+            </ul>
+          </div>
+          <div>
+            <p class="card-section-label">Key Achievements</p>
+            <ul class="achievements-list">
+              <li>Delivered unified platform across 3 service verticals on microservices architecture</li>
+              <li>Designed scalable DB schema for multi-service operations</li>
+              <li>Provided ongoing production stability</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3. INDIAZONA ── -->
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="industry-tag">E-Commerce</span>
+          <h3 class="card-name">Indiazona</h3>
+        </div>
+        <a href="https://indiazona.in/" target="_blank" rel="noopener" class="card-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          indiazona.in
+        </a>
+      </div>
+      <div class="card-body">
+        <p class="overview-text">
+          Led the redesign and modernization of a high-traffic Indian e-commerce platform. Architected a migration plan from a monolithic stack to microservices, improving scalability and developer velocity. Drove key technical decisions while collaborating directly with business stakeholders.
+        </p>
+
+        <div>
+          <p class="card-section-label">Tech Stack</p>
+          <div class="tech-stack">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">Digital Ocean</span>
+            <span class="tech-pill">Microservices</span>
+          </div>
+        </div>
+
+        <div class="card-cols">
+          <div>
+            <p class="card-section-label">Responsibilities</p>
+            <ul class="bullet-list">
+              <li>System architecture design</li>
+              <li>Backend service development</li>
+              <li>Digital Ocean infrastructure setup</li>
+              <li>Performance improvements</li>
+              <li>Stakeholder discussions</li>
+            </ul>
+          </div>
+          <div>
+            <p class="card-section-label">Key Achievements</p>
+            <ul class="achievements-list">
+              <li>Planned monolith → microservices migration roadmap</li>
+              <li>Led full platform redesign initiative</li>
+              <li>Improved backend performance and scalability</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 4. SHOPIFY ── -->
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="industry-tag">E-Commerce / Shopify</span>
+          <h3 class="card-name">Shopify Client Projects</h3>
+          <p class="card-location">Multiple Clients — Fashion, Lifestyle &amp; Homeware</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="overview-text">
+          Delivered end-to-end Shopify solutions for clients across fashion, lifestyle, and homeware — from bespoke theme development and custom app integrations to performance optimization and workflow automation. Each engagement was tailored to the client's specific business requirements.
+        </p>
+
+        <div>
+          <p class="card-section-label">Tech Stack</p>
+          <div class="tech-stack">
+            <span class="tech-pill">Shopify</span>
+            <span class="tech-pill">Liquid</span>
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">Custom Apps</span>
+            <span class="tech-pill">Google Apps Script</span>
+            <span class="tech-pill">REST APIs</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="card-section-label">Client Work <span style="color:var(--muted);font-size:0.55rem;letter-spacing:0.1em;font-weight:400;margin-left:0.5rem;">— Projects delivered; now maintained by respective teams</span></p>
+          <div class="client-links">
+            <a href="https://homekaara.com/" target="_blank" rel="noopener" class="client-link-pill" title="Custom App + HTML/JS development">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Homekaara ✦
+            </a>
+            <a href="https://chakkipeesing.com/" target="_blank" rel="noopener" class="client-link-pill" title="Custom 'Make Your Own Mix' feature — App + JS development">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Chakki Peesing ✦
+            </a>
+            <a href="https://www.gkhair.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              GKhair
+            </a>
+            <a href="https://gypsieblu.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Gypsie Blu
+            </a>
+            <a href="https://houseofsoi.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              House of Soi
+            </a>
+            <a href="https://taractara.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Tara c Tara
+            </a>
+            <a href="https://trendytokari.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Trendy Tokari
+            </a>
+            <a href="https://labeladitihundia.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Label Aditi Hundia
+            </a>
+            <a href="https://shivangikasliwal.com/" target="_blank" rel="noopener" class="client-link-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Shivangi Kasliwal
+            </a>
+            <span class="client-link-pill">Pelican House</span>
+          </div>
+          <p style="font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--muted);margin-top:0.6rem;">✦ Custom app &amp; JS development</p>
+        </div>
+
+        <div class="card-cols">
+          <div>
+            <p class="card-section-label">Responsibilities</p>
+            <ul class="bullet-list">
+              <li>Custom Shopify app development</li>
+              <li>Theme customization &amp; HTML/JS coding</li>
+              <li>End-to-end store setup</li>
+              <li>Third-party app integrations</li>
+              <li>Store speed optimization</li>
+              <li>Bulk product workflow automation</li>
+              <li>AMC — ongoing maintenance &amp; support contracts</li>
+            </ul>
+          </div>
+          <div>
+            <p class="card-section-label">Key Achievements</p>
+            <ul class="achievements-list">
+              <li>Built custom Shopify app for Homekaara with bespoke JS/HTML features</li>
+              <li>Developed "Make Your Own Mix" custom configurator for Chakki Peesing using Shopify App + JS</li>
+              <li>Significantly improved store loading speed &amp; Core Web Vitals</li>
+              <li>Automated bulk product listing via Google Sheets App Script, saving hours of manual work</li>
+              <li>Launched multiple fashion brand stores with custom Liquid templates</li>
+              <li>Retained clients on AMC for long-term maintenance &amp; feature support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /projects-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <p class="cta-eyebrow">// Let's Build Something</p>
+  <h2 class="cta-title">Open for <span>New Opportunities</span></h2>
+  <p class="cta-body">
+    Available for consulting, freelance development, and technical leadership opportunities. Whether you need an architect, a senior developer, or a hands-on technical partner — let's talk.
+  </p>
+  <div class="cta-actions">
+    <a href="index.html#contact" class="btn-primary">Start a Conversation</a>
+    <a href="index.html#services" class="btn-outline">View Services</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <span class="footer-brand">Rirote Global</span>
+  <span class="footer-copy">&copy; 2025 Rirote Global. All rights reserved.</span>
+</footer>
+
+
+<script>
+  // Sticky nav
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  menuToggle.addEventListener('click', () => {
+    navbar.classList.toggle('menu-open');
+  });
+
+  // Intersection observer for card animations
+  const cards = document.querySelectorAll('.project-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  cards.forEach(card => {
+    card.style.animationPlayState = 'paused';
+    observer.observe(card);
+  });
+</script>
+
+</body>
+</html>
