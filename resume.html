@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishabh Sisodiya — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #111827;
+    --ink-mid: #374151;
+    --ink-soft: #6B7280;
+    --ink-faint: #9CA3AF;
+    --border: #E5E7EB;
+    --border-dark: #D1D5DB;
+    --accent: #1D4ED8;
+    --accent-light: #EFF6FF;
+    --bg: #FFFFFF;
+    --bg-alt: #F9FAFB;
+  }
+
+  html { font-size: 14px; }
+
+  body {
+    background: #e5e7eb;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    background: var(--bg);
+    max-width: 860px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 2.8rem 3rem 2.2rem;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+  .header-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .header-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .header-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .contact-line {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+  }
+  .contact-line svg { width: 13px; height: 13px; color: var(--ink-soft); flex-shrink: 0; }
+
+  /* ── BODY LAYOUT ── */
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 0;
+  }
+  .main-col {
+    padding: 2rem 2.4rem 2.4rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+  .side-col {
+    padding: 2rem 2rem 2.4rem;
+    background: var(--bg-alt);
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 2rem; }
+  .section:last-child { margin-bottom: 0; }
+  .section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border-dark);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+
+  /* ── SUMMARY ── */
+  .summary-text {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--ink-mid);
+  }
+
+  /* ── EXPERIENCE ENTRY ── */
+  .exp-entry { margin-bottom: 1.6rem; }
+  .exp-entry:last-child { margin-bottom: 0; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .exp-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .exp-badge {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .exp-client {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.55rem;
+    font-style: italic;
+  }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    font-size: 0.84rem;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.2rem;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 0.7rem;
+    top: 0.1rem;
+  }
+
+  /* ── DIVIDER ── */
+  .exp-divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 1.4rem 0;
+  }
+
+  /* ── SIDE SKILLS ── */
+  .skill-group { margin-bottom: 1.4rem; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .skill-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ink-mid);
+    background: var(--bg);
+    border: 1px solid var(--border-dark);
+    padding: 0.18rem 0.55rem;
+    border-radius: 3px;
+  }
+
+  /* ── EDUCATION TABLE ── */
+  .edu-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .edu-table tr { border-bottom: 1px solid var(--border); }
+  .edu-table tr:last-child { border-bottom: none; }
+  .edu-table td {
+    font-size: 0.78rem;
+    color: var(--ink-mid);
+    padding: 0.5rem 0.3rem;
+    vertical-align: top;
+  }
+  .edu-table td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+    width: 65%;
+    word-break: break-word;
+  }
+  .edu-table td:last-child {
+    text-align: right;
+    color: var(--accent);
+    font-weight: 600;
+    width: 35%;
+    white-space: nowrap;
+  }
+  .edu-inst {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin-top: 0.1rem;
+  }
+
+  /* ── HIGHLIGHTS ── */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .highlight-item {
+    background: var(--bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    padding: 0.65rem 0.7rem;
+    text-align: center;
+  }
+  .highlight-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .highlight-label {
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+    line-height: 1.3;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; max-width: 100%; }
+    @page { margin: 0.6cm 0.8cm; size: A4; }
+  }
+
+  @media (max-width: 700px) {
+    .page { margin: 0; }
+    .body { grid-template-columns: 1fr; }
+    .side-col { border-top: 1px solid var(--border); }
+    .main-col { padding: 1.6rem 1.4rem; }
+    .side-col { padding: 1.6rem 1.4rem; }
+    .header { padding: 2rem 1.4rem 1.6rem; flex-direction: column; align-items: flex-start; }
+    .header-right { text-align: left; }
+    .contact-line { justify-content: flex-start; }
+    .highlight-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="header-left">
+      <h1>Rishabh Sisodiya</h1>
+      <p class="header-title">Full-Stack Engineer</p>
+    </div>
+    <div class="header-right">
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        rishabh.sisodiya4@gmail.com
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Jaipur, India
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        8.5+ Years Experience
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ BODY ══ -->
+  <div class="body">
+
+    <!-- ── MAIN COLUMN ── -->
+    <div class="main-col">
+
+      <!-- Summary -->
+      <div class="section">
+        <p class="section-title">Professional Summary</p>
+        <p class="summary-text">
+          Full-stack engineer with 8.5+ years delivering scalable software across e-commerce, logistics, SaaS, and government sectors. Experienced in microservices architecture, cloud infrastructure, and end-to-end project ownership. Available for consulting, freelance, and technical leadership engagements.
+        </p>
+      </div>
+
+      <!-- Experience -->
+      <div class="section">
+        <p class="section-title">Project Experience</p>
+
+        <!-- Proman Edge -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">Proman Edge — ERP Dashboard</span>
+            <span class="exp-badge">Enterprise · Infrastructure</span>
+          </div>
+          <p class="exp-client">Proman Infrastructure Services Group (9 entities, 5 ERPNext sites) — Full Stack Developer · TCB Infotech</p>
+          <ul class="exp-bullets">
+            <li>Architected and solo-delivered a role-based ERP dashboard platform with 11 role-specific views built on Next.js 14 App Router, React 19, and TypeScript</li>
+            <li>Built a Node.js/Express middleware layer handling JWT auth with ERPNext role sync, Promise.all multi-site fan-out across up to 5 Frappe Cloud sites, and Redis per-widget caching — achieving sub-500ms page loads vs. 5s+ sequential</li>
+            <li>Developed 11 role-specific dashboards and custom reports for MD, Sales Head, Sales Executive, and more — each tailored to role requirements and business KPIs</li>
+            <li>Enforced REST-API-only data access (no direct MariaDB) to respect Frappe permission engine; mock/live data toggle via single env flag for safe pre-launch development</li>
+          </ul>
+          <span style="font-size:0.7rem;color:#6B7280;">Next.js 14 · React 19 · TypeScript · Tailwind CSS · Node.js · Express · Redis · ERPNext v15 · JWT</span>
+        </div>
+
+        <!-- NimNim -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">NimNim Laundry</span>
+            <span class="exp-badge">SaaS · Boston, USA</span>
+          </div>
+          <p class="exp-client">Laundry Management Platform — Full Stack Developer &amp; Infrastructure Engineer (Freelance)</p>
+          <ul class="exp-bullets">
+            <li>Consolidated infrastructure from 2 EC2 instances to 1 and hardened the entire server setup — securing exposed ports, configuring Nginx as reverse proxy, enforcing Cloudflare SSL/DDoS protection, and setting up systemd for process management and auto-restart</li>
+            <li>Hardened API layer with authentication and access controls; upgraded Node.js to current LTS and optimized long-running MongoDB queries to reduce response times significantly</li>
+            <li>Resolved critical production bugs and delivered a full platform revamp</li>
+            <li>Built and maintained full-stack features across the platform — developing new functionality, refactoring legacy code, and ensuring stability for end users</li>
+          </ul>
+          <div style="margin-top:0.5rem;">
+            <span style="font-size:0.7rem;color:#6B7280;">React · Node.js · Express · MongoDB · AWS EC2 · Nginx · Cloudflare</span>
+          </div>
+        </div>
+
+        <hr class="exp-divider">
+
+        <!-- MyRider -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">MyRider</span>
+            <span class="exp-badge">Logistics · Ride Booking · Food Delivery</span>
+          </div>
+          <p class="exp-client">Multi-Service Platform — Technical Lead &amp; Product Manager</p>
+          <ul class="exp-bullets">
+            <li>Led the engineering team across food delivery, parcel logistics, and ride-booking verticals — driving roadmap planning, sprint management, and stakeholder communication</li>
+            <li>Architected the platform on a microservices model enabling independent scaling per service vertical</li>
+            <li>Designed database schema, developed REST APIs, and managed production deployments using PM2 for process management and zero-downtime restarts</li>
+          </ul>
+          <div style="margin-top:0.5rem;">
+            <span style="font-size:0.7rem;color:#6B7280;">React · Node.js · Express · FastAPI · PostgreSQL · Redis · Digital Ocean · Microservices</span>
+          </div>
+        </div>
+
+        <hr class="exp-divider">
+
+        <!-- Indiazona -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">Indiazona</span>
+            <span class="exp-badge">E-Commerce · indiazona.in</span>
+          </div>
+          <p class="exp-client">High-Traffic Indian E-Commerce Platform — Senior Engineer &amp; Architect</p>
+          <ul class="exp-bullets">
+            <li>Led redesign and modernization of the platform, improving UX and performance at scale</li>
+            <li>Architected migration from monolithic application to microservices; set up and managed cloud infrastructure on Digital Ocean</li>
+            <li>Collaborated directly with business stakeholders on technical strategy and delivery planning</li>
+          </ul>
+          <div style="margin-top:0.5rem;">
+            <span style="font-size:0.7rem;color:#6B7280;">React · Node.js · Express · PostgreSQL · Digital Ocean · Microservices</span>
+          </div>
+        </div>
+
+        <hr class="exp-divider">
+
+        <!-- SmartMove / NIUA -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">SmartMove — NIUA</span>
+            <span class="exp-badge">Government · Urban Digital Services</span>
+          </div>
+          <p class="exp-client">National Institute of Urban Affairs (NIUA) · Ministry of Housing &amp; Urban Affairs · Supported by GIZ India — Full Stack Developer</p>
+          <ul class="exp-bullets">
+            <li>Contributed to the SmartMove web portal — a NIUA-driven national innovation challenge for urban mobility under India's Green Urban Mobility Partnership (Ministry of Housing &amp; Urban Affairs, supported by GIZ India)</li>
+            <li>Built public-facing features for team registrations, concept submissions, and idea showcasing; platform received 80+ submissions from 57 teams globally — delivered ongoing enhancements through the full challenge lifecycle</li>
+          </ul>
+          <div style="margin-top:0.5rem;">
+            <span style="font-size:0.7rem;color:#6B7280;">JavaScript · React · Node.js · Express · REST APIs · AWS</span>
+          </div>
+        </div>
+
+      </div><!-- /experience -->
+
+    </div><!-- /main-col -->
+
+    <!-- ── SIDE COLUMN ── -->
+    <div class="side-col">
+
+      <!-- At a Glance -->
+      <div class="section">
+        <p class="section-title">At a Glance</p>
+        <div class="highlight-grid">
+          <div class="highlight-item">
+            <div class="highlight-value">8.5+</div>
+            <div class="highlight-label">Years Experience</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-value">10+</div>
+            <div class="highlight-label">Projects Delivered</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-value">6+</div>
+            <div class="highlight-label">Industries</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-value">2</div>
+            <div class="highlight-label">Markets Served</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Skills -->
+      <div class="section">
+        <p class="section-title">Core Skills</p>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Backend</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Express</span>
+            <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">Microservices</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Frontend</p>
+          <div class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">Shopify Liquid</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Databases</p>
+          <div class="skill-tags">
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">Redis</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Infrastructure</p>
+          <div class="skill-tags">
+            <span class="skill-tag">AWS EC2</span>
+            <span class="skill-tag">Digital Ocean</span>
+            <span class="skill-tag">Nginx</span>
+            <span class="skill-tag">Cloudflare</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Leadership</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Team Management</span>
+            <span class="skill-tag">Product Roadmap</span>
+            <span class="skill-tag">Architecture</span>
+            <span class="skill-tag">Consulting</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Automation</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Google Apps Script</span>
+            <span class="skill-tag">Shopify API</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Tools &amp; OS</p>
+          <div class="skill-tags">
+            <span class="skill-tag">PM2</span>
+            <span class="skill-tag">systemd</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Linux</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="section">
+        <p class="section-title">Education</p>
+        <table class="edu-table">
+          <tr>
+            <td>
+              B.Tech — ECE
+              <div class="edu-inst">Amity University Rajasthan</div>
+            </td>
+            <td>
+              2017<br>
+              <span style="font-size:0.72rem;color:#1D4ED8;">8.31 CGPA</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              12th — CBSE
+              <div class="edu-inst">Central Academy School, Chittorgarh</div>
+            </td>
+            <td>
+              2013<br>
+              <span style="font-size:0.72rem;color:#1D4ED8;">89.60%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              10th — CBSE
+              <div class="edu-inst">Central Academy School, Chittorgarh</div>
+            </td>
+            <td>
+              2011<br>
+              <span style="font-size:0.72rem;color:#1D4ED8;">7.8 CGPA</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Availability -->
+      <div class="section">
+        <p class="section-title">Availability</p>
+        <div style="font-size:0.8rem;color:#374151;line-height:1.65;">
+          Open to freelance, consulting, and technical leadership engagements — India &amp; international clients welcome.
+        </div>
+      </div>
+
+    </div><!-- /side-col -->
+
+  </div><!-- /body -->
+
+</div><!-- /page -->
+</body>
+</html>
