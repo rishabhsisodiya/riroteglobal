@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishabh Sisodiya — Corporate Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #111827;
+    --ink-mid: #374151;
+    --ink-soft: #6B7280;
+    --border: #E5E7EB;
+    --border-dark: #D1D5DB;
+    --accent: #1D4ED8;
+    --accent-light: #EFF6FF;
+    --bg: #FFFFFF;
+    --bg-alt: #F9FAFB;
+  }
+
+  html { font-size: 14px; }
+
+  body {
+    background: #e5e7eb;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    background: var(--bg);
+    max-width: 860px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 2.8rem 3rem 2.2rem;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+  .header-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .header-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .header-right { text-align: right; flex-shrink: 0; }
+  .contact-line {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+  }
+  .contact-line svg { width: 13px; height: 13px; color: var(--ink-soft); flex-shrink: 0; }
+
+  /* ── BODY LAYOUT ── */
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 0;
+  }
+  .main-col {
+    padding: 2rem 2.4rem 2.4rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+  .side-col {
+    padding: 2rem 2rem 2.4rem;
+    background: var(--bg-alt);
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 2rem; }
+  .section:last-child { margin-bottom: 0; }
+  .section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border-dark);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+
+  /* ── SUMMARY ── */
+  .summary-text {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--ink-mid);
+  }
+
+  /* ── EXPERIENCE ENTRY ── */
+  .exp-entry { margin-bottom: 1.8rem; }
+  .exp-entry:last-child { margin-bottom: 0; }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.15rem;
+  }
+  .exp-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .exp-badge {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .exp-meta {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .exp-role { font-weight: 500; color: var(--ink-mid); }
+  .exp-date { font-style: italic; font-size: 0.74rem; white-space: nowrap; flex-shrink: 0; }
+
+  /* ── SUB-ROLE LABEL ── */
+  .sub-role {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0.85rem 0 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sub-role::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    font-size: 0.84rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.25rem;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 0.7rem;
+    top: 0.12rem;
+  }
+  .exp-stack {
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── DIVIDER ── */
+  .exp-divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 1.6rem 0;
+  }
+
+  /* ── SIDE SKILLS ── */
+  .skill-group { margin-bottom: 1.3rem; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .skill-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ink-mid);
+    background: var(--bg);
+    border: 1px solid var(--border-dark);
+    padding: 0.18rem 0.55rem;
+    border-radius: 3px;
+  }
+
+  /* ── HIGHLIGHTS ── */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .highlight-item {
+    background: var(--bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    padding: 0.65rem 0.7rem;
+    text-align: center;
+  }
+  .highlight-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .highlight-label {
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+    line-height: 1.3;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .edu-table tr { border-bottom: 1px solid var(--border); }
+  .edu-table tr:last-child { border-bottom: none; }
+  .edu-table td {
+    font-size: 0.78rem;
+    color: var(--ink-mid);
+    padding: 0.5rem 0.3rem;
+    vertical-align: top;
+  }
+  .edu-table td:first-child { font-weight: 600; color: var(--ink); width: 65%; word-break: break-word; }
+  .edu-table td:last-child { text-align: right; color: var(--accent); font-weight: 600; width: 35%; white-space: nowrap; }
+  .edu-inst { font-size: 0.72rem; color: var(--ink-soft); margin-top: 0.1rem; }
+
+  /* ── AWARD ITEM ── */
+  .award-item {
+    font-size: 0.79rem;
+    color: var(--ink-mid);
+    padding: 0.32rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    line-height: 1.4;
+  }
+  .award-item:last-child { border-bottom: none; }
+  .award-icon { color: #F59E0B; font-size: 0.65rem; flex-shrink: 0; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; max-width: 100%; }
+    @page { margin: 0.6cm 0.8cm; size: A4; }
+  }
+
+  @media (max-width: 700px) {
+    .page { margin: 0; }
+    .body { grid-template-columns: 1fr; }
+    .side-col { border-top: 1px solid var(--border); }
+    .main-col { padding: 1.6rem 1.4rem; }
+    .side-col { padding: 1.6rem 1.4rem; }
+    .header { padding: 2rem 1.4rem 1.6rem; flex-direction: column; align-items: flex-start; }
+    .header-right { text-align: left; }
+    .contact-line { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="header-left">
+      <h1>Rishabh Sisodiya</h1>
+      <p class="header-title">Full Stack Engineer</p>
+    </div>
+    <div class="header-right">
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        rishabh.sisodiya4@gmail.com
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +91-7737612493
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Jaipur, India
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ BODY ══ -->
+  <div class="body">
+
+    <!-- ── MAIN COLUMN ── -->
+    <div class="main-col">
+
+      <!-- Summary -->
+      <div class="section">
+        <p class="section-title">Professional Summary</p>
+        <p class="summary-text">
+          Senior Full Stack Engineer and Technical Lead with 8.5+ years driving end-to-end delivery of enterprise web applications, microservices, and cloud-based platforms. At Wipro, I lead a team of engineers, own architecture decisions, and manage production operations for business-critical systems — while staying hands-on across React.js, Node.js, and AWS. Known for modernizing legacy systems, building AI-powered features, and bridging the gap between engineering teams and business stakeholders.
+        </p>
+      </div>
+
+      <!-- Experience -->
+      <div class="section">
+        <p class="section-title">Professional Experience</p>
+
+        <!-- Wipro -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">Wipro Limited</span>
+            <span class="exp-badge">Lead Engineer</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-role">Lead Engineer &nbsp;·&nbsp; Topcoder</span>
+            <span class="exp-date">Jul 2021 – Present</span>
+          </div>
+
+          <p class="sub-role">Team Leadership</p>
+          <ul class="exp-bullets">
+            <li>Lead a small team of engineers — setting technical standards, conducting structured code reviews, and providing architecture guidance that measurably reduced post-release defects.</li>
+            <li>Mentor junior and mid-level developers through pair programming and regular feedback sessions, accelerating their growth and independent contribution.</li>
+            <li>Interface with contractors and offshore teams to align on scope, resolve blockers, and maintain delivery velocity across parallel workstreams.</li>
+          </ul>
+
+          <p class="sub-role">Full Stack Engineering</p>
+          <ul class="exp-bullets">
+            <li>Independently designed and delivered a Procurement Tool that digitized the end-to-end purchase approval workflow — eliminating lengthy email chains and multi-phase manual approvals, significantly reducing time to close procurement requests. Presented the tool to Wipro leadership as a candidate internal solution to drive revenue for the Topcoder project; built end-to-end using Cursor AI to accelerate solo delivery.</li>
+            <li>Contributed to platform-critical internal tools — Work Manager, AI Screener, and Review Module — core to the Topcoder competitive platform used by thousands of members globally.</li>
+            <li>Built a reporting API using NestJS serving day-to-day operational reports consumed by community managers, delivery teams, and support teams — consolidating data from multiple sources into a single reliable interface.</li>
+            <li>Replaced an unreliable job scheduler — prone to getting stuck or silently stopping, leaving challenge phases open or closed past their scheduled times — with an Auto-Pilot system built on AWS Step Functions that reliably orchestrates phase transitions at scale, eliminating missed phase events and reducing manual intervention by the delivery team.</li>
+            <li>Architected and delivered Node.js microservices covering authentication, user management, reporting, and admin workflows — deployed on AWS ECS with Lambda-based event triggers.</li>
+            <li>Built and maintained React.js applications used by internal operations teams and external business users across multiple product lines.</li>
+            <li>Designed scalable REST APIs with role-based access control, rate limiting, and audit logging; integrated with DynamoDB, PostgreSQL, and Redshift based on data access patterns.</li>
+            <li>Modernized legacy Google App Script automations into production-grade Node.js services — eliminating manual steps and reducing processing overhead by ~60%.</li>
+            <li>Built Zendesk applications and internal productivity tools that improved support agent efficiency and reduced manual operational effort significantly.</li>
+            <li>Developed AI-powered support features — ticket summarization and automated response generation using LLM APIs — reducing average first-response time for support agents.</li>
+            <li>Created Looker dashboards and reporting pipelines providing real-time visibility into ticket SLAs, team performance, and operational health.</li>
+          </ul>
+
+          <p class="sub-role">Production Support &amp; Reliability</p>
+          <ul class="exp-bullets">
+            <li>Own end-to-end production support: incident triage, root cause analysis, stakeholder communication, and post-mortem documentation for business-critical applications.</li>
+          </ul>
+
+          <div class="exp-stack">React.js · Next.js · Node.js · Express.js · AWS EC2 · Lambda · ECS · DynamoDB · PostgreSQL · Redshift · Docker · CircleCI · Looker · Zendesk · Jira</div>
+        </div>
+
+        <hr class="exp-divider">
+
+        <!-- Capgemini -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">Capgemini India Pvt. Ltd.</span>
+            <span class="exp-badge">Senior Engineer</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-role">Senior Software Engineer &nbsp;·&nbsp; Discover Financial Services</span>
+            <span class="exp-date">Feb 2018 – Jun 2021</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Developed enterprise React.js + Redux applications supporting merchant onboarding workflows for Discover Financial Services — handling complex multi-step form orchestration and approval flows at scale.</li>
+            <li>Built REST APIs and backend services using Spring Boot and Node.js, integrated with IBM MQ for reliable event-driven messaging across distributed financial systems.</li>
+            <li>Automated operational and monitoring processes that reduced manual reporting effort and improved incident response time across the platform team.</li>
+            <li>Collaborated with cross-functional teams across multiple geographies — business analysts, QA, and infrastructure — to deliver quarterly release cycles on schedule.</li>
+            <li>Used AppDynamics for application performance monitoring and ServiceNow for change/incident management in a regulated financial services environment.</li>
+            <li>Received Rising Star Award (2020) for performance and contributions within the first two years.</li>
+          </ul>
+          <div class="exp-stack">React.js · Redux · Node.js · Spring Boot · Core Java · IBM MQ · REST APIs · Jenkins · AWS · AppDynamics · ServiceNow</div>
+        </div>
+
+      </div><!-- /experience -->
+
+    </div><!-- /main-col -->
+
+    <!-- ── SIDE COLUMN ── -->
+    <div class="side-col">
+
+
+      <!-- Core Skills -->
+      <div class="section">
+        <p class="section-title">Core Skills</p>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Frontend</p>
+          <div class="skill-tags">
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Redux</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Backend</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">NestJS</span>
+            <span class="skill-tag">Express.js</span>
+            <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">Microservices</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Cloud &amp; DevOps</p>
+          <div class="skill-tags">
+            <span class="skill-tag">AWS EC2</span>
+            <span class="skill-tag">Lambda</span>
+            <span class="skill-tag">ECS</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">CircleCI</span>
+            <span class="skill-tag">Nginx</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Databases</p>
+          <div class="skill-tags">
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">DynamoDB</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">Redshift</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Leadership</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Team Mentoring</span>
+            <span class="skill-tag">Code Review</span>
+            <span class="skill-tag">Architecture</span>
+            <span class="skill-tag">Prod Support</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-label">Tools</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Google App Script</span>
+            <span class="skill-tag">Jira</span>
+            <span class="skill-tag">Looker</span>
+            <span class="skill-tag">Zendesk</span>
+            <span class="skill-tag">AppDynamics</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Awards & Certifications -->
+      <div class="section">
+        <p class="section-title">Awards &amp; Certifications</p>
+        <div class="award-item"><span class="award-icon">★</span> Wipro 5 Habit Winner – Trust &amp; Stewardship (2023)</div>
+        <div class="award-item"><span class="award-icon">★</span> Star of the Month – Wipro (2021)</div>
+        <div class="award-item"><span class="award-icon">★</span> Rising Star Award – Capgemini (2020)</div>
+        <div class="award-item"><span class="award-icon">★</span> Oracle Certified Associate Java Programmer (OCAJP8)</div>
+      </div>
+
+      <!-- Education -->
+      <div class="section" style="page-break-before: always;">
+        <p class="section-title">Education</p>
+        <table class="edu-table">
+          <tr>
+            <td>
+              B.Tech — ECE
+              <div class="edu-inst">Amity University Rajasthan</div>
+            </td>
+            <td>2017<br><span style="font-size:0.72rem;color:#1D4ED8;">8.31 CGPA</span></td>
+          </tr>
+          <tr>
+            <td>
+              12th — CBSE
+              <div class="edu-inst">Central Academy, Chittorgarh</div>
+            </td>
+            <td>2013<br><span style="font-size:0.72rem;color:#1D4ED8;">89.60%</span></td>
+          </tr>
+          <tr>
+            <td>
+              10th — CBSE
+              <div class="edu-inst">Central Academy, Chittorgarh</div>
+            </td>
+            <td>2011<br><span style="font-size:0.72rem;color:#1D4ED8;">7.8 CGPA</span></td>
+          </tr>
+        </table>
+      </div>
+
+    </div><!-- /side-col -->
+
+  </div><!-- /body -->
+
+</div><!-- /page -->
+</body>
+</html>
