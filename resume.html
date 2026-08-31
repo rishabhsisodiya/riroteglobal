@@ -310,7 +310,7 @@
       <div class="section">
         <p class="section-title">Professional Summary</p>
         <p class="summary-text">
-          Full-stack engineer with 8.5+ years delivering scalable software across e-commerce, logistics, SaaS, and government sectors. Experienced in microservices architecture, cloud infrastructure, and end-to-end project ownership — from system design and API development through to server hardening, deployment, and production support.
+          Full-stack engineer with 8.5+ years delivering scalable software across enterprise ERP, e-commerce, logistics, SaaS, and government sectors. Experienced in microservices architecture, domain-driven ERP platforms and third-party integrations, cloud infrastructure, and end-to-end project ownership — from system design and API development through to server hardening, deployment, and production support.
         </p>
       </div>
 
@@ -321,18 +321,38 @@
         <!-- Proman Edge -->
         <div class="exp-entry">
           <div class="exp-header">
-            <span class="exp-title">Proman Edge — ERP Dashboard</span>
+            <span class="exp-title">Proman Edge — Unified ERP Platform</span>
             <span class="exp-badge">Enterprise · Infrastructure</span>
           </div>
           <p class="exp-client">Proman Infrastructure Services Group (9 entities, 5 ERPNext sites) — Full Stack Developer · TCB Infotech</p>
           <ul class="exp-bullets">
-            <li>Architected and solo-delivered a role-based ERP dashboard platform with 11 role-specific views built on Next.js 14 App Router, React 19, and TypeScript</li>
-            <li>Built a Node.js/Express middleware layer handling JWT auth with ERPNext role sync, Promise.all multi-site fan-out across up to 5 Frappe Cloud sites, and Redis per-widget caching — achieving sub-500ms page loads vs. 5s+ sequential</li>
-            <li>Developed 11 role-specific dashboards and custom reports for MD, Sales Head, Sales Executive, and more — each tailored to role requirements and business KPIs</li>
-            <li>Enforced REST-API-only data access (no direct MariaDB) to respect Frappe permission engine; mock/live data toggle via single env flag for safe pre-launch development</li>
+            <li>Architected and solo-delivered a unified platform merging two modules — an ACE after-sales service ticketing system and 11 role-based executive dashboards — onto one PostgreSQL database, one JWT auth/role system, and one Next.js 14 (App Router) / React 19 / TypeScript frontend, replacing two separate codebases and servers</li>
+            <li>Built the ticketing engine on NestJS + Prisma: 8 creation sources funnel into a single CreateTicketService driving a 9-state workflow, with a responsive/PWA Field Service Visit flow and 15 email + SMS notification triggers across the SLA golden path</li>
+            <li>Integrated ERPNext both ways — read-only nightly MariaDB pull for masters (Customer, Item, Serial No, Warehouse, Bin) and REST-API-only writes for Stock Entry and draft Sales Invoice plus an inbound webhook — respecting the Frappe permission engine with no direct DB writes</li>
+            <li>Delivered a Node.js middleware layer with ERPNext role sync, Promise.all multi-site fan-out across up to 5 Frappe Cloud sites, and Redis per-widget caching — sub-500ms dashboard loads vs. 5s+ sequential; mock/live data toggle via a single env flag for safe pre-launch development</li>
           </ul>
-          <span style="font-size:0.7rem;color:#6B7280;">Next.js 14 · React 19 · TypeScript · Tailwind CSS · Node.js · Express · Redis · ERPNext v15 · JWT</span>
+          <span style="font-size:0.7rem;color:#6B7280;">Next.js 14 · React 19 · TypeScript · Tailwind CSS · NestJS · Node.js · Prisma · PostgreSQL · Redis · MariaDB · ERPNext v15 · JWT · PWA</span>
         </div>
+
+        <hr class="exp-divider">
+
+        <!-- ProFound ERP -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <span class="exp-title">ProFound — Foundry ERP</span>
+            <span class="exp-badge">Enterprise · Manufacturing</span>
+          </div>
+          <p class="exp-client">GTC Foundry Operations — Full Stack Developer · TCB Infotech</p>
+          <ul class="exp-bullets">
+            <li>Building a domain-specific ERP that owns all foundry-operational data end to end — sales-order-to-dispatch, production planning, melting &amp; metallurgy, quality, inventory, maintenance and costing — across a 17-module map with heat-number genealogy as the golden traceability key</li>
+            <li>Translated a 100+ doctype functional/solution spec into a NestJS + Prisma + PostgreSQL backend and a Next.js 16 / React 19 App Router frontend; delivered the RBAC foundation (admin-configurable roles, segregation-of-duties rules), audit logging, and 12+ master-data modules with full CRUD</li>
+            <li>Implemented short-lived JWT access tokens backed by rotating, hash-only-stored refresh tokens (rotation-on-use replay protection) with a de-duped client-side silent-refresh interceptor</li>
+            <li>Designed the ERPNext integration boundary — REST/JSON only, no DB-to-DB — keeping GL, statutory invoicing and payroll in ERPNext while ProFound stays authoritative for operations, with idempotent correlation-ID calls, retry/backoff queues, and a nightly reconciliation run for one-sided records</li>
+          </ul>
+          <span style="font-size:0.7rem;color:#6B7280;">Next.js 16 · React 19 · TypeScript · NestJS · Prisma · PostgreSQL · JWT · ERPNext · SWR · Tailwind CSS</span>
+        </div>
+
+        <hr class="exp-divider">
 
         <!-- NimNim -->
         <div class="exp-entry">
@@ -424,7 +444,7 @@
             <div class="highlight-label">Years Experience</div>
           </div>
           <div class="highlight-item">
-            <div class="highlight-value">10+</div>
+            <div class="highlight-value">11+</div>
             <div class="highlight-label">Projects Delivered</div>
           </div>
           <div class="highlight-item">
@@ -446,8 +466,10 @@
           <p class="skill-group-label">Backend</p>
           <div class="skill-tags">
             <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">NestJS</span>
             <span class="skill-tag">Express</span>
             <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">Prisma</span>
             <span class="skill-tag">REST APIs</span>
             <span class="skill-tag">Microservices</span>
           </div>

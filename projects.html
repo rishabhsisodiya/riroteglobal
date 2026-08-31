@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Projects — Rirote Global</title>
-<meta name="description" content="A portfolio of real-world projects across e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.">
+<meta name="description" content="A portfolio of real-world projects across enterprise ERP, e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.">
 <meta name="author" content="Rirote Global">
 <link rel="icon" href="assets/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -403,6 +403,7 @@
   .project-card:nth-child(4) { animation-delay: 0.26s; }
   .project-card:nth-child(5) { animation-delay: 0.33s; }
   .project-card:nth-child(6) { animation-delay: 0.40s; }
+  .project-card:nth-child(7) { animation-delay: 0.47s; }
 
   /* ── SHOPIFY CLIENT LINKS ── */
   .client-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -485,7 +486,7 @@
   <div class="hero-content">
     <p class="eyebrow">// Client Work &amp; Case Studies</p>
     <h1 class="page-title">Projects That<br><span>Moved the Needle</span></h1>
-    <p class="page-sub">Real-world engineering across e-commerce, logistics, SaaS, and government — delivered end-to-end with measurable impact.</p>
+    <p class="page-sub">Real-world engineering across enterprise ERP, e-commerce, logistics, SaaS, and government — delivered end-to-end with measurable impact.</p>
   </div>
 </section>
 
@@ -499,7 +500,7 @@
     <div class="metric-label">Years Experience</div>
   </div>
   <div class="metric-item">
-    <div class="metric-value">10+</div>
+    <div class="metric-value">11+</div>
     <div class="metric-label">Projects Delivered</div>
   </div>
   <div class="metric-item">
@@ -538,29 +539,69 @@
         </div>
       </div>
       <div class="card-body">
-        <p class="card-overview">Role-based ERP dashboard platform serving 9 business entities across 5 ERPNext v15 Frappe Cloud sites — 11 bespoke dashboards built as a solo full-stack delivery, with a custom middleware layer handling auth, caching, and multi-site data aggregation.</p>
+        <p class="card-overview">Unified ERP platform merging an ACE after-sales service ticketing system with 11 role-based executive dashboards — one PostgreSQL database, one auth/role system, one Next.js frontend, replacing two separate codebases and servers. Solo full-stack delivery for 9 business entities across 5 ERPNext v15 Frappe Cloud sites.</p>
         <ul class="achievements-list">
-          <li>11 role-specific dashboards (Sales Head, Finance Head, MD, Manufacturing Head &amp; more) with Next.js 14 App Router + React 19</li>
-          <li>Node.js/Express middleware: JWT auth with ERPNext role sync, Promise.all multi-site fan-out, Redis per-widget caching — sub-500ms loads vs 5s+ sequential</li>
-          <li>Multi-company architecture: one role can span 1, 3, or all 5 ERPNext sites; middleware merges results with zero frontend coupling</li>
+          <li>Ticketing engine on NestJS + Prisma: 8 creation sources → a single CreateTicketService → 9-state workflow, with a responsive/PWA Field Service Visit flow and 15 email + SMS notification triggers</li>
+          <li>Two-way ERPNext integration: read-only nightly MariaDB master pull + REST-API-only writes (Stock Entry, draft Sales Invoice) and an inbound webhook — no direct DB writes, Frappe permission engine respected</li>
+          <li>11 role-specific dashboards (Sales Head, Finance Head, MD, Manufacturing Head &amp; more) on Next.js 14 App Router + React 19</li>
+          <li>Node.js middleware: ERPNext role sync, Promise.all multi-site fan-out across up to 5 sites, Redis per-widget caching — sub-500ms loads vs 5s+ sequential; mock/live toggle via single env flag</li>
           <li>Sales Head dashboard: Decision Band (pace-to-target), pipeline funnel with bottleneck detection, BizBot AI assistant, deal drawer with activity timeline</li>
-          <li>REST-API-only data access (no direct MariaDB) to enforce Frappe permission engine; mock/live toggle via single env flag</li>
         </ul>
         <div class="tech-pills">
           <span class="tech-pill">Next.js 14</span>
           <span class="tech-pill">React 19</span>
           <span class="tech-pill">TypeScript</span>
           <span class="tech-pill">Tailwind CSS</span>
+          <span class="tech-pill">NestJS</span>
           <span class="tech-pill">Node.js</span>
-          <span class="tech-pill">Express</span>
+          <span class="tech-pill">Prisma</span>
+          <span class="tech-pill">PostgreSQL</span>
           <span class="tech-pill">Redis</span>
+          <span class="tech-pill">MariaDB</span>
           <span class="tech-pill">ERPNext v15</span>
           <span class="tech-pill">JWT</span>
+          <span class="tech-pill">PWA</span>
         </div>
       </div>
     </div>
 
-    <!-- ── 2. NIMNIM ── --><!-- numbered correctly -->
+    <!-- ── 2. PROFOUND ── -->
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="industry-tag">Enterprise ERP / Manufacturing</span>
+          <h3 class="card-name">ProFound</h3>
+          <p class="card-location">&#x1F4CD; India · GTC Foundry Operations</p>
+        </div>
+        <div class="card-tags">
+          <span class="role-tag">Full Stack</span>
+          <span class="role-tag">TCB Infotech</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-overview">A domain-specific foundry ERP that owns all foundry-operational data end to end — sales-order-to-dispatch, production planning, melting &amp; metallurgy, quality, inventory, maintenance and costing — across a 17-module map, with heat-number genealogy as the golden traceability key. Integrates with the client's existing ERPNext only for finance and payroll.</p>
+        <ul class="achievements-list">
+          <li>Translated a 100+ doctype functional/solution spec into a NestJS + Prisma + PostgreSQL backend and a Next.js 16 / React 19 App Router frontend</li>
+          <li>Delivered the RBAC foundation (admin-configurable roles, segregation-of-duties rules), audit logging, and 12+ master-data modules with full CRUD</li>
+          <li>Short-lived JWT access tokens backed by rotating, hash-only-stored refresh tokens (rotation-on-use replay protection) with a de-duped silent-refresh interceptor</li>
+          <li>ERPNext integration boundary — REST/JSON only, no DB-to-DB — with idempotent correlation-ID calls, retry/backoff queues, and a nightly reconciliation run for one-sided records</li>
+        </ul>
+        <div class="tech-pills">
+          <span class="tech-pill">Next.js 16</span>
+          <span class="tech-pill">React 19</span>
+          <span class="tech-pill">TypeScript</span>
+          <span class="tech-pill">NestJS</span>
+          <span class="tech-pill">Prisma</span>
+          <span class="tech-pill">PostgreSQL</span>
+          <span class="tech-pill">SWR</span>
+          <span class="tech-pill">Tailwind CSS</span>
+          <span class="tech-pill">JWT</span>
+          <span class="tech-pill">ERPNext</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3. NIMNIM ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
@@ -609,7 +650,7 @@
       </div>
     </div>
 
-    <!-- ── 3. MYRIDER ── -->
+    <!-- ── 4. MYRIDER ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
@@ -660,7 +701,7 @@
       </div>
     </div>
 
-    <!-- ── 4. INDIAZONA ── -->
+    <!-- ── 5. INDIAZONA ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
@@ -713,7 +754,7 @@
       </div>
     </div>
 
-    <!-- ── 5. SHOPIFY ── -->
+    <!-- ── 6. SHOPIFY ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
