@@ -33,7 +33,7 @@ x();
 
 You can see the function scope of y() have \[\[Scopes\]\] which has a in it. So when we return y() and use it later also it will have a with value 7 in it.
 
-![](/notes-img/javascript-notes/img-013.webp)![](/notes-img/javascript-notes/img-014.webp)
+![](/notes-img/JavaScript-notes/img-013.webp)![](/notes-img/JavaScript-notes/img-014.webp)
 
 A **closure** is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time. **So function (or expression) along with its lexical Scope bundled together forms a closure.**
 
@@ -106,7 +106,7 @@ z();
 Output: 7 900
 ```
 
-![](/notes-img/javascript-notes/img-015.webp)
+![](/notes-img/JavaScript-notes/img-015.webp)
 
 So now y forms closure with scope of x and z.
 
@@ -148,7 +148,7 @@ Hello JavaScript
 
 SetTimeout takes the callback function and attaches it to the timer and when the timer expires, it calls that function. JavaScript doesn’t wait for that function to run.
 
-Lets print 1 to 5 after every nth sec . Where n=1 ...5
+Let's print 1 to 5 after every nth sec. Where n=1 ...5
 
 Normally we try to follow the example below but it will print different output.
 
@@ -161,7 +161,7 @@ setTimeout(() => {
 
 console.log(i);
 
-}, i \* 1000);
+}, i * 1000);
 
 }
 
@@ -199,7 +199,7 @@ setTimeout(() => {
 
 console.log(i);
 
-}, i \* 1000);
+}, i * 1000);
 
 }
 
@@ -235,18 +235,18 @@ function x() {
 
 for (var i = 1; i <= 5; i++) {
 ```
-### function closer(i) {
+**function closer(i) {**
 
 setTimeout(function () {
 
 ```js
 console.log(i);
 
-}, i \* 1000);
+}, i * 1000);
 ```
 **}**
 
-### closer(i);
+**closer(i);**
 
 ```js
 }
@@ -272,9 +272,9 @@ Hello JavaScript
 
 5
 
-Every time you call closer(i), it will create a new copy of i .
+Every time you call closer(i), it will create a new copy of i.
 
-### _Some more examples_
+### Some more examples
 
 Consider below as base code
 
@@ -311,7 +311,7 @@ console.log(a);
 
 }
 ```
-### let a=10;
+**let a=10;**
 
 ```js
 return inner;
@@ -325,12 +325,12 @@ Output:
 
 10
 
-### _Subcase 1: When we call inner function before initialization of a_
+### Subcase 1: When we call inner function before initialization of a
 
 ```js
 function outer(){
 ```
-### inner();
+**inner();**
 
 ```js
 let a=10;
@@ -470,7 +470,7 @@ Output:
 
 Since inner function forms closure with outer and outermost so it will have access to variable defined in its parent scope(outer and outermost) **So defining variable with same name does have any impact on closure**
 
-### Case 5: if let a=10 is not present in outer()
+**Case 5: if let a=10 is not present in outer()**
 
 ```js
 function outermost(){
@@ -657,4 +657,4 @@ y();
 
 b() forms closure with a(). x could be garbage collected but due to closure it doesn’t free up. So x memory cannot be free until the program dies.
 
-But modern browser smart garbage collection as it can free memory of z .
+But modern browser smart garbage collection as it can free memory of z.

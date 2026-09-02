@@ -24,7 +24,7 @@ constructor(props) {
 
 super(props);
 ```
-### this.state = {value: ''};
+**this.state = {value: ''};**
 
 ```jsx
 this.handleChange = this.handleChange.bind(this);
@@ -33,17 +33,17 @@ this.handleSubmit = this.handleSubmit.bind(this);
 
 }
 ```
-### handleChange(event) {
+**handleChange(event) {**
 
-### this.setState({value: event.target.value});
+**this.setState({value: event.target.value});**
 
 **}**
 
-### handleSubmit(event) {
+**handleSubmit(event) {**
 
-### alert('A name was submitted: ' + this.state.value);
+**alert('A name was submitted:' + this.state.value);**
 
-### event.preventDefault();
+**event.preventDefault();**
 
 **}**
 
@@ -52,7 +52,7 @@ render() {
 ```jsx
 return (
 ```
-### <form onSubmit={this.handleSubmit}>
+**<form onSubmit={this.handleSubmit}>**
 
 <label>
 
@@ -83,7 +83,7 @@ constructor(props) {
 
 super(props);
 ```
-### this.state = {value: 'coconut'};
+**this.state = {value: 'coconut'};**
 
 ```jsx
 this.handleChange = this.handleChange.bind(this);
@@ -92,9 +92,9 @@ this.handleSubmit = this.handleSubmit.bind(this);
 
 }
 ```
-### handleChange(event) {
+**handleChange(event) {**
 
-### this.setState({value: event.target.value});
+**this.setState({value: event.target.value});**
 
 **}**
 
@@ -153,7 +153,7 @@ constructor(props) {
 
 super(props);
 ```
-### this.state = {
+**this.state = {**
 
 **isGoing: true,**
 
@@ -166,15 +166,15 @@ this.handleInputChange = this.handleInputChange.bind(this);
 
 }
 ```
-### handleInputChange(event) {
+**handleInputChange(event) {**
 
-### const target = event.target;
+**const target = event.target;**
 
-**const value = target.type === 'checkbox' ? target.checked : target.value;**
+**const value = target.type === 'checkbox' ? target.checked: target.value;**
 
-### const name = target.name;
+**const name = target.name;**
 
-### this.setState({
+**this.setState({**
 
 ### \[name\]: value
 
@@ -222,7 +222,7 @@ Number of guests:
 ```jsx
 let i = 0
 ```
-### let a = {
+**let a = {**
 
 **\['foo' + ++i\]: i,**
 
@@ -232,14 +232,14 @@ let i = 0
 
 **}**
 
-### console.log(a.foo1) // 1
-
-### console.log(a.foo2) // 2
-
-### console.log(a.foo3) // 3
-
 ```jsx
-const items = \["A","B","C"\];
+**console.log(a.foo1) // 1**
+
+**console.log(a.foo2) // 2**
+
+**console.log(a.foo3) // 3**
+
+const items = ["A","B","C"];
 
 const obj = {
 ```
@@ -250,11 +250,11 @@ const obj = {
 
 console.log(obj); // A,B,C: "Hello"
 
-console.log(obj\["A,B,C"\]) // "Hello"
+console.log(obj["A,B,C"]) // "Hello"
 
 let param = 'size'
 ```
-### let config = {
+**let config = {**
 
 **\[param\]: 12,**
 
@@ -262,7 +262,9 @@ let param = 'size'
 
 **}**
 
-### console.log(config) // {size: 12, mobileSize: 4}
+```jsx
+**console.log(config) // {size: 12, mobileSize: 4}**
+```
 
 ## Controlled Input Null Value
 

@@ -33,9 +33,9 @@ text-align: center;
 
 }
 ```
-### .App{
+**.App{**
 
-### color:black;
+**color:black;**
 
 **}**
 
@@ -46,7 +46,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 ```
-### import './App.css';
+**import './App.css';**
 
 ```jsx
 class MyHeader extends React.Component {
@@ -102,14 +102,14 @@ return (
 
 Inline CSS must be written with camel case syntax. Use backgroundColor instead of background-color:
 
-We can also **use Javascript Object**
+We can also **use JavaScript Object**
 
 ```jsx
 class MyHeader extends React.Component {
 ```
 render() {
 
-### const mystyle = {
+**const mystyle = {**
 
 **color: "white",**
 
@@ -169,7 +169,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 ```
-### import styles from './mystyle.module.css';
+**import styles from './mystyle.module.css';**
 
 ```jsx
 class Car extends React.Component {
@@ -195,4 +195,4 @@ color:red;
 
 }
 ```
-If you import this file in parent class then by default it will be used in child class also. So if we have a child component with className=”error” then it will use parent class css . So there are name conflicts and now if we have to use different CSS for parent and child then we can use CSS modules. It will take care of name conflicts.
+If you import this file in parent class then by default it will be used in child class also. So if we have a child component with className=”error” then it will use parent class css. So there are name conflicts and now if we have to use different CSS for parent and child then we can use CSS modules. It will take care of name conflicts.

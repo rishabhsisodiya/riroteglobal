@@ -21,17 +21,17 @@ Rate limiting is a strategy for limiting network traffic. It puts a cap on how o
 
 As discussed above, we can actually use various methods in performing API rate limiting, but there are three most common methods:
 
-### 1\. Throttling
+### 1. Throttling
 
 Throttling is performed by setting up a temporary state within the API, so the API can properly assess all requests. Based on certain rules, a specific type of request will be throttled during this temporary state; when throttled, a user may either be slowed considerably (by reducing the bandwidth service) or completely disconnected from the API.
 
 We can implement throttling at the API level, user level, and application level, making it a versatile method for rate limiting.
 
-### 2\. Request Queues
+### 2. Request Queues
 
 Another popular method of rate limiting is “requests queues”, which limits the number of requests in any given period of time. For example, we can set the rate limit at three requests per second.
 
-### 3\. Algorithm-Based
+### 3. Algorithm-Based
 
 In this approach, we are using algorithms to implement the API rate limit, and there are actually various ready-to-use algorithms we can use to implement rate limiting:
 
@@ -78,9 +78,9 @@ One thing I disregarded in using TBA is its scalability. Yes, we can simply crea
 
 It is already recommended to put a rate limiter in the server side component per API so that the system can rate limit on different kinds of APIs with different amounts of bucket size and refill rates. For instance, if we have two APIs as followed in SNS system:
 
-1\. Write the number of posts per second
+1. Write the number of posts per second
 
-2\. Like the number of posts per second
+2. Like the number of posts per second
 
 Obviously, writing posts should have a smaller bucket size than that of liking posts. In this, we need to implement different sorts of Token Bucket Algorithm which is why we need to abstract this layer and create a term, “Token Bucket Algorithm” instead of simple while loops.
 
@@ -175,9 +175,8 @@ bucket.releaseToken();
 
 **The Leaky Bucket algorithm** is another rate limiting mechanism that enforces a constant output rate by continuously leaking excess traffic or requests.
 
-**Here’s how it works:**
-
 ![](/notes-img/system-design-notes/img-005.webp)
+_Here’s how it works_
 
 **Leaky Bucket:** Imagine a bucket with a hole at the bottom. Requests or data enter the bucket, and the bucket leaks (removes) data at a fixed rate, regardless of the rate at which data enters.
 
@@ -269,7 +268,7 @@ Both algorithms have their use cases. Token Bucket is often used when you want t
 
 ### Leaky bucket
 
--   Uploading multiple videos on youtube but only 5 upload max at a time or any other website like compressing and resizing images , the website will only process 10-15 at a time.
+-   Uploading multiple videos on youtube but only 5 upload max at a time or any other website like compressing and resizing images, the website will only process 10-15 at a time.
 -   Imagine an ISP limiting internet speed. The ISP uses a leaky bucket to smooth out the internet traffic. Regardless of how bursty the incoming traffic is, the data flow to the user is at a consistent, predetermined rate. If the data comes in too fast and the bucket fills up, excess packets are dropped.
 
 ### Making a Decision
@@ -292,7 +291,7 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 
 # **Ecommerce Microservice architecture**
 
-### 1\. Basic Components
+### 1. Basic Components
 
 ### Client-Server Model
 
@@ -319,7 +318,7 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 
 ![](/notes-img/system-design-notes/img-008.webp)
 
-### 2\. Load Balancing
+### 2. Load Balancing
 
 -   Role: DNS can map to a single IP only so we will need load balancer IP which distributes traffic evenly across servers.
 -   Algorithms:
@@ -329,7 +328,7 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 
 ![](/notes-img/system-design-notes/img-009.webp)
 
-### 3\. API Gateway
+### 3. API Gateway
 
 -   Role: Routes requests to microservices based on paths (e.g., /auth, /orders).
 -   Functions:
@@ -342,7 +341,7 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 
 ![](/notes-img/system-design-notes/img-010.webp)
 
-### 4\. Caching
+### 4. Caching
 
 -   Purpose: Reduce database load by storing frequent queries.
 -   Tools: Redis, Memcached.
@@ -351,7 +350,7 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 
 ![](/notes-img/system-design-notes/img-011.webp)
 
-### 5\. Asynchronous Processing
+### 5. Asynchronous Processing
 
 -   Queue Systems (SQS): in this case, pulll mechanism works
     \- Use Case: Decouple services (e.g., order processing → email notifications).
@@ -368,13 +367,13 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 
 ![](/notes-img/system-design-notes/img-013.webp)
 
-**6\. Fan-Out Architecture**: ![](/notes-img/system-design-notes/img-014.webp)
+**6. Fan-Out Architecture**: ![](/notes-img/system-design-notes/img-014.webp)
 
 Fan-out is a messaging pattern where a piece of message is distributed or ‘fanned out’ to multiple destinations in parallel. The main idea is each destination can work and process these messages in parallel.
 
 One way to implement this messaging pattern is to use publisher/subscriber or pub/sub model. In the pub/sub model we define a topic which is a logical access point to enabling message communication asynchronously. Basically **pub/sub+ message queue![](/notes-img/system-design-notes/img-015.webp)**
 
-### 7\. Event-Driven Architecture
+### 7. Event-Driven Architecture
 
 -   Components:
     \- Producers: Emit events (e.g., "order_placed").
@@ -383,7 +382,7 @@ One way to implement this messaging pattern is to use publisher/subscriber or pu
 
 ### ![](/notes-img/system-design-notes/img-016.webp)
 
-### 8\. CDN (Content Delivery Network)
+### 8. CDN (Content Delivery Network)
 
 -   Purpose: Cache static content (images, videos) globally.
 -   Flow:
@@ -392,14 +391,14 @@ One way to implement this messaging pattern is to use publisher/subscriber or pu
 -   Diagram:
     Global Users → CDN Edges → Origin Server (Load Balancer)
 
-### 9\. Rate Limiting
+### 9. Rate Limiting
 
 -   Strategies:
     \- Token Bucket: Fixed token refill rate.
     \- Leaky Bucket: Fixed output rate.
 -   Purpose: Prevent abuse (e.g., 5 requests/sec per user).
 
-### 10\. Database Scaling
+### 10. Database Scaling
 
 -   Read Replicas: Handle read-heavy traffic (eventually consistent).
 -   Primary Node: Handles writes (strong consistency).
@@ -416,7 +415,7 @@ When a user uploads a video on the platform, It calls the lambda function which 
 
 ![](/notes-img/system-design-notes/img-018.webp)
 
-There is an eventbridge setup on s3 bucket. We can write a rule that whenever any video is received in the bucket , trigger the lambda function. The lambda function has all the details of the video like who uploaded, metadata,size of the video, etc. Now from here the lambda function pushes it to the queue. So let’s say a user uploads 10 videos, then there will be 10 jobs pushed to the queue. We can set the consumer to consume the videos concurrently. We can set concurrency also. Let’s assume 5. So it will consume 5 videos from the DB. So 5 jobs from the queue will create 5 different docker containers in AWS ecs. When it is processing we set the concurrency to 5 in redis so that we can process only 5 videos at a time .
+There is an eventbridge setup on s3 bucket. We can write a rule that whenever any video is received in the bucket, trigger the lambda function. The lambda function has all the details of the video like who uploaded, metadata,size of the video, etc. Now from here the lambda function pushes it to the queue. So let’s say a user uploads 10 videos, then there will be 10 jobs pushed to the queue. We can set the consumer to consume the videos concurrently. We can set concurrency also. Let’s assume 5. So it will consume 5 videos from the DB. So 5 jobs from the queue will create 5 different docker containers in AWS ecs. When it is processing we set the concurrency to 5 in redis so that we can process only 5 videos at a time.
 
 # System design Interview Questions
 

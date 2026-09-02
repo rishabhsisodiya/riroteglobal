@@ -67,9 +67,9 @@ views/home.ejs
 
 `</html>`
 
-## **Create Views using EJS for URL shortener App**
+## Create Views using EJS for URL shortener App
 
-### _Update index.js_
+### Update index.js
 
 ```js
 const express = require("express");
@@ -106,9 +106,9 @@ app.use("/url", urlRouter);
 
 app.use("/",staticRouter);
 
-app.listen(PORT, () => console.log(\`Server Started at PORT:${PORT}\`));
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
 ```
-### _Update controllers/url.js_
+### Update controllers/url.js
 
 ```js
 const shortid = require("shortid");
@@ -130,7 +130,7 @@ shortId: shortID,
 
 redirectURL: body.url,
 
-visitHistory: \[\],
+visitHistory: [],
 
 });
 
@@ -153,12 +153,12 @@ analytics: result.visitHistory,
 });
 
 };
+
+**const handleRedirectURL = async (req, res) => {**
 ```
-### const handleRedirectURL = async (req, res) => {
+**const shortId = req.params.shortId;**
 
-### const shortId = req.params.shortId;
-
-### const entry = await URL.findOneAndUpdate(
+**const entry = await URL.findOneAndUpdate(**
 
 **{**
 
@@ -168,9 +168,9 @@ analytics: result.visitHistory,
 
 **{**
 
-### $push: {
+**$push: {**
 
-### visitHistory: {
+**visitHistory: {**
 
 **timestamp: Date.now(),**
 
@@ -182,9 +182,10 @@ analytics: result.visitHistory,
 
 **);**
 
-### // console.log(entry);
-
-### res.redirect(entry.redirectURL);
+```js
+**// console.log(entry);**
+```
+**res.redirect(entry.redirectURL);**
 
 **};**
 
@@ -202,7 +203,7 @@ handleRedirectURL,
 ```
 models/url.js remain unchanged
 
-### _Update routes/url.js_
+### Update routes/url.js
 
 ```js
 const express = require("express");
@@ -224,12 +225,12 @@ router.post("/", handleGenerateNewShortURL);
 
 router.get("/analytics/:shortId", handleGetAnalytics);
 ```
-### router.get("/:shortId", handleRedirectURL);
+**router.get("/:shortId", handleRedirectURL);**
 
 ```js
 module.exports = router;
 ```
-### _Create routes/staticRouter.js_
+### Create routes/staticRouter.js
 
 ```js
 const express = require("express");
@@ -249,7 +250,7 @@ return res.render("home",{urls:allURLS})
 ```js
 module.exports = router;
 ```
-### _Create views/home.ejs_
+### Create views/home.ejs
 
 <!DOCTYPE html>
 

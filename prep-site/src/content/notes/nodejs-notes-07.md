@@ -11,7 +11,7 @@ description: "Node.js — What is REST API?."
 ---
 A REST API (also called a RESTful API or RESTful web API) is an application programming interface (API) that conforms to the design principles of the representational state transfer (REST) architectural style.
 
-1.  Return response HTML , JSON, etc
+1.  Return response HTML, JSON, etc
 2.  Respect all HTTP methods, (GET, POST,etc)
 
 You can generate random data json file using Fake Data API: [https://www.mockaroo.com/](https://www.mockaroo.com/)
@@ -36,196 +36,216 @@ return res.json(users);
 ```js
 app.listen(PORT, ()=> console.log("Server started at PORT",PORT);
 ```
-**If you use below code, and verify the endpoint . You will get undefined in the console as express is not aware about the data so We will need middleware.**
+**If you use below code, and verify the endpoint. You will get undefined in the console as express is not aware about the data so We will need middleware.**
 
-### app.post("/api/users/", (req, res)=>{
+```js
+**app.post("/api/users/", (req, res)=>{**
+```
+**const body = req.body;**
 
-### const body = req.body;
-
-### console.log(body); // undefined
-
-### return res.json({"status":"pending"});
+```js
+**console.log(body); // undefined**
+```
+**return res.json({"status":"pending"});**
 
 **})**
 
 ### index.js
 
-### const express = require("express");
+```js
+**const express = require("express");**
 
-### const fs = require("fs");
+**const fs = require("fs");**
 
-### const users = require("./MOCK_DATA.json");
+**const users = require("./MOCK_DATA.json");**
+```
+**const app = express();**
 
-### const app = express();
+**const PORT = 8000;**
 
-### const PORT = 8000;
+**//Middleware plugin**
 
-### //Middleware plugin
+**app.use(express.urlencoded({extended:false}))**
 
-### app.use(express.urlencoded({extended:false}))
-
-### // routes
-
-### app.get("/users", (req, res)=>{
-
-### const html = \`
-
-### <ul>
-
-### ${users.map( (user) => \`<li>${user.first_name}</li>\`).join("")}
-
-### </ul>
-
-**\`;**
-
-### return res.send(html);
-
-**})**
-
-### app.get("/api/users", (req, res)=>{
-
-### return res.json(users);
-
-**})**
-
-### app.post("/api/users/", (req, res)=>{
-
-### const body = req.body;
-
-### users.push({id:users.length+1, ...body})
-
-### // console.log(new_users); // undefined
+**// routes**
 
 ```js
-**fs.writeFile("./MOCK_DATA.json",JSON.stringify(users), (error, result)=>{**
+**app.get("/users", (req, res)=>{**
 ```
-### return res.json({"status":"Success", "id":users.length});
-
-**})**
-
-**})**
-
-### app.listen(PORT, ()=> console.log("Server started at PORT",PORT))
-
-## **CRUD operation**
-
-### const express = require("express");
-
-### const fs = require("fs");
-
-### const users = require("./MOCK_DATA.json");
-
-### const app = express();
-
-### const PORT = 8000;
-
-### //Middleware plugin
-
-### app.use(express.urlencoded({extended:false}))
-
-### // routes
-
-### app.get("/users", (req, res)=>{
-
-### const html = \`
+### const html = `
 
 ### <ul>
 
-### ${users.map( (user) => \`<li>${user.first_name}</li>\`).join("")}
-
+```js
+**${users.map( (user) => `<li>${user.first_name}</li>`).join("")}**
+```
 ### </ul>
 
 **\`;**
 
-### return res.send(html);
+**return res.send(html);**
 
 **})**
 
-### app.get("/api/users", (req, res)=>{
-
-### return res.json(users);
+```js
+**app.get("/api/users", (req, res)=>{**
+```
+**return res.json(users);**
 
 **})**
 
-### app.route("/api/users/:id")
+```js
+**app.post("/api/users/", (req, res)=>{**
+```
+**const body = req.body;**
 
-### .get((req, res)=>{
+**users.push({id:users.length+1, ...body})**
 
-### const id = Number(req.params.id);
+```js
+**// console.log(new_users); // undefined**
 
-### const user= users.find( (user) => user.id === id);
+**fs.writeFile("./MOCK_DATA.json",JSON.stringify(users), (error, result)=>{**
+```
+**return res.json({"status":"Success", "id":users.length});**
 
+**})**
+
+**})**
+
+```js
+**app.listen(PORT, ()=> console.log("Server started at PORT",PORT))**
+```
+## CRUD operation
+
+```js
+**const express = require("express");**
+
+**const fs = require("fs");**
+
+**const users = require("./MOCK_DATA.json");**
+```
+**const app = express();**
+
+**const PORT = 8000;**
+
+**//Middleware plugin**
+
+**app.use(express.urlencoded({extended:false}))**
+
+**// routes**
+
+```js
+**app.get("/users", (req, res)=>{**
+```
+### const html = `
+
+### <ul>
+
+```js
+**${users.map( (user) => `<li>${user.first_name}</li>`).join("")}**
+```
+### </ul>
+
+**\`;**
+
+**return res.send(html);**
+
+**})**
+
+```js
+**app.get("/api/users", (req, res)=>{**
+```
+**return res.json(users);**
+
+**})**
+
+**app.route("/api/users/:id")**
+
+```js
+**.get((req, res)=>{**
+```
+**const id = Number(req.params.id);**
+
+```js
+**const user= users.find( (user) => user.id === id);**
+```
 **return user ? res.json(user): res.json({"status":\`No user found with id ${id}\`});**
 
-### }).patch((req, res) =>{
+```js
+**}).patch((req, res) =>{**
+```
+**const id = Number(req.params.id);**
 
-### const id = Number(req.params.id);
+```js
+**const index= users.findIndex( (user) => user.id === id);**
+```
+**if (!users\[index\]) {**
 
-### const index= users.findIndex( (user) => user.id === id);
-
-### if (!users\[index\]) {
-
-### res.status(404).json({"status":\`No user found with id ${id}\`})
+**res.status(404).json({"status":`No user found with id ${id}`})**
 
 **}**
 
-### const body = req.body;
+**const body = req.body;**
 
-### let new_user = {...users\[index\],...body};
+**let new_user = {...users\[index\],...body};**
 
-### users.splice(index,1,new_user);
+**users.splice(index,1,new_user);**
 
 ```js
 **fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, result) =>{**
 ```
-### return res.json(new_user);
+**return res.json(new_user);**
 
 **})**
 
-### }).delete((req, res) =>{
+```js
+**}).delete((req, res) =>{**
+```
+**const id = Number(req.params.id);**
 
-### const id = Number(req.params.id);
+```js
+**let index= users.findIndex( (user) => user.id === id);**
+```
+**if (!users\[index\]) {**
 
-### let index= users.findIndex( (user) => user.id === id);
-
-### if (!users\[index\]) {
-
-### res.status(404).json({"status":\`No user found with id ${id}\`})
+**res.status(404).json({"status":`No user found with id ${id}`})**
 
 **}**
 
-### users.splice(index,1);
-
-### // console.log(users);
+**users.splice(index,1);**
 
 ```js
+**// console.log(users);**
+
 **fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, result) =>{**
 ```
-### return res.status(200).json({"status":"Success", "id":id});
+**return res.status(200).json({"status":"Success", "id":id});**
 
 **})**
 
 **})**
-
-### app.post("/api/users/", (req, res)=>{
-
-### const body = req.body;
-
-### users.push({id:users.length+1, ...body})
-
-### // console.log(new_users); // undefined
 
 ```js
+**app.post("/api/users/", (req, res)=>{**
+```
+**const body = req.body;**
+
+**users.push({id:users.length+1, ...body})**
+
+```js
+**// console.log(new_users); // undefined**
+
 **fs.writeFile("./MOCK_DATA.json",JSON.stringify(users), (error, result)=>{**
 ```
-### return res.status(201).json({"status":"Success", "id":users.length});
+**return res.status(201).json({"status":"Success", "id":users.length});**
 
 **})**
 
 **})**
 
-### app.listen(PORT, ()=> console.log("Server started at PORT",PORT))
-
+```js
+**app.listen(PORT, ()=> console.log("Server started at PORT",PORT))**
+```
 ### Middleware
 
 Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. The next middleware function is commonly denoted by a variable named next.
@@ -265,7 +285,7 @@ app.use(express.urlencoded({extended:false}))
 
 app.use((req, res, next) => {
 
-fs.appendFile("log.txt",\`\\n ${Date.now()} : ${req.method} : ${req.path}\`, (error,result) =>{
+fs.appendFile("log.txt",`\\n ${Date.now()} : ${req.method} : ${req.path}`, (error,result) =>{
 ```
 next()
 
@@ -278,17 +298,17 @@ next()
 ```js
 app.get("/users", (req, res)=>{
 
-const html = \`
+const html = `
 ```
 <ul>
 
 ```js
-${users.map( (user) => \`<li>${user.first_name}</li>\`).join("")}
+${users.map( (user) => `<li>${user.first_name}</li>`).join("")}
 ```
 </ul>
 
 ```js
-\`;
+`;
 
 return res.send(html);
 ```
@@ -310,7 +330,7 @@ const id = Number(req.params.id);
 
 const user= users.find( (user) => user.id === id);
 
-return user ? res.json(user): res.json({"status":\`No user found with id ${id}\`});
+return user ? res.json(user): res.json({"status":`No user found with id ${id}`});
 
 }).patch((req, res) =>{
 
@@ -321,13 +341,13 @@ const index= users.findIndex( (user) => user.id === id);
 if (!users\[index\]) {
 
 ```js
-res.status(404).json({"status":\`No user found with id ${id}\`})
+res.status(404).json({"status":`No user found with id ${id}`})
 
 }
 
 const body = req.body;
 
-let new_user = {...users\[index\],...body};
+let new_user = {...users[index],...body};
 
 users.splice(index,1,new_user);
 
@@ -347,7 +367,7 @@ let index= users.findIndex( (user) => user.id === id);
 if (!users\[index\]) {
 
 ```js
-res.status(404).json({"status":\`No user found with id ${id}\`})
+res.status(404).json({"status":`No user found with id ${id}`})
 
 }
 

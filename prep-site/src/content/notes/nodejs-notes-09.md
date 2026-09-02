@@ -29,16 +29,18 @@ Create a model controller and routes folder.
 
 ### Create connect.js
 
-### const mongoose = require("mongoose");
+```js
+**const mongoose = require("mongoose");**
+```
+**async function connectToMongoDB(url) {**
 
-### async function connectToMongoDB(url) {
-
-### return mongoose.connect(url);
+**return mongoose.connect(url);**
 
 **}**
 
-### module.exports = {
-
+```js
+**module.exports = {**
+```
 **connectToMongoDB,**
 
 **};**
@@ -73,7 +75,7 @@ required: true,
 },
 
 ```js
-visitHistory: \[{ timestamp: { type: Number } }\],
+visitHistory: [{ timestamp: { type: Number } }],
 ```
 },
 
@@ -108,7 +110,7 @@ shortId: shortID,
 
 redirectURL: body.url,
 
-visitHistory: \[\],
+visitHistory: [],
 
 });
 
@@ -165,33 +167,36 @@ module.exports = router;
 ```
 ### index.js
 
-### const express = require("express");
+```js
+**const express = require("express");**
 
-### const { connectToMongoDB } = require("./connect");
+**const { connectToMongoDB } = require("./connect");**
 
-### const urlRoute = require("./routes/url");
+**const urlRoute = require("./routes/url");**
 
-### const URL = require("./models/url");
+**const URL = require("./models/url");**
+```
+**const app = express();**
 
-### const app = express();
+**const PORT = 8001;**
 
-### const PORT = 8001;
+```js
+**connectToMongoDB("mongodb://127.0.0.1:27017/short-url").then(() =>**
 
-### connectToMongoDB("mongodb://127.0.0.1:27017/short-url").then(() =>
+**console.log("Mongodb connected")**
 
-### console.log("Mongodb connected")
+**).catch( error => console.log(error));**
+```
+**app.use(express.json());**
 
-### ).catch( error => console.log(error));
+**app.use("/url", urlRoute);**
 
-### app.use(express.json());
+```js
+**app.get("/:shortId", async (req, res) => {**
+```
+**const shortId = req.params.shortId;**
 
-### app.use("/url", urlRoute);
-
-### app.get("/:shortId", async (req, res) => {
-
-### const shortId = req.params.shortId;
-
-### const entry = await URL.findOneAndUpdate(
+**const entry = await URL.findOneAndUpdate(**
 
 **{**
 
@@ -201,9 +206,9 @@ module.exports = router;
 
 **{**
 
-### $push: {
+**$push: {**
 
-### visitHistory: {
+**visitHistory: {**
 
 **timestamp: Date.now(),**
 
@@ -215,8 +220,10 @@ module.exports = router;
 
 **);**
 
-### res.redirect(entry.redirectURL);
+**res.redirect(entry.redirectURL);**
 
 **});**
 
-### app.listen(PORT, () => console.log(\`Server Started at PORT:${PORT}\`));
+```js
+**app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));**
+```

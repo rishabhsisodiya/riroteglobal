@@ -11,9 +11,9 @@ description: "Node.js — How Nodejs Works."
 ---
 ![](/notes-img/nodejs-notes/img-001.webp)
 
-Client makes a request to a server (nodejs). Now requests will come to our server. On the server, requests will be queued in the event queue. Now from the queue , the Event loop keeps a watch on the event queue and picks up requests in FIFO order. Now requests can be blocking (sync task) or non-blocking (async task) operations. ![](/notes-img/nodejs-notes/img-002.webp)
+Client makes a request to a server (nodejs). Now requests will come to our server. On the server, requests will be queued in the event queue. Now from the queue, the Event loop keeps a watch on the event queue and picks up requests in FIFO order. Now requests can be blocking (sync task) or non-blocking (async task) operations. ![](/notes-img/nodejs-notes/img-002.webp)
 
-If the request is non-blocking then the event loop takes the requests , processes it and returns the responses to the user. If the request is blocking operation then the request will go to Thread pool (A pool of threads). A **thread pool** is a group of worker threads separate from the main event loop thread Node.js uses to execute JavaScript code and handle requests. Now here a thread/worker will be assigned to the request if available.
+If the request is non-blocking then the event loop takes the requests, processes it and returns the responses to the user. If the request is blocking operation then the request will go to Thread pool (A pool of threads). A **thread pool** is a group of worker threads separate from the main event loop thread Node.js uses to execute JavaScript code and handle requests. Now here a thread/worker will be assigned to the request if available.
 
 ![](/notes-img/nodejs-notes/img-003.webp)
 
@@ -45,55 +45,62 @@ A middleware function will return another function, and a terminator function wi
 
 1.  **Blocking**
 
-### const fs = require('node:fs');
+    ```js
+    **const fs = require('node:fs');**
 
-### console.log("1");
+    **console.log("1");**
+    ```
+**// blocking**
 
-### // blocking
+**const result = fs.readFileSync("test.txt","utf-8");**
 
-### const result = fs.readFileSync("test.txt","utf-8");
+```js
+**console.log(result);**
 
-### console.log(result);
-
-### console.log("2");
-
+**console.log("2");**
+```
 **Output:**
 
 **1**
 
-### Rishabh : Sisodiya
+### Rishabh: Sisodiya
 
 **2**
 
 1.  **Non Blocking:**
 
-### const fs = require('node:fs');
+    ```js
+    **const fs = require('node:fs');**
 
-### console.log("1");
+    **console.log("1");**
+    ```
+**// non-blocking**
 
-### // non-blocking
+```js
+**fs.readFile("test.txt","utf-8",(error, result)=>{**
+```
+**if (error) {**
 
-### fs.readFile("test.txt","utf-8",(error, result)=>{
-
-### if (error) {
-
-### console.log(error);
-
+```js
+**console.log(error);**
+```
 **}**
 
-### console.log(result);
-
+```js
+**console.log(result);**
+```
 **});**
 
-### console.log("2");
-
+```js
+**console.log("2");**
+```
 **Output:**
 
 **1**
 
 **2**
 
-### Rishabh : Sisodiya
+### Rishabh: Sisodiya
 
 ### Concurrency and Throughput
 
@@ -111,7 +118,7 @@ The following diagram shows a simplified overview of the event loop's order of o
 
 Each box will be referred to as a "phase" of the event loop.
 
-## Phases Overview **(whenever event loop transition, will check for nextTick and then promises)**
+## Phases Overview **(whenever event loop transition, will check for nextTick and then promises)
 
 -   **timers**: this phase executes callbacks scheduled by setTimeout() and setInterval().
 -   **pending callbacks:** executes I/O callbacks deferred to the next loop iteration.
@@ -168,7 +175,7 @@ This phase allows a person to execute callbacks immediately after the poll phase
 
 If a socket or handle is closed abruptly (e.g. socket.destroy()), the 'close' event will be emitted in this phase. Otherwise it will be emitted via process.nextTick().
 
-### _setImmediate() vs setTimeout()_
+### setImmediate() vs setTimeout()
 
 setImmediate() is designed to execute a script once the current poll phase completes.
 
@@ -267,12 +274,12 @@ When only a port is passed, the port is bound immediately. So, the 'listening' c
 
 To get around this, the 'listening' event is queued in a nextTick() to allow the script to run to completion. This allows the user to set any event handlers they want.
 
-### _process.nextTick() vs setImmediate()_
+**process.nextTick() vs setImmediate()**
 
 -   process.nextTick() fires immediately on the same phase
 -   setImmediate() fires on the following iteration or 'tick' of the event loop
 
-### _Why use process.nextTick()?_
+### Why use process.nextTick()?
 
 There are two main reasons:
 
@@ -387,7 +394,7 @@ console.log("Hello from Top level Code");
 ```
 Here Output depends on the file we are reading as well.
 
-Let’s understand it .
+Let’s understand it.
 
 -   First top level code will work
 -   Then it will check expired timer callback which is here it is 0 so it will be expired
@@ -431,7 +438,7 @@ return;
 
 setTimeout(() => console.log("Hello from Timer 2"), 0);
 
-setTimeout(() => console.log("Hello from Timer 3"), 5\*1000);
+setTimeout(() => console.log("Hello from Timer 3"), 5*1000);
 
 setImmediate(() => console.log("Hello from Immediate fn 2"));
 
@@ -459,22 +466,22 @@ Hello from Timer 3
 
 ### Explanation
 
-Top level code : **print Hello from Top level Code**
+Top level code: **print Hello from Top level Code**
 
-1.  Timer : Yes we have expired timer with 0ms so our timer 1 will run and **print Hello from Timer 1**
+1.  Timer: Yes we have expired timer with 0ms so our timer 1 will run and **print Hello from Timer 1**
 2.  IO Polling: Yes we have FS readsync but it might take time so it will take time so **move to next step**
 3.  SetImmediate CBs: Yes we have setimmediate so it will run and **print Hello from Immediate fn 1**
 4.  Close CBS: continue
-5.  Pending : Yes we have file reading task pending so **event loop will start again**
+5.  Pending: Yes we have file reading task pending so **event loop will start again**
 6.  Timer: Since the file reading task was not completed earlier. It will check for timer expiration which is not available now. **It will skip and move to next step**
-7.  IO Polling: Here this time File reading task complete so it will enter into its code , register timeout and setimmediate and **print** its top level code which is **IO polling finish**
-8.  SetImmediate CBs: Since in above step , we have immediate callback so it will **print Hello from Immediate fn 2** and move to next step
+7.  IO Polling: Here this time File reading task complete so it will enter into its code, register timeout and setimmediate and **print** its top level code which is **IO polling finish**
+8.  SetImmediate CBs: Since in above step, we have immediate callback so it will **print Hello from Immediate fn 2** and move to next step
 9.  Close CBs: continue to next step
-10.  Pending : Yes we have timeout CBs so **event loop will start again**
+10.  Pending: Yes we have timeout CBs so **event loop will start again**
 11.  Timer: Check for expired timer CB which we have so it **print Hello from Timer 2** and continue the process and again it will run **after 5s** after checking all the steps and **print Hello from Timer 3**
 12.  **Pending: Exit**
 
-### 6\. Code with process.nextTick()
+### 6. Code with process.nextTick()
 
 ```js
 const fs = require("fs");
@@ -503,7 +510,7 @@ process.nextTick(() => console.log("Hello from nextTick fn 3"));
 
 setTimeout(() => console.log("Hello from Timer 2"), 0);
 
-setTimeout(() => console.log("Hello from Timer 3"), 5\*1000);
+setTimeout(() => console.log("Hello from Timer 3"), 5*1000);
 
 setImmediate(() => console.log("Hello from Immediate fn 1"));
 
@@ -557,37 +564,40 @@ Hello from Timer 3
 
 **the nextTickQueue will be processed after the current operation is completed, regardless of the current phase of the event loop. So after each phase we need to check for nextTick function and that will print the output.**
 
-### 7\. Promises and nextTick
+### 7. Promises and nextTick
 
-### const baz = () => console.log('baz');
+```js
+**const baz = () => console.log('baz');**
 
-### const foo = () => console.log('foo');
+**const foo = () => console.log('foo');**
 
-### const zoo = () => console.log('zoo');
+**const zoo = () => console.log('zoo');**
 
-### const start = () => {
+**const start = () => {**
 
-### console.log('start');
+**console.log('start');**
+```
+**setImmediate(baz);**
 
-### setImmediate(baz);
+```js
+**new Promise((resolve, reject) => {**
+```
+**resolve('bar');**
 
-### new Promise((resolve, reject) => {
+```js
+**}).then(resolve => {**
 
-### resolve('bar');
-
-### }).then(resolve => {
-
-### console.log(resolve);
-
-### process.nextTick(zoo);
+**console.log(resolve);**
+```
+**process.nextTick(zoo);**
 
 **});**
 
-### process.nextTick(foo);
+**process.nextTick(foo);**
 
 **};**
 
-### start();
+**start();**
 
 Output:
 
@@ -609,31 +619,35 @@ If you worked with JavaScript in the browser, you know how much of the interacti
 
 On the backend side, Node.js offers us the option to build a similar system using the events module.
 
-### const EventEmitter = require('node:events');
+```js
+**const EventEmitter = require('node:events');**
+```
+**const eventEmitter = new EventEmitter();**
 
-### const eventEmitter = new EventEmitter();
+```js
+**eventEmitter.on('start', () => {**
 
-### eventEmitter.on('start', () => {
-
-### console.log('started');
-
+**console.log('started');**
+```
 **});**
 
-### setTimeout(() => {
-
-### eventEmitter.emit('start');
+```js
+**setTimeout(() => {**
+```
+**eventEmitter.emit('start');**
 
 **}, 0);**
 
-### console.log("End");
-
+```js
+**console.log("End");**
+```
 The EventEmitter object also exposes several other methods to interact with events, like
 
 -   once(): add a one-time listener
 -   removeListener() / off(): remove an event listener from an event
 -   removeAllListeners(): remove all listeners for an event
 
-## **Worker Threads in Nodejs**
+## Worker Threads in Nodejs
 
 ### Thread Pool in Node.js
 

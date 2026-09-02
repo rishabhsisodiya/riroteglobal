@@ -11,25 +11,25 @@ description: "JavaScript — Async vs defer."
 ---
 ### Normal scenario
 
-`<script src=” ” />`
+`<script src=" "></script>`
 
-![](/notes-img/javascript-notes/img-036.webp)
+![](/notes-img/JavaScript-notes/img-036.webp)
 
-During the normal scenario, When the html page load in the browser then it will do html parsing line by line but when the script tag comes it will start fetching javascript file and execute the file then it will again continue with html parsing. So javascript files are blocking the rendering of html.
+During the normal scenario, When the html page load in the browser then it will do html parsing line by line but when the script tag comes it will start fetching JavaScript file and execute the file then it will again continue with html parsing. So JavaScript files are blocking the rendering of html.
 
 ### Async attribute in script tag
 
-`<script **async** src=” ” />`
+`<script **async** src=" "></script>`
 
-![](/notes-img/javascript-notes/img-037.webp)
+![](/notes-img/JavaScript-notes/img-037.webp)
 
 In this case, script will fetch asynchronously along with html parsing and once script is loaded completely it will execute js file immediately during that time html parsing will be on hold and once js code executed it will continue with html parsing.
 
 ### defer attribute in script tag
 
-`<script **defer** src=” ” />`
+`<script **defer** src=" "></script>`
 
-![](/notes-img/javascript-notes/img-038.webp)
+![](/notes-img/JavaScript-notes/img-038.webp)
 
 In this case, script will fetch asynchronously along with html parsing but here it will complete html parsing then script execution will take place.
 

@@ -9,15 +9,15 @@ draft: false
 order: 20
 description: "React — React and HTTP."
 ---
-To fetch some data we can use Fetch API or axios. We are using axios and to install it :
+To fetch some data we can use Fetch API or axios. We are using axios and to install it:
 
 npm i axios
 
 ### App.js
 
-### import PostForm from "./components/React_http/PostForm";
+**import PostForm from "./components/React_http/PostForm";**
 
-### import PostList from "./components/React_http/PostList";
+**import PostList from "./components/React_http/PostList";**
 
 ```jsx
 function App() {
@@ -55,7 +55,7 @@ super(props);
 
 this.state = {
 
-posts: \[\],
+posts: [],
 
 errorMsg: "",
 
@@ -69,19 +69,21 @@ componentDidMount() {
 
 ### .get("https://jsonplaceholder.typicode.com/posts")
 
-### .then((response) => {
+```jsx
+**.then((response) => {**
 
-### console.log(response);
-
-### this.setState({ posts: response.data });
+**console.log(response);**
+```
+**this.setState({ posts: response.data });**
 
 **})**
 
-### .catch((error) => {
+```jsx
+**.catch((error) => {**
 
-### console.log(error);
-
-### this.setState({ errorMsg: "Error retrieving data" });
+**console.log(error);**
+```
+**this.setState({ errorMsg: "Error retrieving data" });**
 
 **});**
 
@@ -106,7 +108,7 @@ List of posts
 ```
 : null}
 
-{errorMsg ? <div>{errorMsg}</div> : null}
+{errorMsg ? <div>{errorMsg}</div>: null}
 
 </div>
 
@@ -147,7 +149,7 @@ body: "",
 
 changeHandler = (e) => {
 
-this.setState({ \[e.target.name\]: e.target.value });
+this.setState({ [e.target.name]: e.target.value });
 
 };
 
@@ -161,16 +163,18 @@ console.log(this.state);
 
 ### .post("https://jsonplaceholder.typicode.com/posts", this.state)
 
-### .then((response) => {
+```jsx
+**.then((response) => {**
 
-### console.log(response);
-
+**console.log(response);**
+```
 **})**
 
-### .catch((error) => {
+```jsx
+**.catch((error) => {**
 
-### console.log(error);
-
+**console.log(error);**
+```
 **});**
 
 ```jsx

@@ -143,7 +143,7 @@ return (
 ```
 // Without the \`key\`, React will fire a key warning
 
-### <React.Fragment key={item.id}>
+**<React.Fragment key={item.id}>**
 
 <dt>{item.term}</dt>
 

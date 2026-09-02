@@ -25,7 +25,7 @@ In simple request response, our connection was getting closed but here when you 
 
 The HTTP 1.1 (only) Upgrade header can be used to upgrade an already established client/server connection to a different protocol (over the same transport protocol). For example, it can be used by a client to upgrade a connection from HTTP 1.1 to HTTP 2.0, or an HTTP or HTTPS connection into a WebSocket.
 
-To implement a web socket , we use socket.io library.
+To implement a web socket, we use socket.io library.
 
 **Why are we using http with express for websocket? Why can't we use just express?**
 
@@ -100,36 +100,40 @@ npm i socket.io
 
 ### Update index.js
 
-### const path = require("path");
+```js
+**const path = require("path");**
 
-### const http = require("http");
+**const http = require("http");**
 
-### const express = require("express");
+**const express = require("express");**
 
-### const { Server } = require("socket.io");
+**const { Server } = require("socket.io");**
+```
+**const app = express();**
 
-### const app = express();
+**const server = http.createServer(app);**
 
-### const server = http.createServer(app);
+**const io = new Server(server);**
 
-### const io = new Server(server);
+**app.use(express.static(path.resolve("./public")));**
 
-### app.use(express.static(path.resolve("./public")));
+```js
+**io.on("connection", (socket) => {**
 
-### io.on("connection", (socket) => {
+**console.log("a new user connected " ,socket.id);**
+```
+**});**
 
-### console.log("a new user connected " ,socket.id);
+```js
+**app.get("/", (req, res) => {**
+```
+**res.sendFile("/public/index.html");**
 
 **});**
 
-### app.get("/", (req, res) => {
-
-### res.sendFile("/public/index.html");
-
-**});**
-
-### server.listen(9000, () => console.log("Server started at 9000"));
-
+```js
+**server.listen(9000, () => console.log("Server started at 9000"));**
+```
 Implement socker.io on frontend
 
 ### Update public/index.html
@@ -156,7 +160,7 @@ Implement socker.io on frontend
 
 ### `<script>`
 
-### var socket = io();
+**var socket = io();**
 
 ### `</script>`
 
@@ -194,19 +198,21 @@ Implement socker.io on frontend
 
 ### `<script>`
 
-### const socket = io();
+**const socket = io();**
 
-### const sendBtn = document.getElementById("sendBtn");
+**const sendBtn = document.getElementById("sendBtn");**
 
-### const messageInput = document.getElementById("message");
+**const messageInput = document.getElementById("message");**
 
-### sendBtn.addEventListener("click", (e)=>{
+```js
+**sendBtn.addEventListener("click", (e)=>{**
+```
+**const message = messageInput.value;**
 
-### const message = messageInput.value;
-
-### console.log(message);
-
-### socket.emit("user-message",message)
+```js
+**console.log(message);**
+```
+**socket.emit("user-message",message)**
 
 **})**
 
@@ -395,31 +401,34 @@ Now we want to show it on the frontend not in the console.
 
 ### `<script>`
 
-### const socket = io();
+**const socket = io();**
 
-### const sendBtn = document.getElementById("sendBtn");
+**const sendBtn = document.getElementById("sendBtn");**
 
-### const messageInput = document.getElementById("message");
+**const messageInput = document.getElementById("message");**
 
-### const allMessages = document.getElementById("messages");
+**const allMessages = document.getElementById("messages");**
 
-### socket.on("message", (message)=>{
+```js
+**socket.on("message", (message)=>{**
+```
+**const p = document.createElement("p");**
 
-### const p = document.createElement("p");
+**p.innerText=message;**
 
-### p.innerText=message;
-
-### allMessages.appendChild(p)
+**allMessages.appendChild(p)**
 
 **});**
 
-### sendBtn.addEventListener("click", (e)=>{
+```js
+**sendBtn.addEventListener("click", (e)=>{**
+```
+**const message = messageInput.value;**
 
-### const message = messageInput.value;
-
-### console.log(message);
-
-### socket.emit("user-message",message)
+```js
+**console.log(message);**
+```
+**socket.emit("user-message",message)**
 
 **})**
 

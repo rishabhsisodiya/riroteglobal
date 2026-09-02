@@ -1,5 +1,5 @@
 ---
-title: "JAVASCRIPT Engine"
+title: "JavaScript Engine"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
@@ -7,35 +7,35 @@ updated: "2026-09-02"
 source: "JavaScript Notes.docx"
 draft: false
 order: 8
-description: "JavaScript — JAVASCRIPT Engine."
+description: "JavaScript — JavaScript Engine."
 ---
-![](/notes-img/javascript-notes/img-023.webp)
+![](/notes-img/JavaScript-notes/img-023.webp)
 
-A JavaScript engine is a computer program that executes JavaScript code and converts it into computer understandable language.Javascript Engine in different browsers.
+A JavaScript engine is a computer program that executes JavaScript code and converts it into computer understandable language.JavaScript Engine in different browsers.
 
 -   Chakra in Edge
 -   Spidermonkey in Firefox. (First js engine)
 -   V8 in google chrome ( and also in nodejs) written in c++.
 
-A Javascript engine is not a machine but just a piece of code in some high level language. This code goes through 3 major steps
+A JavaScript engine is not a machine but just a piece of code in some high level language. This code goes through 3 major steps
 
 1.  Parsing
 2.  Compilation
 3.  Execution
 
-![](/notes-img/javascript-notes/img-024.webp)
+![](/notes-img/JavaScript-notes/img-024.webp)
 
 1.  **Parsing Phase**
 
 During this parsing phase the code which we have written is broken down into tokens.
 
-let a=7 ; (let, a, =, 7 are tokens)
+let a=7; (let, a, =, 7 are tokens)
 
 **Syntax parser:** It takes the code and converts it into AST(Abstract Syntax Tree).
 
 (you can check AST at astexplorer.net)
 
-![](/notes-img/javascript-notes/img-025.webp)
+![](/notes-img/JavaScript-notes/img-025.webp)
 
 1.  **Compilation Phase & Execution phase**
 
@@ -52,7 +52,7 @@ Execution is made possible using these 2 components: Call Stack and memory heap.
 
 Memory Heap is the space where all variables and functions are assigned memory. Garbage collector is also present which frees up the memory whenever possible and it uses Mark and Sweep Algorithm. Compiler also uses some optimization techniques.
 
-### ![](/notes-img/javascript-notes/img-026.webp)
+### ![](/notes-img/JavaScript-notes/img-026.webp)
 
 From a high-level view, the V8 JavaScript engine execution consists of 5 steps.
 
@@ -116,28 +116,28 @@ heap.release(p)
 
 The mark-and-sweep algorithm is called a tracing garbage collector because it traces out the entire collection of objects that are directly or indirectly accessible by the program.
 
-### _Advantages of Mark and Sweep Algorithm_
+### Advantages of Mark and Sweep Algorithm
 
 -   It handles the case with cyclic references, even in the case of a cycle, this algorithm never ends up in an infinite loop.
 -   There are no additional overheads incurred during the execution of the algorithm.
 
-### _Disadvantages of Mark and Sweep Algorithm_
+### Disadvantages of Mark and Sweep Algorithm
 
 -   The main disadvantage of the mark-and-sweep approach is the fact that normal program execution is suspended while the garbage collection algorithm runs.
 -   Another disadvantage is that, after the Mark and Sweep Algorithm is run several times on a program, reachable objects end up being separated by many, small unused memory regions.
 
-### _Copy Elision_
+### Copy Elision
 
 Copy elision is an optimization implemented by most compilers to prevent extra (potentially expensive) copies in certain situations. It makes returning by value or pass-by-value feasible in practice
 
-### _Inline caching_
+### Inline caching
 
 Let's take a look at a code snippet.
 
 ```js
 function printUserName(user){
 
-return \`Hello ${user.firstName} ${user.lastName}\`
+return `Hello ${user.firstName} ${user.lastName}`
 
 }
 

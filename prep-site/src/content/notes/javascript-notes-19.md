@@ -11,13 +11,13 @@ description: "JavaScript — Algorithms & Big-O."
 ---
 DSA
 
-[https://www.geeksforgeeks.org/learn-data-structures-with-javascript-dsa-tutorial/](https://www.geeksforgeeks.org/learn-data-structures-with-javascript-dsa-tutorial/)
+[https://www.geeksforgeeks.org/learn-data-structures-with-JavaScript-dsa-tutorial/](https://www.geeksforgeeks.org/learn-data-structures-with-JavaScript-dsa-tutorial/)
 
 ## What is an Algorithm?
 
 Algorithm is a set of well defined instructions to solve a particular problem.
 
-![](/notes-img/javascript-notes/img-039.webp)
+![](/notes-img/JavaScript-notes/img-039.webp)
 
 **Time Complexity:** Measures the execution time of an algorithm.
 
@@ -25,25 +25,25 @@ Algorithm is a set of well defined instructions to solve a particular problem.
 
 ### Asymptotic notations
 
-1\. Big-O Notation : Big-O represents the upper bound of an algorithm's growth rate. It gives the worst-case complexity of an algorithm.
+1. Big-O Notation: Big-O represents the upper bound of an algorithm's growth rate. It gives the worst-case complexity of an algorithm.
 
 **Example**: If f(n)=5n^2+3n+2, f(n) = then f(n) is O(n^2)
 
-2\. Omega Notation: Omega represents the lower bound of an algorithm's growth rate. It gives the best-case complexity of an algorithm.
+2. Omega Notation: Omega represents the lower bound of an algorithm's growth rate. It gives the best-case complexity of an algorithm.
 
-3\. Theta Notation: Theta provides a tight bound on an algorithm's growth rate. It describes both the upper and lower bounds of an algorithm's complexity.
+3. Theta Notation: Theta provides a tight bound on an algorithm's growth rate. It describes both the upper and lower bounds of an algorithm's complexity.
 
 ## Big-O Notation
 
-Big-O Time Complexity : Count the no of times a statement executed based on input size.
+Big-O Time Complexity: Count the no of times a statement executed based on input size.
 
-![](/notes-img/javascript-notes/img-040.webp)
+![](/notes-img/JavaScript-notes/img-040.webp)
 
 Time complexity is O(n) - linear
 
-![](/notes-img/javascript-notes/img-041.webp)
+![](/notes-img/JavaScript-notes/img-041.webp)
 
-![](/notes-img/javascript-notes/img-042.webp)
+![](/notes-img/JavaScript-notes/img-042.webp)
 
 Space complexity:
 
@@ -51,102 +51,40 @@ O(1)-Constant
 
 O(n)-LInear
 
-O(logn)- Logrithm
+O(log n)- Logrithm
 
-![](/notes-img/javascript-notes/img-043.webp)
+![](/notes-img/JavaScript-notes/img-043.webp)
 
 ### Big-O Time complexity of Object
 
-### Operation
+| Operation | Big-O Notation |
+| --- | --- |
+| Access by key | O(1) |
+| Insert or update a key-value pair | O(1) |
+| Delete by key | O(1) |
+| Search for a key | O(n) |
+| Iterate over keys/values, Object.key(), entries(), values() | O(n) |
+| Check if a key exists | O(1) |
+| Get all keys/values | O(n) |
 
-### Big-O Notation
-
-| --- | ---
-### Access by key
-
-O(1)
-
-| --- | ---
-### Insert or update a key-value pair
-
-O(1)
-
-| --- | ---
-### Delete by key
-
-O(1)
-
-| --- | ---
-### Search for a key
-
-O(n)
-
-| --- | ---
-### Iterate over keys/values, Object.key(), entries(), values()
-
-O(n)
-
-| --- | ---
-### Check if a key exists
-
-O(1)
-
-| --- | ---
-### Get all keys/values
-
-O(n)
-
-| --- | ---
 ### Big-O Time complexity of Array
 
-### Array Method
+| Array Method | Big-O Notation |
+| --- | --- |
+| push (add to end) | O(1) (amortized) |
+| pop (remove from end) | O(1) |
+| shift (remove from start) | O(n) |
+| unshift (add to start) | O(n) |
+| splice (insert/remove) | O(n) |
+| slice,concat,indexOf/includes,forEach/map/filter reverse,reduce,find/findIndex | O(n) |
+| sort | O(n log n) |
 
-### Big-O Notation
-
-| --- | ---
-### push (add to end)
-
-O(1) (amortized)
-
-| --- | ---
-### pop (remove from end)
-
-O(1)
-
-| --- | ---
-### shift (remove from start)
-
-O(n)
-
-| --- | ---
-### unshift (add to start)
-
-O(n)
-
-| --- | ---
-### splice (insert/remove)
-
-O(n)
-
-| --- | ---
-### slice,concat,indexOf/includes,forEach/map/filter
-
-### reverse,reduce,find/findIndex
-
-O(n)
-
-| --- | ---
-### sort
-
-O(nlog⁡n)
-
-| --- | ---
 ### Print Fibonacci
 
 ```js
 function fibonacci(n) {
 
-let series = \[\]
+let series = []
 ```
 if (n === 0) {
 
@@ -186,7 +124,7 @@ let fact=1;
 
 for (let i = 2; i <= n; i++) {
 
-fact=fact\*i;
+fact=fact*i;
 
 }
 
@@ -278,7 +216,7 @@ return true;
 }
 ```
 
-**Time Complexity**: O(logn) The while loop runs as long as the number is greater than 1, and in each iteration, the number is divided by 2.
+**Time Complexity**: O(log n) The while loop runs as long as the number is greater than 1, and in each iteration, the number is divided by 2.
 
 **Space Complexity**: O(1)
 
@@ -337,7 +275,7 @@ return n;
 
 }
 
-return n\*factorial(n-1);
+return n*factorial(n-1);
 
 }
 
@@ -380,7 +318,7 @@ return -1; // Return -1 if the target is not found
 ```js
 }
 
-const arr = \[5, 3, 8, 4, 2\];
+const arr = [5, 3, 8, 4, 2];
 
 const target = 8;
 
@@ -436,7 +374,7 @@ return -1; // Target not found
 
 }
 
-const arr = \[2, 4, 6, 8, 10, 12\];
+const arr = [2, 4, 6, 8, 10, 12];
 
 const target = 8;
 
@@ -478,20 +416,20 @@ return recursiveBinarySearch(arr,target,left,right);
 
 }
 
-const arr = \[2, 4, 6, 8, 10, 12\];
+const arr = [2, 4, 6, 8, 10, 12];
 
 const target = 8;
 
 console.log(recursiveBinarySearch(arr, target)); // Output: 3
 ```
 
-### Time Complexity: O(logn)
+### Time Complexity: O(log n)
 
-### Space Complexity: O(logn)
+### Space Complexity: O(log n)
 
 ## Sorting Algorithm
 
-### 1\. Bubble Sort
+### 1. Bubble Sort
 
 Bubble Sort repeatedly compares adjacent elements in the array and swaps them if they are in the wrong order. The largest elements "bubble" to the end of the array with each pass.
 
@@ -500,12 +438,12 @@ Bubble Sort repeatedly compares adjacent elements in the array and swaps them if
 1.  For each element in the array:
     -   Compare adjacent elements.
     -   Swap them if they are in the wrong order.
-2.  Repeat the process until the array is sorted.![](/notes-img/javascript-notes/img-044.webp)
+2.  Repeat the process until the array is sorted.![](/notes-img/JavaScript-notes/img-044.webp)
 
 **Time Complexity:**
 
 -   Best: O(n) (when the array is already sorted)
--   Worst/Average: O(n2)
+-   Worst/Average: O(n²)
 
 **Space Complexity:** O(1)
 
@@ -545,10 +483,10 @@ return arr;
 // Example Usage
 
 ```js
-console.log(bubbleSort(\[64, 34, 25, 12, 22, 11, 90\]));
+console.log(bubbleSort([64, 34, 25, 12, 22, 11, 90]));
 ```
 
-### 2\. Insertion Sort
+### 2. Insertion Sort
 
 Insertion Sort builds the sorted portion of the array one element at a time by comparing each element to the already sorted portion and inserting it into the correct position.
 
@@ -560,12 +498,12 @@ Insertion Sort builds the sorted portion of the array one element at a time by c
 4.  Insert the key in the correct position.
 5.  Repeat for all elements.
 
-![](/notes-img/javascript-notes/img-045.webp)
+![](/notes-img/JavaScript-notes/img-045.webp)
 
 **Time Complexity:**
 
 -   Best: O(n) when the array is already sorted)
--   Worst/Average: O(n2)
+-   Worst/Average: O(n²)
 
 **Space Complexity:** O(1)
 
@@ -576,11 +514,11 @@ function insertionSort(arr) {
 
 for (let i = 1; i < arr.length; i++) {
 
-let key = arr\[i\];
+let key = arr[i];
 
 let j = i - 1;
 
-while (j >= 0 && arr\[j\] > key) {
+while (j >= 0 && arr[j] > key) {
 ```
 arr\[j + 1\] = arr\[j\]; // Shift element to the right
 
@@ -601,10 +539,10 @@ return arr;
 // Example Usage
 
 ```js
-console.log(insertionSort(\[64, 34, 25, 12, 22, 11, 90\]));
+console.log(insertionSort([64, 34, 25, 12, 22, 11, 90]));
 ```
 
-### 3\. Quick Sort
+### 3. Quick Sort
 
 Quick Sort is a divide-and-conquer algorithm. It selects a pivot, partitions the array into two halves (elements less than the pivot and elements greater than the pivot), and recursively sorts the partitions.
 
@@ -619,10 +557,10 @@ Quick Sort is a divide-and-conquer algorithm. It selects a pivot, partitions the
 
 **Time Complexity:**
 
--   Best/Average: O(nlog⁡n)
--   Worst: O(n2) (when the pivot is poorly chosen)
+-   Best/Average: O(n log n)
+-   Worst: O(n²) (when the pivot is poorly chosen)
 
-**Space Complexity:** O(log⁡n)(recursive call stack)
+**Space Complexity:** O(log n)(recursive call stack)
 
 ### JavaScript Implementation
 
@@ -634,37 +572,37 @@ if (arr.length <= 1) return arr; // Base case
 const pivot = arr\[arr.length - 1\]; // Choose the last element as the pivot
 
 ```js
-const left = \[\];
+const left = [];
 
-const right = \[\];
+const right = [];
 
 for (let i = 0; i < arr.length - 1; i++) {
 ```
 if (arr\[i\] < pivot) {
 
 ```js
-left.push(arr\[i\]);
+left.push(arr[i]);
 ```
 } else {
 
 ```js
-right.push(arr\[i\]);
+right.push(arr[i]);
 
 }
 
 }
 
-return \[...quickSort(left), pivot, ...quickSort(right)\];
+return [...quickSort(left), pivot, ...quickSort(right)];
 
 }
 ```
 // Example Usage
 
 ```js
-console.log(quickSort(\[64, 34, 25, 12, 22, 11, 90\]));
+console.log(quickSort([64, 34, 25, 12, 22, 11, 90]));
 ```
 
-### 4\. Merge Sort
+### 4. Merge Sort
 
 Merge Sort is a divide-and-conquer algorithm that divides the array into halves, recursively sorts them, and then merges the sorted halves.
 
@@ -676,7 +614,7 @@ Merge Sort is a divide-and-conquer algorithm that divides the array into halves,
 
 **Time Complexity:**
 
--   Best/Worst/Average: O(nlog⁡n)
+-   Best/Worst/Average: O(n log n)
 
 **Space Complexity:** O(n)
 
@@ -701,7 +639,7 @@ return merge(left, right); // Merge the sorted halves
 
 function merge(left, right) {
 
-const result = \[\];
+const result = [];
 
 let i = 0, j = 0;
 
@@ -710,14 +648,14 @@ while (i < left.length && j < right.length) {
 if (left\[i\] < right\[j\]) {
 
 ```js
-result.push(left\[i\]);
+result.push(left[i]);
 
 i++;
 ```
 } else {
 
 ```js
-result.push(right\[j\]);
+result.push(right[j]);
 
 j++;
 
@@ -725,85 +663,37 @@ j++;
 
 }
 
-return \[...result, ...left.slice(i), ...right.slice(j)\];
+return [...result, ...left.slice(i), ...right.slice(j)];
 
 }
 ```
 // Example Usage
 
 ```js
-console.log(mergeSort(\[64, 34, 25, 12, 22, 11, 90\]));
+console.log(mergeSort([64, 34, 25, 12, 22, 11, 90]));
 ```
 
 ### Comparison of Sorting Algorithms
 
-### Algorithm
+| Algorithm | Best Time Complexity | Average Time Complexity | Worst Time Complexity | Space Complexity |
+| --- | --- | --- | --- | --- |
+| Bubble Sort | O(n) | O(n²) | O(n²) | O(1) |
+| Insertion Sort | O(n) | O(n²) | O(n²) | O(1) |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n) |
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) |
 
-### Best Time Complexity
-
-### Average Time Complexity
-
-### Worst Time Complexity
-
-### Space Complexity
-
-| --- | --- | --- | --- | ---
-Bubble Sort
-
-O(n)
-
-O(n2)
-
-O(n2)
-
-O(1)
-
-| --- | --- | --- | --- | ---
-Insertion Sort
-
-O(n)
-
-O(n2)
-
-O(n2)
-
-O(1)
-
-| --- | --- | --- | --- | ---
-Quick Sort
-
-O(nlog⁡n)
-
-O(nlog⁡n)
-
-O(n2)
-
-O(log⁡n)
-
-| --- | --- | --- | --- | ---
-Merge Sort
-
-O(nlog⁡n)
-
-O(nlog⁡n)
-
-O(nlog⁡n)
-
-O(n)
-
-| --- | --- | --- | --- | ---
 ## Cartesian Products
 
 ```js
 function cartesianProduct(arr1,arr2) {
 
-let cartesianArr=\[\];
+let cartesianArr=[];
 
 for (let i = 0; i < arr1.length; i++) {
 
 for (let j = 0; j < arr2.length; j++) {
 
-cartesianArr.push(\[arr1\[i\],arr2\[j\]\]);
+cartesianArr.push([arr1[i],arr2[j]]);
 
 }
 
@@ -813,9 +703,9 @@ return cartesianArr;
 
 }
 
-const arr1 =\[1,2\];
+const arr1 =[1,2];
 
-const arr2 =\[3,4\];
+const arr2 =[3,4];
 
 console.log(cartesianProduct(arr1,arr2));
 ```
@@ -826,7 +716,7 @@ Space Complexity: O(n×m)
 
 ## Climbing Staircase
 
-![](/notes-img/javascript-notes/img-046.webp)
+![](/notes-img/JavaScript-notes/img-046.webp)
 
 It looks like Fibonacci Series
 
@@ -859,7 +749,7 @@ console.log(climbStairs(5)); // Output: 8
 
 ## Tower of Hanoi
 
-![](/notes-img/javascript-notes/img-047.webp)
+![](/notes-img/JavaScript-notes/img-047.webp)
 
 The Tower of Hanoi is a classic recursive problem that involves moving disks from one rod to another while following specific rules.
 
@@ -881,7 +771,7 @@ function towerOfHanoi(n, source, destination, helper) {
 if (n === 1) {
 
 ```js
-console.log(\`Move disk 1 from ${source} to ${destination}\`);
+console.log(`Move disk 1 from ${source} to ${destination}`);
 
 return;
 
@@ -895,7 +785,7 @@ towerOfHanoi(n - 1, source, helper, destination);
 // Step 2: Move the nth disk from source to destination
 
 ```js
-console.log(\`Move disk ${n} from ${source} to ${destination}\`);
+console.log(`Move disk ${n} from ${source} to ${destination}`);
 ```
 // Step 3: Move the n-1 disks from helper to destination
 
@@ -912,4 +802,4 @@ const numDisks = 3;
 towerOfHanoi(numDisks, 'A', 'C', 'B');
 ```
 
-![](/notes-img/javascript-notes/img-048.webp)
+![](/notes-img/JavaScript-notes/img-048.webp)

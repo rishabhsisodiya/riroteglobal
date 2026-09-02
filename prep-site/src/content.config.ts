@@ -11,6 +11,8 @@ const notes = defineCollection({
     kind: z.enum(['notes', 'questions']).default('notes'),
     /** lower = earlier; the lowest-order notes doc for a track is its landing page */
     order: z.number().default(1),
+    /** marked high-yield ("imp") in the source notes */
+    imp: z.boolean().default(false),
     /** URL segment for secondary pages: /prep/<track>/<slug> */
     slug: z.string().optional(),
     description: z.string().optional(),

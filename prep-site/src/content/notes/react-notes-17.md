@@ -1,5 +1,5 @@
 ---
-title: "Refs (imp)"
+title: "Refs"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,7 +7,8 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 17
-description: "React — Refs (imp)."
+imp: true
+description: "React — Refs."
 ---
 Refs **provide a way to access DOM nodes or React elements** created in the render method. Refs are created using React.createRef() and attached to React elements via the ref attribute. Refs are commonly assigned to an instance property when a component is constructed so they can be referenced throughout the component.
 
@@ -20,7 +21,7 @@ super(props);
 ```
 // create a ref to store the textInput DOM element
 
-### this.textInput = React.createRef();
+**this.textInput = React.createRef();**
 
 ```jsx
 this.focusTextInput = this.focusTextInput.bind(this);
@@ -33,7 +34,7 @@ focusTextInput() {
 
 // Note: we're accessing "current" to get the DOM node
 
-### this.textInput.current.focus();
+**this.textInput.current.focus();**
 
 ```jsx
 }
@@ -80,19 +81,21 @@ constructor(props) {
 
 super(props);
 ```
-### this.textInput = null;
+**this.textInput = null;**
 
-### this.setTextInputRef = element => {
-
-### this.textInput = element;
+```jsx
+**this.setTextInputRef = element => {**
+```
+**this.textInput = element;**
 
 **};**
 
-### this.focusTextInput = () => {
+```jsx
+**this.focusTextInput = () => {**
+```
+**// Focus the text input using the raw DOM API**
 
-### // Focus the text input using the raw DOM API
-
-### if (this.textInput) this.textInput.focus();
+**if (this.textInput) this.textInput.focus();**
 
 **};**
 
@@ -101,9 +104,9 @@ super(props);
 ```
 componentDidMount() {
 
-### // autofocus the input on mount
+**// autofocus the input on mount**
 
-### this.focusTextInput();
+**this.focusTextInput();**
 
 ```jsx
 }
@@ -123,7 +126,7 @@ return (
 
 type="text"
 
-### ref={this.setTextInputRef}
+**ref={this.setTextInputRef}**
 
 />
 
@@ -133,7 +136,7 @@ type="button"
 
 value="Focus the text input"
 
-### onClick={this.focusTextInput}
+**onClick={this.focusTextInput}**
 
 />
 
@@ -162,14 +165,14 @@ constructor(props) {
 
 super(props);
 ```
-### this.textInput = React.createRef();
+**this.textInput = React.createRef();**
 
 ```jsx
 }
 ```
 componentDidMount() {
 
-### this.textInput.current.focusTextInput();
+**this.textInput.current.focusTextInput();**
 
 ```jsx
 }
@@ -179,7 +182,7 @@ render() {
 ```jsx
 return (
 ```
-### <CustomTextInput ref={this.textInput} />
+**<CustomTextInput ref={this.textInput} />**
 
 ```jsx
 );
@@ -205,7 +208,7 @@ Ref forwarding is a technique for **automatically passing a ref through a compon
 
 ### App.js
 
-### import ParentInputRef from "./components/RefsConcept/ParentInputRef";
+**import ParentInputRef from "./components/RefsConcept/ParentInputRef";**
 
 ```jsx
 function App() {
@@ -231,7 +234,7 @@ export default App;
 ```jsx
 import React, { Component } from 'react'
 ```
-### import FRInputRef from './FRInputRef';
+**import FRInputRef from './FRInputRef';**
 
 ```jsx
 class ParentInputRef extends Component {
@@ -245,11 +248,11 @@ t**his.inputRef = React.createRef();**
 ```jsx
 }
 ```
-### componentDidMount(){
+**componentDidMount(){**
 
-### // For autofocus
+**// For autofocus**
 
-### this.inputRef.current.focus();
+**this.inputRef.current.focus();**
 
 **}**
 
@@ -260,7 +263,7 @@ return (
 ```
 <div>
 
-### <FRInputRef ref={this.inputRef}/>
+**<FRInputRef ref={this.inputRef}/>**
 
 ### <button>Focus Input</button>
 
@@ -287,7 +290,7 @@ return (
 ```
 <div>
 
-### <input type="text" ref={ref}/>
+**<input type="text" ref={ref}/>**
 
 </div>
 

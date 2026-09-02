@@ -54,7 +54,7 @@ const updated = entry.data.updated;
 
   <article class="prose">
     <p class="xlink"><a href={u(`/${entry.data.track}`)}>← {meta.title}</a></p>
-    <h1>{entry.data.title}</h1>
+    <h1>{entry.data.title}{entry.data.imp && <span class="imp-badge">high-yield</span>}</h1>
     {updated && (
       <p class="reviewed">Last reviewed {updated.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
     )}

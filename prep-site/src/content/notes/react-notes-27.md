@@ -66,7 +66,7 @@ import React, { useState } from 'react'
 
 const Counter = () => {
 
-const \[count, setCount\] = useState(0);
+const [count, setCount] = useState(0);
 
 return (
 ```
@@ -100,15 +100,14 @@ const CounterTwo = () => {
 
 const initialCount=0;
 
-const \[count, setCount\] = useState(initialCount);
+const [count, setCount] = useState(initialCount);
 
 const incrementFive = () =>{
 
 for (let i = 0; i < 5; i++) {
-```
-### setCount(prevCount=> prevCount+1)
 
-```jsx
+**setCount(prevCount=> prevCount+1)**
+
 }
 
 }
@@ -140,14 +139,14 @@ export default CounterTwo
 
 ### useState with Object
 
-**Problem:** When we use below code then whenever we enter in first input field , it will show value in firstname but when we enter in second input field then it remove value from firstname and show value for lastName only
+**Problem:** When we use below code then whenever we enter in first input field, it will show value in firstname but when we enter in second input field then it remove value from firstname and show value for lastName only
 
 ```jsx
 import React, {useState} from 'react'
 
 const CounterThree = () => {
 
-const \[name, setName\] = useState({
+const [name, setName] = useState({
 ```
 firstName:'',
 
@@ -186,7 +185,7 @@ import React, {useState} from 'react'
 
 const CounterThree = () => {
 
-const \[name, setName\] = useState({
+const [name, setName] = useState({
 ```
 firstName:'',
 
@@ -225,7 +224,7 @@ import React, { useState } from "react";
 
 const CounterFour = () => {
 
-const \[items, setItems\] = useState(\[\]);
+const [items, setItems] = useState([]);
 
 const addItem = () => {
 ```
@@ -236,7 +235,7 @@ setItems(**\[**
 { id: items.length, value: Math.floor(Math.random() \* 10) + 1 }
 
 ```jsx
-**\]**);
+**]**);
 
 };
 
@@ -278,11 +277,11 @@ import React, { useState, useEffect } from 'react'
 
 const Counter = () => {
 
-const \[count, setCount\] = useState(0);
-```
-### useEffect(() => {
+const [count, setCount] = useState(0);
 
-### document.title= \`You Clicked ${count} times\`
+**useEffect(() => {**
+```
+**document.title= `You Clicked ${count} times`**
 
 **})**
 
@@ -315,15 +314,15 @@ import React, { useState, useEffect } from 'react'
 
 const Counter = () => {
 
-const \[count, setCount\] = useState(0);
+const [count, setCount] = useState(0);
 
-const \[name, setName\] = useState('');
+const [name, setName] = useState('');
 
 useEffect(() => {
 
 console.log('useEffect-Updating document title');
 
-document.title= \`You Clicked ${count} times\`
+document.title= `You Clicked ${count} times`
 ```
 },**\[count\]**)
 
@@ -356,7 +355,7 @@ if(prevState.count !== this.state.count){
 ```jsx
 console.log('useEffect-Updating document title');
 
-document.title= \`You Clicked ${count} times\`
+document.title= `You Clicked ${count} times`
 
 }
 
@@ -370,9 +369,9 @@ import React, {useState, useEffect} from 'react'
 
 const HookMouse = () => {
 
-const \[x, setX\] = useState(0);
+const [x, setX] = useState(0);
 
-const \[y, setY\] = useState(0);
+const [y, setY] = useState(0);
 
 const logMousePosition = e =>{
 
@@ -383,12 +382,12 @@ setX(e.clientX);
 setY(e.clientY);
 
 }
+
+**useEffect( () => {**
+
+**console.log('useEffect called');**
 ```
-### useEffect( () => {
-
-### console.log('useEffect called');
-
-### window.addEventListener('mousemove',logMousePosition)
+**window.addEventListener('mousemove',logMousePosition)**
 
 **},\[\])**
 
@@ -420,9 +419,9 @@ import React, {useState, useEffect} from 'react'
 
 const HookMouse = () => {
 
-const \[x, setX\] = useState(0);
+const [x, setX] = useState(0);
 
-const \[y, setY\] = useState(0);
+const [y, setY] = useState(0);
 
 const logMousePosition = e =>{
 
@@ -440,11 +439,12 @@ console.log('useEffect called');
 ```
 window.addEventListener('mousemove',logMousePosition)
 
-### return () => {
+```jsx
+**return () => {**
 
-### console.log('component unmounted');
-
-### window.removeEventListener('mousemove', logMousePosition)
+**console.log('component unmounted');**
+```
+**window.removeEventListener('mousemove', logMousePosition)**
 
 **}**
 
@@ -476,7 +476,7 @@ import HookMouse from "./HookMouse";
 
 const MouseContainer = () => {
 
-const \[display, setDisplay\] = useState(true);
+const [display, setDisplay] = useState(true);
 
 return (
 ```
@@ -518,7 +518,7 @@ import React, {useState, useEffect} from 'react'
 
 const IntervalHookCounter = () => {
 
-const \[count, setCount\] = useState(0);
+const [count, setCount] = useState(0);
 
 const tick = () => {
 ```
@@ -564,7 +564,7 @@ import React, {useState, useEffect} from 'react'
 
 const IntervalHookCounter = () => {
 
-const \[count, setCount\] = useState(0);
+const [count, setCount] = useState(0);
 
 const tick = () => {
 ```
@@ -603,14 +603,14 @@ return (
 export default IntervalHookCounter
 ```
 
-**Solution 2: use prevCount , prevCount always keeps track of previous value so it will always update UI and render gets called.**
+**Solution 2: use prevCount, prevCount always keeps track of previous value so it will always update UI and render gets called.**
 
 ```jsx
 import React, {useState, useEffect} from 'react'
 
 const IntervalHookCounter = () => {
 
-const \[count, setCount\] = useState(0);
+const [count, setCount] = useState(0);
 
 const tick = () => {
 
@@ -654,7 +654,7 @@ export default IntervalHookCounter
 
 ### Fetching data using useEffect
 
-Install axios : **npm i axios**
+Install axios: **npm i axios**
 
 ```jsx
 import React, { useState, useEffect } from "react";
@@ -663,11 +663,11 @@ import axios from "axios";
 
 function DataFetching() {
 
-const \[post, setPost\] = useState({});
+const [post, setPost] = useState({});
 
-const \[id, setId\] = useState(1);
+const [id, setId] = useState(1);
 
-const \[idFromButtonClick, setIdFromButtonClick\] = useState(1);
+const [idFromButtonClick, setIdFromButtonClick] = useState(1);
 
 useEffect(() => {
 ```
@@ -691,7 +691,7 @@ console.log(err);
 
 });
 
-}, \[idFromButtonClick\]);
+}, [idFromButtonClick]);
 
 const handleClick = () => {
 
@@ -715,7 +715,7 @@ Fetch Post
 <div>{post.title}</div>
 
 ```jsx
-{/\* <ul> {posts.map(post => (<li key={post.id}>{post.title}</li>))}</ul> \*/}
+{/* <ul> {posts.map(post => (<li key={post.id}>{post.title}</li>))}</ul> */}
 ```
 </div>
 
@@ -740,9 +740,9 @@ import "./App.css";
 
 import ComponentC from "./components/ComponentC";
 ```
-### export const UserContext = React.createContext();
+**export const UserContext = React.createContext();**
 
-### export const ChannelContext = React.createContext();
+**export const ChannelContext = React.createContext();**
 
 ```jsx
 function App() {
@@ -751,9 +751,9 @@ return (
 ```
 <div className="App">
 
-### <UserContext.Provider value={"Vishwas"}>
+**<UserContext.Provider value={"Vishwas"}>**
 
-### <ChannelContext.Provider value={"Codevolution"}>
+**<ChannelContext.Provider value={"Codevolution"}>**
 
 <ComponentC />
 
@@ -794,7 +794,7 @@ ComponentF.js
 ```jsx
 import React from "react";
 ```
-### import { UserContext, ChannelContext } from "../App";
+**import { UserContext, ChannelContext } from "../App";**
 
 ```jsx
 function ComponentF() {
@@ -805,9 +805,10 @@ return (
 
 ### <UserContext.Consumer>
 
-### {(user) => {
-
-### return (
+```jsx
+**{(user) => {**
+```
+**return (**
 
 ### <ChannelContext.Consumer>
 
@@ -859,9 +860,9 @@ import ComponentF from './ComponentF'
 ```jsx
 function ComponentE() {
 ```
-### const user = useContext(UserContext)
+**const user = useContext(UserContext)**
 
-### const channel = useContext(ChannelContext)
+**const channel = useContext(ChannelContext)**
 
 return <div> User is {user} and channel is {channel}</div>
 
@@ -879,12 +880,12 @@ What's the difference between useState and useReducer?
 
 → useState is built using useReducer.
 
-Similarity with reduce function in javascript
+Similarity with reduce function in JavaScript
 
 The reduce() method executes a reducer function (that you provide) on each element of the array, resulting in a single output value.
 
 ```jsx
-const array1 = \[1, 2, 3, 4\];
+const array1 = [1, 2, 3, 4];
 
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 ```
@@ -902,63 +903,44 @@ console.log(array1.reduce(reducer, 5));
 ```
 // expected output: 15
 
-reduce in Javascript
+| reduce in JavaScript | useReducer in React |
+| --- | --- |
+| array.reduce(reducer, initialValue) | useReducer(reducer, initialState) |
+| singleValue= reducer(accumulator, intemValue) | newState= reducer(currentState, action) |
+| reduce method returns a single value. | useReducer returns a pair of values. [newState, dispatch] |
 
-useReducer in React
-
-| --- | ---
-array.reduce(reducer, initialValue)
-
-useReducer(reducer, initialState)
-
-| --- | ---
-```jsx
-singleValue= reducer(accumulator, intemValue)
-```
-
-```jsx
-newState= reducer(currentState, action)
-```
-
-| --- | ---
-reduce method returns a single value.
-
-useReducer returns a pair of values.
-
-\[newState, dispatch\]
-
-| --- | ---
 **Syntax:**
 
 ```jsx
-const \[state, dispatch\] = useReducer(reducer, initialArg, init);
+const [state, dispatch] = useReducer(reducer, initialArg, init);
 ```
 CounterOne.js
 
 ```jsx
 import React, { useReducer } from "react";
 ```
-### const initialState = 0;
+**const initialState = 0;**
 
-### const reducer = (state, action) => {
-
-### switch (action) {
+```jsx
+**const reducer = (state, action) => {**
+```
+**switch (action) {**
 
 **case "increment":**
 
-### return state + 1;
+**return state + 1;**
 
 **case "decrement":**
 
-### return state - 1;
+**return state - 1;**
 
 **case "reset":**
 
-### return initialState;
+**return initialState;**
 
 **default:**
 
-### return state;
+**return state;**
 
 **}**
 
@@ -967,7 +949,7 @@ import React, { useReducer } from "react";
 ```jsx
 function CounterOne() {
 ```
-### const \[count, dispatch\] = useReducer(reducer, initialState);
+**const \[count, dispatch\] = useReducer(reducer, initialState);**
 
 ```jsx
 return (
@@ -1025,7 +1007,7 @@ Complex state
 ```jsx
 import React, { useReducer } from "react";
 ```
-### const initialState = {
+**const initialState = {**
 
 **firstCounter: 0,**
 
@@ -1074,7 +1056,7 @@ return state;
 
 function CounterTwo() {
 
-const \[count, dispatch\] = useReducer(reducer, initialState);
+const [count, dispatch] = useReducer(reducer, initialState);
 
 return (
 ```
@@ -1113,7 +1095,7 @@ Decrement 5
 ```jsx
 <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
 ```
-### <div>Secound Counter = {count.secondCounter}</div>
+**<div>Secound Counter = {count.secondCounter}</div>**
 
 <div>
 
@@ -1180,9 +1162,9 @@ return state;
 
 function CounterThree() {
 ```
-### const \[count, dispatch\] = useReducer(reducer, initialState);
+**const \[count, dispatch\] = useReducer(reducer, initialState);**
 
-### const \[countTwo, dispatchTwo\] = useReducer(reducer, initialState);
+**const \[countTwo, dispatchTwo\] = useReducer(reducer, initialState);**
 
 ```jsx
 return (
@@ -1205,7 +1187,7 @@ return (
 
 <button onClick={() => **dispatchTwo("decrement")**}>Decrement</button>
 
-<button onClick={() => **dispatchTwo("reset")}**\>Reset</button>
+<button onClick={() => **dispatchTwo("reset")}**>Reset</button>
 ```
 </div>
 
@@ -1243,38 +1225,39 @@ import ComponentB from "./components/ComponentB";
 
 import ComponentC from "./components/ComponentC";
 ```
-### const initialState = 0;
+**const initialState = 0;**
 
-### const reducer = (state, action) => {
-
-### switch (action) {
+```jsx
+**const reducer = (state, action) => {**
+```
+**switch (action) {**
 
 **case "increment":**
 
-### return state + 1;
+**return state + 1;**
 
 **case "decrement":**
 
-### return state - 1;
+**return state - 1;**
 
 **case "reset":**
 
-### return initialState;
+**return initialState;**
 
 **default:**
 
-### return state;
+**return state;**
 
 **}**
 
 **};**
 
-### export const CountContext = React.createContext();
+**export const CountContext = React.createContext();**
 
 ```jsx
 function App() {
 ```
-### const \[count, dispatch\] = useReducer(reducer, initialState);
+**const \[count, dispatch\] = useReducer(reducer, initialState);**
 
 ```jsx
 return (
@@ -1314,7 +1297,7 @@ import { **CountContext** } from '../App';
 
 function ComponentA() {
 ```
-### const countContext = useContext(CountContext)
+**const countContext = useContext(CountContext)**
 
 ```jsx
 return (
@@ -1399,7 +1382,7 @@ import { **CountContext** } from '../App';
 
 function ComponentD() {
 ```
-### const countContext = useContext(CountContext)
+**const countContext = useContext(CountContext)**
 
 ```jsx
 return (
@@ -1411,7 +1394,7 @@ Component D {**countContext.countState**}
 ```jsx
 <button onClick={**() => countContext.countDispatch('increment')**}>Increment</button>
 
-<button onClick=**{() => countContext.countDispatch('decrement')}**\>Decrement</button>
+<button onClick=**{() => countContext.countDispatch('decrement')}**>Decrement</button>
 
 <button onClick={**() => countContext.countDispatch('reset')**}>Reset</button>
 ```
@@ -1455,12 +1438,12 @@ ComponentF.js
 ```jsx
 import React, { **useContext** } from "react";
 ```
-### import { CountContext } from "../App";
+**import { CountContext } from "../App";**
 
 ```jsx
 function ComponentF() {
 ```
-### const countContext = useContext(CountContext);
+**const countContext = useContext(CountContext);**
 
 ```jsx
 return (
@@ -1507,11 +1490,11 @@ import axios from 'axios';
 
 function DataFetchingOne() {
 
-const \[loading, setLoading\] = useState(true)
+const [loading, setLoading] = useState(true)
 
-const \[error, setError\] = useState('')
+const [error, setError] = useState('')
 
-const \[post, setPost\] = useState({})
+const [post, setPost] = useState({})
 
 useEffect(() => {
 ```
@@ -1546,9 +1529,9 @@ return (
 ```
 <div>
 
-{loading ? 'Loading' : post.title}
+{loading ? 'Loading': post.title}
 
-{error ? error : null}
+{error ? error: null}
 
 </div>
 
@@ -1620,7 +1603,7 @@ return state;
 
 function DataFetchingTwo() {
 
-const \[state, dispatch\] = useReducer(reducer, initialState);
+const [state, dispatch] = useReducer(reducer, initialState);
 
 useEffect(() => {
 ```
@@ -1642,15 +1625,15 @@ dispatch({ type: "FETCH_ERROR" });
 
 });
 
-}, \[\]);
+}, []);
 
 return (
 ```
 <div>
 
-{state.loading ? "Loading" : state.post.title}
+{state.loading ? "Loading": state.post.title}
 
-{state.error ? state.error : null}
+{state.error ? state.error: null}
 
 </div>
 
@@ -1664,48 +1647,14 @@ export default DataFetchingTwo;
 
 ### useState vs useReducer
 
-### Scenario
+| Scenario | useState | useReducer |
+| --- | --- | --- |
+| Type of State | Number, String and boolean | Object or Array |
+| Number of transition( updation) | One or Two | Too many |
+| Related state transition? | No | Yes |
+| Business logic | No business logic | Complex business logic |
+| Local vs Global | Local | Global |
 
-### useState
-
-### useReducer
-
-| --- | --- | ---
-Type of State
-
-Number, String and boolean
-
-Object or Array
-
-| --- | --- | ---
-Number of transition( updation)
-
-One or Two
-
-Too many
-
-| --- | --- | ---
-Related state transition?
-
-No
-
-Yes
-
-| --- | --- | ---
-Business logic
-
-No business logic
-
-Complex business logic
-
-| --- | --- | ---
-Local vs Global
-
-Local
-
-Global
-
-| --- | --- | ---
 ## useCallback
 
 **useCallback** is a hook that will return the memoized version of the callback function that only changes if one of dependencies has changed. It is useful when passing a callback to optimize the child component that relies on reference equality **to prevent unnecessary renders.**
@@ -1727,21 +1676,22 @@ import Title from "./Title";
 
 function ParentComponent() {
 
-const \[age, setAge\] = useState(25);
+const [age, setAge] = useState(25);
 
-const \[salary, setSalary\] = useState(50000);
+const [salary, setSalary] = useState(50000);
+
+**const incrementAge = useCallback(() => {**
 ```
-### const incrementAge = useCallback(() => {
+**setAge(age + 1);**
 
-### setAge(age + 1);
+**}, \[age\]);**
 
-### }, \[age\]);
+```jsx
+**const incrementSalary = useCallback(() => {**
+```
+**setSalary(salary + 1000);**
 
-### const incrementSalary = useCallback(() => {
-
-### setSalary(salary + 1000);
-
-### }, \[salary\]);
+**}, \[salary\]);**
 
 ```jsx
 return (
@@ -1800,7 +1750,7 @@ import React from 'react'
 
 function Count({ text, count }) {
 
-console.log(\`Rendering ${text}\`)
+console.log(`Rendering ${text}`)
 
 return <div>{text} - {count}</div>
 
@@ -1834,17 +1784,11 @@ useCallback Hook
 export default **React.memo**(Title)
 ```
 
-### Program output
+| Program output |  |
+| --- | --- |
+| Console.log() output in browser |  |
 
-![](/notes-img/react-notes/img-020.webp)
-
-| --- | ---
-### Console.log() output in browser
-
-![](/notes-img/react-notes/img-021.webp)
-
-| --- | ---
-So When we click either on the Increment Age or Increment Salary button, Age and Salary value will be incremented respectively **but it will re-render another component as well** which has simple logic like Title, etc. If there are let’s say 40-50 components then **it will be a performance issue. To improve performance we have to restrict the re-render to only components that need to be re-render.** In our case when we increment the age then only the count component and button component related to Age should re-rendered. **So we can wrap our component in React.memo()**. So after wrapping Button.js , Count.js and Title.js in React.memo. Now when click on Increment Age button it will render button and count component related to Age and also it show increment Salary button component which is not needed
+So When we click either on the Increment Age or Increment Salary button, Age and Salary value will be incremented respectively **but it will re-render another component as well** which has simple logic like Title, etc. If there are let’s say 40-50 components then **it will be a performance issue. To improve performance we have to restrict the re-render to only components that need to be re-render.** In our case when we increment the age then only the count component and button component related to Age should re-rendered. **So we can wrap our component in React.memo()**. So after wrapping Button.js, Count.js and Title.js in React.memo. Now when click on Increment Age button it will render button and count component related to Age and also it show increment Salary button component which is not needed
 
 ![](/notes-img/react-notes/img-022.webp)
 
@@ -1859,9 +1803,9 @@ import React, { useState, useMemo } from "react";
 
 function Counter() {
 
-const \[counterOne, setCounterOne\] = useState(0);
+const [counterOne, setCounterOne] = useState(0);
 
-const \[counterTwo, setCounterTwo\] = useState(0);
+const [counterTwo, setCounterTwo] = useState(0);
 
 const incrementOne = () => {
 
@@ -1897,7 +1841,7 @@ return (
 
 <button onClick={incrementOne}>Count One - {counterOne}</button>
 
-<span>{isEven ? "Even" : "Odd"}</span>
+<span>{isEven ? "Even": "Odd"}</span>
 
 </div>
 
@@ -1934,12 +1878,12 @@ import React, { useRef, useEffect } from 'react'
 
 function FocusInput() {
 ```
-### const inputRef = useRef(null)
+**const inputRef = useRef(null)**
 
 ```jsx
 useEffect(() => {
 ```
-### inputRef.current.focus()
+**inputRef.current.focus()**
 
 }, \[\])
 
@@ -2043,9 +1987,9 @@ import React, {useState, useEffect, useRef} from 'react'
 
 function HookTimer() {
 
-const \[timer, setTimer\] = useState(0)
+const [timer, setTimer] = useState(0)
 ```
-### const interValRef = useRef()
+**const interValRef = useRef()**
 
 ```jsx
 useEffect(() => {
@@ -2095,13 +2039,13 @@ import React, {useState, useEffect, useRef} from 'react'
 
 function HookTimer() {
 
-const \[timer, setTimer\] = useState(0)
+const [timer, setTimer] = useState(0)
 
 const interValRef = useRef()
 
 useEffect(() => {
 
-**interValRef.current** \= setInterval(() => {
+**interValRef.current** = setInterval(() => {
 
 setTimer(timer => timer + 1)
 ```
@@ -2144,7 +2088,7 @@ useImperativeHandle customizes the instance value that is exposed to parent comp
 ### Syntax
 
 ```jsx
-useImperativeHandle(ref, createHandle, \[dependencies\]);
+useImperativeHandle(ref, createHandle, [dependencies]);
 ```
 -   **ref**: The forwarded ref from the parent component.
 -   **createHandle**: A function that returns the custom object to expose.
@@ -2154,12 +2098,12 @@ useImperativeHandle(ref, createHandle, \[dependencies\]);
 function FancyInput(props, ref) {
 
 const inputRef = useRef();
+
+**useImperativeHandle(ref, () => ({**
+
+**focus: () => {**
 ```
-### useImperativeHandle(ref, () => ({
-
-### focus: () => {
-
-### inputRef.current.focus();
+**inputRef.current.focus();**
 
 **}**
 
@@ -2189,7 +2133,7 @@ To exclude a component that needs layout effects from the server-rendered HTML, 
 
 ## Custom Hooks
 
-A custom Hook is basically a javascript function whose name starts with ‘use’. You can also call it as other hooks are required.
+A custom Hook is basically a JavaScript function whose name starts with ‘use’. You can also call it as other hooks are required.
 
 ### Uses
 
@@ -2209,11 +2153,11 @@ import React, {useEffect, useState} from 'react'
 
 function DocTitleOne() {
 
-const \[count, setCount\] = useState(0)
+const [count, setCount] = useState(0)
 
 useEffect(() => {
 
-document.title = \`Count- ${count}\`
+document.title = `Count- ${count}`
 ```
 }, \[count\])
 
@@ -2242,11 +2186,11 @@ import React, {useEffect, useState} from 'react'
 
 function DocTitleTwo() {
 
-const \[count, setCount\] = useState(0)
+const [count, setCount] = useState(0)
 
 useEffect(() => {
 
-document.title = \`Count- ${count}\`
+document.title = `Count- ${count}`
 ```
 }, \[count\])
 
@@ -2281,7 +2225,7 @@ function useDocumentTitle(count) {
 
 useEffect(() => {
 
-document.title = \`Count ${count}\`
+document.title = `Count ${count}`
 ```
 }, \[count\])
 
@@ -2296,14 +2240,14 @@ export default useDocumentTitle
 ```jsx
 import React, { useState } from "react";
 ```
-### import useDocumentTitle from "../hooks/useDocumentTitle";
+**import useDocumentTitle from "../hooks/useDocumentTitle";**
 
 ```jsx
 function DocTitleOne() {
 
-const \[count, setCount\] = useState(0);
+const [count, setCount] = useState(0);
 ```
-### useDocumentTitle(count);
+**useDocumentTitle(count);**
 
 ```jsx
 return (
@@ -2328,12 +2272,12 @@ export default DocTitleOne;
 ```jsx
 import React, {useState} from 'react'
 ```
-### import useDocumentTitle from '../hooks/useDocumentTitle';
+**import useDocumentTitle from '../hooks/useDocumentTitle';**
 
 ```jsx
 function DocTitleTwo() {
 
-const \[count, setCount\] = useState(0)
+const [count, setCount] = useState(0)
 ```
 ### useDocumentTitle(count)
 
@@ -2357,7 +2301,7 @@ export default DocTitleTwo
 
 ### Counter
 
-### _Without Hook_
+### Without Hook
 
 ### CounterOne.js
 
@@ -2366,7 +2310,7 @@ import React, { useState } from 'react'
 
 function CounterOne() {
 
-const \[count, setCount\] = useState(0)
+const [count, setCount] = useState(0)
 
 const increment = () => {
 
@@ -2409,7 +2353,7 @@ return (
 export default CounterOne
 ```
 
-### _Using useCounter Custom Hook_
+### Using useCounter Custom Hook
 
 Create **useCounter.js** under hooks folder
 
@@ -2418,7 +2362,7 @@ import { useState } from 'react'
 
 function useCounter(initialCount = 0, value) {
 
-const \[count, setCount\] = useState(initialCount)
+const [count, setCount] = useState(initialCount)
 
 const increment = () => {
 
@@ -2439,7 +2383,7 @@ setCount(initialCount)
 ```jsx
 }
 
-return \[count, increment, decrement, reset\]
+return [count, increment, decrement, reset]
 
 }
 
@@ -2456,7 +2400,7 @@ import React from 'react'
 ```jsx
 function CounterOne() {
 ```
-### const \[count, increment, decrement, reset\] = useCounter(0, 1)
+**const \[count, increment, decrement, reset\] = useCounter(0, 1)**
 
 ```jsx
 return (
@@ -2483,22 +2427,22 @@ export default CounterOne
 
 ### Input Form
 
-### _Without using custom hook_
+### Without using custom hook
 
 ```jsx
 import React, { useState } from "react";
 
 function UserForm() {
 
-const \[firstName, setFirstName\] = useState('');
+const [firstName, setFirstName] = useState('');
 
-const \[lastName, setLastName\] = useState('');
+const [lastName, setLastName] = useState('');
 
 const submitHandler = (e) => {
 
 e.preventDefault();
 
-alert(\`Hello ${firstName} ${lastName}\`);
+alert(`Hello ${firstName} ${lastName}`);
 
 };
 
@@ -2540,14 +2484,14 @@ return (
 export default UserForm;
 ```
 
-### _With useInput custom Hook_
+### With useInput custom Hook
 
 ```jsx
 import {useState} from 'react'
 
 function useInput(initialValue) {
 
-const \[value, setValue\] = useState(initialValue)
+const [value, setValue] = useState(initialValue)
 
 const reset = () => {
 ```
@@ -2560,8 +2504,9 @@ const bind = {
 ```
 value,
 
-### onChange: e => {
-
+```jsx
+**onChange: e => {**
+```
 ### setValue(e.target.value)
 
 **}**
@@ -2569,7 +2514,7 @@ value,
 ```jsx
 }
 
-return \[value, bind, reset\]
+return [value, bind, reset]
 
 }
 
@@ -2585,19 +2530,19 @@ import useInput from "../hooks/useInput";
 
 function UserForm() {
 
-const \[firstName, bindFirstName, resetFirstName\] = useInput("");
+const [firstName, bindFirstName, resetFirstName] = useInput("");
 
-const \[lastName, bindLastName, resetLastName\] = useInput("");
+const [lastName, bindLastName, resetLastName] = useInput("");
 
 const submitHandler = (e) => {
 
 e.preventDefault();
 
-alert(\`Hello ${firstName} ${lastName}\`);
+alert(`Hello ${firstName} ${lastName}`);
 ```
-### resetFirstName();
+**resetFirstName();**
 
-### resetLastName();
+**resetLastName();**
 
 ```jsx
 };
@@ -2647,15 +2592,15 @@ For example, consider the useFriendStatus custom Hook described in “Building Y
 ```jsx
 function useFriendStatus(friendID) {
 
-const \[isOnline, setIsOnline\] = useState(null);
+const [isOnline, setIsOnline] = useState(null);
 ```
 // ...
 
-### // Show a label in DevTools next to this Hook
+**// Show a label in DevTools next to this Hook**
 
-### // e.g. "FriendStatus: Online"
+**// e.g. "FriendStatus: Online"**
 
-### useDebugValue(isOnline ? 'Online' : 'Offline');
+**useDebugValue(isOnline ? 'Online': 'Offline');**
 
 ```jsx
 return isOnline;

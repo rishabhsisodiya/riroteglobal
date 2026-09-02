@@ -38,7 +38,7 @@ lastName:"Random",
 ```js
 }
 ```
-### //function borrowing
+**//function borrowing**
 
 ```js
 name.printFullName.call(name2);
@@ -75,20 +75,20 @@ lastName:"Random",
 ```js
 }
 ```
-### //function borrowing
+**//function borrowing**
 
-### printFullName.call(name2, "Udaipur", "Rajasthan");
+**printFullName.call(name2, "Udaipur", "Rajasthan");**
 
-### printFullName.apply(name2, \["Udaipur", "Rajasthan"\]);
+**printFullName.apply(name2, \["Udaipur", "Rajasthan"\]);**
 
-### // bind method return a copy of method
+**// bind method return a copy of method**
 
-### let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )
+**let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )**
 
-### printMyName();
+**printMyName();**
 
 Only difference between call and apply is how we pass arguments in them (In apply, we invoke the function and allow us to pass in arguments as an array while in call we pass arguments one by one) while bind returns a new copy of function and binds it which we can use later.
 
 If we do not pass argos in array form to apply method then it will throw error:
 
-### TypeError: CreateListFromArrayLike called on non-object
+**TypeError: CreateListFromArrayLike called on non-object**

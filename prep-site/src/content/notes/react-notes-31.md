@@ -80,11 +80,11 @@ Create a **redux**/cake/cakeActions.js and redux/cake/cakeTypes.js under src fol
 export const BUY_CAKE='BUY_CAKE'
 ```
 
-Lets now import action type and replace it in cakeAction.js
+Let's now import action type and replace it in cakeAction.js
 
 ### cakeActions.js
 
-### import {BUY_CAKE} from './cakeTypes';
+**import {BUY_CAKE} from './cakeTypes';**
 
 ```jsx
 export const buyCake = () => {
@@ -144,7 +144,7 @@ export default cakeReducer;
 ```jsx
 import { createStore } from "redux";
 ```
-### import cakeReducer from "./cakeReducer";
+**import cakeReducer from "./cakeReducer";**
 
 ```jsx
 const store = createStore(**cakeReducer**)
@@ -161,16 +161,16 @@ import React from "react";
 
 import CakeContainer from "./components/CakeContainer";
 ```
-### import { Provider } from "react-redux";
+**import { Provider } from "react-redux";**
 
-### import store from "./redux/store";
+**import store from "./redux/store";**
 
 ```jsx
 const App = () => {
 
 return (
 ```
-### <Provider store={store}>
+**<Provider store={store}>**
 
 <div>
 
@@ -193,9 +193,9 @@ export default App;
 ```jsx
 import React from "react";
 ```
-### import { buyCake } from "../redux/cakes/cakeActions";
+**import { buyCake } from "../redux/cakes/cakeActions";**
 
-### import { connect } from "react-redux";
+**import { connect } from "react-redux";**
 
 ```jsx
 const CakeContainer = (**props**) => {
@@ -214,10 +214,10 @@ return (
 );
 
 };
-```
-### const mapStateToProps = (state) => {
 
-### return {
+**const mapStateToProps = (state) => {**
+```
+**return {**
 
 **numOfCakes: state.numOfCakes,**
 
@@ -225,9 +225,10 @@ return (
 
 **};**
 
-### const mapDispatchToProps = (dispatch) => {
-
-### return {
+```jsx
+**const mapDispatchToProps = (dispatch) => {**
+```
+**return {**
 
 ```jsx
 **buyCake: ()=> dispatch(buyCake()),**
@@ -244,7 +245,7 @@ export default **connect(mapStateToProps, mapDispatchToProps)(**CakeContainer**)
 
 Got to terminal: **npm start**
 
-#### **Let’s dive into above code and understand it**
+#### Let’s dive into above code and understand it
 
 Below code is for selectors. **Selectors** return state information from redux. You can create a separate file if your code becomes more complex. Here it is simple so we are not creating any separate file.
 
@@ -326,7 +327,7 @@ import { Provider } from "react-redux";
 
 import store from "./redux/store";
 ```
-### import HooksCakeContainer from "./components/HooksCakeContainer";
+**import HooksCakeContainer from "./components/HooksCakeContainer";**
 
 ```jsx
 const App = () => {
@@ -360,14 +361,14 @@ import React from "react";
 
 import { **useDispatch**, useSelector } from "react-redux";
 ```
-### import { buyCake } from "../redux/cakes/cakeActions";
+**import { buyCake } from "../redux/cakes/cakeActions";**
 
 ```jsx
 const HooksCakeContainer = () => {
 
 const numOfCakes=useSelector(state=> state.numOfCakes)
 ```
-### const dispatch = useDispatch();
+**const dispatch = useDispatch();**
 
 ```jsx
 return (
@@ -478,11 +479,11 @@ export default iceCreamReducer;
 ```jsx
 import { **combineReducers** } from "redux";
 ```
-### import cakeReducer from "./cakes/cakeReducers";
+**import cakeReducer from "./cakes/cakeReducers";**
 
-### import iceCreamReducer from "./iceCreams/iceCreamReducers";
+**import iceCreamReducer from "./iceCreams/iceCreamReducers";**
 
-### const rootReducer = combineReducers({
+**const rootReducer = combineReducers({**
 
 **cake:cakeReducer,**
 
@@ -501,7 +502,7 @@ export default rootReducer;
 ```jsx
 import { createStore } from "redux";
 ```
-### import rootReducer from "./rootReducer";
+**import rootReducer from "./rootReducer";**
 
 ```jsx
 const store = createStore(**rootReducer**)
@@ -537,7 +538,7 @@ return (
 
 };
 ```
-### // Specify the key we use in root reducer
+**// Specify the key we use in root reducer**
 
 ```jsx
 const mapStateToProps = (state) => {
@@ -682,7 +683,7 @@ import { createStore, **applyMiddleware** } from "redux";
 
 import rootReducer from "./rootReducer";
 ```
-### import logger from 'redux-logger';
+**import logger from 'redux-logger';**
 
 ```jsx
 const store = createStore(rootReducer, **applyMiddleware(logger))**
@@ -701,7 +702,7 @@ npm install redux-devtools-extension
 ```jsx
 import { createStore, applyMiddleware } from "redux";
 ```
-### import { composeWithDevTools } from "redux-devtools-extension";
+**import { composeWithDevTools } from "redux-devtools-extension";**
 
 ```jsx
 import rootReducer from "./rootReducer";
@@ -739,7 +740,7 @@ import { connect } from "react-redux";
 
 const NewCakeContainer = (props) => {
 ```
-### const \[number, setNumber\] = useState(1)
+**const \[number, setNumber\] = useState(1)**
 
 ```jsx
 return (
@@ -857,7 +858,7 @@ import HooksCakeContainer from "./components/HooksCakeContainer";
 
 import IceCreamContainer from "./components/IceCreamContainer";
 ```
-### import NewCakeContainer from "./components/NewCakeContainer";
+**import NewCakeContainer from "./components/NewCakeContainer";**
 
 ```jsx
 const App = () => {
@@ -920,7 +921,7 @@ const itemState = **ownProps.cake**
 ```
 ### ? state.cake.numOfCakes
 
-### : state.iceCream.numOfIceCreams;
+**: state.iceCream.numOfIceCreams;**
 
 ```jsx
 return {
@@ -998,9 +999,9 @@ import React from "react";
 
 import { connect } from "react-redux";
 ```
-### import { buyCake } from "../redux/cakes/cakeActions";
+**import { buyCake } from "../redux/cakes/cakeActions";**
 
-### import { buyIceCream } from "../redux/iceCreams/iceCreamActions";
+**import { buyIceCream } from "../redux/iceCreams/iceCreamActions";**
 
 ```jsx
 const ListContainer = (props) => {
@@ -1011,7 +1012,7 @@ return (
 
 <h2>Item: {props.item}</h2>
 
-### <button onClick={props.buyItem}>Buy Item</button>
+**<button onClick={props.buyItem}>Buy Item</button>**
 
 </div>
 
@@ -1036,13 +1037,12 @@ item: itemState,
 };
 
 };
-```
-### const mapDispatchToProps = (dispatch, ownProps) => {
 
-```jsx
+**const mapDispatchToProps = (dispatch, ownProps) => {**
+
 **const dispatchFunction = ownProps.cake ? ()=> dispatch(buyCake()) :()=> dispatch(buyIceCream())**
 ```
-### return {
+**return {**
 
 ### buyItem: dispatchFunction
 
@@ -1061,11 +1061,11 @@ export default connect(**null**, mapDispatchToProps)(ListContainer);
 ```
 ## Redux thunk
 
-Install axios **Install axios , redux-thunk**
+Install axios **Install axios, redux-thunk**
 
 npm install axios redux-thunk
 
-Create a new folder **user** under redux then create files userTypes.js , userActions.js and userReducers.js.
+Create a new folder **user** under redux then create files userTypes.js, userActions.js and userReducers.js.
 
 ### userTypes.js
 
@@ -1164,7 +1164,7 @@ const initialState = {
 
 loading: false,
 
-users: \[\],
+users: [],
 
 error: "",
 
@@ -1212,7 +1212,7 @@ return {
 loading:false,
 
 ```jsx
-users: \[\],
+users: [],
 
 error: action.payload,
 
@@ -1265,7 +1265,7 @@ import rootReducer from "./rootReducer";
 
 import logger from "redux-logger";
 ```
-### import thunk from 'redux-thunk';
+**import thunk from 'redux-thunk';**
 
 ```jsx
 const store = createStore(

@@ -1,5 +1,5 @@
 ---
-title: "Use setState() correctly - imp"
+title: "Use setState() correctly"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,40 +7,21 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 5
-description: "React — Use setState() correctly - imp."
+imp: true
+description: "React — Use setState() correctly."
 ---
-**_1\. If you do not use setState method for updating state value then UI update will not happen._**
+**_1. If you do not use setState method for updating state value then UI update will not happen._**
 
 You can assign value directly to state, you need to use setState method to update the state value and if you do not use setState then it will not render your component and hence there will be no update in UI.
 
-**_2\. Callback in setState (to use updated state’s value just after setState)_**
+**_2. Callback in setState (to use updated state’s value just after setState)_**
 
 We have used the ES7 feature below where we can directly initialize constructor properties. Here we have initialized state directly
 
-Before ES7
+| Before ES7 | After ES7 |
+| --- | --- |
+| constructor(props) { super(props); this.state = {count:0}; } | state = { count: 0, }; |
 
-After ES7
-
-| --- | ---
-```jsx
-constructor(props) {
-
-super(props);
-
-this.state = {count:0};
-
-}
-```
-
-```jsx
-state = {
-
-count: 0,
-
-};
-```
-
-| --- | ---
 App.js
 
 ```jsx
@@ -79,7 +60,7 @@ count: 0,
 
 increment = () => {
 ```
-### this.setState({
+**this.setState({**
 
 ### count: this.state.count + 1
 
@@ -87,11 +68,11 @@ increment = () => {
 
 **);**
 
-### // below console.log will not print updated count value
-
-### console.log(this.state.count);
+**// below console.log will not print updated count value**
 
 ```jsx
+**console.log(this.state.count);**
+
 };
 ```
 render() {
@@ -118,7 +99,7 @@ Count: {this.state.count}
 export default Counter;
 ```
 
-### _3\. To update state based on prev state_
+### 3. To update state based on prev state
 
 **Problem: React group multiple setState call into single update for better performance**
 
@@ -218,10 +199,10 @@ increment = () => {
 
 ```jsx
 // console.log(this.state.count);
-```
-### this.setState( (prevState) => ({count:prevState.count+1}) );
 
-### // You can use props as well along with prevState
+**this.setState( (prevState) => ({count:prevState.count+1}) );**
+```
+**// You can use props as well along with prevState**
 
 ```jsx
 **//this.setState( (prevState,props) => ({count:prevState.count+props.addValue}) );**

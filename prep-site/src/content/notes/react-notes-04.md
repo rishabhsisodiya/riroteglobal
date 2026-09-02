@@ -58,70 +58,16 @@ When React sees an element representing a user-defined component, it passes JSX 
 
 React treats components starting with lowercase letters as DOM tags. For example, <div /> represents an HTML div tag, but <Welcome /> represents a component and requires Welcome to be in scope.
 
-### Functional
+| Functional | class |
+| --- | --- |
+| A functional component is just a plain JavaScript pure function that accepts props as an argument and returns a React element(JSX). | A class component requires you to extend from React. Component and create a render function that returns a React element. |
+| There is no render method used in functional components. | It must have the render() method returning JSX (which is syntactically similar to HTML) |
+| Functional components run from top to bottom and once the function is returned it can’t be kept alive. | The class component is instantiated and a different life cycle method is kept alive and is run and invoked depending on the phase of the class component. |
+| Also known as Stateless components as they simply accept data and display them in some form, they are mainly responsible for rendering UI. | Also known as Stateful components because they implement logic and state. |
+| Constructors are not used. | Constructor is used as it needs to store stat |
+| Absence of 'this' keyword Mutated. Same object is override and old value will be gone Function App(){ } Stateless/ Dumb/ Presentational | 1. Non-Mutated. Every time a function runs it creates a new copy. class C1 extends React.components{ } const obj = new C1(); More feature rich Maintain their own private data – state Complex UI logic Stateful/ Smart/ Container |
+| Provide lifecycle hooks | It has lifecycle methods |
 
-### class
-
-| --- | ---
-A functional component is just a plain JavaScript pure function that accepts props as an argument and returns a React element(JSX).
-
-A class component requires you to extend from React. Component and create a render function that returns a React element.
-
-| --- | ---
-There is no render method used in functional components.
-
-It must have the render() method returning JSX (which is syntactically similar to HTML)
-
-| --- | ---
-Functional components run from top to bottom and once the function is returned it can’t be kept alive.
-
-The class component is instantiated and a different life cycle method is kept alive and is run and invoked depending on the phase of the class component.
-
-| --- | ---
-Also known as Stateless components as they simply accept data and display them in some form, they are mainly responsible for rendering UI.
-
-Also known as Stateful components because they implement logic and state.
-
-| --- | ---
-Constructors are not used.
-
-Constructor is used as it needs to store stat
-
-| --- | ---
-### Absence of 'this' keyword
-
-Mutated. Same object is override and old value will be gone
-
-Function App(){
-
-```jsx
-}
-```
-Stateless/ Dumb/ Presentational
-
-1\. Non-Mutated. Every time a function runs it creates a new copy.
-
-```jsx
-class C1 extends React.components{
-
-}
-
-const obj = new C1();
-```
-More feature rich
-
-Maintain their own private data – state
-
-Complex UI logic
-
-Stateful/ Smart/ Container
-
-| --- | ---
-Provide lifecycle hooks
-
-It has lifecycle methods
-
-| --- | ---
 ### Props are Read-Only
 
 **Props** allow you to **pass data** **from** a **parent** (wrapping) component **to** a **child** (embedded) component.
@@ -219,63 +165,14 @@ Destructuring in parameters. Suppose you are passing <FullName fname=”Rishabh�
 
 then
 
-Before ES6
+| Before ES6 | After ES6 |
+| --- | --- |
+| function FullName( props ){ …. console.log( props.fname+” ”+props.lname ); ....} | function FullName( {fname, lname} ){ …. console.log( fname+” ”+lname ); .... } |
 
-After ES6
-
-| --- | ---
-```jsx
-function FullName(**props**){
-```
-….
-
-```jsx
-console.log(**props.fname+” ”+props.lname**);
-```
-....}
-
-```jsx
-function FullName(**{fname, lname}**){
-```
-….
-
-```jsx
-console.log(**fname+” ”+lname**);
-```
-....
-
-```jsx
-}
-```
-
-| --- | ---
 same with state as well.
 
 ### State vs Props
 
-### Props
-
-### State
-
-| --- | ---
-props get passed to the component
-
-Function parameters
-
-props are immutable
-
-props — Functional Components
-
-this.props — Class Components
-
-state is managed within the component
-
-Variables declared in the function body
-
-state can be changed
-
-useState Hook— Functional Components
-
-this.state — Class Components
-
-| --- | ---
+| Props | State |
+| --- | --- |
+| props get passed to the component Function parameters props are immutable props — Functional Components this.props — Class Components | state is managed within the component Variables declared in the function body state can be changed useState Hook— Functional Components this.state — Class Components |

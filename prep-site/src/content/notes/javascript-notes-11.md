@@ -10,7 +10,7 @@ order: 11
 description: "JavaScript — Polyfill Reduce."
 ---
 ```js
-const numbers = \[1, 2, 3, 4\];
+const numbers = [1, 2, 3, 4];
 
 const sum = numbers.reduce((accumulator, currentValue) => {
 
@@ -54,7 +54,7 @@ throw new TypeError("Reduce of empty array with no initial value");
 
 }
 
-acc = originalArray\[0\];
+acc = originalArray[0];
 ```
 startIndex = 1; // Skip the first element
 
@@ -66,7 +66,7 @@ startIndex = 1; // Skip the first element
 ```js
 for (let i = startIndex; i < originalArray.length; i++) {
 
-acc = callback(acc, originalArray\[i\], i, originalArray);
+acc = callback(acc, originalArray[i], i, originalArray);
 
 }
 
@@ -86,7 +86,7 @@ console.log(sum1); // Output: 10
 ### Check duplicate using reduce method
 
 ```js
-const numbers = \[2, 5, 3, 5, 6, 3, 2\];
+const numbers = [2, 5, 3, 5, 6, 3, 2];
 
 const firstDuplicate = numbers.reduce((acc, currentValue, currentIndex, array) => {
 ```
@@ -105,11 +105,11 @@ console.log(firstDuplicate); // **Output: 5**
 ```
 
 ```js
-const numbers = \[10, 20, 30, 40\];
+const numbers = [10, 20, 30, 40];
 
 const sumWithDebug = numbers.reduce((acc, currentValue, currentIndex, array) => {
 
-console.log(\`Index: ${currentIndex}, Value: ${currentValue}, Accumulator: ${acc}, Array: ${array}\`);
+console.log(`Index: ${currentIndex}, Value: ${currentValue}, Accumulator: ${acc}, Array: ${array}`);
 
 return acc + currentValue;
 

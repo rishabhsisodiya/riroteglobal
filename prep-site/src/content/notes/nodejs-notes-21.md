@@ -51,14 +51,14 @@ process.on('uncaughtException', (_error_) => {
 
 errorCount++;
 
-logger.logError('\[Server.js\] Uncaught Exception:', _error_, {errorCount });
+logger.logError('[Server.js] Uncaught Exception:', _error_, {errorCount });
 ```
 _// Only exit if we're hitting too many errors too quickly_
 
 if (errorCount >= ERROR_THRESHOLD) {
 
 ```js
-logger.error(\`Error threshold (${ERROR_THRESHOLD}) exceeded. Shutting down gracefully...\`);
+logger.error(`Error threshold (${ERROR_THRESHOLD}) exceeded. Shutting down gracefully...`);
 ```
 _// Give time for existing requests to complete_
 
@@ -92,7 +92,7 @@ _// Only exit if we're hitting too many errors too quickly_
 if (errorCount >= ERROR_THRESHOLD) {
 
 ```js
-logger.error(\`Error threshold (${ERROR_THRESHOLD}) exceeded. Shutting down gracefully...\`);
+logger.error(`Error threshold (${ERROR_THRESHOLD}) exceeded. Shutting down gracefully...`);
 ```
 _// Give time for existing requests to complete_
 

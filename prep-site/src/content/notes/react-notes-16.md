@@ -1,5 +1,5 @@
 ---
-title: "Memo (imp)"
+title: "Memo"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,11 +7,12 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 16
-description: "React — Memo (imp)."
+imp: true
+description: "React — Memo."
 ---
 **Pure Component works only in class components that’s why React.memo comes into picture.**
 
-**React.memo is a higher order component.** **It comes in React 16.6** .
+**React.memo is a higher order component.** **It comes in React 16.6**.
 
 If your component renders the same result given the same props, you can wrap it in a call to React.memo for a performance boost in some cases by memoizing the result. This means that **React will skip rendering the component, and reuse the last rendered result.**
 
@@ -47,7 +48,7 @@ export default **React.memo**(MemoComp);
 ```jsx
 import React, { Component } from 'react'
 ```
-### import MemoComp from './MemoComp';
+**import MemoComp from './MemoComp';**
 
 ```jsx
 import PureComp from './PureComp';
@@ -85,7 +86,7 @@ this.setState({name:"Rishabh"})
 render() {
 
 ```jsx
-console.log("\*\*\*\*\*\*\*\*\*\*Parent Component\*\*\*\*\*\*\*\*\*");
+console.log("**********Parent Component*********");
 
 return (
 ```
@@ -93,11 +94,11 @@ return (
 
 Parent Component
 
-### {/\* <RegComp name={this.state.name}/>
+**{/\* <RegComp name={this.state.name}/>**
 
-### <PureComp name={this.state.name}/> \*/}
+**<PureComp name={this.state.name}/> \*/}**
 
-### <MemoComp name={this.state.name} />
+**<MemoComp name={this.state.name} />**
 
 </div>
 

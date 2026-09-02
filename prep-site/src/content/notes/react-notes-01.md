@@ -11,7 +11,7 @@ description: "React — React 18 updates."
 ---
 1.  React 18 introduces a new root API which provides better ergonomics for managing roots. The new root API also enables the new concurrent renderer, which allows you to opt-into concurrent features.
 
-### // Before
+**// Before**
 
 ```jsx
 import { render } from 'react-dom';
@@ -20,7 +20,7 @@ const container = document.getElementById('app');
 
 render(<App tab="home" />, container);
 ```
-### // After
+**// After**
 
 ```jsx
 import { createRoot } from 'react-dom/client';
@@ -113,7 +113,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function App(props) {
 
-const \[state, setState\] = useState(0);
+const [state, setState] = useState(0);
 
 console.log('render', state);
 
@@ -140,7 +140,7 @@ console.log('after set state');
 
 })();
 
-}, \[\]);
+}, []);
 
 return (
 ```

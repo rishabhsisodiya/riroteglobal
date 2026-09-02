@@ -99,7 +99,7 @@ console.log(this.firstName+" "+this.lastName+" ,"+hometown+", "+state);
 
 }
 
-printName.apply(name, \["Chittorgarh","Rajasthan"\]);
+printName.apply(name, ["Chittorgarh","Rajasthan"]);
 
 Function.prototype.myapply = function(obj,args){
 ```
@@ -194,7 +194,7 @@ return function (...innerArgs) {
 // Combine the arguments from .myBind and the returned function
 
 ```js
-return func.apply(obj, \[...args, ...innerArgs\]);
+return func.apply(obj, [...args, ...innerArgs]);
 
 };
 
@@ -221,9 +221,9 @@ obj\[uniqueKey\] = this; // Temporarily assign the function to the object
 ```js
 return function (...innerArgs) {
 
-const newArgs = \[...args, ...innerArgs\];
+const newArgs = [...args, ...innerArgs];
 
-return obj\[uniqueKey\](..newArgs);
+return obj[uniqueKey](..newArgs);
 
 };
 

@@ -1,5 +1,5 @@
 ---
-title: "Higher order component (imp)"
+title: "Higher order component"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,7 +7,8 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 12
-description: "React — Higher order component (imp)."
+imp: true
+description: "React — Higher order component."
 ---
 A **higher-order component** is a function that takes a component and returns a new component.
 
@@ -227,7 +228,7 @@ export default UpdatedComponent;
 ```jsx
 import React, { Component } from 'react'
 ```
-### import UpdatedComponent from './withCounter';
+**import UpdatedComponent from './withCounter';**
 
 ```jsx
 class ClickedCounter extends Component {
@@ -278,13 +279,12 @@ return (
 export default **UpdatedComponent**(ClickedCounter)
 ```
 
-**UI OUTPUT:**
-
 ![](/notes-img/react-notes/img-016.webp)
+_UI OUTPUT_
 
 **Solution to our counter problem.**
 
-### withCounter.js (Compare it with Syntax for better understanding)
+**withCounter.js (Compare it with Syntax for better understanding)**
 
 ```jsx
 import React from 'react'
@@ -293,7 +293,7 @@ const **withCounter** = **WrappedComponent** =>{
 
 class **WithCounter** extends React.Component{
 ```
-### // Common functionality
+**// Common functionality**
 
 ```jsx
 constructor(props) {
@@ -342,16 +342,16 @@ export default **withCounter**;
 ```jsx
 import React, { Component } from 'react'
 ```
-### import withCounter from './withCounter';
+**import withCounter from './withCounter';**
 
 ```jsx
 class ClickedCounter extends Component {
 ```
 render() {
 
-### // Destructured props = props from HOC
+**// Destructured props = props from HOC**
 
-### const {count, incrementCounter} = this.props;
+**const {count, incrementCounter} = this.props;**
 
 ```jsx
 return (
@@ -377,16 +377,16 @@ export default **withCounter(ClickedCounter)**
 ```jsx
 import React, { Component } from 'react'
 ```
-### import withCounter from './withCounter';
+**import withCounter from './withCounter';**
 
 ```jsx
 class HoveredCounter extends Component {
 ```
 render() {
 
-### // Destructured props = props from HOC
+**// Destructured props = props from HOC**
 
-### const {count, incrementCounter} = this.props;
+**const {count, incrementCounter} = this.props;**
 
 ```jsx
 return (
@@ -409,11 +409,11 @@ export default **withCounter(HoveredCounter)**
 
 ### HOC comes with an issue!!! (imp)
 
-### _Pass Unrelated Props Through to the Wrapped Component_
+### Pass Unrelated Props Through to the Wrapped Component
 
 If we pass props in our child component which are wrapped in HOC from parent then we can’t use those props passed from parent but we can use those props in our HOC component so fix this issue we pass rest of the props in WrappedComponent HOC {...props}.
 
-### withCounter.js (Fixed prop issue and it is must)
+**withCounter.js (Fixed prop issue and it is must)**
 
 ```jsx
 import React from 'react'
@@ -466,11 +466,11 @@ return WithCounter;
 export default withCounter;
 ```
 
-### _Pass parameter in HOC_
+### Pass parameter in HOC
 
-**Suppose we need to use different increment value in counter.** So we will pass the value from our orginalComponent or WrappedComponent along with it in HOC and we dont pass this value from wrappedcomponent then it will show NaN in UI.
+**Suppose we need to use different increment value in counter.** So we will pass the value from our orginalComponent or WrappedComponent along with it in HOC and we don't pass this value from wrappedcomponent then it will show NaN in UI.
 
-### withCounter.js (Compare with Syntax for better understanding)
+**withCounter.js (Compare with Syntax for better understanding)**
 
 ```jsx
 import React from 'react'
@@ -593,14 +593,14 @@ return (
 export default withCounter(HoveredCounter**, 10**)
 ```
 
-### _Don’t Mutate the Original Component(Prototype). Use Composition._
+### Don’t Mutate the Original Component(Prototype). Use Composition.
 
 Resist the temptation to **modify a component’s prototype** (or otherwise mutate it) inside a HOC.
 
 ```jsx
 function logProps(InputComponent) {
 ```
-**InputComponent.prototype.componentDidUpdate** \= function(prevProps) {
+**InputComponent.prototype.componentDidUpdate** = function(prevProps) {
 
 ```jsx
 console.log('Current props: ', this.props);
@@ -638,7 +638,7 @@ A **presentational** **component** is a component that just renders HTML. **Cont
 
 ## Caveat or limitation (imp)
 
-### _Don’t Use HOCs Inside the render Method_
+### Don’t Use HOCs Inside the render Method
 
 The problem here isn’t just about performance — **remounting a component causes the state of that component and all of its children to be lost**. Instead, apply HOCs outside the component definition so that the resulting component is created only once. Then, its identity will be consistent across renders. This is usually what you want, anyway.
 
@@ -675,14 +675,14 @@ return (
 
 Also its better to memoize functions which are called in render directly to avoid computation again and again
 
-### _Static Methods Must Be Copied Over_
+### Static Methods Must Be Copied Over
 
 When you apply a HOC to a component, though, the original component is wrapped with a container component. That means **the new component does not have any of the static methods of the original component.**
 
 // Define a static method
 
 ```jsx
-WrappedComponent.staticMethod = function() {/\*...\*/}
+WrappedComponent.staticMethod = function() {/*...*/}
 ```
 // Now apply a HOC
 
@@ -695,31 +695,31 @@ typeof EnhancedComponent.staticMethod === 'undefined' // true
 
 ### Solutions
 
--   -   -   -   1.  **_1\. To solve this, you could copy the methods onto the container before returning it:_**
+-   -   -   -   1.  **_1. To solve this, you could copy the methods onto the container before returning it:_**
 
 ```jsx
 function enhance(WrappedComponent) {
 
-class Enhance extends React.Component {/\*...\*/}
+class Enhance extends React.Component {/*...*/}
 ```
 // Must know exactly which method(s) to copy :(
 
-### Enhance.staticMethod = WrappedComponent.staticMethod;
+**Enhance.staticMethod = WrappedComponent.staticMethod;**
 
-### return Enhance;
+**return Enhance;**
 
 ```jsx
 }
 ```
 
--   -   -   -   1.  **_2\. You can use hoist-non-react-statics package to automatically copy all non-React static methods_**
+-   -   -   -   1.  **_2. You can use hoist-non-react-statics package to automatically copy all non-React static methods_**
 
-### import hoistNonReactStatic from 'hoist-non-react-statics';
+**import hoistNonReactStatic from 'hoist-non-react-statics';**
 
 ```jsx
 function enhance(WrappedComponent) {
 
-class Enhance extends React.Component {/\*...\*/}
+class Enhance extends React.Component {/*...*/}
 
 **hoistNonReactStatic**(Enhance, WrappedComponent);
 
@@ -728,7 +728,7 @@ return Enhance;
 }
 ```
 
--   -   -   -   1.  **_3\. You can export the static method separately from the component itself._**
+-   -   -   -   1.  **_3. You can export the static method separately from the component itself._**
 
 // Instead of...
 
@@ -744,9 +744,9 @@ export { someFunction };
 ```
 // ...and in the consuming module, import both
 
-### import MyComponent, { someFunction } from './MyComponent.js';
+**import MyComponent, { someFunction } from './MyComponent.js';**
 
-### _Refs Aren’t Passed Through_
+### Refs Aren’t Passed Through
 
 While the convention for higher-order components is to pass through all props to the wrapped component, this does not work for refs. **That’s because ref is not really a prop** — like a key, it’s handled specially by React. If you add a ref to an element whose component is the result of a HOC, the ref refers to an instance of the outermost container component, not the wrapped component.
 

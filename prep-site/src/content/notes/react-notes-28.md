@@ -57,7 +57,7 @@ ReactDOM.createRoot(root).render(
 
 ### <Routes>
 
-### <Route** path="/" element={<App />} **/>
+**<Route** path="/" element={<App />} **/>**
 
 ### </Routes>
 
@@ -213,7 +213,7 @@ A <Route path> without an element prop adds a path prefix to its child routes, w
 
 ### Dynamic Segments
 
-If a path segment starts with : then it becomes a "dynamic segment". When the route matches the URL, the dynamic segment will be parsed from the URL and provided as params to other router APIs like useParams.
+If a path segment starts with: then it becomes a "dynamic segment". When the route matches the URL, the dynamic segment will be parsed from the URL and provided as params to other router APIs like useParams.
 
 <Route path="**teams/:teamId**" element={<Team />} />
 
@@ -261,12 +261,12 @@ let params = useParams();
 // params\["\*"\] will contain the remaining URL after files/
 
 ```jsx
-let filePath = params\["\*"\];
+let filePath = params["*"];
 ```
 You can destructure the \*, you just have to assign it a new name. A common name is splat:
 
 ```jsx
-let { "\*": splat } = useParams();
+let { "*": splat } = useParams();
 ```
 ## Navigating
 
@@ -359,9 +359,10 @@ Reserve usage of useNavigate to situations where the user is not interacting but
 
 <MyLoginForm
 
-### onSuccess={() => {
-
-### navigate("/dashboard");
+```jsx
+**onSuccess={() => {**
+```
+**navigate("/dashboard");**
 
 **}}**
 
@@ -393,7 +394,7 @@ function City() {
 
 let { **city** } = **useParams**();
 
-let data = useFakeDataLibrary(\`/api/v2/cities/${city}\`);
+let data = useFakeDataLibrary(`/api/v2/cities/${city}`);
 ```
 // ...
 
@@ -407,7 +408,7 @@ Search params are the values after a ? in the URL. They are accessible from useS
 ```jsx
 function SearchResults() {
 
-let \[searchParams\] = **useSearchParams**();
+let [searchParams] = **useSearchParams**();
 
 return (
 ```
@@ -441,7 +442,7 @@ useEffect(() => {
 
 sendFakeAnalytics(location.pathname);
 
-}, \[location\]);
+}, [location]);
 
 }
 
@@ -453,11 +454,11 @@ useEffect(() => {
 
 fakeRestoreScroll(location.key);
 
-}, \[location\]);
+}, [location]);
 
 }
 ```
-## Reactjs - \`component\` vs \`render\` in Route
+## Reactjs - `component` vs `render` in Route
 
 When you pass a component to the component prop, the component will get the path parameters in the props.match.params object, i.e props.match.params.username in your example:
 

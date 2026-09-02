@@ -37,7 +37,7 @@ Data structures can be linear (e.g., arrays, linked lists) or non-linear (e.g., 
 -   Sets are iterables. They can be used with a for of loop
 
 ```js
-const mySet = new Set(\[1, 2, 3, 3, 4\]);
+const mySet = new Set([1, 2, 3, 3, 4]);
 
 console.log(mySet); // Output: Set { 1, 2, 3, 4 }
 
@@ -160,7 +160,7 @@ return "Stack is empty";
 
 }
 
-return this.items\[this.items.length - 1\];
+return this.items[this.items.length - 1];
 
 }
 ```
@@ -248,7 +248,7 @@ this.head = 0;
 push(element) {
 
 ```js
-this.items\[this.head\] = element;
+this.items[this.head] = element;
 
 this.head++;
 
@@ -257,9 +257,9 @@ this.head++;
 pop() {
 
 ```js
-const item = this.items\[this.head - 1\];
+const item = this.items[this.head - 1];
 
-delete this.items\[this.head - 1\];
+delete this.items[this.head - 1];
 
 this.head--;
 
@@ -270,7 +270,7 @@ return item;
 peek() {
 
 ```js
-return this.items\[this.head - 1\];
+return this.items[this.head - 1];
 
 }
 ```
@@ -329,7 +329,7 @@ class Queue {
 
 constructor() {
 
-this.items = \[\];
+this.items = [];
 
 }
 ```
@@ -352,7 +352,7 @@ peek() {
 if (!this.isEmpty()) {
 
 ```js
-return this.items\[0\];
+return this.items[0];
 
 }
 
@@ -424,7 +424,7 @@ this.rear = 0;
 enqueue(element) {
 
 ```js
-this.items\[this.rear\] = element;
+this.items[this.rear] = element;
 
 this.rear++;
 
@@ -433,9 +433,9 @@ this.rear++;
 dequeue() {
 
 ```js
-const item = this.items\[this.front\];
+const item = this.items[this.front];
 
-delete this.items\[this.front\];
+delete this.items[this.front];
 
 this.front++;
 
@@ -446,7 +446,7 @@ return item;
 peek() {
 
 ```js
-return this.items\[this.front\];
+return this.items[this.front];
 
 }
 ```
@@ -557,7 +557,7 @@ if (!this.isFull()) {
 ```js
 this.rear = (this.rear + 1) % this.capacity;
 
-this.items\[this.rear\] = item;
+this.items[this.rear] = item;
 
 this.currentLength += 1;
 ```
@@ -581,9 +581,9 @@ return null;
 
 }
 
-const item = this.items\[this.front\];
+const item = this.items[this.front];
 
-this.items\[this.front\] = null;
+this.items[this.front] = null;
 
 this.front = (this.front + 1) % this.capacity;
 
@@ -607,7 +607,7 @@ peek() {
 if (!this.isEmpty()) {
 
 ```js
-return this.items\[this.front\];
+return this.items[this.front];
 
 }
 
@@ -632,11 +632,11 @@ let str = "";
 for (i = this.front; i !== this.rear; i = (i + 1) % this.capacity) {
 
 ```js
-str += this.items\[i\] + " ";
+str += this.items[i] + " ";
 
 }
 
-str += this.items\[i\];
+str += this.items[i];
 
 console.log(str);
 
@@ -978,7 +978,7 @@ let list = "";
 
 while (curr) {
 
-list += \`${curr.value}->\`;
+list += `${curr.value}->`;
 
 curr = curr.next;
 
@@ -1222,7 +1222,7 @@ let list = "";
 
 while (curr) {
 
-list += \`${curr.value}->\`;
+list += `${curr.value}->`;
 
 curr = curr.next;
 
@@ -1421,7 +1421,7 @@ console.log(queue.peek());
 
 ## Doubly Linked List
 
-![](/notes-img/javascript-notes/img-049.webp)
+![](/notes-img/JavaScript-notes/img-049.webp)
 
 We have next and prev pointers in the node.
 
@@ -1587,7 +1587,7 @@ let list = "";
 
 while (curr) {
 
-list += \`${curr.value}<->\`;
+list += `${curr.value}<->`;
 
 curr = curr.next;
 
@@ -1615,7 +1615,7 @@ let list = "";
 
 while (curr) {
 
-list += \`${curr.value}<->\`;
+list += `${curr.value}<->`;
 
 curr = curr.prev;
 
@@ -1696,29 +1696,29 @@ set(key, value) {
 ```js
 const index = this.hash(key);
 
-const bucket = this.table\[index\];
+const bucket = this.table[index];
 ```
 // handle collision
 
 if (!bucket) {
 
 ```js
-this.table\[index\] = \[\[key, value\]\];
+this.table[index] = [[key, value]];
 ```
 } else {
 
 ```js
-const sameKeyItem = bucket.find((item) => item\[0\] === key);
+const sameKeyItem = bucket.find((item) => item[0] === key);
 ```
 if (sameKeyItem) {
 
 ```js
-sameKeyItem\[1\] = value;
+sameKeyItem[1] = value;
 ```
 } else {
 
 ```js
-bucket.push(\[key, value\]);
+bucket.push([key, value]);
 
 }
 
@@ -1731,19 +1731,19 @@ get(key) {
 ```js
 const index = this.hash(key);
 
-const bucket = this.table\[index\];
+const bucket = this.table[index];
 ```
 // handle collision
 
 if (bucket) {
 
 ```js
-const sameKeyItem = bucket.find((item) => item\[0\] === key);
+const sameKeyItem = bucket.find((item) => item[0] === key);
 ```
 if (sameKeyItem) {
 
 ```js
-return sameKeyItem\[1\];
+return sameKeyItem[1];
 
 }
 
@@ -1758,12 +1758,12 @@ remove(key) {
 ```js
 let index = this.hash(key);
 
-const bucket = this.table\[index\];
+const bucket = this.table[index];
 ```
 if (bucket) {
 
 ```js
-const sameKeyItem = bucket.find((item) => item\[0\] === key);
+const sameKeyItem = bucket.find((item) => item[0] === key);
 ```
 if (sameKeyItem) {
 
@@ -1783,7 +1783,7 @@ for (let i = 0; i < this.table.length; i++) {
 if (this.table\[i\]) {
 
 ```js
-console.log(i, this.table\[i\]);
+console.log(i, this.table[i]);
 
 }
 
@@ -1814,19 +1814,19 @@ table.remove("name");
 table.display();
 ```
 
-![](/notes-img/javascript-notes/img-050.webp)![](/notes-img/javascript-notes/img-051.webp)
+![](/notes-img/JavaScript-notes/img-050.webp)![](/notes-img/JavaScript-notes/img-051.webp)
 
 You can see here if we do not use that extra code in the set method then we will override the values in the hashtable as the key is converted to integer index respective to character length. So the key with the same length will have an override value. This is called collision and it is handled by extra code.
 
 Before handling collision
 
-![](/notes-img/javascript-notes/img-052.webp)
+![](/notes-img/JavaScript-notes/img-052.webp)
 
 After handling a collision.
 
 We are saving the array instead of overriding the value at index.
 
-![](/notes-img/javascript-notes/img-053.webp)
+![](/notes-img/JavaScript-notes/img-053.webp)
 
 ## Tree
 
@@ -1859,7 +1859,7 @@ The data in a tree are not stored in a sequential manner i.e., they are not stor
 10.  **Neighbour of a Node:** Parent or child nodes of that node are called neighbors of that node.
 11.  **Subtree**: Any node of the tree along with its descendant.
 
-### ![](/notes-img/javascript-notes/img-054.webp)
+### ![](/notes-img/JavaScript-notes/img-054.webp)
 
 **BInary Tree**: In a binary tree, each node can have a maximum of two children linked to it.
 
@@ -2128,7 +2128,7 @@ levelOrder() {
 \* I've used an array for simplicity. \*/
 
 ```js
-const queue = \[\];
+const queue = [];
 
 queue.push(this.root);
 
@@ -2188,7 +2188,7 @@ return;
 if (level === 1) {
 
 ```js
-console.log(\`${node.element} \`);
+console.log(`${node.element} `);
 ```
 } else if (level > 1) {
 
@@ -2290,7 +2290,7 @@ addVertex(vertex) {
 if (!this.adjacencyList\[vertex\]) {
 
 ```js
-this.adjacencyList\[vertex\] = new Set();
+this.adjacencyList[vertex] = new Set();
 
 }
 
@@ -2312,18 +2312,18 @@ this.addVertex(vertex2);
 
 }
 
-this.adjacencyList\[vertex1\].add(vertex2);
+this.adjacencyList[vertex1].add(vertex2);
 
-this.adjacencyList\[vertex2\].add(vertex1);
+this.adjacencyList[vertex2].add(vertex1);
 
 }
 ```
 removeEdge(vertex1, vertex2) {
 
 ```js
-this.adjacencyList\[vertex1\].delete(vertex2);
+this.adjacencyList[vertex1].delete(vertex2);
 
-this.adjacencyList\[vertex2\].delete(vertex1);
+this.adjacencyList[vertex2].delete(vertex1);
 
 }
 ```
@@ -2336,13 +2336,13 @@ return;
 
 }
 
-for (let adjacentVertex of this.adjacencyList\[vertex\]) {
+for (let adjacentVertex of this.adjacencyList[vertex]) {
 
 this.removeEdge(vertex, adjacentVertex);
 
 }
 
-delete this.adjacencyList\[vertex\];
+delete this.adjacencyList[vertex];
 
 }
 ```
@@ -2365,7 +2365,7 @@ display() {
 ```js
 for (let vertex in this.adjacencyList) {
 
-console.log(vertex + " -> " + \[...this.adjacencyList\[vertex\]\]);
+console.log(vertex + " -> " + [...this.adjacencyList[vertex]]);
 
 }
 

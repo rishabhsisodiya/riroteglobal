@@ -80,41 +80,13 @@ fs.open('/Users/joe/test.txt', 'r', (err, fd) => {
 
 Other flags you'll commonly use are:
 
-### Flag
+| Flag | Description | File gets created if it doesn't exist |
+| --- | --- | --- |
+| r+ | This flag opens the file for reading and writing | ❌ |
+| w+ | This flag opens the file for reading and writing and it also positions the stream at the beginning of the file | ✅ |
+| a | This flag opens the file for writing and it also positions the stream at the end of the file | ✅ |
+| a+ | This flag opens the file for reading and writing and it also positions the stream at the end of the file | ✅ |
 
-### Description
-
-### File gets created if it doesn't exist
-
-| --- | --- | ---
-r+
-
-This flag opens the file for reading and writing
-
-❌
-
-| --- | --- | ---
-w+
-
-This flag opens the file for reading and writing and it also positions the stream at the beginning of the file
-
-✅
-
-| --- | --- | ---
-a
-
-This flag opens the file for writing and it also positions the stream at the end of the file
-
-✅
-
-| --- | --- | ---
-a+
-
-This flag opens the file for reading and writing and it also positions the stream at the end of the file
-
-✅
-
-| --- | --- | ---
 **You can use util.promisify to convert fs methods into promise-based methods.**
 
 ### Reading files with Node.js
@@ -212,41 +184,13 @@ console.error(err);
 
 The flags you'll likely use are
 
-### Flag
+| Flag | Description | File gets created if it doesn't exist |
+| --- | --- | --- |
+| r+ | This flag opens the file for reading and writing | ❌ |
+| w+ | This flag opens the file for reading and writing and it also positions the stream at the beginning of the file | ✅ |
+| a | This flag opens the file for writing and it also positions the stream at the end of the file | ✅ |
+| a+ | This flag opens the file for reading and writing and it also positions the stream at the end of the file | ✅ |
 
-### Description
-
-### File gets created if it doesn't exist
-
-| --- | --- | ---
-r+
-
-This flag opens the file for reading and writing
-
-❌
-
-| --- | --- | ---
-w+
-
-This flag opens the file for reading and writing and it also positions the stream at the beginning of the file
-
-✅
-
-| --- | --- | ---
-a
-
-This flag opens the file for writing and it also positions the stream at the end of the file
-
-✅
-
-| --- | --- | ---
-a+
-
-This flag opens the file for reading and writing and it also positions the stream at the end of the file
-
-✅
-
-| --- | --- | ---
 ### Appending content to a file
 
 A handy method to append content to the end of a file is fs.appendFile() (and its fs.appendFileSync() counterpart):
@@ -410,7 +354,7 @@ throw err;
 
 }
 
-console.log(\`${dir} is deleted!\`);
+console.log(`${dir} is deleted!`);
 
 });
 ```
@@ -431,7 +375,7 @@ throw err;
 
 }
 
-console.log(\`${dir} is deleted!\`);
+console.log(`${dir} is deleted!`);
 
 });
 ```

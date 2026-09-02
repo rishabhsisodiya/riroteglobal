@@ -11,11 +11,11 @@ description: "React — Portals."
 ---
 Portals provide a f**irst-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component (root div).**
 
-### ReactDOM.createPortal(child, container)
+**ReactDOM.createPortal(child, container)**
 
 The first argument (child) is any renderable React child, such as an element, string, or fragment. The second argument (container) is a DOM element. Normally, when you return an element from a component’s render method, it’s mounted into the DOM as a child of the nearest parent node.
 
-### _Use cases_
+### Use cases
 
 **Mess up with parent component CSS.**
 
@@ -73,7 +73,7 @@ return **ReactDOM.createPortal(**
 ```
 **<h1>Portals Demo</h1>,**
 
-### document.getElementById("portal-root")
+**document.getElementById("portal-root")**
 
 **)**
 

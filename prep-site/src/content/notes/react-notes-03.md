@@ -11,7 +11,7 @@ description: "React — Introducing JSX."
 ---
 Consider this variable declaration:
 
-### const element = <h1>Hello, world!</h1>;
+**const element = <h1>Hello, world!</h1>;**
 
 This funny tag syntax is neither a string nor HTML.
 
@@ -19,7 +19,7 @@ It is called JSX, and it is a syntax extension to JavaScript. We recommend using
 
 Since JSX is closer to JavaScript than to HTML, React DOM uses camelCase property naming convention instead of HTML attribute names.
 
-For example, **class becomes className in JSX, for becomes htmlFor , onclick becomes onClick and tabindex becomes tabIndex.**
+For example, **class becomes className in JSX, for becomes htmlFor, onclick becomes onClick and tabindex becomes tabIndex.**
 
 ### Rendering Elements
 

@@ -101,9 +101,9 @@ cb(null, "./uploads");
 ```js
 filename: function (req, file, cb) {
 
-const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() \* 1e9);
+const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
 
-cb(null, \`${Date.now()}-${file.originalname}\`);
+cb(null, `${Date.now()}-${file.originalname}`);
 ```
 },
 
@@ -136,7 +136,7 @@ return res.redirect("/");
 
 app.listen(PORT, () => console.log("Server started at ", PORT));
 ```
-### _Update views/homepage.ejs_
+### Update views/homepage.ejs
 
 <!DOCTYPE html>
 
@@ -168,19 +168,19 @@ app.listen(PORT, () => console.log("Server started at ", PORT));
 
 ## Retrieve File data without uploading - Useful when we do not want to store the file and just forward the file to another endpoint.
 
-### _React Dropzone front end_
+### React Dropzone front end
 
 ```js
 onDrop = async newFiles => {
 ```
-### let formData = new FormData()
+**let formData = new FormData()**
 
 ```js
 for (let i = 0; i < newFiles.length; i++) {
 
-let file = newFiles\[i\]
+let file = newFiles[i]
 ```
-### formData.append('files', file)
+**formData.append('files', file)**
 
 ```js
 }
@@ -200,35 +200,35 @@ console.log(error)
 ```
 ### Express back end
 
-### const fileUpload = require('express-fileupload')
-
-### app.use(fileUpload())
+```js
+**const fileUpload = require('express-fileupload')**
+```
+**app.use(fileUpload())**
 
 ```js
 const router = require('express').Router()
-```
-### const FormData = require('form-data')
 
-```js
+**const FormData = require('form-data')**
+
 const axios = require('axios')
 
 router.post('/upload', preAuth, async (request, response) => {
 
 const { files } = request
 ```
-### const formData = new FormData()
+**const formData = new FormData()**
 
 ```js
 for (let i = 0; i < files.length; i++) {
 
-let file = files\[i\]
+let file = files[i]
 ```
 **formData.append('files', file**)
 
 ```js
 }
 ```
-### const formHeaders = formData.getHeaders()
+**const formHeaders = formData.getHeaders()**
 
 ```js
 try {

@@ -46,7 +46,7 @@ Generate Token:
 2.  Click on bot and enable MESSAGE CONTENT INTENT so that we can have access to message guild content to access the message received in the server.
 3.  Click on reset token and copy the token.
 
-As per the docs [https://discord.js.org/docs/packages/discord.js/14.14.1](https://discord.js.org/docs/packages/discord.js/14.14.1) , we will copy the code from here
+As per the docs [https://discord.js.org/docs/packages/discord.js/14.14.1](https://discord.js.org/docs/packages/discord.js/14.14.1), we will copy the code from here
 
 GatewayIntentBits -for the Permission
 
@@ -67,7 +67,7 @@ require("dotenv").config();
 
 const client = new Client({
 
-intents: \[
+intents: [
 ```
 GatewayIntentBits.Guilds,
 
@@ -99,7 +99,7 @@ client.login(token);
 ```
 Update the command in package.json to node index.js. Now run npm start
 
-### _Command to interact with bot_
+### Command to interact with bot
 
 ```js
 const { Client, GatewayIntentBits } = require("discord.js");
@@ -108,7 +108,7 @@ require("dotenv").config();
 
 const client = new Client({
 
-intents: \[
+intents: [
 ```
 GatewayIntentBits.Guilds,
 
@@ -130,7 +130,7 @@ if (message.author.bot) return;
 if (message.content.startsWith("create")) {
 
 ```js
-const url = message.content.split("create")\[1\];
+const url = message.content.split("create")[1];
 
 return message.reply({
 ```

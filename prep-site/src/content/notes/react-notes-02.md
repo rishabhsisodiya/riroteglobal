@@ -21,24 +21,10 @@ A **declarative** style, like what react has, allows you to control flow and sta
 
 The benefit of declarative is that you don't get bogged down in the implementation details of representing the state. You're delegating the organizational component of keeping your application views consistent so you just have to worry about state.
 
-Declarative
+| Declarative | Imperative |
+| --- | --- |
+| root.render(<h1 className=”header”>Hello, React</h1>) | const h1 = document.createElement(“h1”); h1.textContent=”Hello, React”; h1.className = “header”; document.getElementById(“root”).appendChild(h1); |
 
-Imperative
-
-| --- | ---
-root.render(<h1 className=”header”>Hello, React</h1>)
-
-```jsx
-const h1 = document.createElement(“h1”);
-
-h1.textContent=”Hello, React”;
-
-h1.className = “header”;
-
-document.getElementById(“root”).appendChild(h1);
-```
-
-| --- | ---
 ### Data binding
 
 Two type of data binding:
@@ -87,7 +73,7 @@ Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into a
 // Babel Input: ES2015 arrow function
 
 ```jsx
-\[1, 2, 3\].map(n => n + 1);
+[1, 2, 3].map(n => n + 1);
 ```
 // Babel Output: ES5 equivalent
 
@@ -135,7 +121,7 @@ npm i -D @babel/preset-react @babel/preset-env @babel/core babel-loader @babel/p
 
 **babel-loader** will be used by webpack to transpile Modern JS into the JS code that browsers can understand.
 
-Since all browsers don’t understand javascript’s static class’s properties features. **@babel/plugin-proposal-class-properties** plugin transforms static class properties as well as properties declared with the property initializer syntax.
+Since all browsers don’t understand JavaScript’s static class’s properties features. **@babel/plugin-proposal-class-properties** plugin transforms static class properties as well as properties declared with the property initializer syntax.
 
 ### Step 4: Create a babel config file .babelrc
 
@@ -148,7 +134,7 @@ We also tell webpack to use @babel/preset-react for React and @babel/plugin-prop
 {
 
 ```jsx
-"presets": \[
+"presets": [
 ```
 \[ "@babel/preset-env", {
 
@@ -157,7 +143,7 @@ We also tell webpack to use @babel/preset-react for React and @babel/plugin-prop
 
 "targets": {
 
-"browsers": \[
+"browsers": [
 ```
 "last 2 Chrome versions",
 
@@ -185,7 +171,7 @@ We also tell webpack to use @babel/preset-react for React and @babel/plugin-prop
 \],
 
 ```jsx
-"plugins": \[ "@babel/plugin-proposal-class-properties" \]
+"plugins": [ "@babel/plugin-proposal-class-properties" ]
 
 }
 ```
@@ -195,7 +181,7 @@ npm i -D webpack webpack-cli webpack-dev-server html-webpack-plugin path
 
 ### Step 6: Create directories and files for the project
 
-Create directories called src and public .Create a HTML file public/index.htm , entry filesrc/index.js and a component file src/App.js inside of it.
+Create directories called src and public .Create a HTML file public/index.htm, entry filesrc/index.js and a component file src/App.js inside of it.
 
 mkdir src public
 
@@ -205,9 +191,9 @@ touch src/index.js src/App.js public/index.html
 
 Here html-webpack-plugin will use your custom index.html that will be rendered by webpack-dev-server
 
-Please note that if you don’t pass any param in new HTMLWebpackPlugin() , then thehtml-webpack-plugin plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags.
+Please note that if you don’t pass any param in new HTMLWebpackPlugin(), then thehtml-webpack-plugin plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags.
 
-Also add the style loader, css loader and file-loader for styles and images. As webpack understands javascript so we need to convert the styles and images in javascript using these loaders
+Also add the style loader, css loader and file-loader for styles and images. As webpack understands JavaScript so we need to convert the styles and images in JavaScript using these loaders
 
 npm install style-loader css-loader file-loader
 
@@ -242,12 +228,12 @@ historyApiFallback: true
 ```jsx
 module: {
 
-rules: \[
+rules: [
 ```
 {
 
 ```jsx
-test: /\\.js$/,
+test: /\.js$/,
 
 use: 'babel-loader',
 ```
@@ -256,16 +242,16 @@ use: 'babel-loader',
 {
 
 ```jsx
-test: /\\.css$/,
+test: /\.css$/,
 
-use: \['style-loader', 'css-loader'\],
+use: ['style-loader', 'css-loader'],
 ```
 },
 
 {
 
 ```jsx
-test: /\\.(png|j?g|svg|gif)?$/,
+test: /\.(png|j?g|svg|gif)?$/,
 
 use: 'file-loader'
 
@@ -276,7 +262,7 @@ use: 'file-loader'
 },
 
 ```jsx
-plugins: \[
+plugins: [
 ```
 new HtmlWebPackPlugin({
 
@@ -294,7 +280,7 @@ filename: 'index.html'
 ```
 Notice that we have also passed historyApiFallbackto true and public path to ‘/’
 
-What it does is that it redirects all server requests to /index.html which will download all the JS resources and allow React Router to take it from there. If we don’t do this then when you add routes later using react-router or @reach/router and if you access a route like /dashboard , the browser will make a GET request to /dashboard which will fail, as you have no logic on the server to handle that request.
+What it does is that it redirects all server requests to /index.html which will download all the JS resources and allow React Router to take it from there. If we don’t do this then when you add routes later using react-router or @reach/router and if you access a route like /dashboard, the browser will make a GET request to /dashboard which will fail, as you have no logic on the server to handle that request.
 
 So publicPath allows you to specify the base path for all the assets within your application. historyAPIFallback will redirect 404s to /index.html.
 
@@ -400,10 +386,10 @@ A package.json file:
 
 A package.json file may look similar to this:![](/notes-img/react-notes/img-003.webp)
 
--   **name** is the name of your app, which you give while executing create-react-app<name-of-application> . You can give any name of your choice to the app, the only condition being that it should be in lowercase. It may also contain hyphens and underscores.
+-   **name** is the name of your app, which you give while executing create-react-app<name-of-application>. You can give any name of your choice to the app, the only condition being that it should be in lowercase. It may also contain hyphens and underscores.
 -   **version** is the current version of your app. The version field must be of the form x.x.x. By default, create-react-app initializes it as 0.1.0
 -   "**private**": true is one of the most crucial attributes. The problem is that if you set private as true in your package.json, then npm will refuse to publish it within the npm ecosystem. This is a way to prevent the accidental publication of private repositories.
--   **dependencies** contains all the required node modules and versions required for the application in production. In the snapshot above, it contains three dependencies, which allows us to use react , react-dom and react-scripts in our JavaScript. react-scripts provide a set of useful development scripts for working with React.
+-   **dependencies** contains all the required node modules and versions required for the application in production. In the snapshot above, it contains three dependencies, which allows us to use react, react-dom and react-scripts in our JavaScript. react-scripts provide a set of useful development scripts for working with React.
 
 In the screenshot above, the react version is specified as ^16.6.3, which means that npm will install the most recent major version matching 16.x.x. In contrast, if you see something like ~5.6.7 in package.json, it means that it will install the most recent minor version matching 5.6.x.
 

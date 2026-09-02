@@ -96,12 +96,12 @@ optionalMessage: PropTypes.instanceOf(Message),
 // it is an enum.
 
 ```jsx
-optionalEnum: PropTypes.oneOf(\['News', 'Photos'\]),
+optionalEnum: PropTypes.oneOf(['News', 'Photos']),
 ```
 // An object that could be one of many types
 
 ```jsx
-optionalUnion: PropTypes.oneOfType(\[
+optionalUnion: PropTypes.oneOfType([
 ```
 PropTypes.string,
 
@@ -291,7 +291,7 @@ document.getElementById('example')
 );
 ```
 
-If you are using a Babel transform like transform-class-properties , you can also declare defaultProps as static property within a React component class. This syntax has not yet been finalized though and will require a compilation step to work within a browser. For more information, see the class field proposal.
+If you are using a Babel transform like transform-class-properties, you can also declare defaultProps as static property within a React component class. This syntax has not yet been finalized though and will require a compilation step to work within a browser. For more information, see the class field proposal.
 
 ```jsx
 class Greeting extends React.Component {

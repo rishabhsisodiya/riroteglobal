@@ -56,7 +56,10 @@ if (primary) {
             <li>
               <a href={u(`/${track}/${pageSlug(e)}`)}>
                 <span class="chapters-n">{String(i + 1).padStart(2, '0')}</span>
-                <span class="chapters-t">{e.data.title}</span>
+                <span class="chapters-t">
+                  {e.data.title}
+                  {e.data.imp && <span class="imp-badge">high-yield</span>}
+                </span>
               </a>
             </li>
           ))}

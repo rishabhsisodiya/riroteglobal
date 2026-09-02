@@ -64,7 +64,7 @@ export default Counter;
 
 So in above code if we use <button onClick={**this.increment()**}>Increment</button> then our method will be call immediately just after code loads in browser and when we click on button nothing will happen
 
-## **Binding Event handler**
+## Binding Event handler
 
 Let's take an example
 
@@ -81,16 +81,17 @@ count: 0,
 
 };
 ```
-### increment(){
+**increment(){**
 
-### this.setState({
+**this.setState({**
 
 ### count: this.state.count + 1
 
 **});**
 
-### console.log(this.state.count);
-
+```jsx
+**console.log(this.state.count);**
+```
 **}**
 
 render() {
@@ -209,7 +210,7 @@ console.log(this.firstName+" "+this.lastName+" from "+hometown+", "+state);
 
 }
 ```
-### printFullName.call(name, "Chittorgarh", "Rajasthan");
+**printFullName.call(name, "Chittorgarh", "Rajasthan");**
 
 ```jsx
 let name2 = {
@@ -221,9 +222,9 @@ lastName:"Random",
 ```jsx
 }
 ```
-### // bind method
+**// bind method**
 
-### let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )
+**let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )**
 
 ```jsx
 printMyName();
@@ -231,7 +232,7 @@ printMyName();
 
 So from the above code we can understand we need to pass an object(Here name2) for which method printFullName’s this.firstName can refer to. So if we pass the name in the bind method then it will use the name object’s firstname I.e Rishabh value.
 
-## **Type of Binding (very imp)**
+## Type of Binding (very imp)
 
 1.  **Bind**: - An object to which _this_ keyword can refer inside the new function. This controls what _this_ inside the function will refer to and by binding it to _this_ here.
 
@@ -254,7 +255,7 @@ count: this.state.count + 1
 -   **Memory Usage:** It can lead to unnecessary memory usage and performance issues in large-scale applications or components with frequent updates.
 -   **Readability:** Makes the code less clean and harder to follow.
 
-1.  Using **Arrow function : As Arrow function doesn't have its own ‘this’. So it will refer to its parent lexical environment**
+1.  Using **Arrow function: As Arrow function doesn't have its own ‘this’. So it will refer to its parent lexical environment**
 
 Increment(){
 
@@ -275,14 +276,14 @@ count: this.state.count + 1
 -   **Memory Usage:** It has the same memory concerns as Method 1.
 -   **Readability:** Slightly cleaner than .bind(this) but still less optimal.
 
-1.  Binding in constructor :
+1.  Binding in constructor:
 
     ```jsx
     constructor(){
     ```
 ….
 
-### this.increment= this.increment.bind(this)
+**this.increment= this.increment.bind(this)**
 
 ```jsx
 }
@@ -306,7 +307,7 @@ count: this.state.count + 1
 -   **Memory Usage:** More efficient than Methods 1 and 2.
 -   **Readability**: Cleaner than Methods 1 and 2, but the need for manual binding can clutter the constructor if multiple methods require binding.
 
-1.  **Using class property approach** : Use arrow function outside constructor
+1.  **Using class property approach**: Use arrow function outside constructor
 
     ```jsx
     constructor(){ ….}
@@ -324,7 +325,7 @@ count: this.state.count + 1
 ```
 <button onClick={**this.increment**}>Increment</button>
 
-**Above code is most efficient and best approach , because:**
+**Above code is most efficient and best approach, because:**
 
 -   **Efficiency**: The method is bound as a property of the class using an arrow function. This ensures this always refers to the class instance without needing explicit binding or function creation during rendering.
 -   **Memory Usage:** Efficient because the function is not recreated on every render.
@@ -333,48 +334,14 @@ count: this.state.count + 1
 
 ### Implications of Class Property Approach on Unit Testing
 
-### Aspect
+| Aspect | Class Property Approach | Constructor Binding (bind()) |
+| --- | --- | --- |
+| Memory Efficiency | Each instance holds its own copy | Small callback stored per instance |
+| Method Location | Defined on the instance | Defined on the prototype |
+| Performance Impact | Negligible in most cases | Slight edge in memory-critical apps |
+| Syntax/Readability | Cleaner, modern syntax | Verbose, slightly cluttered |
+| Testing Compatibility | Harder to spy/stub via prototype | Easy to spy/stub on prototype |
 
-### Class Property Approach
-
-### Constructor Binding (bind())
-
-| --- | --- | ---
-### Memory Efficiency
-
-Each instance holds its own copy
-
-Small callback stored per instance
-
-| --- | --- | ---
-### Method Location
-
-Defined on the instance
-
-Defined on the prototype
-
-| --- | --- | ---
-### Performance Impact
-
-Negligible in most cases
-
-Slight edge in memory-critical apps
-
-| --- | --- | ---
-### Syntax/Readability
-
-Cleaner, modern syntax
-
-Verbose, slightly cluttered
-
-| --- | --- | ---
-### Testing Compatibility
-
-Harder to spy/stub via prototype
-
-Easy to spy/stub on prototype
-
-| --- | --- | ---
 1.  First the **memory and performance;** When you use a class field to define a function, your whole method resides on each instance of the class and NOT on the prototype, but using the bind technique, just a small callback is stored on each instance, which calls your method that is stored on the prototype.
 2.  Second thing that can be affected is **how you write your unit tests**. You won't be able to use the component prototype to stub on function calls like below:
 
@@ -390,7 +357,7 @@ You will have to find another way to stub the method, either by passing the spy 
 
 **If the callback is passed as prop to child components,** those components might do an extra re-rendering. In those cases, it is preferred to go with .bind() or public class fields syntax approach considering performance.
 
-### _We can pass methods as props_
+### We can pass methods as props
 
 **by passing references in props** just like we are passing variables.
 

@@ -12,7 +12,7 @@ description: "Node.js — NodeJS Streams."
 Let’s consider a scenario where we need to read a 400mb file and display the content on the UI. We can do it easily using the fs module but every time when we refresh it will increase the memory usage as each time it will read and send data to the client side. We can monitor it using package express-status-monitor. Each time you refresh the web page your memory consumption will increase. So this is not the efficient way to deal with it.
 
 ![](/notes-img/nodejs-notes/img-022.webp)
-We can resolve it using stream which means read data in chunks. Similar to youtube where video is not buffer completely , it buffers in chunks
+We can resolve it using stream which means read data in chunks. Similar to youtube where video is not buffer completely, it buffers in chunks
 
 **A stream** is an abstract interface for working with streaming data in Node.js. The node:stream module provides an API for implementing the stream interface.
 

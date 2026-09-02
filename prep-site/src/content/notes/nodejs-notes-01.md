@@ -85,33 +85,13 @@ node -v
 
 ### Differences between Node.js and the Browser
 
-### Nodejs
+| Nodejs | Browser |
+| --- | --- |
+| We don't have the document, window and all the other objects that are provided by the browser | Browser provides DOM, or other Web Platform APIs like Cookies to interact with the browser |
+| Node.js provides filesystem access functionality and other functionality through its modules | We don't have all the nice APIs that Node.js provides through its modules. |
+| in Node.js you control the environment. Unless you are building an open source application that anyone can deploy anywhere, you know which version of Node.js you will run the application on | You don't get the luxury to choose what browser your visitors will use, this is very convenient. |
+| Node.js supports both the CommonJS and ES module systems (since Node.js v12). This means we can use both require() and import in Node.js | ES Modules standard being implemented. We are limited to import in the browser |
 
-### Browser
-
-| --- | ---
-We don't have the document, window and all the other objects that are provided by the browser
-
-Browser provides DOM, or other Web Platform APIs like Cookies to interact with the browser
-
-| --- | ---
-Node.js provides filesystem access functionality and other functionality through its modules
-
-We don't have all the nice APIs that Node.js provides through its modules.
-
-| --- | ---
-in Node.js you control the environment. Unless you are building an open source application that anyone can deploy anywhere, you know which version of Node.js you will run the application on
-
-You don't get the luxury to choose what browser your visitors will use, this is very convenient.
-
-| --- | ---
-Node.js supports both the CommonJS and ES module systems (since Node.js v12).
-
-This means we can use both require() and import in Node.js
-
-ES Modules standard being implemented. We are limited to import in the browser
-
-| --- | ---
 ### NPM
 
 npm manages downloads of dependencies of your project.
@@ -188,7 +168,7 @@ To use the function in another module, we can export it using module.exports and
 
 We have two ways to import the module and packages.
 
-### 1\. require: The CommonJS Syntax
+### 1. require: The CommonJS Syntax
 
 The require function has been a part of Node.js since the beginning and is based on the CommonJS module system. It is used to import modules from external files and libraries. Here's an example:
 
@@ -203,7 +183,7 @@ Key characteristics of require:
 -   Default exports: The require function imports the module's default export.
 -   Caching: Once a module is required, Node.js caches it, so subsequent require calls return the same instance.
 
-### 2\. import: The ECMAScript Module Syntax
+### 2. import: The ECMAScript Module Syntax
 
 With the introduction of ECMAScript modules (ESM) in Node.js, the import syntax allows for a more modern and standardized approach to module imports. Here's an example:
 

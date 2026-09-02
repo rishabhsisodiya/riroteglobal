@@ -38,13 +38,12 @@ const cookieParser = require("cookie-parser");
 const { checkForAuthenticationCookie } = require("./middleware/authentication");
 
 const Blog = require("./models/blog");
-```
-### require("dotenv").config();
 
-```js
+**require("dotenv").config();**
+
 const app = express();
 ```
-### const PORT = process.env.PORT || 8000;
+**const PORT = process.env.PORT || 8000;**
 
 mongoose
 

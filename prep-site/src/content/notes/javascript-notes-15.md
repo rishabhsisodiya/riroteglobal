@@ -15,12 +15,12 @@ It keeps returning a new function (that expects the current argument, like we sa
 
 Two ways to implement currying
 
-### 1\. Currying using bind method
+### 1. Currying using bind method
 
 ```js
 let multiply = function(x,y){
 
-console.log(x\*y);
+console.log(x*y);
 
 }
 
@@ -45,7 +45,7 @@ Output:
 
 6
 
-### 2\. Currying using closures
+### 2. Currying using closures
 
 //closure
 
@@ -54,7 +54,7 @@ let multiply = function(x){
 
 return function(y){
 
-console.log(x\*y);
+console.log(x*y);
 
 }
 
@@ -75,7 +75,7 @@ Output:
 
 6
 
-### _Write a function which can handle sum(1)(2)(3)(4)........( n)()_
+### Write a function which can handle sum(1)(2)(3)(4)........( n)()
 
 ```js
 let sum = function(a){

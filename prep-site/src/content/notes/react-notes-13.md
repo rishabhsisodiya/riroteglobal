@@ -1,5 +1,5 @@
 ---
-title: "Render Props -imp"
+title: "Render Props"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,7 +7,8 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 13
-description: "React — Render Props -imp."
+imp: true
+description: "React — Render Props."
 ---
 Just like HOC shares functionality between components without repeating the code there is another pattern which is render props.
 
@@ -19,11 +20,11 @@ So we are using the same counter problem example that we used in HOC.
 
 ### App.js
 
-### import ClickCounter from "./components/RenderProps/ClickCounter";
+**import ClickCounter from "./components/RenderProps/ClickCounter";**
 
-### import Counter from "./components/RenderProps/Counter";
+**import Counter from "./components/RenderProps/Counter";**
 
-### import HoverCounter from "./components/RenderProps/HoverCounter";
+**import HoverCounter from "./components/RenderProps/HoverCounter";**
 
 ```jsx
 function App() {
@@ -34,9 +35,10 @@ return (
 
 ### <Counter
 
-### render={(count, incrementCounter) => (
-
-### <ClickCounter count={count} incrementCounter={incrementCounter} />
+```jsx
+**render={(count, incrementCounter) => (**
+```
+**<ClickCounter count={count} incrementCounter={incrementCounter} />**
 
 **)}**
 
@@ -44,9 +46,10 @@ return (
 
 ### <Counter
 
-### render={(count, incrementCounter) => (
-
-### <HoverCounter count={count} incrementCounter={incrementCounter} />
+```jsx
+**render={(count, incrementCounter) => (**
+```
+**<HoverCounter count={count} incrementCounter={incrementCounter} />**
 
 **)}**
 
@@ -124,7 +127,7 @@ class ClickCounter extends Component {
 ```
 render() {
 
-### const {count, incrementCounter} = this.props;
+**const {count, incrementCounter} = this.props;**
 
 ```jsx
 return (
@@ -154,14 +157,14 @@ class HoverCounter extends Component {
 ```
 render() {
 
-### const {count, incrementCounter} = this.props;
+**const {count, incrementCounter} = this.props;**
 
 ```jsx
 return (
 ```
 <div>
 
-### <h1 onMouseOver={incrementCounter}>Hovered {count} times</h1>
+**<h1 onMouseOver={incrementCounter}>Hovered {count} times</h1>**
 
 </div>
 
@@ -196,9 +199,10 @@ return (
 
 ### <Counter>
 
-### {(count, incrementCounter) => (
-
-### <ClickCounter count={count} incrementCounter={incrementCounter} />
+```jsx
+**{(count, incrementCounter) => (**
+```
+**<ClickCounter count={count} incrementCounter={incrementCounter} />**
 
 **)}**
 
@@ -206,9 +210,10 @@ return (
 
 ### <Counter>
 
-### {(count, incrementCounter) => (
-
-### <HoverCounter count={count} incrementCounter={incrementCounter} />
+```jsx
+**{(count, incrementCounter) => (**
+```
+**<HoverCounter count={count} incrementCounter={incrementCounter} />**
 
 **)}**
 
@@ -296,9 +301,9 @@ class MouseTracker extends React.Component {
 
 // refers to \*same\* function when we use it in render
 
-### renderTheCat(mouse) {
+**renderTheCat(mouse) {**
 
-### return <Cat mouse={mouse} />;
+**return <Cat mouse={mouse} />;**
 
 **}**
 

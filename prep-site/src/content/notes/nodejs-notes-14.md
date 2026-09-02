@@ -87,11 +87,11 @@ Let’s create two files in partials
 
 **href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"**
 
-### rel="stylesheet"
+**rel="stylesheet"**
 
 **integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"**
 
-### crossorigin="anonymous"
+**crossorigin="anonymous"**
 
 **/>**
 
@@ -109,7 +109,7 @@ Let’s create two files in partials
 
 **integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"**
 
-### crossorigin="anonymous"
+**crossorigin="anonymous"**
 
 ### \>`</script>`
 
@@ -143,7 +143,7 @@ Since we need navbar on all pages so we will create partials
 
 ### Create views/partials/nav.ejs
 
-We just copied the code from bootstrap navbar. Also we have added bg-dark" data-bs-theme="dark in nav tag [https://getbootstrap.com/docs/4.1/components/navbar/](https://getbootstrap.com/docs/4.1/components/navbar/) . Also update the details as per our application.
+We just copied the code from bootstrap navbar. Also we have added bg-dark" data-bs-theme="dark in nav tag [https://getbootstrap.com/docs/4.1/components/navbar/](https://getbootstrap.com/docs/4.1/components/navbar/). Also update the details as per our application.
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark" data-bs-theme="dark">
 
@@ -259,7 +259,7 @@ Included the nav.ejs
 
 `</html>`
 
-## **Create Signin and signup flow**
+## Create Signin and signup flow
 
 We will need to use mongoose. Also we will need a default image if the user does not provide the image.
 
@@ -324,7 +324,7 @@ role: {
 
 type: String,
 
-enum: \["USER", "ADMIN"\],
+enum: ["USER", "ADMIN"],
 
 default: "USER",
 ```
@@ -380,14 +380,14 @@ default: "/images/default.png",
 
 }
 ```
-We will have two roles for the user , User and Admin. Also we should have only 2 options so we have used enum here
+We will have two roles for the user, User and Admin. Also we should have only 2 options so we have used enum here
 
 ```js
 role: {
 
 type: String,
 
-enum: \["USER", "ADMIN"\],
+enum: ["USER", "ADMIN"],
 
 default: "USER",
 ```
@@ -437,29 +437,33 @@ next();
 ```
 ### Create routes/user.js
 
-### const { Router } = require("express");
+```js
+**const { Router } = require("express");**
 
-### const User = require("../models/user");
+**const User = require("../models/user");**
+```
+**const router = Router();**
 
-### const router = Router();
-
-### router.get("/signin", (req, res) => {
-
-### return res.render("signin");
-
-**});**
-
-### router.get("/signup", (req, res) => {
-
-### return res.render("signup");
+```js
+**router.get("/signin", (req, res) => {**
+```
+**return res.render("signin");**
 
 **});**
 
-### router.post("/signup", async (req, res) => {
+```js
+**router.get("/signup", (req, res) => {**
+```
+**return res.render("signup");**
 
-### const { fullName, email, password } = req.body;
+**});**
 
-### await User.create({
+```js
+**router.post("/signup", async (req, res) => {**
+```
+**const { fullName, email, password } = req.body;**
+
+**await User.create({**
 
 **fullName,**
 
@@ -469,12 +473,13 @@ next();
 
 **});**
 
-### return res.redirect("/");
+**return res.redirect("/");**
 
 **});**
 
-### module.exports = router;
-
+```js
+**module.exports = router;**
+```
 ### Create views/signup.ejs
 
 ### <!DOCTYPE html>
@@ -503,13 +508,13 @@ next();
 
 ### <input
 
-### type="text"
+**type="text"**
 
-### class="form-control"
+**class="form-control"**
 
-### id="fullName"
+**id="fullName"**
 
-### name="fullName"
+**name="fullName"**
 
 ### aria-describedby="fullName"
 
@@ -527,13 +532,13 @@ next();
 
 ### <input
 
-### type="email"
+**type="email"**
 
-### name="email"
+**name="email"**
 
-### class="form-control"
+**class="form-control"**
 
-### id="exampleInputEmail1"
+**id="exampleInputEmail1"**
 
 ### aria-describedby="emailHelp"
 
@@ -553,13 +558,13 @@ next();
 
 ### <input
 
-### name="password"
+**name="password"**
 
-### type="password"
+**type="password"**
 
-### class="form-control"
+**class="form-control"**
 
-### id="exampleInputPassword1"
+**id="exampleInputPassword1"**
 
 **/>**
 
@@ -579,57 +584,62 @@ next();
 
 ### Update index.js
 
-### const express = require("express");
+```js
+**const express = require("express");**
 
-### const path = require("path");
+**const path = require("path");**
 
-### const userRoute = require("./routes/user");
+**const userRoute = require("./routes/user");**
 
-### const mongoose = require("mongoose");
+**const mongoose = require("mongoose");**
+```
+**const app = express();**
 
-### const app = express();
-
-### const PORT= 8000;
+**const PORT= 8000;**
 
 ### mongoose
 
 ### .connect('mongodb://127.0.0.1:27017/blogit')
 
-### .then((e) => console.log("MongoDB Connected"));
+```js
+**.then((e) => console.log("MongoDB Connected"));**
+```
+**app.set("view engine","ejs");**
 
-### app.set("view engine","ejs");
+**app.set("views",path.resolve("./views"));**
 
-### app.set("views",path.resolve("./views"));
+**app.use(express.json());**
 
-### app.use(express.json());
+**app.use(express.urlencoded({extended:false}))**
 
-### app.use(express.urlencoded({extended:false}))
+**app.use("/user",userRoute);**
 
-### app.use("/user",userRoute);
-
-### app.get("/", (req, res)=>{
-
-### return res.render("home")
+```js
+**app.get("/", (req, res)=>{**
+```
+**return res.render("home")**
 
 **})**
 
-### app.listen(PORT, ()=>{
+```js
+**app.listen(PORT, ()=>{**
 
-### console.log("Server started at ", PORT);
-
+**console.log("Server started at ", PORT);**
+```
 **})**
 
 ### Create service/authentication.js
 
 Add authentication using jsonwebtoken
 
-### const JWT = require("jsonwebtoken");
+```js
+**const JWT = require("jsonwebtoken");**
+```
+**const secret = "$uperMan@123";**
 
-### const secret = "$uperMan@123";
+**function createTokenForUser(user) {**
 
-### function createTokenForUser(user) {
-
-### const payload = {
+**const payload = {**
 
 **_id: user._id,**
 
@@ -641,22 +651,23 @@ Add authentication using jsonwebtoken
 
 **};**
 
-### const token = JWT.sign(payload, secret);
+**const token = JWT.sign(payload, secret);**
 
-### return token;
-
-**}**
-
-### function validateToken(token) {
-
-### const payload = JWT.verify(token, secret);
-
-### return payload;
+**return token;**
 
 **}**
 
-### module.exports = {
+**function validateToken(token) {**
 
+**const payload = JWT.verify(token, secret);**
+
+**return payload;**
+
+**}**
+
+```js
+**module.exports = {**
+```
 **createTokenForUser,**
 
 **validateToken,**
@@ -665,17 +676,18 @@ Add authentication using jsonwebtoken
 
 ### Update models/user.js
 
-### const { createHmac, randomBytes } = require("crypto");
+```js
+**const { createHmac, randomBytes } = require("crypto");**
 
-### const { Schema, model } = require("mongoose");
+**const { Schema, model } = require("mongoose");**
 
-### const { createTokenForUser } = require("../service/authentication");
-
-### const userSchema = new Schema(
+**const { createTokenForUser } = require("../service/authentication");**
+```
+**const userSchema = new Schema(**
 
 **{**
 
-### fullName: {
+**fullName: {**
 
 **type: String,**
 
@@ -683,7 +695,7 @@ Add authentication using jsonwebtoken
 
 **},**
 
-### email: {
+**email: {**
 
 **type: String,**
 
@@ -693,13 +705,13 @@ Add authentication using jsonwebtoken
 
 **},**
 
-### salt: {
+**salt: {**
 
 **type: String,**
 
 **},**
 
-### password: {
+**password: {**
 
 **type: String,**
 
@@ -707,7 +719,7 @@ Add authentication using jsonwebtoken
 
 **},**
 
-### profileImageURL: {
+**profileImageURL: {**
 
 **type: String,**
 
@@ -715,7 +727,7 @@ Add authentication using jsonwebtoken
 
 **},**
 
-### role: {
+**role: {**
 
 **type: String,**
 
@@ -731,64 +743,65 @@ Add authentication using jsonwebtoken
 
 **);**
 
-### userSchema.pre("save", function (next) {
+**userSchema.pre("save", function (next) {**
 
-### const user = this;
+**const user = this;**
 
-### if (!user.isModified("password")) return;
+**if (!user.isModified("password")) return;**
 
-### const salt = randomBytes(16).toString();
+**const salt = randomBytes(16).toString();**
 
-### const hashedPassword = createHmac("sha256", salt)
+**const hashedPassword = createHmac("sha256", salt)**
 
 ### .update(user.password)
 
-### .digest("hex");
+**.digest("hex");**
 
-### this.salt = salt;
+**this.salt = salt;**
 
-### this.password = hashedPassword;
+**this.password = hashedPassword;**
 
-### next();
+**next();**
 
 **});**
 
-### userSchema.static(
+**userSchema.static(**
 
 **"matchPasswordAndGenerateToken",**
 
-### async function (email, password) {
+**async function (email, password) {**
 
-### const user = await this.findOne({ email });
+**const user = await this.findOne({ email });**
 
-### if (!user) throw new Error("User not found!");
+**if (!user) throw new Error("User not found!");**
 
-### const salt = user.salt;
+**const salt = user.salt;**
 
-### const hashedPassword = user.password;
+**const hashedPassword = user.password;**
 
-### const userProvidedHash = createHmac("sha256", salt)
+**const userProvidedHash = createHmac("sha256", salt)**
 
 ### .update(password)
 
-### .digest("hex");
+**.digest("hex");**
 
-### if (hashedPassword !== userProvidedHash)
+**if (hashedPassword !== userProvidedHash)**
 
-### throw new Error("Incorrect Password");
+**throw new Error("Incorrect Password");**
 
-### const token = createTokenForUser(user);
+**const token = createTokenForUser(user);**
 
-### return token;
+**return token;**
 
 **}**
 
 **);**
 
-### const User = model("user", userSchema);
+**const User = model("user", userSchema);**
 
-### module.exports = User;
-
+```js
+**module.exports = User;**
+```
 Added the virtual function (static function) to the user schema to verify the password
 
 Update routes/user.js
@@ -1059,7 +1072,7 @@ function checkForAuthenticationCookie(cookieName) {
 
 return (req, res, next) => {
 
-const tokenCookieValue = req.cookies\[cookieName\];
+const tokenCookieValue = req.cookies[cookieName];
 ```
 if (!tokenCookieValue) {
 
@@ -1369,13 +1382,13 @@ ref: "user",
 
 ### <input
 
-### type="file"
+**type="file"**
 
-### class="form-control"
+**class="form-control"**
 
-### id="coverImage"
+**id="coverImage"**
 
-### name="coverImage"
+**name="coverImage"**
 
 ### aria-describedby="coverImage"
 
@@ -1389,13 +1402,13 @@ ref: "user",
 
 ### <input
 
-### type="text"
+**type="text"**
 
-### class="form-control"
+**class="form-control"**
 
-### id="title"
+**id="title"**
 
-### name="title"
+**name="title"**
 
 ### aria-describedby="title"
 
@@ -1429,39 +1442,41 @@ ref: "user",
 
 ### Create routes/blog.js
 
-### const { Router } = require("express");
+```js
+**const { Router } = require("express");**
 
-### const multer = require("multer");
+**const multer = require("multer");**
 
-### const path = require("path");
+**const path = require("path");**
 
-### const Blog = require("../models/blog");
+**const Blog = require("../models/blog");**
+```
+**const router = Router();**
 
-### const router = Router();
+**const storage = multer.diskStorage({**
 
-### const storage = multer.diskStorage({
+**destination: function (req, file, cb) {**
 
-### destination: function (req, file, cb) {
-
-### cb(null, path.resolve(\`./public/uploads/\`));
+**cb(null, path.resolve(`./public/uploads/`));**
 
 **},**
 
-### filename: function (req, file, cb) {
+**filename: function (req, file, cb) {**
 
-### const fileName = \`${Date.now()}-${file.originalname}\`;
+**const fileName = `${Date.now()}-${file.originalname}`;**
 
-### cb(null, fileName);
+**cb(null, fileName);**
 
 **},**
 
 **});**
 
-### const upload = multer({ storage: storage });
+**const upload = multer({ storage: storage });**
 
-### router.get("/add-new", (req, res) => {
-
-### return res.render("addBlog", {
+```js
+**router.get("/add-new", (req, res) => {**
+```
+**return res.render("addBlog", {**
 
 **user: req.user,**
 
@@ -1469,11 +1484,12 @@ ref: "user",
 
 **});**
 
-### router.post("/", upload.single("coverImage"), async (req, res) => {
+```js
+**router.post("/", upload.single("coverImage"), async (req, res) => {**
+```
+**const { title, body } = req.body;**
 
-### const { title, body } = req.body;
-
-### const blog = await Blog.create({
+**const blog = await Blog.create({**
 
 **body,**
 
@@ -1485,12 +1501,13 @@ ref: "user",
 
 **});**
 
-### return res.redirect(\`/blog/${blog._id}\`);
+**return res.redirect(`/blog/${blog._id}`);**
 
 **});**
 
-### module.exports = router;
-
+```js
+**module.exports = router;**
+```
 ### Update index.js
 
 Add routes for blog and render the blogs on homepage so we need to pass it to the home.ejs
@@ -1583,8 +1600,9 @@ Now render the blogs on homepage
 
 ### <div class="row row-cols-4">
 
-### <% blogs.forEach(blog => { %>
-
+```js
+**<% blogs.forEach(blog => { %>**
+```
 ### <div class="col">
 
 ### <div class="card col" style="width: 18rem">
@@ -1653,7 +1671,7 @@ Now render the blogs on homepage
 
 ### <div class="container mt-3">
 
-### <h1>Comments (<%= comments.length %>)</h1>
+**<h1>Comments (<%= comments.length %>)</h1>**
 
 ### <% if (locals.user) { %>
 
@@ -1663,13 +1681,13 @@ Now render the blogs on homepage
 
 ### <input
 
-### type="text"
+**type="text"**
 
-### name="content"
+**name="content"**
 
-### class="form-control"
+**class="form-control"**
 
-### placeholder="Enter your comment"
+**placeholder="Enter your comment"**
 
 **/>**
 
@@ -1683,8 +1701,9 @@ Now render the blogs on homepage
 
 ### <div class="mt-3">
 
-### <% comments.forEach(comment => { %>
-
+```js
+**<% comments.forEach(comment => { %>**
+```
 ### <div>
 
 ### <img src="<%= comment.createdBy.profileImageURL %>" width="50px" />
@@ -1709,13 +1728,14 @@ Now render the blogs on homepage
 
 ### Create models/comment.js
 
-### const { Schema, model } = require("mongoose");
-
-### const commentSchema = new Schema(
+```js
+**const { Schema, model } = require("mongoose");**
+```
+**const commentSchema = new Schema(**
 
 **{**
 
-### content: {
+**content: {**
 
 **type: String,**
 
@@ -1723,7 +1743,7 @@ Now render the blogs on homepage
 
 **},**
 
-### blogId: {
+**blogId: {**
 
 **type: Schema.Types.ObjectId,**
 
@@ -1731,7 +1751,7 @@ Now render the blogs on homepage
 
 **},**
 
-### createdBy: {
+**createdBy: {**
 
 **type: Schema.Types.ObjectId,**
 
@@ -1745,47 +1765,50 @@ Now render the blogs on homepage
 
 **);**
 
-### const Comment = model("comment", commentSchema);
+**const Comment = model("comment", commentSchema);**
 
-### module.exports = Comment;
-
+```js
+**module.exports = Comment;**
+```
 ### Update routes/blog.js
 
-### const { Router } = require("express");
+```js
+**const { Router } = require("express");**
 
-### const multer = require("multer");
+**const multer = require("multer");**
 
-### const path = require("path");
+**const path = require("path");**
 
-### const Blog = require("../models/blog");
+**const Blog = require("../models/blog");**
 
-### const Comment = require("../models/comment");
+**const Comment = require("../models/comment");**
+```
+**const router = Router();**
 
-### const router = Router();
+**const storage = multer.diskStorage({**
 
-### const storage = multer.diskStorage({
+**destination: function (req, file, cb) {**
 
-### destination: function (req, file, cb) {
-
-### cb(null, path.resolve(\`./public/uploads/\`));
+**cb(null, path.resolve(`./public/uploads/`));**
 
 **},**
 
-### filename: function (req, file, cb) {
+**filename: function (req, file, cb) {**
 
-### const fileName = \`${Date.now()}-${file.originalname}\`;
+**const fileName = `${Date.now()}-${file.originalname}`;**
 
-### cb(null, fileName);
+**cb(null, fileName);**
 
 **},**
 
 **});**
 
-### const upload = multer({ storage: storage });
+**const upload = multer({ storage: storage });**
 
-### router.get("/add-new", (req, res) => {
-
-### return res.render("addBlog", {
+```js
+**router.get("/add-new", (req, res) => {**
+```
+**return res.render("addBlog", {**
 
 **user: req.user,**
 
@@ -1793,17 +1816,18 @@ Now render the blogs on homepage
 
 **});**
 
-### router.get("/:id", async (req, res) => {
+```js
+**router.get("/:id", async (req, res) => {**
+```
+**const blog = await Blog.findById(req.params.id).populate("createdBy");**
 
-### const blog = await Blog.findById(req.params.id).populate("createdBy");
-
-### const comments = await Comment.find({ blogId: req.params.id }).populate(
+**const comments = await Comment.find({ blogId: req.params.id }).populate(**
 
 ### "createdBy"
 
 **);**
 
-### return res.render("blog", {
+**return res.render("blog", {**
 
 **user: req.user,**
 
@@ -1815,9 +1839,10 @@ Now render the blogs on homepage
 
 **});**
 
-### router.post("/comment/:blogId", async (req, res) => {
-
-### await Comment.create({
+```js
+**router.post("/comment/:blogId", async (req, res) => {**
+```
+**await Comment.create({**
 
 **content: req.body.content,**
 
@@ -1827,15 +1852,16 @@ Now render the blogs on homepage
 
 **});**
 
-### return res.redirect(\`/blog/${req.params.blogId}\`);
+**return res.redirect(`/blog/${req.params.blogId}`);**
 
 **});**
 
-### router.post("/", upload.single("coverImage"), async (req, res) => {
+```js
+**router.post("/", upload.single("coverImage"), async (req, res) => {**
+```
+**const { title, body } = req.body;**
 
-### const { title, body } = req.body;
-
-### const blog = await Blog.create({
+**const blog = await Blog.create({**
 
 **body,**
 
@@ -1847,17 +1873,18 @@ Now render the blogs on homepage
 
 **});**
 
-### return res.redirect(\`/blog/${blog._id}\`);
+**return res.redirect(`/blog/${blog._id}`);**
 
 **});**
 
-### module.exports = router;
+```js
+**module.exports = router;**
+```
+**Populate method: It is used to get the details of the model. Here we are populate createdBy which is user table so in blog, we will get user record details as well**
 
-**Populate method : It is used to get the details of the model. Here we are populate createdBy which is user table so in blog, we will get user record details as well**
+**const blog = await Blog.findById(req.params.id).populate("createdBy");**
 
-### const blog = await Blog.findById(req.params.id).populate("createdBy");
-
-### const comments = await Comment.find({ blogId: req.params.id }).populate(
+**const comments = await Comment.find({ blogId: req.params.id }).populate(**
 
 ### "createdBy"
 

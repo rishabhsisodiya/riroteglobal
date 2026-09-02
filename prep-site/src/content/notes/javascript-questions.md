@@ -8,7 +8,7 @@ draft: false
 order: 1
 description: "JavaScript Interview Questions — study notes."
 ---
-## What is Javascript?
+## What is JavaScript?
 
 JavaScript is a cross-platform, object-oriented scripting language used to make webpages interactive
 
@@ -28,13 +28,13 @@ Interpreter languages are fast but compiler languages provide more efficiency.
 
 ## Why is JavaScript treated as Single threaded
 
-JavaScript is a single-threaded language. Because **it executes code in a single call stack, meaning it processes one task at a time** .This design follows the event loop model and **Its primary key priorities were simplicity and responsiveness** . Also ,the l**anguage specification does not allow the programmer to write code** so that the interpreter can run parts of it in parallel in multiple threads or processes. Whereas languages like java, go, C++ can make multi-threaded and multi-process programs.
+JavaScript is a single-threaded language. Because **it executes code in a single call stack, meaning it processes one task at a time** .This design follows the event loop model and **Its primary key priorities were simplicity and responsiveness**. Also ,the l**anguage specification does not allow the programmer to write code** so that the interpreter can run parts of it in parallel in multiple threads or processes. Whereas languages like java, go, C++ can make multi-threaded and multi-process programs.
 
 ## Difference between asynchronous and synchronous
 
 When a program is being executed synchronously, the thread will wait until the first statement is finished to jump to the second one, while in asynchronous execution, even if the first one was not completed, the execution will continue.
 
-## Is Javascript asynchronous or synchronous?
+## Is JavaScript asynchronous or synchronous?
 
 JavaScript is synchronous by default, but it has asynchronous capabilities through its runtime environment and APIs.
 
@@ -53,52 +53,26 @@ JavaScript can handle asynchronous tasks with the help of browser APIs (in the b
 -   async/await
 -   Event loop and Task queues
 
-![](/notes-img/javascript-questions/img-001.webp)
+![](/notes-img/JavaScript-questions/img-001.webp)
 
-![](/notes-img/javascript-questions/img-002.webp)
+![](/notes-img/JavaScript-questions/img-002.webp)
 
 ## Difference between Java and JavaScript
 
-JAVA
+| JAVA | JavaScript |
+| --- | --- |
+| Java is strongly typed language and static typing ( In Java the type of a variable is checked at compile-time and the variable must be declared first to use in program.) | JavaScript is a weakly typed language and dynamic typing (have more relaxed syntax and rules.) |
+| Java applications can run in any virtual machine (JVM) or browser. | JavaScript code runs on browsers only as JavaScript is developed for browser only. |
+| Java programs use more memory. | JavaScript requires less memory therefore it is used in web pages. |
+| Java has a thread based approach to concurrency. | JavaScript has an event based approach to concurrency. |
+| Objects of Java are class based even though we can't make any program in java without creating a class. | JavaScript Objects are prototype based. |
+| Can automatically write to hard disk | Cannot automatically write to hard disk. |
 
-JAVASCRIPT
+## What is a strict mode in JavaScript
 
-| --- | ---
-Java is strongly typed language and static typing ( In Java the type of a variable is checked at compile-time and the variable must be declared first to use in program.)
+Strict Mode is a new feature in ECMAScript 5 that allows you to place a program, or a function, in a “strict” operating context. This way **it prevents certain actions from being taken and throws more exceptions**. The literal expression "use strict"instructs the browser to use the JavaScript code in the Strict mode.
 
-JavaScript is a weakly typed language and dynamic typing (have more relaxed syntax and rules.)
-
-| --- | ---
-Java applications can run in any virtual machine (JVM) or browser.
-
-JavaScript code runs on browsers only as JavaScript is developed for browser only.
-
-| --- | ---
-Java programs use more memory.
-
-JavaScript requires less memory therefore it is used in web pages.
-
-| --- | ---
-Java has a thread based approach to concurrency.
-
-JavaScript has an event based approach to concurrency.
-
-| --- | ---
-Objects of Java are class based even though we can't make any program in java without creating a class.
-
-JavaScript Objects are prototype based.
-
-| --- | ---
-Can automatically write to hard disk
-
-Cannot automatically write to hard disk.
-
-| --- | ---
-## \*What is a strict mode in javascript
-
-Strict Mode is a new feature in ECMAScript 5 that allows you to place a program, or a function, in a “strict” operating context. This way **it prevents certain actions from being taken and throws more exceptions**. The literal expression "use strict"instructs the browser to use the javascript code in the Strict mode.
-
-## \*Why do you need strict mode
+## Why do you need strict mode
 
 Strict mode is useful to write “secure” JavaScript by notifying “bad syntax” into real errors. F**or example, it eliminates accidentally creating a global variable by throwing an error and also throws an error for assignment to a non-writable property, a getter-only property, a non-existing property, a non-existing variable, or a non-existing object.**
 
@@ -175,38 +149,14 @@ console.log(typeof(user)) //object
 ```
 ## What is the difference between null and undefined
 
-### Null
+| Null | undefined |
+| --- | --- |
+| It is an assignment value which indicates that a variable points to no object. | It is not an assignment value where a variable has been declared but has not yet been assigned a value. |
+| Type of null is object | Type of undefined is undefined |
+| The null value is a primitive value that represents the null, empty, or non-existent reference. | The undefined value is a primitive value used when a variable has not been assigned a value. |
+| Indicates the absence of a value for a variable | Indicates absence of variable itself |
+| Converted to zero (0) while performing primitive operations | Converted to NaN while performing primitive operations |
 
-### undefined
-
-| --- | ---
-It is an assignment value which indicates that a variable points to no object.
-
-It is not an assignment value where a variable has been declared but has not yet been assigned a value.
-
-| --- | ---
-Type of null is object
-
-Type of undefined is undefined
-
-| --- | ---
-The null value is a primitive value that represents the null, empty, or non-existent reference.
-
-The undefined value is a primitive value used when a variable has not been assigned a value.
-
-| --- | ---
-Indicates the absence of a value for a variable
-
-Indicates absence of variable itself
-
-| --- | ---
-Converted to zero (0) while performing primitive operations
-
-Converted to NaN while performing primitive
-
-operations
-
-| --- | ---
 ## What is eval
 
 The eval() function **evaluates JavaScript code represented as a string.** The string can be a JavaScript expression, variable, statement, or sequence of statements.
@@ -218,64 +168,13 @@ console.log(eval('1 + 2')); // 3
 
 Some of the major difference in a tabular form:
 
-### Slice
+| Slice | Splice |
+| --- | --- |
+| Doesn’t modify the original array(immutable) | Modifies the original array(mutable) |
+| Returns the subset of original array | Returns the deleted elements as array |
+| Used to pick the elements from array | Used to insert or delete elements to/from array |
+| let arrayIntegers = [1, 2, 3, 4, 5]; let arrayIntegers1 = arrayIntegers.slice(0,2); // returns [1,2] let arrayIntegers2 = arrayIntegers.slice(2,3); // returns [3] let arrayIntegers3 = arrayIntegers.slice(4); //returns [5] | let arrayIntegersOriginal1 = [1, 2, 3, 4, 5]; let arrayIntegersOriginal2 = [1, 2, 3, 4, 5]; let arrayIntegersOriginal3 = [1, 2, 3, 4, 5]; let arrayIntegers1 = arrayIntegersOriginal1.splice(0,2); // returns [1, 2]; original array [3, 4,5] let arrayIntegers2 = arrayIntegersOriginal2.splice(3); // returns [4, 5]; original array [1,2,3] let arrayIntegers3 = arrayIntegersOriginal3.splice(3, 1, "a", "b", "c"); //returns [4]; original array: [1,2,3,"a", "b", "c",5] |
 
-### Splice
-
-| --- | ---
-Doesn’t modify the original array(immutable)
-
-Modifies the original array(mutable)
-
-| --- | ---
-Returns the subset of original array
-
-Returns the deleted elements as array
-
-| --- | ---
-Used to pick the elements from array
-
-Used to insert or delete elements to/from array
-
-| --- | ---
-```js
-let arrayIntegers = \[1, 2, 3, 4, 5\];
-
-let arrayIntegers1 = arrayIntegers.slice(0,2);
-```
-// returns \[1,2\]
-
-```js
-let arrayIntegers2 = arrayIntegers.slice(2,3);
-```
-// returns \[3\]
-
-```js
-let arrayIntegers3 = arrayIntegers.slice(4); //returns \[5\]
-```
-
-```js
-let arrayIntegersOriginal1 = \[1, 2, 3, 4, 5\];
-
-let arrayIntegersOriginal2 = \[1, 2, 3, 4, 5\];
-
-let arrayIntegersOriginal3 = \[1, 2, 3, 4, 5\];
-
-let arrayIntegers1 = arrayIntegersOriginal1.splice(0,2);
-```
-// returns \[1, 2\]; original array \[3, 4,5\]
-
-```js
-let arrayIntegers2 = arrayIntegersOriginal2.splice(3);
-```
-// returns \[4, 5\]; original array \[1,2,3\]
-
-```js
-let arrayIntegers3 = arrayIntegersOriginal3.splice(3, 1, "a", "b", "c");
-```
-//returns \[4\]; original array: \[1,2,3,"a", "b", "c",5\]
-
-| --- | ---
 ## What is a shallow copy?
 
 A shallow copy of an object or array creates a new object or array, but **only the top-level properties are copied.** **If the original object or array contains other objects or arrays (nested structures), the references to these inner objects are copied, not the objects themselves**.
@@ -291,51 +190,51 @@ details: { age: 25, city: "New York" }
 ```
 However, the details object (which is a nested object) is copied by reference. Changing the age property in the shallowCopy.details affects both shallowCopy and original.
 
-## how to empty an array in javascript
+## how to empty an array in JavaScript
 
 There are several ways to empty an array in JavaScript. Here are the most common methods:
 
-### 1\. Set the array length to 0
+### 1. Set the array length to 0
 
 This is the most efficient and widely used method.
 
 ```js
-let arr = \[1, 2, 3, 4\];
+let arr = [1, 2, 3, 4];
 
 arr.length = 0;
 
-console.log(arr); // Output: \[\]
+console.log(arr); // Output: []
 ```
-### 2\. Reassign to a new empty array
+### 2. Reassign to a new empty array
 
 This creates a new empty array and assigns it to the variable. However, this does not affect references to the original array.
 
 ```js
-let arr = \[1, 2, 3, 4\];
+let arr = [1, 2, 3, 4];
 
-arr = \[\];
+arr = [];
 
-console.log(arr); // Output: \[\]
+console.log(arr); // Output: []
 ```
 Note: If other variables reference the original array, they will retain the original values.
 
-### 3\. Use splice() method
+### 3. Use splice() method
 
 This method modifies the array in place and works well when references need to be cleared.
 
 ```js
-let arr = \[1, 2, 3, 4\];
+let arr = [1, 2, 3, 4];
 
 arr.splice(0, arr.length);
 
-console.log(arr); // Output: \[\]
+console.log(arr); // Output: []
 ```
-### 4\. Use pop() in a loop
+### 4. Use pop() in a loop
 
 This manually removes elements one by one from the end of the array.
 
 ```js
-let arr = \[1, 2, 3, 4\];
+let arr = [1, 2, 3, 4];
 
 while (arr.length > 0) {
 
@@ -343,16 +242,16 @@ arr.pop();
 
 }
 
-console.log(arr); // Output: \[\]
+console.log(arr); // Output: []
 ```
 Note: This is less efficient compared to other methods.
 
-### 5\. Use shift() in a loop
+### 5. Use shift() in a loop
 
 This method removes elements one by one from the start of the array.
 
 ```js
-let arr = \[1, 2, 3, 4\];
+let arr = [1, 2, 3, 4];
 
 while (arr.length > 0) {
 
@@ -360,51 +259,33 @@ arr.shift();
 
 }
 
-console.log(arr); // Output: \[\]
+console.log(arr); // Output: []
 ```
 Note: This is even less efficient than using pop() because shift() shifts all remaining elements.
 
-## \*What is the difference between window and document
+## What is the difference between window and document
 
-### Window
+| Window | Document |
+| --- | --- |
+| It is the root level element in any web page | It is the direct child of the window object. This is also known as Document Object Model (DOM) |
+| By default window object is available implicitly in the page | You can access it via window.document or document. |
+| It has methods like alert(), confirm() and properties like document, location | It provides methods like getElementById, getElementByTagName, createElement etc |
 
-### Document
-
-| --- | ---
-It is the root level element in any web page
-
-It is the direct child of the window object. This is also known as Document Object Model (DOM)
-
-| --- | ---
-By default window object is available implicitly in the page
-
-You can access it via window.document or
-
-document.
-
-| --- | ---
-It has methods like alert(), confirm() and properties like document, location
-
-It provides methods like getElementById,
-
-getElementByTagName, createElement etc
-
-| --- | ---
 ## How do you check if a key exists in an object
 
 You can check whether a key exists in an object or not using three approaches:
 
-**1\. Using in operator:** You can use the in operator whether a key exists in an object or not
+**1. Using in operator:** You can use the in operator whether a key exists in an object or not
 
 "key" in obj and If you want to check if a key doesn’t exist, remember to use parenthesis:
 
 ### !("key" in obj)
 
-**2\. Using hasOwnProperty method:** You can use hasOwnProperty to particularly test for properties of the object instance (and not inherited properties)
+**2. Using hasOwnProperty method:** You can use hasOwnProperty to particularly test for properties of the object instance (and not inherited properties)
 
 **obj.hasOwnProperty("key")** // true
 
-**3\. Using undefined comparison:** If you access a non-existing property from an object, the result is undefined. Let’s compare the properties against undefined to determine the existence of the property.
+**3. Using undefined comparison:** If you access a non-existing property from an object, the result is undefined. Let’s compare the properties against undefined to determine the existence of the property.
 
 ```js
 const user = {
@@ -417,9 +298,9 @@ console.log(user.name !== undefined); // true
 
 console.log(user.nickName !== undefined); // false
 ```
-## How do you loop through or enumerate javascript object
+## How do you loop through or enumerate JavaScript object
 
-You can use the for-in loop to loop through a javascript object. You can also make sure that the key you get is an actual property of an object, and doesn’t come from the prototype using hasOwnProperty method.
+You can use the for-in loop to loop through a JavaScript object. You can also make sure that the key you get is an actual property of an object, and doesn’t come from the prototype using hasOwnProperty method.
 
 ```js
 var object = {
@@ -437,7 +318,7 @@ for (var key in object) {
 if (object.hasOwnProperty(key)) {
 
 ```js
-console.log(key + " -> " + object\[key\]); // k1 -> value1 ...
+console.log(key + " -> " + object[key]); // k1 -> value1 ...
 
 }
 
@@ -448,15 +329,15 @@ console.log(key + " -> " + object\[key\]); // k1 -> value1 ...
 
 There are different solutions based on ECMAScript versions
 
-**1\. Using Object entries(ECMA 7+):** You can use object entries length along with constructor type.
+**1. Using Object entries(ECMA 7+):** You can use object entries length along with constructor type.
 
 Object.entries(obj).length === 0 && obj.constructor === Object
 
-**2\. Using Object keys(ECMA 5+):** You can use object keys length along with constructor type.
+**2. Using Object keys(ECMA 5+):** You can use object keys length along with constructor type.
 
 Object.keys(obj).length === 0 && obj.constructor === Object
 
-**3\. Using for-in with hasOwnProperty(Pre-ECMA 5):** You can use a for-in loop along with hasOwnProperty.
+**3. Using for-in with hasOwnProperty(Pre-ECMA 5):** You can use a for-in loop along with hasOwnProperty.
 
 ```js
 function isEmpty(obj) {
@@ -477,7 +358,7 @@ return JSON.stringify(obj) === JSON.stringify({});
 }
 ```
 
-## How do you display the current date in javascript
+## How do you display the current date in JavaScript
 
 You can use new Date() to generate a new Date object containing the current date and time. For example, let’s display the current date in mm/dd/yyyy
 
@@ -509,29 +390,29 @@ console.log(d1.getTime() === d2.getTime()); //True
 
 console.log(d1 === d2); // False
 ```
-## What are the javascript data types
+## What are the JavaScript data types
 
 The latest ECMAScript standard defines eight data types:
 
 • Seven data types that are primitives:
 
-1\. Boolean. true and false.
+1. Boolean. true and false.
 
-2\. null. A special keyword denoting a null value. Because JavaScript is case-sensitive, null is not the same as Null, NULL, or any other variant.
+2. null. A special keyword denoting a null value. Because JavaScript is case-sensitive, null is not the same as Null, NULL, or any other variant.
 
-3\. undefined. A top-level property whose value is not defined.
+3. undefined. A top-level property whose value is not defined.
 
-4\. Number. An integer or floating point number. For example: 42 or 3.14159.
+4. Number. An integer or floating point number. For example: 42 or 3.14159.
 
-5\. BigInt. An integer with arbitrary precision. For example: 9007199254740992n.
+5. BigInt. An integer with arbitrary precision. For example: 9007199254740992n.
 
-6\. String. A sequence of characters that represent a text value. For example: "Howdy"
+6. String. A sequence of characters that represent a text value. For example: "Howdy"
 
-7\. Symbol (new in ECMAScript 2015). A data type whose instances are unique and immutable.
+7. Symbol (new in ECMAScript 2015). A data type whose instances are unique and immutable.
 
 • and Object
 
-## \*What is a dynamically typed language?
+## What is a dynamically typed language?
 
 That means you don't have to specify the data type of a variable when you declare it, and data types are converted automatically as needed during script execution.
 
@@ -542,7 +423,7 @@ In JavaScript, **extra commas in an array literal are known as trailing commas o
 You do not have to specify all elements in an array literal.
 
 ```js
-var fish = \['Lion', , 'Angel'\];
+var fish = ['Lion', , 'Angel'];
 ```
 This array has two elements with values and one empty element (fish\[0\] is "Lion", fish\[1\] is undefined, and fish\[2\] is "Angel").
 
@@ -576,31 +457,11 @@ There is a period between entering scope and being declared where they cannot be
 
 ## Difference between let and const
 
-Feature
+| Feature | let | const |
+| --- | --- | --- |
+| Mutability | Mutable (value can change) | Immutable binding (cannot reassign) |
+| Initialization | Optional | Mandatory |
 
-```js
-let
-```
-
-```js
-const
-```
-
-| --- | --- | ---
-Mutability
-
-Mutable (value can change)
-
-Immutable binding (cannot reassign)
-
-| --- | --- | ---
-Initialization
-
-Optional
-
-Mandatory
-
-| --- | --- | ---
 ## Why do we say let and const are hoisted if we are unable to access it?
 
 Here's why we still say let and const are hoisted:
@@ -620,64 +481,23 @@ let myLet = "I exist!";
 -   The ReferenceError here indicates that myLet is known to the engine (proof of hoisting), but it's uninitialized.
 -   **If let wasn't hoisted, the error would be something like "myLet is not defined".**
 
-## \*What is shadowing?
+## What is shadowing?
 
 Variable shadowing occurs when a variable of an inner scope is defined with the same name as a variable in the outer scope. In the inner scope, both variables’ scope overlap. According to variable scoping rules, the inner scope should always be able to access a variable defined in the outer scope, but in practice, shadowing will prevent that from happening.
 
-### _Illegal Shadowing:_
+### Illegal Shadowing:
 
 Illegal shadowing happens when you try to declare a variable in a way that violates JavaScript's scoping rules, particularly when **you use let or const to shadow a variable declared with var in the same scope.** **This is not allowed because let and const introduce block scoping, whereas var is function-scoped or globally scoped.**
 
-Illegal Shadowing
+| Illegal Shadowing | Legal Shadowing |
+| --- | --- |
+| let a=20; { var a=10; } | let a=20; function x(){ var a=10; } |
+|  | var a=20; { let a=10; } |
+| Output: Uncaught SyntaxError: Identifier 'a' has already been declared |  |
 
-Legal Shadowing
-
-| --- | ---
-```js
-let a=20;
-```
-{
-
-```js
-var a=10;
-
-}
-```
-
-```js
-let a=20;
-
-function x(){
-
-var a=10;
-
-}
-```
-
-| --- | ---
-|
-```js
-var a=20;
-```
-{
-
-```js
-let a=10;
-
-}
-```
-
-| --- | ---
-|  |
-| --- | ---
-```js
-Output: Uncaught SyntaxError: Identifier 'a' has already been declared
-```
- |
-| --- | ---
 ## What are classes in ES6
 
-In ES6, Javascript classes are primarily **syntactic sugar over JavaScript’s existing prototype-based inheritance.** For example, the prototype based inheritance written in function expression as below,
+In ES6, JavaScript classes are primarily **syntactic sugar over JavaScript’s existing prototype-based inheritance.** For example, the prototype based inheritance written in function expression as below,
 
 ```js
 function Bike(model,color) {
@@ -690,7 +510,7 @@ this.color = color;
 
 Bike.prototype.getDetails = function() {
 ```
-return this.model + ' bike has' + this.color + ' color';
+return this.model +' bike has' + this.color +' color';
 
 ```js
 };
@@ -711,7 +531,7 @@ this.color = color;
 getDetails() {
 
 ```js
-return \`${this.model} bike has ${this.color} color\`;
+return `${this.model} bike has ${this.color} color`;
 
 }
 
@@ -720,28 +540,28 @@ return \`${this.model} bike has ${this.color} color\`;
 
 ## What are the possible ways to create objects in JavaScript
 
-There are many ways to create objects in javascript as below:
+There are many ways to create objects in JavaScript as below:
 
-**1\. Object constructor:** The simplest way to create an empty object is using the Object constructor. Currently this approach is not recommended.
+**1. Object constructor:** The simplest way to create an empty object is using the Object constructor. Currently this approach is not recommended.
 
 ```js
 var object = new Object();
 ```
-**2\. Object create method:** The create method of Object creates a new object by passing the
+**2. Object create method:** The create method of Object creates a new object by passing the
 
 prototype object as a parameter
 
 ```js
 var object = Object.create(null);
 ```
-**3\. Object literal syntax:** The object literal syntax is equivalent to create method when it passes
+**3. Object literal syntax:** The object literal syntax is equivalent to create method when it passes
 
 null as parameter.
 
 ```js
 var object = {};
 ```
-**4\. Function constructor:** Create any function and apply the new operator to create object
+**4. Function constructor:** Create any function and apply the new operator to create object
 
 instances,
 
@@ -760,7 +580,7 @@ return object;
 
 var object = new Person("Sudheer");
 ```
-**5\. Function constructor with prototype:** This is similar to function constructor but it uses prototype for their properties and methods,
+**5. Function constructor with prototype:** This is similar to function constructor but it uses prototype for their properties and methods,
 
 ```js
 function Person(){}
@@ -793,7 +613,7 @@ var result = func.call(newInstance, x, y, z),
 ```js
 console.log(result && typeof result === 'object' ? result : newInstance);
 ```
-**6\. ES6 Class syntax:** ES6 introduces class feature to create the objects
+**6. ES6 Class syntax:** ES6 introduces class feature to create the objects
 
 ```js
 class Person {
@@ -808,7 +628,7 @@ this.name = name;
 
 var object = new Person("Sudheer");
 ```
-**7\. Singleton pattern:** A Singleton is an object which can only be instantiated one time. Repeated calls to its constructor return the same instance and this way one can ensure that they don’t accidentally create multiple instances.
+**7. Singleton pattern:** A Singleton is an object which can only be instantiated one time. Repeated calls to its constructor return the same instance and this way one can ensure that they don’t accidentally create multiple instances.
 
 ```js
 var object = new function(){
@@ -817,7 +637,7 @@ this.name = "Sudheer";
 
 }
 ```
-## \*What is Object prototypes and prototype chain
+## What is Object prototypes and prototype chain
 
 Prototypes are the mechanism by which JavaScript objects inherit features from one another.
 
@@ -827,7 +647,7 @@ When it comes to inheritance, JavaScript only has one construct: objects. **Each
 
 ## How to Define read-only properties in JavaScript Object
 
-### 1\. Using Object.defineProperty()
+### 1. Using Object.defineProperty()
 
 You could instead use the writable property of the property descriptor, which prevents the need for a get accessor. By default writable is false so you can emit writable:false also.
 
@@ -854,7 +674,7 @@ person.name = 'Jane'; // Will have no effect
 console.log(person.name); // "John"
 ```
 
-**2\. Using Object.freeze()
+**2. Using Object.freeze()
 **Object.freeze() is a method that prevents any modifications to an object's properties, making them effectively read-only. This includes preventing adding, deleting, or modifying existing properties.
 
 ```js
@@ -878,7 +698,7 @@ console.log(person.name); // "John"
 console.log(person); // { name: 'John', age: 30 }
 ```
 
-### 3\. Using get Accessors for Read-Only Properties
+### 3. Using get Accessors for Read-Only Properties
 
 ```js
 const person = {
@@ -912,9 +732,9 @@ Execution context is an abstract concept that holds information about the enviro
 
 A call stack is a mechanism for an interpreter (like the JavaScript interpreter in a web browser) to keep track of its place in a script that calls multiple functions — what function is currently being run and what functions are called from within that function, etc
 
-## \*What is optional Chaining
+## What is optional Chaining
 
-The optional chaining operator (?.) permits reading the value of a property located deep within a chain of connected objects without having to expressly validate that each reference in the chain is valid. **The ?. operator functions similarly to the . chaining operator, except that instead of causing an error if a reference is nullish (null or undefined), the expression short-circuits with a return value of undefined.**
+The optional chaining operator (?.) permits reading the value of a property located deep within a chain of connected objects without having to expressly validate that each reference in the chain is valid. **The ?. operator functions similarly to the. chaining operator, except that instead of causing an error if a reference is nullish (null or undefined), the expression short-circuits with a return value of undefined.**
 
 ```js
 const dogName = adventurer.dog?.name;
@@ -925,24 +745,24 @@ console.log(dogName);// expected output: undefined
 
 **Map is preferable** **over Object** in certain cases.
 
-1\. The **keys** of an Object are Strings and Symbols, whereas they can be **any value for a Map**, including functions, objects, and any primitive.
+1. The **keys** of an Object are Strings and Symbols, whereas they can be **any value for a Map**, including functions, objects, and any primitive.
 
-2\. The **keys** **in Map are ordered** while keys added to Object are not. Thus, when iterating over it, a Map object returns keys in order of insertion.
+2. The **keys** **in Map are ordered** while keys added to Object are not. Thus, when iterating over it, a Map object returns keys in order of insertion.
 
-3\. You can **get the size of a Map easily** with the size property, while the number of properties in an Object must be determined manually (Object.keys(myArray).length).
+3. You can **get the size of a Map easily** with the size property, while the number of properties in an Object must be determined manually (Object.keys(myArray).length).
 
-4\. A **Map** is an iterable and can thus be **directly iterated,** whereas iterating over an Object requires obtaining its keys in some fashion and iterating over them.
+4. A **Map** is an iterable and can thus be **directly iterated,** whereas iterating over an Object requires obtaining its keys in some fashion and iterating over them.
 
 ```js
 for (let key in yourobject) {
 
-console.log(key, yourobject\[key\]);
+console.log(key, yourobject[key]);
 
 }
 ```
-5\. An Object has a prototype, so there are **default keys in the map that could collide with your keys** if you’re not careful. As of ES5 this can be bypassed by using map = Object.create(null), but this is seldom done.
+5. An Object has a prototype, so there are **default keys in the map that could collide with your keys** if you’re not careful. As of ES5 this can be bypassed by using map = Object.create(null), but this is seldom done.
 
-6\. A **Map** may **perform** **better in scenarios involving frequent addition and removal of key pairs.**
+6. A **Map** may **perform** **better in scenarios involving frequent addition and removal of key pairs.**
 
 ## What are benefits of map over for loops
 
@@ -961,80 +781,36 @@ console.log(key, yourobject\[key\]);
 
 The .map() and .forEach() methods in JavaScript are both used to iterate over arrays, but they serve different purposes and have different characteristics. Here's a detailed comparison:
 
-### Feature/Aspect
+| Feature/Aspect | .map() | .forEach() |
+| --- | --- | --- |
+| Purpose | To transform an array by applying a function to each element and returning a new array. | To perform operations on each element of an array without returning a new array. |
+| Return Value | Returns a new array containing the results of applying the callback function to each element. | Returns undefined. |
+| Mutability | Does not modify the original array (unless the callback function explicitly does so). | Does not modify the original array (unless explicitly done inside the callback). |
+| Chainable | Can be chained with other array methods because it returns an array. | Not chainable because it returns undefined. |
+| Use Case | Use when you need a transformed version of the original array. | Use when you need to execute side effects (e.g., logging, updating an external variable) without creating a new array. |
+| Syntax | js [1, 2, 3].map(x => x * 2); // [2, 4, 6] | js [1, 2, 3].forEach(x => console.log(x)); // Logs 1, 2, 3 |
 
-### .map()
-
-### .forEach()
-
-| --- | --- | ---
-### Purpose
-
-To transform an array by applying a function to each element and returning a new array.
-
-To perform operations on each element of an array without returning a new array.
-
-| --- | --- | ---
-### Return Value
-
-Returns a new array containing the results of applying the callback function to each element.
-
-Returns undefined.
-
-| --- | --- | ---
-### Mutability
-
-Does not modify the original array (unless the callback function explicitly does so).
-
-Does not modify the original array (unless explicitly done inside the callback).
-
-| --- | --- | ---
-### Chainable
-
-Can be chained with other array methods because it returns an array.
-
-Not chainable because it returns undefined.
-
-| --- | --- | ---
-### Use Case
-
-Use when you need a transformed version of the original array.
-
-Use when you need to execute side effects (e.g., logging, updating an external variable) without creating a new array.
-
-| --- | --- | ---
-### Syntax
-
-```js
-js \[1, 2, 3\].map(x => x \* 2); // \[2, 4, 6\]
-```
-
-```js
-js \[1, 2, 3\].forEach(x => console.log(x)); // Logs 1, 2, 3
-```
-
-| --- | --- | ---
 ### Examples
 
 ### Using .map() for Transformation
 
 ```js
-const numbers = \[1, 2, 3\];
+const numbers = [1, 2, 3];
 
-const doubled = numbers.map(num => num \* 2);
+const doubled = numbers.map(num => num * 2);
 
-console.log(doubled); // \[2, 4, 6\]
+console.log(doubled); // [2, 4, 6]
 
-console.log(numbers); // \[1, 2, 3\] (original array unchanged)
+console.log(numbers); // [1, 2, 3] (original array unchanged)
 ```
 ### Using .forEach() for Side Effects
 
 ```js
-const numbers = \[1, 2, 3\];
+const numbers = [1, 2, 3];
 
-numbers.forEach(num => console.log(num \* 2)); // Logs 2, 4, 6
+numbers.forEach(num => console.log(num * 2)); // Logs 2, 4, 6
 
-console.log(numbers); // \[1, 2, 3\] (original array unchanged)
+console.log(numbers); // [1, 2, 3] (original array unchanged)
 ```
 ### Key Points
 
@@ -1042,428 +818,66 @@ console.log(numbers); // \[1, 2, 3\] (original array unchanged)
 -   Use .forEach() when you're only performing side effects (e.g., console logs, updates to an external variable).
 -   For performance-critical applications, note that .forEach() may be slightly faster because it doesn't create a new array. However, this difference is usually negligible.
 
-## What are all String methods available in javascript?
+## What are all String methods available in JavaScript?
+
+| Method | Description | Syntax |
+| --- | --- | --- |
+| charAt(index) | Returns the character at the specified index. | 'hello'.charAt(1) // Output: 'e' |
+| charCodeAt(index) | Returns the Unicode value of the character at the specified index. | 'hello'.charCodeAt(1) // Output: 101 |
+| concat(string2, ...) | Joins two or more strings and returns a new string. | 'Hello'.concat(' ', 'World') // Output: 'Hello World' |
+| includes(substring) | Checks if a string contains the specified substring. Returns true or false. | 'JavaScript'.includes('Script') // Output: true |
+| indexOf(searchValue) | Returns the index of the first occurrence of the specified value. Returns -1 if not found. | 'hello world'.indexOf('world') // Output: 6 |
+| lastIndexOf(searchValue) | Returns the index of the last occurrence of the specified value. Returns -1 if not found. | 'hello world world'.lastIndexOf('world') // Output: 12 |
+| slice(start, end) | Extracts a part of a string and returns a new string. | 'JavaScript'.slice(4, 10) // Output: 'Script' Supports negative indices. Negative values count from the end of the string. If startIndex > endIndex, it returns an empty string. |
+| substring(start, end) | Extracts characters between start and end. | 'JavaScript'.substring(4, 10) // Output: 'Script' Does not support negative indices. Treat them as 0. If startIndex > endIndex, it swaps the indices automatically. |
+| substr(start, length) | Extracts a substring from a string, starting at a specified position and for a specified length. | 'JavaScript'.substr(4, 6) // Output: 'Script' |
+| toLowerCase() | Converts a string to lowercase. | 'Hello World'.toLowerCase() // Output: 'hello world' |
+| toUpperCase() | Converts a string to uppercase. | 'Hello World'.toUpperCase() // Output: 'HELLO WORLD' |
+| trim() | Removes whitespace from both ends of a string. |' Hello World '.trim() // Output: 'Hello World' |
+| trimStart() | Removes whitespace only from the beginning of a string. |' Hello World '.trimStart() // Output: 'Hello World' |
+| trimEnd() | Removes whitespace only from the end of a string. |' Hello World '.trimEnd() // Output:' Hello World' |
+| split(separator) | Splits a string into an array of substrings based on the specified separator. | 'a,b,c'.split(',') // Output: ['a', 'b', 'c'] |
+| replace(search, replace) | Replaces the first occurrence of a specified value with another value. | 'hello world'.replace('world', 'JavaScript') // Output: 'hello JavaScript' |
+| replaceAll(search, replace) | Replaces all occurrences of a specified value with another value. | 'hello world world'.replaceAll('world', 'JavaScript') // Output: 'hello JavaScript JavaScript' |
+| startsWith(substring) | Checks if a string starts with the specified substring. Returns true or false. | 'JavaScript'.startsWith('Java') // Output: true |
+| endsWith(substring) | Checks if a string ends with the specified substring. Returns true or false. | 'JavaScript'.endsWith('Script') // Output: true |
+| repeat(count) | Returns a new string with the original string repeated count times. | 'ha'.repeat(3) // Output: 'hahaha' |
+| match(regex) | Matches a string against a regular expression and returns an array of matches or null if no match. | 'hello world'.match(/world/) // Output: ['world'] |
+| search(regex) | Searches for a match between the string and a regular expression and returns the index or -1. | 'hello world'.search(/world/) // Output: 6 |
+| padStart(targetLength) | Pads the string at the start with specified characters to reach the target length. | '5'.padStart(3, '0') // Output: '005' |
+| padEnd(targetLength) | Pads the string at the end with specified characters to reach the target length. | '5'.padEnd(3, '0') // Output: '500' |
+| localeCompare(otherString) | Compares two strings and returns a number indicating their relative order. | 'apple'.localeCompare('banana') // Output: -1 |
+
+## What are all Array methods available in JavaScript?
+
+| Method | Description | Syntax (with Example and Output) |
+| --- | --- | --- |
+| push(item) | Adds one or more items to the end of an array and returns the new length. | let arr = [1, 2]; arr.push(3); // Output: [1, 2, 3] |
+| pop() | Removes the last item from an array and returns it. | let arr = [1, 2, 3]; arr.pop(); // Output: 3, Array: [1, 2] |
+| shift() | Removes the first item from an array and returns it. | let arr = [1, 2, 3]; arr.shift(); // Output: 1, Array: [2, 3] |
+| unshift(item) | Adds one or more items to the beginning of an array and returns the new length. | let arr = [1, 2]; arr.unshift(0); // Output: [0, 1, 2] |
+| concat(array) | Combines two or more arrays and returns a new array. | let arr1 = [1, 2]; let arr2 = [3, 4]; arr1.concat(arr2); // Output: [1, 2, 3, 4] |
+| slice(start, end) | Returns a shallow copy of a portion of an array into a new array. | let arr = [1, 2, 3, 4]; arr.slice(1, 3); // Output: [2, 3] |
+| splice(start, deleteCount, ...items) | Adds/removes items to/from an array, modifying the original array. | let arr = [1, 2, 3]; arr.splice(1, 1, 'a'); // Output: [1, 'a', 3] |
+| indexOf(item) | Returns the first index of a specified item, or -1 if not found. | let arr = [1, 2, 3]; arr.indexOf(2); // Output: 1 |
+| lastIndexOf(item) | Returns the last index of a specified item, or -1 if not found. | let arr = [1, 2, 2, 3]; arr.lastIndexOf(2); // Output: 2 |
+| includes(item) | Checks if an array contains the specified item. Returns true or false. | let arr = [1, 2, 3]; arr.includes(2); // Output: true |
+| find(callback) | Returns the first item that satisfies the callback function, or undefined if no match is found. | let arr = [1, 2, 3]; arr.find(x => x > 2); // Output: 3 |
+| findIndex(callback) | Returns the index of the first item that satisfies the callback function, or -1 if no match is found. | let arr = [1, 2, 3]; arr.findIndex(x => x > 2); // Output: 2 |
+| filter(callback) | Returns a new array with items that satisfy the callback function. | let arr = [1, 2, 3]; arr.filter(x => x > 1); // Output: [2, 3] |
+| map(callback) | Creates a new array by applying the callback function to each item in the array. | let arr = [1, 2, 3]; arr.map(x => x * 2); // Output: [2, 4, 6] |
+| reduce(callback, initialValue) | Applies a callback function to reduce the array to a single value. | let arr = [1, 2, 3]; arr.reduce((sum, x) => sum + x, 0); // Output: 6 |
+| every(callback) | Returns true if all items satisfy the callback function, otherwise false. | let arr = [2, 4, 6]; arr.every(x => x % 2 === 0); // Output: true |
+| some(callback) | Returns true if at least one item satisfies the callback function, otherwise false. | let arr = [1, 3, 5]; arr.some(x => x % 2 === 0); // Output: false |
+| sort(compareFunction) | Sorts the items of the array in place. | let arr = [3, 1, 2]; arr.sort(); // Output: [1, 2, 3] |
+| reverse() | Reverses the order of the items in the array. | let arr = [1, 2, 3]; arr.reverse(); // Output: [3, 2, 1] |
+| join(separator) | Joins all array items into a string, separated by the specified separator. | let arr = [1, 2, 3]; arr.join('-'); // Output: '1-2-3' |
+| flat(depth) | Flattens nested arrays into a single array, up to the specified depth. | let arr = [1, [2, [3]]]; arr.flat(2); // Output: [1, 2, 3] |
+| flatMap(callback) | Maps each item using a callback function, then flattens the result into a new array. | let arr = [1, 2]; arr.flatMap(x => [x, x * 2]); // Output: [1, 2, 2, 4] |
+| fill(value, start, end) | Fills an array with a specified value from the start index to the end index (exclusive). | let arr = [1, 2, 3]; arr.fill(0, 1, 3); // Output: [1, 0, 0] |
+| copyWithin(target, start, end) | Copies part of the array to another location in the same array. | let arr = [1, 2, 3, 4]; arr.copyWithin(1, 2); // Output: [1, 3, 4, 4] |
+| Array.isArray(value) | Returns true if the given value is an array, otherwise false. | Array.isArray([1, 2, 3]); // Output: true |
 
-### Method
-
-### Description
-
-### Syntax
-
-| --- | --- | ---
-### charAt(index)
-
-Returns the character at the specified index.
-
-'hello'.charAt(1) // Output: 'e'
-
-| --- | --- | ---
-### charCodeAt(index)
-
-Returns the Unicode value of the character at the specified index.
-
-'hello'.charCodeAt(1) // Output: 101
-
-| --- | --- | ---
-### concat(string2, ...)
-
-Joins two or more strings and returns a new string.
-
-'Hello'.concat(' ', 'World') // Output: 'Hello World'
-
-| --- | --- | ---
-### includes(substring)
-
-Checks if a string contains the specified substring. Returns true or false.
-
-'JavaScript'.includes('Script') // Output: true
-
-| --- | --- | ---
-### indexOf(searchValue)
-
-Returns the index of the first occurrence of the specified value. Returns -1 if not found.
-
-'hello world'.indexOf('world') // Output: 6
-
-| --- | --- | ---
-### lastIndexOf(searchValue)
-
-Returns the index of the last occurrence of the specified value. Returns -1 if not found.
-
-'hello world world'.lastIndexOf('world') // Output: 12
-
-| --- | --- | ---
-### slice(start, end)
-
-Extracts a part of a string and returns a new string.
-
-'JavaScript'.slice(4, 10) // Output: 'Script'
-
--   **Supports negative indices. Negative values count from the end of the string.**
--   **If startIndex > endIndex, it returns an empty string.**
-
-| --- | --- | ---
-### substring(start, end)
-
-Extracts characters between start and end.
-
-'JavaScript'.substring(4, 10) // Output: 'Script'
-
--   **Does not support negative indices. Treat them as 0.**
--   **If startIndex > endIndex, it swaps the indices automatically.**
-
-| --- | --- | ---
-### substr(start, length)
-
-Extracts a substring from a string, starting at a specified position and for a specified length.
-
-'JavaScript'.substr(4, 6) // Output: 'Script'
-
-| --- | --- | ---
-### toLowerCase()
-
-Converts a string to lowercase.
-
-'Hello World'.toLowerCase() // Output: 'hello world'
-
-| --- | --- | ---
-### toUpperCase()
-
-Converts a string to uppercase.
-
-'Hello World'.toUpperCase() // Output: 'HELLO WORLD'
-
-| --- | --- | ---
-### trim()
-
-Removes whitespace from both ends of a string.
-
-' Hello World '.trim() // Output: 'Hello World'
-
-| --- | --- | ---
-### trimStart()
-
-Removes whitespace only from the beginning of a string.
-
-' Hello World '.trimStart() // Output: 'Hello World '
-
-| --- | --- | ---
-### trimEnd()
-
-Removes whitespace only from the end of a string.
-
-' Hello World '.trimEnd() // Output: ' Hello World'
-
-| --- | --- | ---
-### split(separator)
-
-Splits a string into an array of substrings based on the specified separator.
-
-'a,b,c'.split(',') // Output: \['a', 'b', 'c'\]
-
-| --- | --- | ---
-### replace(search, replace)
-
-Replaces the first occurrence of a specified value with another value.
-
-'hello world'.replace('world', 'JavaScript') // Output: 'hello JavaScript'
-
-| --- | --- | ---
-### replaceAll(search, replace)
-
-Replaces all occurrences of a specified value with another value.
-
-'hello world world'.replaceAll('world', 'JavaScript') // Output: 'hello JavaScript JavaScript'
-
-| --- | --- | ---
-### startsWith(substring)
-
-Checks if a string starts with the specified substring. Returns true or false.
-
-'JavaScript'.startsWith('Java') // Output: true
-
-| --- | --- | ---
-### endsWith(substring)
-
-Checks if a string ends with the specified substring. Returns true or false.
-
-'JavaScript'.endsWith('Script') // Output: true
-
-| --- | --- | ---
-### repeat(count)
-
-Returns a new string with the original string repeated count times.
-
-'ha'.repeat(3) // Output: 'hahaha'
-
-| --- | --- | ---
-### match(regex)
-
-Matches a string against a regular expression and returns an array of matches or null if no match.
-
-'hello world'.match(/world/) // Output: \['world'\]
-
-| --- | --- | ---
-### search(regex)
-
-Searches for a match between the string and a regular expression and returns the index or -1.
-
-'hello world'.search(/world/) // Output: 6
-
-| --- | --- | ---
-### padStart(targetLength)
-
-Pads the string at the start with specified characters to reach the target length.
-
-'5'.padStart(3, '0') // Output: '005'
-
-| --- | --- | ---
-### padEnd(targetLength)
-
-Pads the string at the end with specified characters to reach the target length.
-
-'5'.padEnd(3, '0') // Output: '500'
-
-| --- | --- | ---
-### localeCompare(otherString)
-
-Compares two strings and returns a number indicating their relative order.
-
-'apple'.localeCompare('banana') // Output: -1
-
-| --- | --- | ---
-## What are all Array methods available in Javascript?
-
-### Method
-
-### Description
-
-### Syntax (with Example and Output)
-
-| --- | --- | ---
-### push(item)
-
-Adds one or more items to the end of an array and returns the new length.
-
-```js
-let arr = \[1, 2\]; arr.push(3); // Output: \[1, 2, 3\]
-```
-
-| --- | --- | ---
-### pop()
-
-Removes the last item from an array and returns it.
-
-```js
-let arr = \[1, 2, 3\]; arr.pop(); // Output: 3, Array: \[1, 2\]
-```
-
-| --- | --- | ---
-### shift()
-
-Removes the first item from an array and returns it.
-
-```js
-let arr = \[1, 2, 3\]; arr.shift(); // Output: 1, Array: \[2, 3\]
-```
-
-| --- | --- | ---
-### unshift(item)
-
-Adds one or more items to the beginning of an array and returns the new length.
-
-```js
-let arr = \[1, 2\]; arr.unshift(0); // Output: \[0, 1, 2\]
-```
-
-| --- | --- | ---
-### concat(array)
-
-Combines two or more arrays and returns a new array.
-
-```js
-let arr1 = \[1, 2\]; let arr2 = \[3, 4\]; arr1.concat(arr2); // Output: \[1, 2, 3, 4\]
-```
-
-| --- | --- | ---
-### slice(start, end)
-
-Returns a shallow copy of a portion of an array into a new array.
-
-```js
-let arr = \[1, 2, 3, 4\]; arr.slice(1, 3); // Output: \[2, 3\]
-```
-
-| --- | --- | ---
-### splice(start, deleteCount, ...items)
-
-Adds/removes items to/from an array, modifying the original array.
-
-```js
-let arr = \[1, 2, 3\]; arr.splice(1, 1, 'a'); // Output: \[1, 'a', 3\]
-```
-
-| --- | --- | ---
-### indexOf(item)
-
-Returns the first index of a specified item, or -1 if not found.
-
-```js
-let arr = \[1, 2, 3\]; arr.indexOf(2); // Output: 1
-```
-
-| --- | --- | ---
-### lastIndexOf(item)
-
-Returns the last index of a specified item, or -1 if not found.
-
-```js
-let arr = \[1, 2, 2, 3\]; arr.lastIndexOf(2); // Output: 2
-```
-
-| --- | --- | ---
-### includes(item)
-
-Checks if an array contains the specified item. Returns true or false.
-
-```js
-let arr = \[1, 2, 3\]; arr.includes(2); // Output: true
-```
-
-| --- | --- | ---
-### find(callback)
-
-Returns the first item that satisfies the callback function, or undefined if no match is found.
-
-```js
-let arr = \[1, 2, 3\]; arr.find(x => x > 2); // Output: 3
-```
-
-| --- | --- | ---
-### findIndex(callback)
-
-Returns the index of the first item that satisfies the callback function, or -1 if no match is found.
-
-```js
-let arr = \[1, 2, 3\]; arr.findIndex(x => x > 2); // Output: 2
-```
-
-| --- | --- | ---
-### filter(callback)
-
-Returns a new array with items that satisfy the callback function.
-
-```js
-let arr = \[1, 2, 3\]; arr.filter(x => x > 1); // Output: \[2, 3\]
-```
-
-| --- | --- | ---
-### map(callback)
-
-Creates a new array by applying the callback function to each item in the array.
-
-```js
-let arr = \[1, 2, 3\]; arr.map(x => x \* 2); // Output: \[2, 4, 6\]
-```
-
-| --- | --- | ---
-### reduce(callback, initialValue)
-
-Applies a callback function to reduce the array to a single value.
-
-```js
-let arr = \[1, 2, 3\]; arr.reduce((sum, x) => sum + x, 0); // Output: 6
-```
-
-| --- | --- | ---
-### every(callback)
-
-Returns true if all items satisfy the callback function, otherwise false.
-
-```js
-let arr = \[2, 4, 6\]; arr.every(x => x % 2 === 0); // Output: true
-```
-
-| --- | --- | ---
-### some(callback)
-
-Returns true if at least one item satisfies the callback function, otherwise false.
-
-```js
-let arr = \[1, 3, 5\]; arr.some(x => x % 2 === 0); // Output: false
-```
-
-| --- | --- | ---
-### sort(compareFunction)
-
-Sorts the items of the array in place.
-
-```js
-let arr = \[3, 1, 2\]; arr.sort(); // Output: \[1, 2, 3\]
-```
-
-| --- | --- | ---
-### reverse()
-
-Reverses the order of the items in the array.
-
-```js
-let arr = \[1, 2, 3\]; arr.reverse(); // Output: \[3, 2, 1\]
-```
-
-| --- | --- | ---
-### join(separator)
-
-Joins all array items into a string, separated by the specified separator.
-
-```js
-let arr = \[1, 2, 3\]; arr.join('-'); // Output: '1-2-3'
-```
-
-| --- | --- | ---
-### flat(depth)
-
-Flattens nested arrays into a single array, up to the specified depth.
-
-```js
-let arr = \[1, \[2, \[3\]\]\]; arr.flat(2); // Output: \[1, 2, 3\]
-```
-
-| --- | --- | ---
-### flatMap(callback)
-
-Maps each item using a callback function, then flattens the result into a new array.
-
-```js
-let arr = \[1, 2\]; arr.flatMap(x => \[x, x \* 2\]); // Output: \[1, 2, 2, 4\]
-```
-
-| --- | --- | ---
-### fill(value, start, end)
-
-Fills an array with a specified value from the start index to the end index (exclusive).
-
-```js
-let arr = \[1, 2, 3\]; arr.fill(0, 1, 3); // Output: \[1, 0, 0\]
-```
-
-| --- | --- | ---
-### copyWithin(target, start, end)
-
-Copies part of the array to another location in the same array.
-
-```js
-let arr = \[1, 2, 3, 4\]; arr.copyWithin(1, 2); // Output: \[1, 3, 4, 4\]
-```
-
-| --- | --- | ---
-### Array.isArray(value)
-
-Returns true if the given value is an array, otherwise false.
-
-Array.isArray(\[1, 2, 3\]); // Output: true
-
-| --- | --- | ---
 ## How do you redeclare variables in switch block without an error
 
 ```js
@@ -1569,7 +983,7 @@ var total = 0;
 
 for (var i = 0, len = arguments.length; i < len; ++i) {
 
-total += arguments\[i\];
+total += arguments[i];
 
 }
 
@@ -1609,7 +1023,7 @@ Anonymous functions are used in places where functions are used as value. So we 
 
 ## What is a first class function
 
-In Javascript, functions are first class objects. First-class functions means when functions in that language are treated like any other variable. For example, in such a language, a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable. For example, in the below example, handler functions assigned to a listener :
+In JavaScript, functions are first class objects. First-class functions means when functions in that language are treated like any other variable. For example, in such a language, a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable. For example, in the below example, handler functions assigned to a listener:
 
 const handler = () => console.log ('This is a click handler function');
 
@@ -1636,17 +1050,18 @@ higherOrder (firstOrderFunc);
 ```
 ## What is a pure function
 
-A Pure function is a function where the return value is only determined by its arguments without any side effects. .e, If you call a function with the same arguments ‘n’ number of times and ‘n’ number of places in the application then it will always return the same value. Let’s take an example :
+A Pure function is a function where the return value is only determined by its arguments without any side effects. .e, If you call a function with the same arguments ‘n’ number of times and ‘n’ number of places in the application then it will always return the same value. Let’s take an example:
 
-### function add(a, b) {
+**function add(a, b) {**
 
-### return a + b;
+**return a + b;**
 
 **}**
 
-### console.log(add(2, 3)); // 5
-
-### console.log(add(2, 3)); // 5 (Always produces the same result)
+```js
+**console.log(add(2, 3)); // 5**
+```
+**console.log(add(2, 3)); // 5 (Always produces the same result)**
 
 -   **No Side Effects: It doesn’t change any variables outside its scope.**
 -   **Deterministic Behavior: Same inputs always give the same output**
@@ -1704,11 +1119,11 @@ There are a lot of benefits to using modules in favor of sprawling. Some
 
 of the benefits are,
 
-1\. Maintainability
+1. Maintainability
 
-2\. Reusability
+2. Reusability
 
-3\. Namespacing
+3. Namespacing
 
 ## What is memoization
 
@@ -1738,7 +1153,7 @@ console.log('Calculating result');
 
 let result = value + 20;
 
-cache\[value\] = result;
+cache[value] = result;
 
 return result;
 
@@ -1764,12 +1179,12 @@ Currying is a process in functional programming in which we can transform a func
 
 Two ways to implement currying
 
-### 1\. Currying using bind method
+### 1. Currying using bind method
 
 ```js
 let multiply = function(x,y){
 
-console.log(x\*y);
+console.log(x*y);
 
 }
 
@@ -1794,7 +1209,7 @@ Output:
 
 6
 
-### 2\. Currying using closures
+### 2. Currying using closures
 
 //closure
 
@@ -1803,7 +1218,7 @@ let multiply = function(x){
 
 return function(y){
 
-console.log(x\*y);
+console.log(x*y);
 
 }
 
@@ -1861,11 +1276,11 @@ callback(name);
 outerFunction(callbackFunction);
 ```
 
-## \*Why do we need callbacks
+## Why do we need callbacks
 
-The callbacks are needed because javascript is an event driven language. That means instead of waiting for a response javascript will keep executing while listening for other events.
+The callbacks are needed because JavaScript is an event driven language. That means instead of waiting for a response JavaScript will keep executing while listening for other events.
 
-## \*What is a callback hell
+## What is a callback hell
 
 Callback Hell is an anti-pattern with multiple nested callbacks which makes code hard to read and debug when dealing with asynchronous logic.
 
@@ -1895,11 +1310,11 @@ async4(function(){
 
 **Callback Hell (Callback Pyramids)** in JavaScript, also known as the “Pyramid of Doom,” is a situation where nested callbacks lead to deeply indented and hard-to-read code. It can make your code look like a pyramid due to its visual structure.
 
-## \*What is inversion of control
+## What is inversion of control
 
 **Inversion of Control (IoC)** is an abstract programming principle based on the flow of control (execution of statements/instructions) that should be fully managed by the specific implementation of the framework, which is external to your code.
 
-## In the above example, we are losing the control of the program and passing the control of the once callback to another.
+## In the above example, we are losing the control of the program and handing control of our callback over to another function.
 
 ## What is a promise
 
@@ -1935,7 +1350,7 @@ The process of executing a sequence of asynchronous tasks one after another usin
 Promise.all is a promise that takes an array of promises as an input (an iterable), and it gets resolved when all the promises get resolved or any one of them gets rejected. For example, the syntax of promise.all method is below:
 
 ```js
-Promise.all(\[Promise1, Promise2, Promise3\]) .then(result) => {
+Promise.all([Promise1, Promise2, Promise3]) .then(result) => {
 
 console.log(result) })
 ```
@@ -1965,19 +1380,19 @@ console.log(value); // "two" // Both promises will resolve, but promise2 is fast
 ```js
 });
 ```
-## \*What are the main rules of promise
+## What are the main rules of promise
 
 A promise must follow a specific set of rules:
 
-1\. A promise is an object that supplies a standard-compliant .then() method
+1. A promise is an object that supplies a standard-compliant .then() method
 
-2\. A pending promise may transition into either fulfilled or rejected state
+2. A pending promise may transition into either fulfilled or rejected state
 
-3\. A fulfilled or rejected promise is settled and it must not transition into any other state.
+3. A fulfilled or rejected promise is settled and it must not transition into any other state.
 
-4\. Once a promise is settled, the value must not change.
+4. Once a promise is settled, the value must not change.
 
-## \*What are the pros and cons of promises over callbacks
+## What are the pros and cons of promises over callbacks
 
 Below are the list of pros and cons of promises over callbacks,
 
@@ -2015,7 +1430,7 @@ All the callback functions which come from **promises** will go into the microta
 
 Starvation happens when “greedy” threads make shared resources unavailable for long periods. For instance, suppose an object provides a synchronized method that often takes a long time to return. Suppose execution of methods that are inside microtask queue create more methods that goes into microtask queue then in such case methods of callback queue will never get change for execution
 
-## What is Javascript Engine?
+## What is JavaScript Engine?
 
 A JavaScript engine is a computer program that executes JavaScript code and converts it into computer understandable language.
 
@@ -2026,7 +1441,7 @@ Key Responsibilities of a JavaScript Engine:
 3.  **Execution**: Runs the machine code efficiently, ensuring the application functions correctly.
 4.  **Memory Management**: Handles memory allocation and garbage collection (removal of unused objects).
 
-## \*What is Copy Elision?
+## What is Copy Elision?
 
 Copy elision is an optimization implemented by most compilers to prevent extra (potentially expensive) copies in certain situations. It makes returning by value or pass-by-value feasible in practice
 
@@ -2066,21 +1481,21 @@ lastName:"Random",
 ```js
 }
 ```
-### //function borrowing
+**//function borrowing**
 
-### printFullName.call(name2, "Udaipur", "Rajasthan");
+**printFullName.call(name2, "Udaipur", "Rajasthan");**
 
-### printFullName.apply(name2, \["Udaipur", "Rajasthan"\]);
+**printFullName.apply(name2, \["Udaipur", "Rajasthan"\]);**
 
-### // bind method return a copy of method
+**// bind method return a copy of method**
 
-### let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )
+**let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )**
 
-### printMyName();
+**printMyName();**
 
 ## What is Polyfill?
 
-Polyfill is like a browser's fallback and you have to write your own method instead of using Javascript new methods
+Polyfill is like a browser's fallback and you have to write your own method instead of using JavaScript new methods
 
 ## What are polyfills for call, apply and bind methods?
 
@@ -2226,7 +1641,7 @@ return function (...innerArgs) {
 // Combine the arguments from .myBind and the returned function
 
 ```js
-return func.apply(obj, \[...args, ...innerArgs\]);
+return func.apply(obj, [...args, ...innerArgs]);
 
 };
 
@@ -2253,9 +1668,9 @@ obj\[uniqueKey\] = this; // Temporarily assign the function to the object
 ```js
 return function (...innerArgs) {
 
-const newArgs = \[...args, ...innerArgs\];
+const newArgs = [...args, ...innerArgs];
 
-return obj\[uniqueKey\](..newArgs);
+return obj[uniqueKey](..newArgs);
 
 };
 
@@ -2266,7 +1681,7 @@ return obj\[uniqueKey\](..newArgs);
 The reduce() function in JavaScript is a method available on arrays that is used to iterate through the array, applying a callback function to each element, and accumulating a single result.
 
 ```js
-const numbers = \[1, 2, 3, 4\];
+const numbers = [1, 2, 3, 4];
 
 const sum = numbers.reduce((accumulator, currentValue) => {
 
@@ -2310,7 +1725,7 @@ throw new TypeError("Reduce of empty array with no initial value");
 
 }
 
-acc = originalArray\[0\];
+acc = originalArray[0];
 ```
 startIndex = 1; // Skip the first element
 
@@ -2322,7 +1737,7 @@ startIndex = 1; // Skip the first element
 ```js
 for (let i = startIndex; i < originalArray.length; i++) {
 
-acc = callback(acc, originalArray\[i\], i, originalArray);
+acc = callback(acc, originalArray[i], i, originalArray);
 
 }
 
@@ -2342,7 +1757,7 @@ console.log(sum1); // Output: 10
 ## Check duplicate using reduce method
 
 ```js
-const numbers = \[2, 5, 3, 5, 6, 3, 2\];
+const numbers = [2, 5, 3, 5, 6, 3, 2];
 
 const firstDuplicate = numbers.reduce((acc, currentValue, currentIndex, array) => {
 ```
@@ -2361,11 +1776,11 @@ console.log(firstDuplicate); // **Output: 5**
 ```
 
 ```js
-const numbers = \[10, 20, 30, 40\];
+const numbers = [10, 20, 30, 40];
 
 const sumWithDebug = numbers.reduce((acc, currentValue, currentIndex, array) => {
 
-console.log(\`Index: ${currentIndex}, Value: ${currentValue}, Accumulator: ${acc}, Array: ${array}\`);
+console.log(`Index: ${currentIndex}, Value: ${currentValue}, Accumulator: ${acc}, Array: ${array}`);
 
 return acc + currentValue;
 
@@ -2419,7 +1834,7 @@ index.html
 
 ### Index.js
 
-// Debouncing in Javascript
+// Debouncing in JavaScript
 
 ```js
 let counter=0;
@@ -2433,7 +1848,7 @@ console.log("Fetching Data....", counter++);
 
 }
 
-const **debounce**\= function(func, delay){
+const **debounce**= function(func, delay){
 
 let timer;
 
@@ -2546,7 +1961,7 @@ const betterFunction = throttle(expensive, 1000);
 window.addEventListener("resize", betterFunction);
 ```
 
-### // Throttling Function using date time
+**// Throttling Function using date time**
 
 ```js
 const throttleFunction=(func, delay)=>{
@@ -2628,7 +2043,7 @@ lastArgs = null; // Reset stored arguments
 lastArgs = args; // Store the latest arguments
 
 ```js
-console.error(\`Rate limit has been reached. Please wait for ${limit / 1000}s\`);
+console.error(`Rate limit has been reached. Please wait for ${limit / 1000}s`);
 
 }
 
@@ -2649,9 +2064,9 @@ In the **debouncing** technique, no matter how many times the user fires the eve
 
 There are two ways of event flow:
 
-1\. Top to Bottom(Event Capturing)
+1. Top to Bottom(Event Capturing)
 
-2\. Bottom to Top (Event Bubbling)
+2. Bottom to Top (Event Bubbling)
 
 ## What is event bubbling ?
 
@@ -2677,7 +2092,7 @@ console.log(event.target);
 
 }, false);
 ```
-## \*What is BOM
+## What is BOM
 
 The Browser Object Model (BOM) allows JavaScript to “talk to” the browser. It consists of the objects navigator, history, screen, location and document which are children of the window. The Browser Object Model is not standardized and can change based on different browsers.
 
@@ -2687,7 +2102,7 @@ The Browser Object Model (BOM) allows JavaScript to “talk to” the browser. I
 
 **Host objects** are objects provided by the browser or runtime environment (Node). For example, window, XmlHttpRequest, DOM nodes etc. are considered as host objects.
 
-## User objects are objects defined in the javascript code. For example, User objects created for profile information.
+## User objects are objects defined in the JavaScript code. For example, User objects created for profile information.
 
 ## What is IndexedDB
 
@@ -2697,9 +2112,9 @@ IndexedDB is a low-level API for client-side storage of larger amounts of struct
 
 Web storage is an API that provides a mechanism by which browsers can store key/value pairs locally within the user’s browser, in a much more intuitive fashion than using cookies. The web storage provides two mechanisms for storing data on the client.
 
-1\. Local storage: It stores data for current origin with no expiration date.
+1. Local storage: It stores data for current origin with no expiration date.
 
-2\. Session storage: It stores data for one session and the data is lost when the browser tab is closed.
+2. Session storage: It stores data for one session and the data is lost when the browser tab is closed.
 
 ## What is a Cookie
 
@@ -2709,20 +2124,20 @@ A cookie is a piece of data that is stored on your computer to be accessed by yo
 
 Cookies are used to remember information about the user profile(such as username). It basically involves two steps,
 
-1\. When a user visits a web page, the user profile can be stored in a cookie.
+1. When a user visits a web page, the user profile can be stored in a cookie.
 
-2\. Next time the user visits the page, the cookie remembers the user profile.
+2. Next time the user visits the page, the cookie remembers the user profile.
 
 ## What are the options in a cookie
 
 There are few below options available for a cookie,
 
-1\. By default, the cookie is deleted when the browser is closed but you can change this behavior by setting expiry date (in UTC time).
+1. By default, the cookie is deleted when the browser is closed but you can change this behavior by setting expiry date (in UTC time).
 
 ```js
 document.cookie = "username=John; expires=Sat, 8 Jun 2019 12:00:00 UTC";
 ```
-2\. By default, the cookie belongs to a current page. But you can tell the browser what path the cookie belongs to using a path parameter.
+2. By default, the cookie belongs to a current page. But you can tell the browser what path the cookie belongs to using a path parameter.
 
 ```js
 document.cookie = "username=John; path=/services";
@@ -2738,53 +2153,13 @@ Note: You should define the cookie path option to ensure that you delete the rig
 
 ## What are the differences between cookie, local storage and session storage
 
-### Feature
+| Feature | Cookie | Local storage | Session storage |
+| --- | --- | --- | --- |
+| Accessed on client or server side | Both server-side & client-side | client-side only | client-side only |
+| Lifetime | As configured using Expires option | until deleted | until tab is closed |
+| SSL | Supported | Not Supported | Not Supported |
+| Maximum data size | 4KB | 5 MB | 5 MB |
 
-### Cookie
-
-### Local storage
-
-### Session storage
-
-| --- | --- | --- | ---
-Accessed on client or server side
-
-Both server-side & client-side
-
-client-side only
-
-client-side only
-
-| --- | --- | --- | ---
-Lifetime
-
-As configured using
-
-Expires option
-
-until deleted
-
-until tab is closed
-
-| --- | --- | --- | ---
-SSL
-
-Supported
-
-Not Supported
-
-Not Supported
-
-| --- | --- | --- | ---
-Maximum data size
-
-4KB
-
-5 MB
-
-5 MB
-
-| --- | --- | --- | ---
 ## How do you access web storage
 
 The Window object implements the WindowLocalStorage and WindowSessionStorage objects which have localStorage(window.localStorage) and sessionStorage(window.sessionStorage) properties respectively. These properties create an instance of the Storage object, through which data items can be set, retrieved and removed for a specific domain and storage type (session or local). For example, you can read and write on local storage objects as below
@@ -2818,7 +2193,7 @@ sessionStorage.clear();
 ```
 ## What is a storage event and its event handler
 
-The StorageEvent is an event that fires when a storage area has been changed in the context of another document. Whereas onstorage property is an EventHandler for processing storage events. The syntax would be as below :
+The StorageEvent is an event that fires when a storage area has been changed in the context of another document. Whereas onstorage property is an EventHandler for processing storage events. The syntax would be as below:
 
 ```js
 window.onstorage = functionRef;
@@ -2828,7 +2203,7 @@ Let’s take the example usage of onstorage event handler which logs the storage
 ```js
 window.onstorage = function(e) {
 ```
-console.log('The ' + e.key + ' key has been changed from ' + e.oldValue +
+console.log('The' + e.key +' key has been changed from' + e.oldValue +
 
 ```js
 ' to ' + e.newValue + '.');
@@ -2904,7 +2279,7 @@ event.waitUntil(
 caches.open('my-cache').then(function(cache) {
 
 ```js
-return cache.addAll(\[
+return cache.addAll([
 ```
 '/index.html',
 
@@ -2913,7 +2288,7 @@ return cache.addAll(\[
 '/app.js'
 
 ```js
-\]);
+]);
 ```
 })
 
@@ -2955,7 +2330,7 @@ The problem with service worker is that it gets terminated when not in use, and 
 
 You need to follow below steps to start using web workers for counting example
 
-**1\. Create a Web Worker File:** You need to write a script to increment the count value. Let’s name it as counter.js.
+**1. Create a Web Worker File:** You need to write a script to increment the count value. Let’s name it as counter.js.
 
 ```js
 let i = 0;
@@ -2975,7 +2350,7 @@ timedCount();
 
 Here postMessage() method is used to post a message back to the HTML page
 
-**2\. Create a Web Worker Object:** You can create a web worker object by checking for browser support. Let’s name this file as web_worker_example.js
+**2. Create a Web Worker Object:** You can create a web worker object by checking for browser support. Let’s name this file as web_worker_example.js
 
 if (typeof(w) == "undefined") {
 
@@ -2994,24 +2369,24 @@ document.getElementById("message").innerHTML = event.data;
 };
 ```
 
-**3\. Terminate a Web Worker:** Web workers will continue to listen for messages (even after the external script is finished) until it is terminated. You can use the terminate() method to terminate listening to the messages.
+**3. Terminate a Web Worker:** Web workers will continue to listen for messages (even after the external script is finished) until it is terminated. You can use the terminate() method to terminate listening to the messages.
 
-### w.terminate();
+**w.terminate();**
 
-**4\. Reuse the Web Worker:** If you set the worker variable to undefined you can reuse the code.
+**4. Reuse the Web Worker:** If you set the worker variable to undefined you can reuse the code.
 
 ```js
 w = undefined;
 ```
 ## What are the restrictions of web workers on DOM?
 
-WebWorkers don’t have access to below javascript objects since they are defined in external files.
+WebWorkers don’t have access to below JavaScript objects since they are defined in external files.
 
-1\. Window object
+1. Window object
 
-2\. Document object
+2. Document object
 
-3\. Parent object
+3. Parent object
 
 ## How do you submit a form using JavaScript
 
@@ -3020,7 +2395,7 @@ You can submit a form using JavaScript using document.form\[0\].submit(). All th
 ```js
 function submit() {
 
-document.form\[0\].submit();
+document.form[0].submit();
 
 }
 ```
@@ -3037,14 +2412,14 @@ The DOMContentLoaded event is fired when the initial HTML document has been comp
 
 ## What are the tools or techniques used for debugging JavaScript code
 
-You can use below tools or techniques for debugging javascript
+You can use below tools or techniques for debugging JavaScript
 
-1\. Chrome Devtools
+1. Chrome Devtools
 
-2\. debugger statement
+2. debugger statement
 
 ```js
-3\. Good old console.log statement
+3. Good old console.log statement
 ```
 ## What is the difference between an attribute and a property
 
@@ -3103,37 +2478,17 @@ alert("DIV 2");
 
 JSON (JavaScript Object Notation) is a lightweight format that is used for data interchanging.
 
-### JSON to String
+| JSON to String | String to JSON object |
+| --- | --- |
+| var userJSON = {'name': 'John', age: 31} var userString = JSON.stringify(user); console.log(userString); //"{"name":"John","age":31}" | var userString = '{"name":"John","age":31}'; var userJSON = JSON.parse(userString); console.log(userJSON); // {name: "John", age: 31} |
 
-### String to JSON object
-
-| --- | ---
-```js
-var userJSON = {'name': 'John', age: 31}
-
-var userString = JSON.stringify(user);
-
-console.log(userString);
-```
-//"{"name":"John","age":31}"
-
-```js
-var userString = '{"name":"John","age":31}';
-
-var userJSON = JSON.parse(userString);
-
-console.log(userJSON);
-```
-// {name: "John", age: 31}
-
-| --- | ---
 ## What are PWAs
 
 Progressive web applications (PWAs) are a type of mobile app delivered through the web, built using common web technologies including HTML, CSS and JavaScript. These PWAs are deployed to servers, accessible through URLs, and indexed by search engines.
 
-## How do you redirect new page in javascript
+## How do you redirect new page in JavaScript
 
-In vanilla javascript, you can redirect to a new page using the location property of the window object. The syntax would be as follows:
+In vanilla JavaScript, you can redirect to a new page using the location property of the window object. The syntax would be as follows:
 
 ```js
 function redirect() {
@@ -3142,7 +2497,7 @@ window.location.href = 'newPage.html';
 
 }
 ```
-## How do you get the current url with javascript
+## How do you get the current url with JavaScript
 
 You can use window.location.href expression to get the current url path and you can use the same expression for updating the URL too. You can also use document.URL for read-only purposes but this solution has issues in FF.
 
@@ -3162,16 +2517,16 @@ The below Location object properties can be used to access URL components of the
 7.  search - The query portion of the URL
 8.  hash - The anchor portion of the URL
 
-## How do get query string values in javascript
+## How do get query string values in JavaScript
 
-You can use URLSearchParams to get query string values in javascript. Let’s see an example to get the client code value from URL query string,
+You can use URLSearchParams to get query string values in JavaScript. Let’s see an example to get the client code value from URL query string,
 
 ```js
 const urlParams = new URLSearchParams(window.location.search);
 
 const clientCode = urlParams.get('clientCode');
 ```
-## How do you access history in javascript
+## How do you access history in JavaScript
 
 The window.history object contains the browser’s history. You can load previous and next URLs in the history using back() and next() methods.
 
@@ -3196,7 +2551,7 @@ window.history.forward()
 
 JavaScript provides three main types of popup boxes to interact with users. These are part of the browser's built-in functionality:
 
-### 1\. Alert Box
+### 1. Alert Box
 
 -   **Purpose**: Used to display a simple message or alert to the user.
 -   **Characteristics**:
@@ -3211,7 +2566,7 @@ alert("This is an alert box!");
 ```js
 alert("Hello! This is an alert message.");
 ```
-### 2\. Confirm Box
+### 2. Confirm Box
 
 -   **Purpose**: Used to display a message and ask for user confirmation (Yes/No, OK/Cancel).
 -   **Characteristics**:
@@ -3235,7 +2590,7 @@ console.log("User clicked Cancel");
 
 }
 ```
-### 3\. Prompt Box
+### 3. Prompt Box
 
 -   **Purpose**: Used to get input from the user.
 -   **Characteristics**:
@@ -3310,29 +2665,15 @@ if(typeof(EventSource) !== "undefined") {
 
 Below are the list of events available for server sent events
 
-### Events
+| Events | Description |
+| --- | --- |
+| onopen | When a connection to the server is opened |
+| onmessage | When a message is received |
+| onerror | When an error occurs |
 
-### Description
-
-| --- | ---
-onopen
-
-When a connection to the server is opened
-
-| --- | ---
-onmessage
-
-When a message is received
-
-| --- | ---
-onerror
-
-When an error occurs
-
-| --- | ---
 Output Questions
 
-### Output questions (To check output , select the complete row )
+### Output questions (To check output, select the complete row )
 
 ## Basic JavaScript
 
@@ -3386,9 +2727,9 @@ console.log((+f)+a+1);
 console.log(5 < 6 < 7);
 ```
 
-**Output** : true
+**Output**: true
 
-**Reason** : In JavaScript, the < operator evaluates expressions from left to right. First, the expression 5 < 6 is evaluated, resulting in true because 5 is less than 6. Then, the expression true < 7 is evaluated. In this case, JavaScript performs type coercion and converts true to the number 1. Therefore, the expression becomes 1 < 7, which is true.
+**Reason**: In JavaScript, the < operator evaluates expressions from left to right. First, the expression 5 < 6 is evaluated, resulting in true because 5 is less than 6. Then, the expression true < 7 is evaluated. In this case, JavaScript performs type coercion and converts true to the number 1. Therefore, the expression becomes 1 < 7, which is true.
 
 ### Arithmetic operation on undefined
 
@@ -3412,16 +2753,16 @@ console.log(0 == false);
 console.log(1 == true);
 ```
 
-**Output** : true, true
+**Output**: true, true
 
-**Reason** : The == operator converts operands to a common type before making the comparison. In both the cases, the boolean value will be converted to a number, i.e., false is converted to 0 and true is converted to 1. So, the expression 0 == false is equivalent to 0 == 0 and 1 == true is equivalent to 1 == 1.
+**Reason**: The == operator converts operands to a common type before making the comparison. In both the cases, the boolean value will be converted to a number, i.e., false is converted to 0 and true is converted to 1. So, the expression 0 == false is equivalent to 0 == 0 and 1 == true is equivalent to 1 == 1.
 
 ### Comparing object with string
 
 ```js
-const arr1 = \[1,2,3\];
+const arr1 = [1,2,3];
 
-const arr2 = \[1,2,3\];
+const arr2 = [1,2,3];
 
 const str = "1,2,3";
 
@@ -3430,11 +2771,11 @@ console.log(arr1 == str);
 console.log(arr1 == arr2);
 ```
 
-**Output** : true, false
+**Output**: true, false
 
-**Reason** for console.log(arr1 == str) : Javascript compiler performs type conversion. In this case, it converts the array arr1 and the string str to their string representations and then compares them.
+**Reason** for console.log(arr1 == str): JavaScript compiler performs type conversion. In this case, it converts the array arr1 and the string str to their string representations and then compares them.
 
-**Reason** for console.log(arr1==arr2) : In Javascript arrays are objects and objects are compared by reference. In this case, arr1 and arr2 are pointing to 2 different memory locations
+**Reason** for console.log(arr1==arr2): In JavaScript arrays are objects and objects are compared by reference. In this case, arr1 and arr2 are pointing to 2 different memory locations
 
 ### Comparing objects
 
@@ -3444,9 +2785,9 @@ console.log({} == {});
 console.log({} === {});
 ```
 
-**Output** : false, false
+**Output**: false, false
 
-**Reason** : When you compare objects using == or ===, it checks if they refer to the exact same object. So even if they are looking the same, they are pointing to different memory locations.
+**Reason**: When you compare objects using == or ===, it checks if they refer to the exact same object. So even if they are looking the same, they are pointing to different memory locations.
 
 ### Comparing NAN
 
@@ -3454,37 +2795,37 @@ console.log({} === {});
 console.log(NaN===NaN)
 ```
 
-**Output** : false
+**Output**: false
 
-**Reason** : NaN represents an invalid or undefined numeric result, and it doesn’t make sense to consider one invalid result equal to another
+**Reason**: NaN represents an invalid or undefined numeric result, and it doesn’t make sense to consider one invalid result equal to another
 
 ### Comparing array with boolean
 
 ```js
-console.log(false == \[\]);
+console.log(false == []);
 
-console.log(false ==!\[\]);
+console.log(false ==![]);
 ```
 
 **Output**:true
 
 true
 
-1\. Expression:
+1. Expression:
 
 false == \[\]
 
-2\. Convert \`false\` to a number:
+2. Convert \`false\` to a number:
 
 \- \`false\` becomes \`0\`.
 
-3\. Convert \`\[\]\` (empty array) to a primitive:
+3. Convert \`\[\]\` (empty array) to a primitive:
 
 \- \`\[\].toString()\` → \`""\` (empty string).
 
 \- \`""\` (empty string) converts to \`0\` when used in a numeric comparison.
 
-4\. Final comparison:
+4. Final comparison:
 
 0 == 0
 
@@ -3502,9 +2843,9 @@ console.log(y);
 console.log(x)
 ```
 
-**Output** : 5, 6
+**Output**: 5, 6
 
-**Reason** : The post-increment operator increments and returns the value before incrementing.
+**Reason**: The post-increment operator increments and returns the value before incrementing.
 
 ### Post increment operator
 
@@ -3518,9 +2859,9 @@ console.log(y);
 console.log(x)
 ```
 
-**Output** : 6, 6
+**Output**: 6, 6
 
-**Reason** : The pre-increment operator increments and returns the value after incrementing.
+**Reason**: The pre-increment operator increments and returns the value after incrementing.
 
 ## Variable Hoisting
 
@@ -3548,7 +2889,7 @@ value of a is undefined
 
 value of a is 100
 
-### Declare and Assign a value without var , let and const
+### Declare and Assign a value without var, let and const
 
 ```js
 x = 10;
@@ -3616,7 +2957,7 @@ console.log("value of a is", a);
 
 **Output:**
 
-### ReferenceError: Cannot access 'a' before initialization
+**ReferenceError: Cannot access 'a' before initialization**
 
 **Reason:** Let and const are hoisted but only acces**sible in temporal dead zone**)
 
@@ -3630,9 +2971,9 @@ let a = "pqr";
 console.log(a)
 ```
 
-**Output** : SyntaxError: Identifier 'a' has already been declared
+**Output**: SyntaxError: Identifier 'a' has already been declared
 
-**Reason** : Because let and const does not allow re-declaration of the same variable in the same scope.
+**Reason**: Because let and const does not allow re-declaration of the same variable in the same scope.
 
 ### Declare var variable twice
 
@@ -3644,9 +2985,9 @@ var a = "pqr";
 console.log(a)
 ```
 
-**Output** : "pqr"
+**Output**: "pqr"
 
-**Reason** : Both the variables are declared using the "var" keyword with the same name "a". The second variable declaration will override the first variable declaration.
+**Reason**: Both the variables are declared using the "var" keyword with the same name "a". The second variable declaration will override the first variable declaration.
 
 ### Declare and access the variable inside the function
 
@@ -3692,7 +3033,7 @@ console.log(a);
 
 **Output:** ReferenceError: a is not defined
 
-**Reason:** After function block executed , vair a will be out of the execution context and then will be not defined even with undefined value. Hence the error.
+**Reason:** After function block executed, vair a will be out of the execution context and then will be not defined even with undefined value. Hence the error.
 
 ### Access function when we use function expression to declare the function
 
@@ -3777,36 +3118,34 @@ undefined
 ### Spread Array items
 
 ```js
-const arr1 = \[1, 2, 3, 4\];
+const arr1 = [1, 2, 3, 4];
 
-const arr2 = \[6, 7, 5\];
+const arr2 = [6, 7, 5];
 
-const result = \[...arr1, ...arr2\];
+const result = [...arr1, ...arr2];
 
 console.log(result);
 ```
 
 ```js
-Output : \[1, 2, 3, 4, 6, 7, 5\]
+Output : [1, 2, 3, 4, 6, 7, 5]
 ```
-Reason : Spread operator (...) concatenates the two arrays into a "result" array.
+Reason: Spread operator (...) concatenates the two arrays into a "result" array.
 
 ### Concate using +
 
 ```js
-console.log(\[11, 2, 31\] + \[4, 5, 6\]);
+console.log([11, 2, 31] + [4, 5, 6]);
 ```
 
-**Output** : "11,2,314,5,6"
+**Output**: "11,2,314,5,6"
 
-**Reason** : The + operator is used for both addition and string concatenation. When you try to concatenate two arrays using the + operator, the arrays are converted to strings and then concatenated together. In this case, the arrays \[11, 2, 31\] and \[4, 5, 6\] are converted to strings as "11,2,31" and "4,5,6" respectively. Then, the two strings are concatenated, resulting in "11,2,314,5,6".
-
-###
+**Reason**: The + operator is used for both addition and string concatenation. When you try to concatenate two arrays using the + operator, the arrays are converted to strings and then concatenated together. In this case, the arrays \[11, 2, 31\] and \[4, 5, 6\] are converted to strings as "11,2,31" and "4,5,6" respectively. Then, the two strings are concatenated, resulting in "11,2,314,5,6".
 
 ### What will happen if we set array length to 0
 
 ```js
-let arr = \[1, 2, 3, 4, 5, -6, 7\];
+let arr = [1, 2, 3, 4, 5, -6, 7];
 
 arr.length = 0;
 
@@ -3815,19 +3154,19 @@ console.log(arr);
 
 **Output :** \[ \]
 
-Reason : The length of the array has been set to 0, so the array becomes empty.
+Reason: The length of the array has been set to 0, so the array becomes empty.
 
 ### Concat subarray inside
 
 ```js
-let arr = \[1, \[2, \[3\]\]\];
+let arr = [1, [2, [3]]];
 ```
 arr.flat(2); // Output: \[1, 2, 3\]
 
 ### What will be the length of the array and array elements if we add arr.foo = ‘hello’?
 
 ```js
-const arr = \[3, 5, 7\];
+const arr = [3, 5, 7];
 
 arr.foo = 'hello';
 
@@ -3883,7 +3222,7 @@ console.log(b);
 
 **Output :** { x: 3, y: 2 } { x: 3, y: 2 }
 
-**Reason : '**a' and 'b' both are pointing to the same reference.
+**Reason: '**a' and 'b' both are pointing to the same reference.
 
 ### Destructing object
 
@@ -3901,9 +3240,9 @@ const { var1, var2 } = obj;
 console.log(var1, var2);
 ```
 
-**Output** : 1, 2
+**Output**: 1, 2
 
-**Reason** : Object destructuring extracts the values of var1 and var2 from obj object and prints them using console.log(var1, var2)
+**Reason**: Object destructuring extracts the values of var1 and var2 from obj object and prints them using console.log(var1, var2)
 
 ### Destructing object with default value
 
@@ -3923,11 +3262,11 @@ console.log(fullname);
 console.log(name);
 ```
 
-**Output** : Surbhi Dighe, ReferenceError: name is not defined
+**Output**: Surbhi Dighe, ReferenceError: name is not defined
 
-**Reason** for console.log(fullname) : The name property from the user is assigned to a local variable fullname.
+**Reason** for console.log(fullname): The name property from the user is assigned to a local variable fullname.
 
-**Reason** for console.log(name) : It gives an error because name was assigned to a local variable fullname and therefore name is not directly accessible.
+**Reason** for console.log(name): It gives an error because name was assigned to a local variable fullname and therefore name is not directly accessible.
 
 ### Destructing object with default value
 
@@ -3943,20 +3282,20 @@ const { firstName="Henry"} = person;
 console.log(firstName);
 ```
 
-**Output** : Surbhi
+**Output**: Surbhi
 
-**Reason** : The \`firstName\` property in the \`person\` object has the value 'Surbhi'. The default value "Henry" is ignored because it only applies when the property does not exist or is \`undefined\`
+**Reason**: The \`firstName\` property in the \`person\` object has the value 'Surbhi'. The default value "Henry" is ignored because it only applies when the property does not exist or is \`undefined\`
 
 ### object keys converted to strings
 
 ```js
 let x={},y={name:"Satish"},z={name:"Pratik"};
 
-x\[y\]={name:"Salman"};
+x[y]={name:"Salman"};
 
-x\[z\]={name:"Sharukh"};
+x[z]={name:"Sharukh"};
 
-console.log(x\[y\])
+console.log(x[y])
 ```
 
 **Output: { name: 'Sharukh' }
@@ -3973,7 +3312,7 @@ Reason:**
     -   z = { name: "Pratik" } (another object with a name property).
 2.  **First Assignment**
     ```js
-        x\[y\] = { name: "Salman" };
+        x[y] = { name: "Salman" };
     ```
     -   When y is used as a key, it is converted to \[object Object\].
     -   This results in:
@@ -3988,7 +3327,7 @@ x = {
 ```
 1.  **Second Assignment**
     ```js
-        x\[z\] = { name: "Sharukh" };
+        x[z] = { name: "Sharukh" };
     ```
     -   Similarly, z is also converted to \[object Object\].
     -   Since the key \[object Object\] already exists in x, the value { name: "Sharukh" } overwrites the previous value { name: "Salman" }.
@@ -4003,7 +3342,7 @@ x = {
 ```
 **Output**:
 ```js
-console.log(x\[y\]);// Output: { name: "Sharukh" }
+console.log(x[y]);// Output: { name: "Sharukh" }
 ```
 
 ### Access getter in object
@@ -4108,7 +3447,7 @@ console.log(this.name);
 
 };
 
-setTimeout(rishabh.sayName, 3\*1000);
+setTimeout(rishabh.sayName, 3*1000);
 ```
 
 **Output:** Undefined
@@ -4161,7 +3500,7 @@ console.log(obj.height);
 
 30
 
-![](/notes-img/javascript-questions/img-003.webp)
+![](/notes-img/JavaScript-questions/img-003.webp)
 
 ## IIFE (Immediately Invoked function Expression)
 
@@ -4293,7 +3632,7 @@ setTimeout(() => {
 
 console.log(i);
 
-}, i \* 1000);
+}, i * 1000);
 
 }
 
@@ -4333,7 +3672,7 @@ setTimeout(() => {
 
 console.log(i);
 
-}, i \* 1000);
+}, i * 1000);
 
 }
 
@@ -4369,18 +3708,18 @@ function x() {
 
 for (var i = 1; i <= 5; i++) {
 ```
-### function closer(i) {
+**function closer(i) {**
 
 setTimeout(function () {
 
 ```js
 console.log(i);
 
-}, i \* 1000);
+}, i * 1000);
 ```
 **}**
 
-### closer(i);
+**closer(i);**
 
 ```js
 }
@@ -4421,7 +3760,7 @@ console.log(a);
 
 }
 ```
-### let a=10;
+**let a=10;**
 
 ```js
 return inner;
@@ -4440,7 +3779,7 @@ Output:
 ```js
 function outer(){
 ```
-### inner();
+**inner();**
 
 ```js
 let a=10;
@@ -4460,7 +3799,7 @@ Output:
 
 index.js:5 Uncaught ReferenceError: Cannot access 'a' before initialization
 
-In case of var a , it will show undefined. It is a similar case where we try to access var and let before initialization.
+In case of var a, it will show undefined. It is a similar case where we try to access var and let before initialization.
 
 **Counter problem statement with closure
 **It is also a good way to implement data hiding
@@ -4506,7 +3845,7 @@ The idea is to maintain two pointers: left and right, such that left points at t
 While the left pointer is less than the right pointer, swap the elements at these two positions. After each swap, increment the left pointer and decrement the right pointer to move towards the center of the array. This will swap all the elements in the first half with their corresponding element in the second half.
 
 ```js
-const arr = \[1, 4, 3, 2, 6, 5,1\];
+const arr = [1, 4, 3, 2, 6, 5,1];
 
 function reverseArray(arr) {
 
@@ -4519,11 +3858,11 @@ while (left<right) {
 // \[arr\[left\],arr\[right\]\]=\[arr\[right\],arr\[left\]\]
 
 ```js
-temp1 = arr\[left\];
+temp1 = arr[left];
 
-arr\[left\]=arr\[right\];
+arr[left]=arr[right];
 
-arr\[right\]=temp1;
+arr[right]=temp1;
 
 left++;
 
@@ -4553,7 +3892,7 @@ arr.reverse();
 
 }
 
-const arr = \[1, 4, 3, 2, 6, 5\];
+const arr = [1, 4, 3, 2, 6, 5];
 
 reverseArray(arr);
 
@@ -4566,17 +3905,19 @@ Auxiliary Space: O(1)
 
 ## Find the maximum and minimum element in an array
 
-|
-|
+|  |
+
+|  |
+
 ## Code to print combination of elements from array:
 
 ```js
-function combine(\[head, ...\[headTail, ...tailTail\]\]) {
+function combine([head, ...[headTail, ...tailTail]]) {
 ```
 if (!headTail || headTail.length < 1) {
 
 ```js
-return head.map( item=> \[item\]);
+return head.map( item=> [item]);
 
 }
 
@@ -4584,7 +3925,7 @@ const combined = head.reduce((acc, currentValue) => {
 
 return acc.concat(headTail.map(h => {
 
-return Array.isArray(currentValue) ? \[...currentValue, h\] : \[currentValue, h\]
+return Array.isArray(currentValue) ? [...currentValue, h] : [currentValue, h]
 ```
 }))
 
@@ -4593,11 +3934,11 @@ return Array.isArray(currentValue) ? \[...currentValue, h\] : \[currentValue, h\
 if (!tailTail || tailTail.length < 1) return combined
 
 ```js
-return combine(\[combined, ...tailTail\])
+return combine([combined, ...tailTail])
 
 }
 
-console.log(combine(\[\["1.5 cm","2cm"\] \]))
+console.log(combine([["1.5 cm","2cm"] ]))
 ```
 
 ## Sum of Marks Ignoring Lowest Average Subject
@@ -4630,7 +3971,7 @@ let sum = 0;
 
 for (let i = 0; i < n; i++) {
 
-sum += marks\[i\]\[j\];
+sum += marks[i][j];
 
 }
 ```
@@ -4667,7 +4008,7 @@ for (let j = 0; j < m; j++) {
 if (j !== minAvgIndex) { // Exclude the lowest average subject
 
 ```js
-totalMarks\[i\] += marks\[i\]\[j\];
+totalMarks[i] += marks[i][j];
 
 }
 
@@ -4686,7 +4027,7 @@ let students = 3;
 
 let subjects = 4;
 
-let marks = \[
+let marks = [
 ```
 \[80, 90, 70, 60\],
 
@@ -4695,7 +4036,7 @@ let marks = \[
 \[78, 92, 68, 58\]
 
 ```js
-\];
+];
 
 console.log(calculateTotalMarks(students, subjects, marks));
 ```
@@ -4716,7 +4057,7 @@ You may assume each function in the array accepts one integer as input and retur
 Example 1:
 
 ```js
-Input: functions = \[x => x + 1, x => x \* x, x => 2 \* x\], x = 4
+Input: functions = [x => x + 1, x => x * x, x => 2 * x], x = 4
 
 Output: 65
 ```
@@ -4755,9 +4096,9 @@ Every subsequent time it is called, it should return undefined.
 Example 1:
 
 ```js
-Input: fn = (a,b,c) => (a + b + c), calls = \[\[1,2,3\],\[2,3,6\]\]
+Input: fn = (a,b,c) => (a + b + c), calls = [[1,2,3],[2,3,6]]
 
-Output: \[{"calls":1,"value":6}\]
+Output: [{"calls":1,"value":6}]
 ```
 Explanation:
 
@@ -4833,7 +4174,7 @@ let windowCounts = new Map();
 
 while (right < input1.length) {
 
-let rightChar = input1\[right\];
+let rightChar = input1[right];
 ```
 if (charMap.has(rightChar)) {
 
@@ -4865,7 +4206,7 @@ minSubstring = input1.substring(left, right + 1);
 
 }
 
-let leftChar = input1\[left\];
+let leftChar = input1[left];
 ```
 if (charMap.has(leftChar)) {
 
@@ -4907,4 +4248,4 @@ console.log(minWindowSubstring("a", "b")); // Output: ""
 
 # DSA questions
 
-[https://github.com/loiane/javascript-datastructures-algorithms/tree/third-edition/examples/chapter03](https://github.com/loiane/javascript-datastructures-algorithms/tree/third-edition/examples/chapter03)
+[https://github.com/loiane/JavaScript-datastructures-algorithms/tree/third-edition/examples/chapter03](https://github.com/loiane/JavaScript-datastructures-algorithms/tree/third-edition/examples/chapter03)

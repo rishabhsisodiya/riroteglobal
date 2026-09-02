@@ -9,7 +9,7 @@ draft: false
 order: 22
 description: "React — React Without ES6."
 ---
-## Javascript Class
+## JavaScript Class
 
 Normally you would define a React component as a plain JavaScript class:
 
@@ -28,13 +28,14 @@ return <h1>Hello, {this.props.name}</h1>;
 
 If you don’t use ES6 yet, you may use the create-react-class module instead:
 
-### var createReactClass = require('create-react-class');
+```jsx
+**var createReactClass = require('create-react-class');**
+```
+**var Greeting = createReactClass({**
 
-### var Greeting = createReactClass({
+**render: function() {**
 
-### render: function() {
-
-### return <h1>Hello, {this.props.name}</h1>;
+**return <h1>Hello, {this.props.name}</h1>;**
 
 **}**
 

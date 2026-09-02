@@ -27,7 +27,7 @@ const workbook = xlsx.readFile('./list.xlsx'); // Path for the sheet in your loc
 const sheetName = 'Bytedance'; // Change to the name of your sheet
 
 ```js
-const worksheet = workbook.Sheets\[sheetName\];
+const worksheet = workbook.Sheets[sheetName];
 
 const data = xlsx.utils.sheet_to_json(worksheet);
 ```
@@ -67,7 +67,7 @@ const { Name, Company, Email, Role, Link } = row; // Adjust column names accordi
 
 const nameParts = Name.split(' ');
 
-const name = nameParts\[0\];
+const name = nameParts[0];
 
 const mailOptions = {
 
@@ -75,9 +75,9 @@ from: 'Vaibhav Mishra <vaibhavmishra.dev@gmail.com>',
 
 to: Email,
 
-subject: \`Request for an Interview Opportunity - ${Role} at ${Company}\`,
+subject: `Request for an Interview Opportunity - ${Role} at ${Company}`,
 
-html: \`
+html: `
 ```
 <p>Greetings ${name},</p>
 
@@ -89,7 +89,7 @@ html: \`
 
 <li><b>2.3 Years</b> Experience as a <b>Frontend Developer</b> at <a href="https://groww.in/">Groww</a></li>
 
-<li>Worked extensively in <b>Javascript, Typescript, React & Next.js</b></li>
+<li>Worked extensively in <b>JavaScript, Typescript, React & Next.js</b></li>
 
 <li>Familiar with <b>REST, GraphQL, monorepo codebases, Jest & React Testing library</b></li>
 
@@ -107,7 +107,7 @@ html: \`
 
 <p>Currently, I am <b>serving a notice period</b> and can <b>join within 15 days</b> of receiving an offer. A little help from your side can significantly help my career.</p>
 
-<p>PS: I have attached my <b><a href="https://drive.google.com/file/d/1dMjAWdXAXLQnQvuX8K6fLozMDIbZ1L5_/view">Resume</a></b> & <b><a href="https://www.linkedin.com/in/vaibhavmishra09/">Linkedin Profile</a></b> ${Link !== undefined ? \`& <b><a href=${Link}>${Role}</a> </b> Opening\` : '' } for you to take a look at. If you find me suitable, please help me with an Interview Opportunity at ${Company}.</p>
+<p>PS: I have attached my <b><a href="https://drive.google.com/file/d/1dMjAWdXAXLQnQvuX8K6fLozMDIbZ1L5_/view">Resume</a></b> & <b><a href="https://www.linkedin.com/in/vaibhavmishra09/">Linkedin Profile</a></b> ${Link !== undefined ? \`& <b><a href=${Link}>${Role}</a> </b> Opening\`: '' } for you to take a look at. If you find me suitable, please help me with an Interview Opportunity at ${Company}.</p>
 
 <p>
 

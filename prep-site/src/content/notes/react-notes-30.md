@@ -15,35 +15,13 @@ To understand the concepts let take an example of Cake Shop
 
 ![](/notes-img/react-notes/img-023.webp)
 
-Cake Shop Scenario
+| Cake Shop Scenario | Redux | Purpose |
+| --- | --- | --- |
+| Shop | Store | Hold the state of your application. |
+| Intention to Buy_Cake | Action | Describe what happened |
+| Shopkeeper | Reducer | Ties the store and action together. |
 
-Redux
-
-Purpose
-
-| --- | --- | ---
-Shop
-
-Store
-
-Hold the state of your application.
-
-| --- | --- | ---
-Intention to Buy_Cake
-
-Action
-
-Describe what happened
-
-| --- | --- | ---
-Shopkeeper
-
-Reducer
-
-Ties the store and action together.
-
-| --- | --- | ---
-1.  A **store** is a giant javascript object that holds the state of your application.
+1.  A **store** is a giant JavaScript object that holds the state of your application.
 2.  An **action** that describes the changes in the state of the application.
 3.  A **reducer** which carries out the state transition depending on the action.
 
@@ -102,17 +80,18 @@ info: 'First redux cake'
 ```
 // reducers
 
-### const intialState ={
+**const intialState ={**
 
 ### numOfCakes:10
 
 **}**
 
-### const reducer = (state=intialState, action)=>{
+```jsx
+**const reducer = (state=intialState, action)=>{**
+```
+**switch (action.type) {**
 
-### switch (action.type) {
-
-### case BUY_CAKE:return {
+**case BUY_CAKE:return {**
 
 **...state,**
 
@@ -120,7 +99,7 @@ info: 'First redux cake'
 
 **}**
 
-### default: return state;
+**default: return state;**
 
 **}**
 
@@ -140,9 +119,10 @@ Responsibilities:-
 
 For redux standlone
 
-### const redux = require('redux')
-
-### const createStore= redux.createStore;
+```jsx
+**const redux = require('redux')**
+```
+**const createStore= redux.createStore;**
 
 ```jsx
 const BUY_CAKE="BUY_CAKE"
@@ -188,22 +168,22 @@ default: return state;
 
 }
 ```
-### // Redux Store
+**// Redux Store**
 
-### const store = createStore(reducer);
-
-### console.log('Initial State', store.getState());
+**const store = createStore(reducer);**
 
 ```jsx
+**console.log('Initial State', store.getState());**
+
 **const unsubscribe= store.subscribe( ()=> console.log('Updated state:',store.getState()) )**
 ```
-### store.dispatch(buyCake())
+**store.dispatch(buyCake())**
 
-### store.dispatch(buyCake())
+**store.dispatch(buyCake())**
 
-### store.dispatch(buyCake())
+**store.dispatch(buyCake())**
 
-### unsubscribe();
+**unsubscribe();**
 
 Output:
 
@@ -266,9 +246,9 @@ info: 'First redux cake'
 ```
 ### const BUY_ICECREAM="BUY_ICECREAM"
 
-### function buyIcecream(){
+**function buyIcecream(){**
 
-### return {
+**return {**
 
 **type: BUY_ICECREAM,**
 
@@ -303,7 +283,7 @@ numOfCakes:state.numOfCakes-1
 ```jsx
 }
 ```
-### case BUY_ICECREAM:return {
+**case BUY_ICECREAM:return {**
 
 **...state,**
 
@@ -333,9 +313,9 @@ store.dispatch(buyCake())
 
 store.dispatch(buyCake())
 
-### store.dispatch(buyIcecream())
+**store.dispatch(buyIcecream())**
 
-### store.dispatch(buyIcecream())
+**store.dispatch(buyIcecream())**
 
 ```jsx
 unsubscribe();
@@ -447,7 +427,7 @@ default: return state;
 
 }
 ```
-### const rootReducer= combineReducers({
+**const rootReducer= combineReducers({**
 
 **cake:cakeReducer,**
 
@@ -513,7 +493,7 @@ const combineReducers = redux.combineReducers
 ```
 ### const applyMiddleware= redux.applyMiddleware
 
-### const logger= reduxLogger.createLogger()
+**const logger= reduxLogger.createLogger()**
 
 ```jsx
 const BUY_CAKE="BUY_CAKE"
@@ -699,7 +679,7 @@ So what redux logger will do is to print following in below order
 
 **Redux-thunk:** It is middleware we are applying to redux to define action creators and handle Async actions.
 
-### Install axios , redux-thunk
+### Install axios, redux-thunk
 
 npm install axios redux-thunk
 
@@ -707,10 +687,9 @@ npm install axios redux-thunk
 
 ```jsx
 const redux = require("redux");
-```
-### const thunkMiddleware = require("redux-thunk").default;
 
-```jsx
+**const thunkMiddleware = require("redux-thunk").default;**
+
 const axios = require("axios");
 
 const createStore = redux.createStore;
@@ -721,7 +700,7 @@ const initialState = {
 
 loading: false,
 
-users: \[\],
+users: [],
 
 error: "",
 
@@ -809,7 +788,7 @@ return {
 loading:false,
 
 ```jsx
-users: \[\],
+users: [],
 
 error: action.payload,
 
@@ -823,7 +802,7 @@ const fetchUsers = () => {
 
 return function (dispatch) {
 ```
-### dispatch(fetchUsersRequest());
+**dispatch(fetchUsersRequest());**
 
 axios
 
@@ -837,7 +816,7 @@ axios
 ```jsx
 const users = response.data.map((user) => user.id);
 ```
-### dispatch(fetchUsersSuccess(users));
+**dispatch(fetchUsersSuccess(users));**
 
 })
 
@@ -846,7 +825,7 @@ const users = response.data.map((user) => user.id);
 ```
 // error.message is the error description
 
-### dispatch(fetchUsersSuccess(error.message));
+**dispatch(fetchUsersSuccess(error.message));**
 
 ```jsx
 });
@@ -873,7 +852,7 @@ Output:
 { loading: false,
 
 ```jsx
-users: \[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 \],
+users: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
 
 error: '' }
 ```

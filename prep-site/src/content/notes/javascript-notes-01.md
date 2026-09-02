@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "JavaScript Basics"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
@@ -7,13 +7,11 @@ updated: "2026-09-02"
 source: "JavaScript Notes.docx"
 draft: false
 order: 1
-description: "JavaScript — Introduction."
+description: "JavaScript — JavaScript Basics."
 ---
 JavaScript is a cross-platform, object-oriented scripting language used to make webpages interactive (e.g. having complex animations, clickable buttons, popup menus, etc.)
 
-JavaScript follows most Java expression syntax, naming conventions and basic control-flow constructs which was the reason why it was renamed from LiveScript to JavaScript.
-
-JavaScript is standardized at Ecma International — the European association for standardizing information and communication systems **(ECMA was formerly an acronym for the European Computer Manufacturers Association)** to deliver a standardized, international programming language based on JavaScript.
+JavaScript was created at Netscape in 1995 by Brendan Eich. It borrows some syntax and naming conventions from Java, and was renamed from "LiveScript" to "JavaScript" as a marketing move tied to a Netscape–Sun partnership — not because the two languages are otherwise related. JavaScript is standardized at Ecma International — the European association for standardizing information and communication systems **(ECMA was formerly an acronym for the European Computer Manufacturers Association)** to deliver a standardized, international programming language based on JavaScript.
 
 1.  **JavaScript Can Change HTML Content:** This example uses the method to "find" an HTML element (with id="demo") and changes the element content (**innerHTML**) to "Hello JavaScript"
 
@@ -32,7 +30,7 @@ JavaScript is standardized at Ecma International — the European association fo
     ```
 **Difference between synchronous and asynchronous JavaScript.**
 
-Javascript is the synchronous single-threaded language but with the help of event-loop and promises, JavaScript is used to do asynchronous programming.
+JavaScript is the synchronous single-threaded language but with the help of event-loop and promises, JavaScript is used to do asynchronous programming.
 
 ### Declaration of JavaScript tag
 
@@ -85,7 +83,7 @@ There are three kinds of declarations in JavaScript.
 -   let: Declares a block-scoped, local variable, optionally initializing it to a value.
 -   const: Declares a block-scoped, read-only named constant.
 
-### _Declaring variables_
+### Declaring variables
 
 You can declare a variable in three ways:
 
@@ -97,78 +95,16 @@ You can declare a variable in three ways:
 
 Assignment operators assign values to JavaScript variables.
 
-Operator
+| Operator | Example | Same As |
+| --- | --- | --- |
+| = | x = y | x = y |
+| += | x += y | x = x + y |
+| -= | x -= y | x = x - y |
+| *= | x *= y | x = x * y |
+| /= | x /= y | x = x / y |
+| %= | x %= y | x = x % y |
+| **= | x **= y | x = x ** y |
 
-Example
-
-Same As
-
-| --- | --- | ---
-**\=**
-
-```js
-x = y
-```
-
-```js
-x = y
-```
-
-| --- | --- | ---
-**+=**
-
-x += y
-
-```js
-x = x + y
-```
-
-| --- | --- | ---
-**\-=**
-
-x -= y
-
-```js
-x = x - y
-```
-
-| --- | --- | ---
-**\*=**
-
-x \*= y
-
-```js
-x = x \* y
-```
-
-| --- | --- | ---
-**/=**
-
-x /= y
-
-```js
-x = x / y
-```
-
-| --- | --- | ---
-**%=**
-
-x %= y
-
-```js
-x = x % y
-```
-
-| --- | --- | ---
-**\*\*=**
-
-x \*\*= y
-
-```js
-x = x \*\* y
-```
-
-| --- | --- | ---
 ### JavaScript String Operators
 
 The + operator can also be used to add (concatenate) strings.
@@ -184,7 +120,7 @@ The result of txt3 will be:
 
 John Doe
 
-### _Adding Strings and Numbers_
+### Adding Strings and Numbers
 
 Adding two numbers will return the sum, but adding a number and a string will return a string:
 
@@ -201,211 +137,51 @@ The result of _x_, _y_, and _z_ will be:
 55
 Hello5
 
-### _JavaScript Comparison Operators_
+### JavaScript Comparison Operators
 
-Operator
+| Operator | Description |
+| --- | --- |
+| == | equal to |
+| === | equal value and equal type |
+| != | not equal |
+| !== | not equal value or not equal type |
+| > | greater than |
+| < | less than |
+| >= | greater than or equal to |
+| <= | less than or equal to |
+| ? | ternary operator |
 
-Description
+### JavaScript Logical Operators
 
-| --- | ---
-**\==**
+| Operator | Description |
+| --- | --- |
+| && | logical and |
+| || | logical or |
+| ! | logical not |
 
-equal to
+### JavaScript Type Operators
 
-| --- | ---
-**\===**
+| Operator | Description |
+| --- | --- |
+| typeof | Returns the type of a variable |
+| instanceof | Returns true if an object is an instance of an object type |
 
-equal value and equal type
-
-| --- | ---
-**!=**
-
-not equal
-
-| --- | ---
-**!==**
-
-not equal value or not equal type
-
-| --- | ---
-**\>**
-
-greater than
-
-| --- | ---
-**<**
-
-less than
-
-| --- | ---
-**\>=**
-
-greater than or equal to
-
-| --- | ---
-**<=**
-
-less than or equal to
-
-| --- | ---
-**?**
-
-ternary operator
-
-| --- | ---
-### _JavaScript Logical Operators_
-
-Operator
-
-Description
-
-| --- | ---
-**&&**
-
-logical and
-
-| --- | ---
-**||**
-
-logical or
-
-| --- | ---
-**!**
-
-logical not
-
-| --- | ---
-####
-
-### _JavaScript Type Operators_
-
-Operator
-
-Description
-
-| --- | ---
-### typeof
-
-Returns the type of a variable
-
-| --- | ---
-### instanceof
-
-Returns true if an object is an instance of an object type
-
-| --- | ---
-####
-
-### _JavaScript Bitwise Operators_
+### JavaScript Bitwise Operators
 
 Bit operators work on 32 bits numbers.
 
 Any numeric operand in the operation is converted into a 32 bit number. The result is converted back to a JavaScript number.
 
-Operator
+| Operator | Description | Example | Same as | Result | Decimal |
+| --- | --- | --- | --- | --- | --- |
+| & | AND | 5 & 1 | 0101 & 0001 | 0001 | 1 |
+| | | OR | 5 | 1 | 0101 | 0001 | 0101 | 5 |
+| ~ | NOT | ~ 5 | ~0101 | 1010 | 10 |
+| ^ | XOR | 5 ^ 1 | 0101 ^ 0001 | 0100 | 4 |
+| << | Zero fill left shift | 5 << 1 | 0101 << 1 | 1010 | 10 |
+| >> | Signed right shift | 5 >> 1 | 0101 >> 1 | 0010 | 2 |
+| >>> | Zero fill right shift | 5 >>> 1 | 0101 >>> 1 | 0010 | 2 |
 
-Description
-
-Example
-
-Same as
-
-Result
-
-Decimal
-
-| --- | --- | --- | --- | --- | ---
-**&**
-
-AND
-
-5 & 1
-
-0101 & 0001
-
-0001
-
-1
-
-| --- | --- | --- | --- | --- | ---
-**|**
-
-OR
-
-5 | 1
-
-0101 | 0001
-
-0101
-
-5
-
-| --- | --- | --- | --- | --- | ---
-**~**
-
-NOT
-
-~ 5
-
-~0101
-
-1010
-
-10
-
-| --- | --- | --- | --- | --- | ---
-**^**
-
-XOR
-
-5 ^ 1
-
-0101 ^ 0001
-
-0100
-
-4
-
-| --- | --- | --- | --- | --- | ---
-**<<**
-
-Zero fill left shift
-
-5 << 1
-
-0101 << 1
-
-1010
-
-10
-
-| --- | --- | --- | --- | --- | ---
-**\>>**
-
-Signed right shift
-
-5 >> 1
-
-0101 >> 1
-
-0010
-
-2
-
-| --- | --- | --- | --- | --- | ---
-**\>>>**
-
-Zero fill right shift
-
-5 >>> 1
-
-0101 >>> 1
-
-0010
-
-2
-
-| --- | --- | --- | --- | --- | ---
 The examples above use 4 bits of unsigned examples. But JavaScript uses 32-bit signed numbers.
 Because of this, in JavaScript, ~ 5 will not return 10. It will return -6.
 ~00000000000000000000000000000101 will return 11111111111111111111111111111010
@@ -436,8 +212,9 @@ console.log(Boolean(null));// false
     2.  [undefined](https://developer.mozilla.org/en-US/docs/Glossary/undefined). A top-level property whose value is not defined.The undefined type is a primitive type that has only one value undefined. By default, when a variable is declared but not initialized, it defaults to undefined
         JavaScript defines that null is equal to undefined as follows:
 
-### console.log(null == undefined); // true
-
+```js
+**console.log(null == undefined); // true**
+```
 -   1.  [Number](https://developer.mozilla.org/en-US/docs/Glossary/Number). An integer or floating point number. For example: 42 or 3.14159.
         **NaN**
 NaN stands for Not a Number. It is a special numeric value that indicates an invalid number. For example, the division of a string by a number returns NaN:.
@@ -508,9 +285,9 @@ Because JavaScript is dynamically typed, this assignment does not cause an error
 
 In expressions involving numeric and string values with the + operator, JavaScript converts numeric values to strings. For example, consider the following statements:
 
-x = 'The answer is ' + 42 // "The answer is 42"
+x = 'The answer is' + 42 // "The answer is 42"
 
-y = 42 + ' is the answer' // "42 is the answer"
+y = 42 +' is the answer' // "42 is the answer"
 
 In statements involving other operators, **JavaScript does not convert numeric values to strings.** For example:
 
@@ -518,7 +295,7 @@ In statements involving other operators, **JavaScript does not convert numeric v
 
 **'37' + 7 // "377"**
 
-### _Converting strings to numbers_
+### Converting strings to numbers
 
 In the case that a value representing a number is in memory as a string, there are methods for conversion.
 
@@ -526,7 +303,7 @@ In the case that a value representing a number is in memory as a string, there a
 
 [parseFloat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)
 
-### _Literals_
+### Literals
 
 You use literals to represent values in JavaScript. These are fixed values, not variables, that you _literally_ provide in your script. This section describes the following types of literals:
 
@@ -538,21 +315,21 @@ You use literals to represent values in JavaScript. These are fixed values, not 
 -   RegExp literals
 -   String literals
 
-### _Array literals_
+### Array literals
 
 An array literal is a list of zero or more expressions, each of which represents an array element, enclosed in square brackets (\[\]). When you create an array using an array literal, it is initialized with the specified values as its elements, and its length is set to the number of arguments specified.
 
 The following example creates the coffees array with three elements and a length of three:
 
 ```js
-var coffees = \['French Roast', 'Colombian', 'Kona'\];
+var coffees = ['French Roast', 'Colombian', 'Kona'];
 ```
 ### Extra commas in array literals
 
 You do not have to specify all elements in an array literal. If you put two commas in a row, the array is created with undefined for the unspecified elements. The following example creates the fish array:
 
 ```js
-var fish = \['Lion', , 'Angel'\];
+var fish = ['Lion', , 'Angel'];
 ```
 This array has two elements with values and one empty element (fish\[0\] is "Lion", **fish\[1\] is undefined**, and fish\[2\] is "Angel").
 
@@ -561,17 +338,17 @@ If you include a trailing comma at the end of the list of elements, the comma is
 **Note :** Trailing commas can create errors in older browser versions and it is a best practice to remove them.
 
 ```js
-var myList = \['home', , 'school', \];
+var myList = ['home', , 'school', ];
 ```
 In the following example, the length of the array is four, and myList\[0\] and myList\[2\] are missing.
 
 ```js
-var myList = \[ ,'home', , 'school'\];
+var myList = [ ,'home', , 'school'];
 ```
 In the following example, the length of the array is four, and myList\[1\] and myList\[3\] are missing. **Only the last comma is ignored.**
 
 ```js
-var myList = \['home', , 'school', , \];
+var myList = ['home', , 'school', , ];
 ```
 ### Boolean literals
 
@@ -615,7 +392,7 @@ var car = { manyCars: {a: 'Saab', b: 'Jeep'}, 7: 'Mazda' };
 
 console.log(car.manyCars.b); // Jeep
 
-console.log(car\[7\]); // Mazda
+console.log(car[7]); // Mazda
 ```
 Object property names can be any string, including the empty string. If the property name would not be a valid JavaScript [identifier](https://developer.mozilla.org/en-US/docs/Glossary/Identifier) or number, it must be enclosed in quotes. Property names that are not valid identifiers also cannot be accessed as a dot (.) property, but can be accessed and set with the array-like notation("\[\]").
 
@@ -631,11 +408,11 @@ var unusualPropertyNames = {
 
 console.log(unusualPropertyNames.''); // SyntaxError: Unexpected string
 
-console.log(unusualPropertyNames\[''\]); // An empty string
+console.log(unusualPropertyNames['']); // An empty string
 
 console.log(unusualPropertyNames.!); // SyntaxError: Unexpected token !
 
-console.log(unusualPropertyNames\['!'\]); // Bang!
+console.log(unusualPropertyNames['!']); // Bang!
 ```
 
 RegExp literals
@@ -691,10 +468,10 @@ X-Credentials: ${credentials}
 { "foo": ${foo},
 
 ```js
-"bar": ${bar}}\`(myOnReadyStateChangeHandler);
+"bar": ${bar}}`(myOnReadyStateChangeHandler);
 ```
 
-### _Escaping characters_
+### Escaping characters
 
 For characters not listed in the table, a preceding backslash is ignored, but this usage is deprecated and should be avoided.
 
@@ -781,7 +558,7 @@ statement_n;
 
 A conditional statement is a set of commands that executes if a specified condition is true. JavaScript supports two conditional statements: if...else and switch.
 
-### _Falsy values_
+### Falsy values
 
 The following values evaluate to false (also known as Falsy values):
 
@@ -839,9 +616,9 @@ this.name = 'UserException';
 
 // (e.g., by the error console)
 
-### UserException.prototype.toString = function() {
+**UserException.prototype.toString = function() {**
 
-### return \`${this.name}: "${this.message}"\`;
+**return `${this.name}: "${this.message}"`;**
 
 **}**
 
@@ -850,21 +627,21 @@ this.name = 'UserException';
 ```js
 throw new UserException('Value too high');
 ```
-### _try...catch statement_
+### try...catch statement
 
 ```js
 function getMonthName(mo) {
 
 mo = mo - 1; // Adjust month number for array index (1 = Jan, 12 = Dec)
 
-let months = \['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
 
-'Aug', 'Sep', 'Oct', 'Nov', 'Dec'\];
+'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 ```
 if (months\[mo\]) {
 
 ```js
-return months\[mo\];
+return months[mo];
 ```
 } else {
 
@@ -891,7 +668,7 @@ logMyErrors(e); // pass exception object to error handler (i.e. your own functio
 ```js
 }
 ```
-### _The Finally Block_
+### The Finally Block
 
 The finally block contains statements to be executed after the try and catch blocks execute. Additionally, the finally block executes before the code that follows the try…catch…finally statement.
 
@@ -950,16 +727,16 @@ console.log('caught outer "bogus"');
 
 ### Loops and iteration
 
-### _for statement_
+### for statement
 
 A for loop repeats until a specified condition evaluates to false. The JavaScript for loop is similar to the Java and C for loop.
 
 ```js
-for (\[initialExpression\]; \[conditionExpression\]; \[incrementExpression\])
+for ([initialExpression]; [conditionExpression]; [incrementExpression])
 ```
 statement
 
-### _do...while statement_
+### do...while statement
 
 The do...while statement repeats until a specified condition evaluates to false.
 
@@ -972,7 +749,7 @@ statement
 ```js
 while (condition);
 ```
-### _while statement_
+### while statement
 
 A while statement executes its statements as long as a specified condition evaluates to true. A while statement looks as follows:
 
@@ -981,7 +758,7 @@ while (condition)
 ```
 statement
 
-### _break statement_
+### break statement
 
 Use the break statement to terminate a loop, switch, or in conjunction with a labeled statement.
 
@@ -1023,23 +800,23 @@ break;
 
 }
 ```
-### _continue statement_
+### continue statement
 
 The continue statement can be used to restart a while, do-while, for, or label statement.
 
 -   When you use continue without a label, it terminates the current iteration of the innermost enclosing while, do-while, or for statement and continues execution of the loop with the next iteration. In contrast to the break statement, continue does not terminate the execution of the loop entirely. In a while loop, it jumps back to the condition. In a for loop, it jumps to the increment-expression.
 -   When you use continue with a label, it applies to the looping statement identified with that label.
 
-### _for...in statement_
+### for...in statement
 
 The for...in statement iterates a specified variable over all the enumerable properties of an object. For each distinct property, JavaScript executes the specified statements.
 
-### _for...of statement_
+### for...of statement
 
 The for...of statement creates a loop Iterating over iterable objects (including Array, Map, Set, arguments object and so on), invoking a custom iteration hook with statements to be executed for the value of each distinct property. The following example shows the difference between a for...of loop and a for...in loop. While for...in iterates over property names, for...of iterates over property values:
 
 ```js
-const arr = \[3, 5, 7\];
+const arr = [3, 5, 7];
 
 arr.foo = 'hello';
 
@@ -1055,7 +832,6 @@ console.log(i); // logs 3, 5, 7
 
 }
 ```
-###
 Functions
 
 A function in JavaScript is similar to a procedure—a set of statements that performs a task or calculates a value, but for a procedure to qualify as a function, it should take some input and return an output where there is some obvious relationship between the input and the output. To use a function, you must define it somewhere in the scope from which you wish to call it.
@@ -1091,7 +867,7 @@ While the function declaration above is syntactically a statement, functions can
 Such a function can be anonymous; it does not have to have a name. For example, the function square could have been defined as:
 
 ```js
-const square = function(number) { return number \* number }
+const square = function(number) { return number * number }
 ```
 var x = square(4) // x gets the value 16
 
@@ -1104,7 +880,7 @@ a();
 
 b();
 ```
-### // function statement
+**// function statement**
 
 ```js
 function a() {
@@ -1113,7 +889,7 @@ console.log("a called");
 
 }
 ```
-### // Function Expression
+**// Function Expression**
 
 ```js
 var b = function(){
@@ -1221,7 +997,7 @@ function addSquares(a, b) {
 
 function square(x) {
 
-return x \* x;
+return x * x;
 
 }
 
@@ -1318,7 +1094,7 @@ var x = 5;
 
 function inside(x) {
 
-return x \* 2;
+return x * 2;
 
 }
 
@@ -1416,7 +1192,7 @@ In the code above, the name variable of the outer function is accessible to the 
 ```js
 var getCode = (function() {
 
-var apiCode = '0\]Eal(eh&2'; // A code we do not want outsiders to be able to modify...
+var apiCode = '0]Eal(eh&2'; // A code we do not want outsiders to be able to modify...
 
 return function() {
 
@@ -1472,7 +1248,7 @@ var i;
 ```js
 for (i = 1; i < arguments.length; i++) {
 
-result += arguments\[i\] + separator;
+result += arguments[i] + separator;
 
 }
 
@@ -1512,7 +1288,7 @@ function multiply(a, b) {
 
 b = typeof b !== 'undefined' ? b : 1;
 
-return a \* b;
+return a * b;
 
 }
 ```
@@ -1523,7 +1299,7 @@ multiply(5); // 5
 ```js
 function multiply(a, b = 1) {
 
-return a \* b;
+return a * b;
 
 }
 ```
@@ -1536,13 +1312,13 @@ The rest parameter syntax allows us to represent an indefinite number of argumen
 ```js
 function multiply(multiplier, ...theArgs) {
 
-return theArgs.map(x => multiplier \* x);
+return theArgs.map(x => multiplier * x);
 
 }
 
 var arr = multiply(2, 1, 2, 3);
 
-console.log(arr); // \[2, 4, 6\]
+console.log(arr); // [2, 4, 6]
 ```
 ### Anonymous function
 
@@ -1585,7 +1361,7 @@ console.log("xyz called");
 
 b();
 ```
-### xyz();
+**xyz();**
 
 **Output**:
 
@@ -1603,7 +1379,7 @@ Parameters are used in function definition as local variables inside that functi
 
 A programming language is said to have **First-class functions** **when functions** in that language **are treated like any other variable**. For example, in such a language, a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable.
 
-### // Pass function as parameter
+**// Pass function as parameter**
 
 ```js
 var b = function (param1) {
@@ -1613,7 +1389,7 @@ console.log(param1);
 };
 ```
 
-### // Return a function
+**// Return a function**
 
 ```js
 b(function () {});
@@ -1691,7 +1467,7 @@ Two factors influenced the introduction of arrow functions: shorter functions an
 ### Shorter functions
 
 ```js
-var a = \[
+var a = [
 ```
 'Hydrogen',
 
@@ -1702,15 +1478,15 @@ var a = \[
 'Beryllium'
 
 ```js
-\];
+];
 
 var a2 = a.map(function(s) { return s.length; });
 
-console.log(a2); // logs \[8, 6, 7, 9\]
+console.log(a2); // logs [8, 6, 7, 9]
 
 var a3 = a.map(s => s.length);
 
-console.log(a3); // logs \[8, 6, 7, 9\]
+console.log(a3); // logs [8, 6, 7, 9]
 ```
 ### No separate this
 
@@ -1805,21 +1581,21 @@ Destructuring**
 The destructuring assignment syntax is a JavaScript expression that makes it possible to extract data from arrays or objects using a syntax that mirrors the construction of array and object literals.
 
 ```js
-var foo = \['one', 'two', 'three'\];
+var foo = ['one', 'two', 'three'];
 ```
 // without destructuring
 
 ```js
-var one = foo\[0\];
+var one = foo[0];
 
-var two = foo\[1\];
+var two = foo[1];
 
-var three = foo\[2\];
+var three = foo[2];
 ```
 // with destructuring
 
 ```js
-var \[one, two, three\] = foo;
+var [one, two, three] = foo;
 ```
 ### Comparison operators
 
@@ -1830,126 +1606,36 @@ Equal (==), Not equal (!=), Strict equal (===), Strict not equal (!==), Greater 
 **
 Arithmetic operators**
 
-### Operator
+| Operator | Description | Example |
+| --- | --- | --- |
+| Remainder (%) | Binary operator. Returns the integer remainder of dividing the two operands. | 12 % 5 returns 2. |
+| Increment (++) | Unary operator. Adds one to its operand. If used as a prefix operator (++x), returns the value of its operand after adding one; if used as a postfix operator (x++), returns the value of its operand before adding one. | If x is 3, then ++x sets x to 4 and returns 4, whereas x++ returns 3 and, only then, sets x to 4. |
+| Decrement (--) | Unary operator. Subtracts one from its operand. The return value is analogous to that for the increment operator. | If x is 3, then --x sets x to 2 and returns 2, whereas x-- returns 3 and, only then, sets x to 2. |
+| Unary negation (-) | Unary operator. Returns the negation of its operand. | If x is 3, then -x returns -3. |
+| Unary plus (+) | Unary operator. Attempts to convert the operand to a number, if it is not already. | +"3" returns 3. +true returns 1. |
+| Exponentiation operator (**) | Calculates the base to the exponent power, that is, baseexponent | 2 ** 3 returns 8. 10 ** -1 returns 0.1. |
 
-### Description
-
-### Example
-
-| --- | --- | ---
-[Remainder](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder)(%)
-
-Binary operator. Returns the integer remainder of dividing the two operands.
-
-12 % 5 returns 2.
-
-| --- | --- | ---
-[Increment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Increment) (++)
-
-Unary operator. Adds one to its operand. If used as a prefix operator (++x), returns the value of its operand after adding one; if used as a postfix operator (x++), returns the value of its operand before adding one.
-
-If x is 3, then ++x sets x to 4 and returns 4, whereas x++ returns 3 and, only then, sets x to 4.
-
-| --- | --- | ---
-[Decrement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement) (--)
-
-Unary operator. Subtracts one from its operand. The return value is analogous to that for the increment operator.
-
-If x is 3, then --x sets x to 2 and returns 2, whereas x-- returns 3 and, only then, sets x to 2.
-
-| --- | --- | ---
-[Unary negation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_negation) (-)
-
-Unary operator. Returns the negation of its operand.
-
-If x is 3, then -x returns -3.
-
-| --- | --- | ---
-[Unary plus](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus) (+)
-
-Unary operator. Attempts to convert the operand to a number, if it is not already.
-
-+"3" returns 3.
-
-+true returns 1.
-
-| --- | --- | ---
-[Exponentiation operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Exponentiation) (\*\*)
-
-Calculates the base to the exponent power, that is, baseexponent
-
-2 \*\* 3 returns 8.
-10 \*\* -1 returns 0.1.
-
-| --- | --- | ---
 ### Bitwise operators
 
 A bitwise operator treats their operands as a set of 32 bits (zeros and ones), rather than as decimal, hexadecimal, or octal numbers.
 
-### Operator
+| Operator | Usage | Description |
+| --- | --- | --- |
+| Bitwise AND | a & b | Returns a one in each bit position for which the corresponding bits of both operands are ones. |
+| Bitwise OR | a | b | Returns a zero in each bit position for which the corresponding bits of both operands are zeros. |
+| Bitwise XOR | a ^ b | Returns a zero in each bit position for which the corresponding bits are the same. [Returns a one in each bit position for which the corresponding bits are different.] |
+| Bitwise NOT | ~ a | Inverts the bits of its operand. |
+| Left shift | a << b | Shifts a in binary representation b bits to the left, shifting in zeros from the right. |
+| Sign-propagating right shift | a >> b | Shifts a in binary representation b bits to the right, discarding bits shifted off. |
+| Zero-fill right shift | a >>> b | Shifts a in binary representation b bits to the right, discarding bits shifted off, and shifting in zeros from the left. |
 
-### Usage
-
-### Description
-
-| --- | --- | ---
-[Bitwise AND](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_AND)
-
-a & b
-
-Returns a one in each bit position for which the corresponding bits of both operands are ones.
-
-| --- | --- | ---
-[Bitwise OR](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR)
-
-a | b
-
-Returns a zero in each bit position for which the corresponding bits of both operands are zeros.
-
-| --- | --- | ---
-[Bitwise XOR](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_XOR)
-
-a ^ b
-
-Returns a zero in each bit position for which the corresponding bits are the same.
-\[Returns a one in each bit position for which the corresponding bits are different.\]
-
-| --- | --- | ---
-[Bitwise NOT](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT)
-
-~ a
-
-Inverts the bits of its operand.
-
-| --- | --- | ---
-[Left shift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Left_shift)
-
-a << b
-
-Shifts a in binary representation b bits to the left, shifting in zeros from the right.
-
-| --- | --- | ---
-[Sign-propagating right shift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Right_shift)
-
-a >> b
-
-Shifts a in binary representation b bits to the right, discarding bits shifted off.
-
-| --- | --- | ---
-[Zero-fill right shift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unsigned_right_shift)
-
-a >>> b
-
-Shifts a in binary representation b bits to the right, discarding bits shifted off, and shifting in zeros from the left.
-
-| --- | --- | ---
 ### Logical operators
 
 Logical operators are typically used with Boolean (logical) values; when they are, they return a Boolean value.
 
 Logical AND (&&), Logical OR (||) and Logical NOT (!).
 
-### _Short-circuit evaluation_
+### Short-circuit evaluation
 
 As logical expressions are evaluated left to right, they are tested for possible "short-circuit" evaluation using the following rules:
 
@@ -1961,13 +1647,13 @@ true || anything is short-circuit evaluated to true.
 
 The concatenation operator (+) concatenates two string values together, returning another string that is the union of the two operand strings.
 
-console.log('my ' + 'string'); // console logs the string "my string".
+console.log('my' + 'string'); // console logs the string "my string".
 
 ### Conditional (ternary) operator
 
 The conditional operator is the only JavaScript operator that takes three operands. The operator can have one of two values based on a condition. The syntax is:
 
-condition ? val1 : val2
+condition ? val1: val2
 
 For example,
 
@@ -1982,16 +1668,16 @@ The comma operator (,) evaluates both of its operands and returns the value of t
 
 A unary operation is an operation with only one operand.
 
-### _delete_
+### delete
 
 The delete operator deletes an object's property. The syntax is:
 
 ```js
 delete object.property;
 
-delete object\[propertyKey\];
+delete object[propertyKey];
 
-delete objectName\[index\];
+delete objectName[index];
 ```
 delete property; // legal only within a with statement
 
@@ -2016,7 +1702,7 @@ delete myobj.h; // returns true (can delete user-defined properties)
 
 Since arrays are just objects, it's technically possible to delete elements from them. This is however regarded as a bad practice, try to avoid it. When you delete an array property, the array length is not affected and other elements are not re-indexed. To achieve that behavior, it is much better to just overwrite the element with the value undefined. To actually manipulate the array, use the various array methods such as splice.
 
-### _typeof_
+### typeof
 
 The typeof operator returns a string indicating the type of the unevaluated operand. operand is the string, variable, keyword, or object for which the type is to be returned.
 
@@ -2029,7 +1715,7 @@ var shape = 'round';
 
 var size = 1;
 
-var foo = \['Apple', 'Mango', 'Orange'\];
+var foo = ['Apple', 'Mango', 'Orange'];
 
 var today = new Date();
 ```
@@ -2047,7 +1733,7 @@ typeof today; // returns "object"
 
 typeof doesntExist; // returns "undefined"
 
-### _void_
+### void
 
 The void operator specifies an expression to be evaluated without returning a value. expression is a JavaScript expression to evaluate.
 
@@ -2055,7 +1741,7 @@ The void operator specifies an expression to be evaluated without returning a va
 
 A relational operator compares its operands and returns a Boolean value based on whether the comparison is true.
 
-### _in_
+### in
 
 The in operator returns true if the specified property is in the specified object. The syntax is:
 
@@ -2064,7 +1750,7 @@ propNameOrNumber in objectName
 // Arrays
 
 ```js
-var trees = \['redwood', 'bay', 'cedar', 'oak', 'maple'\];
+var trees = ['redwood', 'bay', 'cedar', 'oak', 'maple'];
 ```
 0 in trees; // returns true
 
@@ -2096,7 +1782,7 @@ var mycar = { make: 'Honda', model: 'Accord', year: 1998 };
 
 'model' in mycar; // returns true
 
-### _instanceof_
+### instanceof
 
 The instanceof operator returns true if the specified object is of the specified object type. The syntax is: objectName instanceof objectType
 
@@ -2114,100 +1800,36 @@ if (theDay instanceof Date) {
 ```
 The **typeof** and the **instanceof** operator are quite different. typeof returns a type of entity that it’s operated on (like it operates on string then return “string” not String). instanceof of returns true if an object is created from a given constructor and false otherwise ().
 
-### _Operator precedence_
+### Operator precedence
 
 The following table describes the precedence of operators, from highest to lowest.
 
-### Operator type
+| Operator type | Individual operators |
+| --- | --- |
+| member |. [] |
+| call / create instance | () new |
+| negation/increment | ! ~ - + ++ -- typeof void delete |
+| multiply/divide | * / % |
+| addition/subtraction | + - |
+| bitwise shift | << >> >>> |
+| relational | < <= > >= in instanceof |
+| equality | == != === !== |
+| bitwise-and | & |
+| bitwise-xor | ^ |
+| bitwise-or | | |
+| logical-and | && |
+| logical-or | || |
+| conditional | ?: |
+| assignment | = += -= *= /= %= <<= >>= >>>= &= ^= |= &&= ||= ??= |
+| comma |, |
 
-### Individual operators
-
-| --- | ---
-member
-
-. \[\]
-
-| --- | ---
-call / create instance
-
-() new
-
-| --- | ---
-negation/increment
-
-! ~ - + ++ -- typeof void delete
-
-| --- | ---
-multiply/divide
-
-\* / %
-
-| --- | ---
-addition/subtraction
-
-\+ -
-
-| --- | ---
-bitwise shift
-
-<< >> >>>
-
-| --- | ---
-relational
-
-< <= > >= in instanceof
-
-| --- | ---
-equality
-
-\== != === !==
-
-| --- | ---
-bitwise-and
-
-&
-
-| --- | ---
-bitwise-xor
-
-^
-
-| --- | ---
-bitwise-or
-
-| --- | ---
-logical-and
-
-&&
-
-| --- | ---
-logical-or
-
-||
-
-| --- | ---
-conditional
-
-?:
-
-| --- | ---
-assignment
-
-\= += -= \*= /= %= <<= >>= >>>= &= ^= |= &&= ||= ??=
-
-| --- | ---
-comma
-
-,
-
-| --- | ---
-### _Expressions_
+### Expressions
 
 An expression is any valid unit of code that resolves to a value.
 
 ### Primary Expression
 
-### _this_
+### this
 
 Use this keyword to refer to the current object. In general, this refers to the calling object in a method. Use this either with the dot or the bracket notation:
 
@@ -2215,7 +1837,7 @@ this\['propertyName'\]
 
 this.propertyName
 
-### _Grouping operator_
+### Grouping operator
 
 The grouping operator ( ) controls the precedence of evaluation in expressions. For example, you can override multiplication and division first, then addition and subtraction to evaluate addition first
 
@@ -2223,28 +1845,28 @@ The grouping operator ( ) controls the precedence of evaluation in expressions. 
 
 (a + b) \* c // 9
 
-### _Left-hand-side expressions_
+### Left-hand-side expressions
 
-### _new_
+### new
 
 You can use the new operator to create an instance of a user-defined object type or of one of the built-in object types. Use new as follows:
 
 ```js
-var objectName = new objectType(\[param1, param2, ..., paramN\]);
+var objectName = new objectType([param1, param2, ..., paramN]);
 ```
-### _super_
+### super
 
 The super keyword is used to call functions on an object's parent. It is useful with classes to call the parent constructor, for example.
 
 super(\[arguments\]); // calls the parent constructor.
 
 ```js
-super.functionOnParent(\[arguments\]);
+super.functionOnParent([arguments]);
 ```
 ### Date object
 
 ```js
-var dateObjectName = new Date(\[parameters\]);
+var dateObjectName = new Date([parameters]);
 ```
 The parameters in the preceding syntax can be any of the following:
 
@@ -2292,82 +1914,28 @@ The String Object is a wrapper around the string primitive data type.
 ```js
 const foo = new String('foo'); // Creates a String object
 
-console.log(foo); // Displays: \[String: 'foo'\]
+console.log(foo); // Displays: [String: 'foo']
 ```
 typeof foo; // Returns 'object'
 
 ### Methods of String
 
-### Method
+| Method | Description |
+| --- | --- |
+| charAt, charCodeAt, codePointAt | Return the character or character code at the specified position in the string. |
+| indexOf, lastIndexOf | Return the position of specified substring in the string or last position of specified substring, respectively. |
+| startsWith, endsWith, includes | Returns whether or not the string starts, ends or contains a specified string. |
+| concat | Combines the text of two strings and returns a new string. |
+| fromCharCode, fromCodePoint | Constructs a string from the specified sequence of Unicode values. This is a method of the String class, not a String instance. |
+| split | Splits a String object into an array of strings by separating the string into substrings. |
+| slice | Extracts a section of a string and returns a new string. |
+| substring, substr | Return the specified subset of the string, either by specifying the start and end indexes or the start index and a length. |
+| match, matchAll, replace, replaceAll, search | Work with regular expressions. |
+| toLowerCase, toUpperCase | Return the string in all lowercase or all uppercase, respectively. |
+| normalize | Returns the Unicode Normalization Form of the calling string value. |
+| repeat | Returns a string consisting of the elements of the object repeated the given times. |
+| trim | Trims whitespace from the beginning and end of the string. |
 
-### Description
-
-| --- | ---
-[charAt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt), [charCodeAt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt), [codePointAt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt)
-
-Return the character or character code at the specified position in the string.
-
-| --- | ---
-[indexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf), [lastIndexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/lastIndexOf)
-
-Return the position of specified substring in the string or last position of specified substring, respectively.
-
-| --- | ---
-[startsWith](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith), [endsWith](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith), [includes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes)
-
-Returns whether or not the string starts, ends or contains a specified string.
-
-| --- | ---
-[concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/concat)
-
-Combines the text of two strings and returns a new string.
-
-| --- | ---
-[fromCharCode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode), [fromCodePoint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint)
-
-Constructs a string from the specified sequence of Unicode values. This is a method of the String class, not a String instance.
-
-| --- | ---
-[split](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split)
-
-Splits a String object into an array of strings by separating the string into substrings.
-
-| --- | ---
-[slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice)
-
-Extracts a section of a string and returns a new string.
-
-| --- | ---
-[substring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring), [substr](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr)
-
-Return the specified subset of the string, either by specifying the start and end indexes or the start index and a length.
-
-| --- | ---
-[match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match), [matchAll](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll), [replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace), [replaceAll](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll), [search](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search)
-
-Work with regular expressions.
-
-| --- | ---
-[toLowerCase](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase), [toUpperCase](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
-
-Return the string in all lowercase or all uppercase, respectively.
-
-| --- | ---
-[normalize](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize)
-
-Returns the Unicode Normalization Form of the calling string value.
-
-| --- | ---
-[repeat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat)
-
-Returns a string consisting of the elements of the object repeated the given times.
-
-| --- | ---
-[trim](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim)
-
-Trims whitespace from the beginning and end of the string.
-
-| --- | ---
 ### Embedded expressions
 
 console.log(\`Fifteen is ${five + ten} and not ${2 \* five + ten}.\`);
@@ -2379,12 +1947,12 @@ The **Intl** object is the namespace for the ECMAScript Internationalization API
 The DateTimeFormat object is useful for formatting date and time. The following formats a date for English as used in the United States. (The result is different in another time zone.)
 
 ```js
-const msPerDay = 24 \* 60 \* 60 \* 1000;
+const msPerDay = 24 * 60 * 60 * 1000;
 ```
 // July 17, 2014 00:00:00 UTC.
 
 ```js
-const july172014 = new Date(msPerDay \* (44 \* 365 + 11 + 197));
+const july172014 = new Date(msPerDay * (44 * 365 + 11 + 197));
 
 const options = { year: '2-digit', month: '2-digit', day: '2-digit',
 
@@ -2418,7 +1986,7 @@ console.log(hanDecimalRMBInChina.format(1314.25)); // ￥ 一,三一四.二五
 
 An array is an ordered list of values that you refer to with a name and an index.
 
-### _Creating an array_
+### Creating an array
 
 The following statements create equivalent arrays:
 
@@ -2427,7 +1995,7 @@ let arr = new Array(element0, element1, ..., elementN)
 
 let arr = Array(element0, element1, ..., elementN)
 
-let arr = \[element0, element1, ..., elementN\]
+let arr = [element0, element1, ..., elementN]
 
 let arr = Array(42) // Creates an array with no elements
 ```
@@ -2441,7 +2009,7 @@ let wisenArray = Array.of(9.3) // wisenArray contains only one element 9.3
 Note: If you supply a non-integer value to the array operator in the code above, a property will be created in the object representing the array, instead of an array element.
 
 ```js
-let arr = \[\]
+let arr = []
 ```
 arr\[3.4\] = 'Oranges'
 
@@ -2551,11 +2119,11 @@ sort() can also take a callback function to determine how array elements are com
 ```js
 let sortFn = function(a, b) {
 
-if (a\[a.length - 1\] < b\[b.length - 1\]) return -1;
+if (a[a.length - 1] < b[b.length - 1]) return -1;
 
-if (a\[a.length - 1\] > b\[b.length - 1\]) return 1;
+if (a[a.length - 1] > b[b.length - 1]) return 1;
 
-if (a\[a.length - 1\] == b\[b.length - 1\]) return 0;
+if (a[a.length - 1] == b[b.length - 1]) return 0;
 
 }
 ```
@@ -2570,7 +2138,7 @@ myArray.sort(sortFn)
 [indexOf(searchElement\[, fromIndex\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) searches the array for searchElement and returns the index of the first match.
 
 ```js
-let a = \['a', 'b', 'a', 'b', 'a'\]
+let a = ['a', 'b', 'a', 'b', 'a']
 
 console.log(a.indexOf('b')) // logs 1
 ```
@@ -2584,7 +2152,7 @@ console.log(a.indexOf('z')) // logs -1, because 'z' was not found
 [lastIndexOf(searchElement\[, fromIndex\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf) works like indexOf, but starts at the end and searches backwards.
 
 ```js
-let a = \['a', 'b', 'c', 'd', 'a', 'b'\]
+let a = ['a', 'b', 'c', 'd', 'a', 'b']
 
 console.log(a.lastIndexOf('b')) // logs 5
 ```
@@ -2598,7 +2166,7 @@ console.log(a.lastIndexOf('z')) // logs -1
 [forEach(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) executes callback on every array item and returns undefined.
 
 ```js
-let a = \['a', 'b', 'c'\]
+let a = ['a', 'b', 'c']
 
 a.forEach(function(element) { console.log(element) })
 ```
@@ -2607,20 +2175,20 @@ a.forEach(function(element) { console.log(element) })
 [map(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) returns a new array of the return value from executing callback on every array item.
 
 ```js
-let a1 = \['a', 'b', 'c'\]
+let a1 = ['a', 'b', 'c']
 
 let a2 = a1.map(function(item) { return item.toUpperCase() })
 
-console.log(a2) // logs \['A', 'B', 'C'\]
+console.log(a2) // logs ['A', 'B', 'C']
 ```
 [filter(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) returns a new array containing the items for which callback returned true.
 
 ```js
-let a1 = \['a', 10, 'b', 20, 'c', 30\]
+let a1 = ['a', 10, 'b', 20, 'c', 30]
 
 let a2 = a1.filter(function(item) { return typeof item === 'number'; })
 
-console.log(a2) // logs \[10, 20, 30\]
+console.log(a2) // logs [10, 20, 30]
 ```
 [every(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) returns true if callback returns true for every item in the array.
 
@@ -2631,11 +2199,11 @@ return typeof value === 'number'
 
 }
 
-let a1 = \[1, 2, 3\]
+let a1 = [1, 2, 3]
 
 console.log(a1.every(isNumber)) // logs true
 
-let a2 = \[1, '2', 3\]
+let a2 = [1, '2', 3]
 
 console.log(a2.every(isNumber)) // logs false
 ```
@@ -2648,22 +2216,22 @@ return typeof value === 'number'
 
 }
 
-let a1 = \[1, 2, 3\]
+let a1 = [1, 2, 3]
 
 console.log(a1.some(isNumber)) // logs true
 
-let a2 = \[1, '2', 3\]
+let a2 = [1, '2', 3]
 
 console.log(a2.some(isNumber)) // logs true
 
-let a3 = \['1', '2', '3'\]
+let a3 = ['1', '2', '3']
 
 console.log(a3.some(isNumber)) // logs false
 ```
 [reduce(callback\[, initialValue\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) applies _callback_(_accumulator_, _currentValue_\[, _currentIndex_\[, _array_\]\]) for each value in the array for the purpose of reducing the list of items down to a single value.  The reduce function returns the final value returned by _callback_ function.
 
 ```js
-let a = \[10, 20, 30\]
+let a = [10, 20, 30]
 
 let total = a.reduce(function(accumulator, currentValue) { return accumulator + currentValue }, 0)
 
@@ -2672,7 +2240,7 @@ console.log(total) // Prints 60[g arrays to store other properties](https://deve
 **Arrays can also be used like objects, to store related information.**
 
 ```js
-const arr = \[1, 2, 3\];
+const arr = [1, 2, 3];
 
 arr.property = "value";
 
@@ -2706,7 +2274,7 @@ sayings.delete('dog');
 sayings.has('dog'); // false
 
 ```js
-for (let \[key, value\] of sayings) {
+for (let [key, value] of sayings) {
 
 console.log(key + ' goes ' + value);
 
@@ -2799,16 +2367,16 @@ for (let item of mySet) console.log(item);
 
 // "some text"
 
-### _Array and Set compared_
+### Array and Set compared
 
 Create Array from set and vice versa
 
 ```js
 Array.from(mySet);
 
-\[...mySet2\];
+[...mySet2];
 
-mySet2 = new Set(\[1, 2, 3, 4\]);
+mySet2 = new Set([1, 2, 3, 4]);
 ```
 
 Traditionally, a set of elements has been stored in arrays in JavaScript in a lot of situations. The new Set object, however, has some advantages:
@@ -2883,7 +2451,8 @@ year: 1969
 };
 ```
 
-| --- | ---
+| --- | --- |
+
 Unassigned properties of an object are undefined (and not null).
 
 myCar.color; // undefined
@@ -2891,16 +2460,16 @@ myCar.color; // undefined
 ```js
 function showProps(obj, objName) {
 
-var result = \`\`;
+var result = ;
 
 for (var i in obj) {
 ```
 **// obj.hasOwnProperty() is used to filter out properties from the object's prototype chain**
 
-### if (obj.hasOwnProperty(i)) {
+**if (obj.hasOwnProperty(i)) {**
 
 ```js
-result += \`${objName}.${i} = ${obj\[i\]}\\n\`;
+result += `${objName}.${i} = ${obj[i]}\\n`;
 
 }
 
@@ -2910,7 +2479,7 @@ return result;
 
 }
 ```
-### _Enumerate the properties of an object_
+### Enumerate the properties of an object
 
 Starting with ECMAScript 5, there are three native ways to list/traverse object properties:
 
@@ -3049,7 +2618,7 @@ Getters and setters can also be added to an object at any time after creation us
 ```js
 var o = { a: 0 };
 ```
-### Object.defineProperties(o, {
+**Object.defineProperties(o, {**
 
 **'b': { get: function() { return this.a + 1; } },**
 
@@ -3065,7 +2634,7 @@ console.log(o.b); // Runs the getter, which yields a + 1 or 6
 
 In JavaScript, this keyword is a fundamental concept used to refer to the execution context or the object that is currently being acted upon. Its value depends on **where and how it is used**, making it both versatile and sometimes tricky to understand. Here's a detailed breakdown:
 
-**1\. Default Behavio**r
+**1. Default Behavio**r
 
 -   **Global Context (Non-Strict Mode):**
     -   this refers to the global object (window in browsers, global in Node.js).
@@ -3080,7 +2649,7 @@ console.log(this); // In browsers, outputs the Window object
 
 console.log(this); // undefined
 ```
-### 2\. Inside Functions
+### 2. Inside Functions
 
 -   **Non-Strict Mode:**
     -   this refers to the global object.
@@ -3127,7 +2696,7 @@ console.log(this.name);
 ```
 obj.greet(); // Alice
 
-### 3\. Inside Arrow Functions
+### 3. Inside Arrow Functions
 
 -   Arrow functions do not bind their own this. Instead, this is inherited from the enclosing execution context.
 
@@ -3149,7 +2718,7 @@ obj.greet(); // undefined (or Window.name in browsers)
 
 In this case, this is inherited from the surrounding scope (e.g., global or parent function).
 
-### 4\. Inside Classes
+### 4. Inside Classes
 
 -   **Methods in Classes:**
     -   this refers to the instance of the class.
@@ -3166,7 +2735,7 @@ this.name = name;
 greet() {
 
 ```js
-console.log(\`Hello, my name is ${this.name}\`);
+console.log(`Hello, my name is ${this.name}`);
 
 }
 
@@ -3193,7 +2762,7 @@ console.log(this);
 ```
 Person.info(); // Person
 
-### 5\. In Event Handlers
+### 5. In Event Handlers
 
 In regular functions, this refers to the element that received the event.
 ```js
@@ -3214,7 +2783,7 @@ console.log(this); // <button> element
 
     });
     ```
-### 6\. Explicit Binding
+### 6. Explicit Binding
 
 -   **call and apply:**
     -   You can explicitly set the value of this.
@@ -3240,7 +2809,7 @@ const boundGreet = greet.bind(person);
 ```
 boundGreet(); // Alice
 
-### 7\. In Constructors
+### 7. In Constructors
 
 In constructor functions, this refers to the newly created object.
 ```js
@@ -3254,7 +2823,7 @@ const person = new Person('Alice');
 
 console.log(person.name); // Alice
 ```
-### 8\. With new Keyword
+### 8. With new Keyword
 
 When a function is invoked with new, this refers to the new object being created.
 ```js
@@ -3268,7 +2837,7 @@ const cat = new Animal('cat');
 
 console.log(cat.type); // cat
 ```
-### 9\. In setTimeout and setInterval
+### 9. In setTimeout and setInterval
 
 Inside regular functions passed to setTimeout, this refers to the global object (window or global).
 
@@ -3288,7 +2857,7 @@ console.log(this); // Window
 
     }, 1000);
     ```
-### 10\. Special Cases
+### 10. Special Cases
 
 **Object Property Assignment:
 ```js
@@ -3329,9 +2898,9 @@ JavaScript is a prototype based language, so, whenever we create a function usin
 
 **Prototypes** are the mechanism by which JavaScript objects inherit features from one another. An object's prototype object may also have a prototype object, which it inherits methods and properties from, and so on. This is often referred to as a **prototype chain**, and explains why different objects have properties and methods defined on other objects available to them.
 
-There is a saying that “Everything in javascript is an object” comes from here where arrays or any method have a prototype of the object.
+There is a saying that “Everything in JavaScript is an object” comes from here where arrays or any method have a prototype of the object.
 
-![](/notes-img/javascript-notes/img-001.webp)
+![](/notes-img/JavaScript-notes/img-001.webp)
 
 ```js
 let object ={
@@ -3356,13 +2925,13 @@ name:"Aditya"
 ```js
 }
 ```
-### // Never do this, it would have performance issue
+**// Never do this, it would have performance issue**
 
 ```js
 object2.__proto__=object;
 ```
 
-object2 will have access to object properties. If suppose city is not defined in object2 then it will use object property and the same with methods also. ![](/notes-img/javascript-notes/img-002.webp)
+object2 will have access to object properties. If suppose city is not defined in object2 then it will use object property and the same with methods also. ![](/notes-img/JavaScript-notes/img-002.webp)
 
 ### Add properties to inbuilt function and object
 
@@ -3383,7 +2952,7 @@ function fun() {
 
 Now it will give access of mybind method to all function.
 
-![](/notes-img/javascript-notes/img-003.webp)
+![](/notes-img/JavaScript-notes/img-003.webp)
 
 They use __proto__ so people don’t end up messing with the prototype and nobody will use __proto__ by mistake.
 
@@ -3484,7 +3053,7 @@ console.log(emp1.name); // ReferenceError: stud is not defined
 console.log(emp2.name); // employee
 ```
 
-### _Class Expression Example: Re-declaring Class_
+### Class Expression Example: Re-declaring Class
 
 Unlike class declaration, **the class expression allows us to re-declare the same class.**
 
@@ -3579,7 +3148,7 @@ e1.detail(); //calling method
 e2.detail();
 ```
 
-### _Named Class Expression Example_
+### Named Class Expression Example
 
 We can express the class with a particular name. Here, the scope of the class name is up to the class body. The class is retrieved using class.name property.
 
@@ -3598,7 +3167,7 @@ this.name = name;
 
 document.writeln(emp.name);
 
-/\*document.writeln(Employee.name);
+/*document.writeln(Employee.name);
 ```
 Error occurs on console:
 
@@ -3632,20 +3201,10 @@ The next() method must return an object with two properties:
 -   value (the next value)
 -   done (true or false)
 
-### value
+| value | The value returned by the iterator (Can be omitted if done is true) |
+| --- | --- |
+| done | true if the iterator has completed false if the iterator has produced a new value |
 
-The value returned by the iterator
-
-(Can be omitted if done is true)
-
-| --- | ---
-### done
-
-true if the iterator has completed
-
-false if the iterator has produced a new value
-
-| --- | ---
 ### Custom Iterable
 
 // Home Made Iterable
@@ -3724,7 +3283,7 @@ return {value:n, done:done};
 A **generator function** in JavaScript is a special type of function that can pause and resume its execution, allowing you to produce (or "generate") values on demand. It is defined using the function\* syntax, and its execution is controlled using an **iterator** returned by calling the function.
 
 ```js
-function\* myGenerator() {
+function* myGenerator() {
 ```
 yield 1; // Pause and return 1
 
@@ -3746,4 +3305,4 @@ console.log(gen.next()); // { value: 3, done: false }
 console.log(gen.next()); // { value: undefined, done: true }
 ```
 
-![](/notes-img/javascript-notes/img-004.webp)
+![](/notes-img/JavaScript-notes/img-004.webp)

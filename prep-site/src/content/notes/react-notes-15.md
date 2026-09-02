@@ -1,5 +1,5 @@
 ---
-title: "Pure Component (imp)"
+title: "Pure Component"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,7 +7,8 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 15
-description: "React — Pure Component (imp)."
+imp: true
+description: "React — Pure Component."
 ---
 React.PureComponent is similar to React.Component. The difference between them is that React.Component doesn’t implement shouldComponentUpdate(), but **React.PureComponent implements shouldComponentUpdate() with a shallow prop and state comparison.**
 
@@ -76,7 +77,7 @@ this.setState({name:"Rishabh"})
 render() {
 
 ```jsx
-console.log("\*\*\*\*\*\*\*\*\*\*Parent Component\*\*\*\*\*\*\*\*\*");
+console.log("**********Parent Component*********");
 
 return (
 ```
@@ -194,9 +195,9 @@ Ex: string 'Rishabh' (SC) string 'Rishabh' returns true
 a (SC) b returns true if a and b reference the exact same object.
 
 ```jsx
-var a= \[1,2,3\];
+var a= [1,2,3];
 
-var b = \[1,2,3\];
+var b = [1,2,3];
 
 var c = a;
 
@@ -206,9 +207,9 @@ var ac_eq = (a === c); // true
 ```
 and same with Object also.
 
-Pure component does shallow comparison of prevState with currentState .
+Pure component does shallow comparison of prevState with currentState.
 
-It also does shallow comparison of prevProps with currentProps .
+It also does shallow comparison of prevProps with currentProps.
 
 When there is a difference in the above comparison then the component will re-render.
 

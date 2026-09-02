@@ -36,7 +36,7 @@ window.addEventListener("resize", expensive);
 
 So now whenever you resize the browser's window it will call an expensive method.
 
-Lets overcome this issue with throttling
+Let's overcome this issue with throttling
 
 // Throttling in JavaScript
 
@@ -89,7 +89,7 @@ const betterFunction = throttle(expensive, 1000);
 window.addEventListener("resize", betterFunction);
 ```
 
-### // Throttling Function using date time
+**// Throttling Function using date time**
 
 ```js
 const throttleFunction=(func, delay)=>{
@@ -171,7 +171,7 @@ lastArgs = null; // Reset stored arguments
 lastArgs = args; // Store the latest arguments
 
 ```js
-console.error(\`Rate limit has been reached. Please wait for ${limit / 1000}s\`);
+console.error(`Rate limit has been reached. Please wait for ${limit / 1000}s`);
 
 }
 

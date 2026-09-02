@@ -89,14 +89,14 @@ const doSomething = () => console.log('test');
 
 const measureDoingSomething = () => {
 ```
-### console.time('doSomething()');
+**console.time('doSomething()');**
 
 // do something, and measure the time it takes
 
 ```js
 doSomething();
 ```
-### console.timeEnd('doSomething()');
+**console.timeEnd('doSomething()');**
 
 ```js
 };
@@ -129,9 +129,9 @@ output: process.stdout,
 
 });
 
-rl.question(\`What's your name?\`, name => {
+rl.question(`What's your name?`, name => {
 
-console.log(\`Hi ${name}!\`);
+console.log(`Hi ${name}!`);
 
 rl.close();
 
@@ -145,7 +145,7 @@ You can install it using npm install inquirer, and then you can replicate the ab
 ```js
 const inquirer = require('inquirer');
 
-const questions = \[
+const questions = [
 ```
 {
 
@@ -159,11 +159,11 @@ message: "What's your name?",
 },
 
 ```js
-\];
+];
 
 inquirer.prompt(questions).then(answers => {
 
-console.log(\`Hi ${answers.name}!\`);
+console.log(`Hi ${answers.name}!`);
 
 });
 ```

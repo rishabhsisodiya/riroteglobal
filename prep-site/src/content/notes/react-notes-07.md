@@ -117,7 +117,7 @@ You have {unreadMessages.length} unread messages.
 
 }
 
-const messages = \['React', 'Re: React', 'Re:Re: React'\];
+const messages = ['React', 'Re: React', 'Re:Re: React'];
 ```
 ReactDOM.render(
 
@@ -137,7 +137,7 @@ Therefore, if the condition is true, the element right after && will appear in t
 
 ### Inline If-Else with Conditional Operator
 
-Another method for conditionally rendering elements inline is to use the JavaScript conditional operator condition ? true : false.
+Another method for conditionally rendering elements inline is to use the JavaScript conditional operator condition ? true: false.
 
 In the example below, we use it to conditionally render a small block of text.
 
@@ -150,7 +150,7 @@ return (
 ```
 <div>
 
-The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+The user is <b>{isLoggedIn ? 'currently': 'not'}</b> logged in.
 
 </div>
 

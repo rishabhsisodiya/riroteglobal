@@ -11,7 +11,7 @@ description: "React — Introduction to Redux."
 ---
 Redux is a predictable state container for JavaScript Apps. Let’s break this definition into following parts:
 
-**Redux is for Javascript application:** Redux is not tied to React only we can use it with Angular, Vue or even vanilla js. It is a library for javascript applications.
+**Redux is for JavaScript application:** Redux is not tied to React only we can use it with Angular, Vue or even vanilla js. It is a library for JavaScript applications.
 
 **Redux is a state container:** Redux stores the state of your application.
 

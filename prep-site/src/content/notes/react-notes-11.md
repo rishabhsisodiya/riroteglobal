@@ -1,5 +1,5 @@
 ---
-title: "Component Lifecycle Methods (imp)"
+title: "Component Lifecycle Methods"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,7 +7,8 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 11
-description: "React — Component Lifecycle Methods (imp)."
+imp: true
+description: "React — Component Lifecycle Methods."
 ---
 **Mounting:** When an instance of a component is being created and inserted into the DOM. It uses **constructor, static getDerivedStateFromProps, render and componentDidMount**
 
@@ -147,14 +148,14 @@ LifeCycleA render called
 
 LifeCycleA componentDidMount called
 
-### _What if LifecycleA have child component LifecycleB_
+### What if LifecycleA have child component LifecycleB
 
 ### LifecycleA.js
 
 ```jsx
 import React, { Component } from 'react'
 ```
-### import LifecycleB from './LifecycleB';
+**import LifecycleB from './LifecycleB';**
 
 ```jsx
 class LifecycleA extends Component {
@@ -428,31 +429,35 @@ console.log('LifeCycleA componentDidMount called');
 
 }
 ```
-### shouldComponentUpdate(){
+**shouldComponentUpdate(){**
 
-### console.log('LifeCycleA shouldComponentUpdate called');
-
-### return true;
-
-**}**
-
-### getSnapshotBeforeUpdate(prevProps, prevState){
-
-### console.log('LifeCycleA getSnapshotBeforeUpdate called');
-
-### return null;
+```jsx
+**console.log('LifeCycleA shouldComponentUpdate called');**
+```
+**return true;**
 
 **}**
 
-### componentDidUpdate(){
+**getSnapshotBeforeUpdate(prevProps, prevState){**
 
-### console.log('LifeCycleA componentDidUpdate called');
+```jsx
+**console.log('LifeCycleA getSnapshotBeforeUpdate called');**
+```
+**return null;**
 
 **}**
 
-### changeState = ()=>{
+**componentDidUpdate(){**
 
-### this.setState({ name:"Rishabh Sisodiya"})
+```jsx
+**console.log('LifeCycleA componentDidUpdate called');**
+```
+**}**
+
+```jsx
+**changeState = ()=>{**
+```
+**this.setState({ name:"Rishabh Sisodiya"})**
 
 **}**
 
@@ -467,7 +472,7 @@ return (
 
 LifeCycle A
 
-### <button onClick={this.changeState}>Change state</button>
+**<button onClick={this.changeState}>Change state</button>**
 
 <LifecycleB />
 
@@ -522,26 +527,29 @@ console.log('LifeCycleB componentDidMount called');
 
 }
 ```
-### shouldComponentUpdate(){
+**shouldComponentUpdate(){**
 
-### console.log('LifeCycleB shouldComponentUpdate called');
-
-### return true;
-
-**}**
-
-### getSnapshotBeforeUpdate(prevProps, prevState){
-
-### console.log('LifeCycleB getSnapshotBeforeUpdate called');
-
-### return null;
+```jsx
+**console.log('LifeCycleB shouldComponentUpdate called');**
+```
+**return true;**
 
 **}**
 
-### componentDidUpdate(){
+**getSnapshotBeforeUpdate(prevProps, prevState){**
 
-### console.log('LifeCycleB componentDidUpdate called');
+```jsx
+**console.log('LifeCycleB getSnapshotBeforeUpdate called');**
+```
+**return null;**
 
+**}**
+
+**componentDidUpdate(){**
+
+```jsx
+**console.log('LifeCycleB componentDidUpdate called');**
+```
 **}**
 
 render() {
@@ -585,7 +593,7 @@ LifeCycleB componentDidMount called
 
 LifeCycleA componentDidMount called
 
-### //After clicking on change state button – updating phase
+**//After clicking on change state button – updating phase**
 
 LifeCycleA getDerivedStateFromProps called
 
@@ -634,9 +642,9 @@ The static **getDerivedStateFromError** method is used to render a fallback UI a
 
 ### App.js
 
-### import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+**import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";**
 
-### import Hero from "./components/ErrorBoundary/Hero";
+**import Hero from "./components/ErrorBoundary/Hero";**
 
 ```jsx
 function App() {
@@ -724,9 +732,9 @@ hasError:false
 
 }
 ```
-### static getDerivedStateFromError(error){
+**static getDerivedStateFromError(error){**
 
-### return {
+**return {**
 
 ### hasError:true
 
@@ -734,12 +742,13 @@ hasError:false
 
 **}**
 
-### componentDidCatch(error, info){
+**componentDidCatch(error, info){**
 
-### console.log(error);
+```jsx
+**console.log(error);**
 
-### console.log(info);
-
+**console.log(info);**
+```
 **}**
 
 render() {
@@ -751,7 +760,7 @@ return <h1>Something went wrong</h1>
 
 }
 ```
-### return this.props.children;
+**return this.props.children;**
 
 ```jsx
 }

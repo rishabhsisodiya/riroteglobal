@@ -1,5 +1,5 @@
 ---
-title: "Lists and Keys (imp)"
+title: "Lists and Keys"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,7 +7,8 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 8
-description: "React — Lists and Keys (imp)."
+imp: true
+description: "React — Lists and Keys."
 ---
 Create **PersonList**.js under component folder
 
@@ -18,7 +19,7 @@ import Person from "./Person";
 
 function PersonList() {
 
-const persons = \[
+const persons = [
 ```
 {
 
@@ -60,7 +61,7 @@ skill: "Vue",
 },
 
 ```jsx
-\];
+];
 
 const personList = persons.map((person) => (
 ```
@@ -114,7 +115,7 @@ import Person from "./Person";
 
 function PersonList() {
 
-const persons = \[
+const persons = [
 ```
 {
 
@@ -156,15 +157,16 @@ skill: "Vue",
 },
 
 ```jsx
-\];
+];
 
 return (
 ```
 <div>
 
-### {persons.map((person) => (
-
-### <Person key={person.id} person={person} />
+```jsx
+**{persons.map((person) => (**
+```
+**<Person key={person.id} person={person} />**
 
 **))}**
 
@@ -186,7 +188,7 @@ export default PersonList;
 
 When diffing two trees, React first compares the two root elements. The behavior is different depending on the types of the root elements.
 
-### _List without key attribute_
+### List without key attribute
 
 Let's say we have two items Bruce and Clark and now we have to add another item at the end of the list. So **how react will handle this update is react just iterate over both the list at the same time and generate a mutation whenever there is difference.**![](/notes-img/react-notes/img-004.webp)
 
@@ -194,7 +196,7 @@ In our example, React will match the first items in each list and see no differe
 
 Now consider the same initial items but this time we need to insert at the beginning. So what happens in this situation is that **when react iterates over both the list and makes a comparison, it turns out that every item is different. React will end up mutating every child** instead of realizing it can keep Bruce and Clark's sub tree intact and this inefficiency can be a problem and in order **to resolve this issue**. **React supports key attributes.** ![](/notes-img/react-notes/img-005.webp)
 
-### _List with key attribute_
+### List with key attribute
 
 So when children have key attributes. React uses a key to match the children in the original tree to the children of subsequent trees. **Now react knows the item with key=3 is the new one and item with key=1 and key=2 just moved. So react will preserve the sub tree and simply insert the item at the top of the list.**![](/notes-img/react-notes/img-006.webp)
 
@@ -227,7 +229,7 @@ return (
 
 }
 
-const numbers = \[1, 2, 3, 4, 5\];
+const numbers = [1, 2, 3, 4, 5];
 ```
 ReactDOM.render(
 
@@ -239,7 +241,7 @@ document.getElementById('root')
 );
 ```
 
-### _But it can create some serious issues in some scenarios. (imp)_
+### But it can create some serious issues in some scenarios. (imp)
 
 You can refer this link → [https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318](https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318)
 
@@ -277,8 +279,8 @@ But it gives us below output
 
 ### When to use index as key
 
-1\. The items in your list do not have a unique id.
+1. The items in your list do not have a unique id.
 
-2\. The list is a static list and will not change.
+2. The list is a static list and will not change.
 
-3\. The list will never be reordered or filtered.
+3. The list will never be reordered or filtered.

@@ -60,9 +60,9 @@ attachEventListeners();
 
 Now xyz() forms a closure with attachEventListeners. You can see event listeners attach to Click Me button and also scope chain.(Global and Script)
 
-![](/notes-img/javascript-notes/img-016.webp)
+![](/notes-img/JavaScript-notes/img-016.webp)
 
 ## Garbage collection and remove Event Listeners
 
--   Event Listeners are heavy and it takes memory. Whenever you attach an event listener, it forms closure . Event listeners are not freeing up the extra memory (e.g value of count in previous example). That is why we need to remove event listeners.
+-   Event Listeners are heavy and it takes memory. Whenever you attach an event listener, it forms closure. Event listeners are not freeing up the extra memory (e.g value of count in previous example). That is why we need to remove event listeners.
 -   It can reduce page performance.

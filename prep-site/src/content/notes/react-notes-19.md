@@ -1,5 +1,5 @@
 ---
-title: "Context (imp)"
+title: "Context"
 part: "React Notes"
 track: "react"
 kind: "notes"
@@ -7,11 +7,12 @@ updated: "2026-09-02"
 source: "React JS.docx"
 draft: false
 order: 19
-description: "React — Context (imp)."
+imp: true
+description: "React — Context."
 ---
 **Context provides a way to pass data through the component tree without having to pass props down manually at every level.** We can use composition and even render props but are limited to some level of tree.
 
-Let's say we have to use username in A, D and F components available from AppComponent. For A , it is straightforward; we can directly pass in props and use them. For D we need to pass in to B and then from B again we need to pass username in props to D. For F we need to pass username to E and then from E to F. But let’s assume we have to pass username further down let say 100th level of component tree then it will make our component complex. **Prop Drilling** is the process by which you pass data from one part of the React Component tree to another by going through other parts that do not need the data but only help in passing it around.![](/notes-img/react-notes/img-017.webp)
+Let's say we have to use username in A, D and F components available from AppComponent. For A, it is straightforward; we can directly pass in props and use them. For D we need to pass in to B and then from B again we need to pass username in props to D. For F we need to pass username to E and then from E to F. But let’s assume we have to pass username further down let say 100th level of component tree then it will make our component complex. **Prop Drilling** is the process by which you pass data from one part of the React Component tree to another by going through other parts that do not need the data but only help in passing it around.![](/notes-img/react-notes/img-017.webp)
 
 There are 3 steps to use context:
 
@@ -21,13 +22,13 @@ There are 3 steps to use context:
 
 ### React.createContext
 
-### const MyContext = React.createContext(defaultValue);
+**const MyContext = React.createContext(defaultValue);**
 
 The **defaultValue** argument is only used when a component does not have a matching Provider above it in the tree(If the value **attribute in Provider is not there and we have set defaultValue then Consumer will use the defaultValue. If we have provided value in the Provider then the consumer will use the value provided by the provider**). This default value can be helpful for testing components in isolation without wrapping them. Note: passing undefined as a Provider value does not cause consuming components to use defaultValue.
 
 ### Context.Provider
 
-### <MyContext.Provider value={/\* some value \*/}>
+**<MyContext.Provider value={/\* some value \*/}>**
 
 Every Context object comes with a Provider React component that allows consuming components to subscribe to context changes.
 
@@ -39,7 +40,7 @@ Changes are determined by comparing the new and old values using the same algori
 
 ### Class.contextType
 
-### let value = this.context;
+**let value = this.context;**
 
 ```jsx
 class MyClass extends React.Component {
@@ -80,9 +81,9 @@ Context object accepts a displayName string property. React DevTools uses this s
 For example, the following component will appear as MyDisplayName in the DevTools:
 
 ```jsx
-const MyContext = React.createContext(/\* some value \*/);
+const MyContext = React.createContext(/* some value */);
 ```
-### MyContext.displayName = 'MyDisplayName';
+**MyContext.displayName = 'MyDisplayName';**
 
 <MyContext.Provider> // "MyDisplayName.Provider" in DevTools
 
@@ -109,7 +110,7 @@ export {UserProvider, UserConsumer};
 ```jsx
 import ComponentC from "./components/Context/ComponentC";
 ```
-### import { UserProvider } from "./components/Context/userContext";
+**import { UserProvider } from "./components/Context/userContext";**
 
 ```jsx
 function App() {
@@ -199,7 +200,7 @@ export default ComponentE;
 ```jsx
 import React, { Component } from 'react'
 ```
-### import { UserConsumer } from './userContext';
+**import { UserConsumer } from './userContext';**
 
 ```jsx
 class ComponentF extends Component {
@@ -211,9 +212,10 @@ return (
 ```
 ### <UserConsumer>
 
-### { username=>{
-
-### return <div>hello {username}</div>
+```jsx
+**{ username=>{**
+```
+**return <div>hello {username}</div>**
 
 **}}**
 
@@ -262,7 +264,7 @@ return (
 ```
 <div className="App">
 
-### {/\* <UserProvider value="Rishabh"> \*/}
+**{/\* <UserProvider value="Rishabh"> \*/}**
 
 <ComponentC />
 
@@ -295,7 +297,7 @@ const UserConsumer = UserContext.Consumer;
 
 export {UserProvider, UserConsumer};
 ```
-### export default UserContext;
+**export default UserContext;**
 
 ### ContextType outside the class
 
@@ -306,7 +308,7 @@ import React, { Component } from 'react'
 
 import ComponentF from './ComponentF'
 ```
-### import UserContext from './userContext';
+**import UserContext from './userContext';**
 
 ```jsx
 class ComponentE extends Component {
@@ -331,7 +333,7 @@ return (
 
 }
 ```
-### ComponentE.contextType= UserContext;
+**ComponentE.contextType= UserContext;**
 
 ```jsx
 export default ComponentE;
@@ -350,7 +352,7 @@ import UserContext from './userContext';
 
 class ComponentE extends Component {
 ```
-### static contextType= UserContext;
+**static contextType= UserContext;**
 
 render() {
 
@@ -414,13 +416,14 @@ return (
 ```
 ### <ThemeContext.Consumer>
 
-### {({theme, toggleTheme}) => (
-
+```jsx
+**{({theme, toggleTheme}) => (**
+```
 ### <button
 
-### onClick={toggleTheme}
+**onClick={toggleTheme}**
 
-### style={{backgroundColor: theme.background}}>
+**style={{backgroundColor: theme.background}}>**
 
 ### Toggle Theme
 
@@ -450,11 +453,11 @@ class App extends React.Component {
 constructor(props) {
 
 super(props);
+
+**this.toggleTheme = () => {**
+
+**this.setState(state => ({**
 ```
-### this.toggleTheme = () => {
-
-### this.setState(state => ({
-
 **theme:**
 
 ### state.theme === themes.dark
@@ -489,7 +492,7 @@ render() {
 ```jsx
 return (
 ```
-### <ThemeContext.Provider value={this.state}>
+**<ThemeContext.Provider value={this.state}>**
 
 ### <Content />
 
@@ -548,9 +551,9 @@ const {signedInUser, theme} = this.props;
 ```jsx
 return (
 ```
-### <ThemeContext.Provider value={theme}>
+**<ThemeContext.Provider value={theme}>**
 
-### <UserContext.Provider value={signedInUser}>
+**<UserContext.Provider value={signedInUser}>**
 
 <Layout />
 
@@ -591,13 +594,15 @@ return (
 ```
 ### <ThemeContext.Consumer>
 
-### {theme => (
-
+```jsx
+**{theme => (**
+```
 ### <UserContext.Consumer>
 
-### {user => (
-
-### <ProfilePage user={user} theme={theme} />
+```jsx
+**{user => (**
+```
+**<ProfilePage user={user} theme={theme} />**
 
 **)}**
 

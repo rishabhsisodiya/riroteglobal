@@ -9,7 +9,7 @@ draft: false
 order: 8
 description: "Node.js — Get started with MongoDB."
 ---
-MongoDB is a NoSQL document database with the scalability and flexibility that you want with the querying and indexing that you need. . It stores data in a type of JSON format called BSON.
+MongoDB is a NoSQL document database with the scalability and flexibility that you want with the querying and indexing that you need.. It stores data in a type of JSON format called BSON.
 
 Install MongoDb in your machine or we can use mongoDB cloud as well
 
@@ -118,7 +118,7 @@ app.use(express.urlencoded({extended:false}))
 ```js
 app.use((req, res, next) => {
 
-fs.appendFile("log.txt",\`\\n ${Date.now()} : ${req.method} : ${req.path}\`, (error,result) =>{
+fs.appendFile("log.txt",`\\n ${Date.now()} : ${req.method} : ${req.path}`, (error,result) =>{
 ```
 next()
 
@@ -131,17 +131,17 @@ next()
 ```js
 app.get("/users", (req, res)=>{
 
-const html = \`
+const html = `
 ```
 <ul>
 
 ```js
-${users.map( (user) => \`<li>${user.first_name}</li>\`).join("")}
+${users.map( (user) => `<li>${user.first_name}</li>`).join("")}
 ```
 </ul>
 
 ```js
-\`;
+`;
 
 return res.send(html);
 ```
@@ -163,7 +163,7 @@ const id = Number(req.params.id);
 
 const user= users.find( (user) => user.id === id);
 
-return user ? res.json(user): res.json({"status":\`No user found with id ${id}\`});
+return user ? res.json(user): res.json({"status":`No user found with id ${id}`});
 
 }).patch((req, res) =>{
 
@@ -174,13 +174,13 @@ const index= users.findIndex( (user) => user.id === id);
 if (!users\[index\]) {
 
 ```js
-res.status(404).json({"status":\`No user found with id ${id}\`})
+res.status(404).json({"status":`No user found with id ${id}`})
 
 }
 
 const body = req.body;
 
-let new_user = {...users\[index\],...body};
+let new_user = {...users[index],...body};
 
 users.splice(index,1,new_user);
 
@@ -200,7 +200,7 @@ let index= users.findIndex( (user) => user.id === id);
 if (!users\[index\]) {
 
 ```js
-res.status(404).json({"status":\`No user found with id ${id}\`})
+res.status(404).json({"status":`No user found with id ${id}`})
 
 }
 
@@ -361,17 +361,17 @@ app.get("/users", async (req, res) => {
 
 const allDBUsers = await User.find({});
 
-const html = \`
+const html = `
 ```
 <ul>
 
 ```js
-${allDBUsers.map((user) => \`<li>${user.firstName}</li>\`).join("")}
+${allDBUsers.map((user) => `<li>${user.firstName}</li>`).join("")}
 ```
 </ul>
 
 ```js
-\`;
+`;
 
 return res.status(200).send(html);
 
@@ -399,7 +399,7 @@ const user = await User.findById(req.params.id);
 if (!user) {
 
 ```js
-return res.status(404).json({ status: \`No user found with id ${req.params.id}\` });
+return res.status(404).json({ status: `No user found with id ${req.params.id}` });
 
 }
 
@@ -408,7 +408,7 @@ return res.status(200).json(user)
 }catch(error){
 
 ```js
-return res.status(400).json({ message: \`${err.reason}\` });
+return res.status(400).json({ message: `${err.reason}` });
 
 }
 ```
@@ -426,7 +426,7 @@ const user = await User.findByIdAndUpdate(req.params.id, body);
 if (!user) {
 
 ```js
-return res.status(404).json({ status: \`No user found with id ${req.params.id}\` });
+return res.status(404).json({ status: `No user found with id ${req.params.id}` });
 
 }
 
@@ -435,7 +435,7 @@ return res.status(200).json(user);
 }catch(err){
 
 ```js
-return res.status(400).json({ message: \`${err.reason}\` });
+return res.status(400).json({ message: `${err.reason}` });
 
 }
 ```
@@ -451,7 +451,7 @@ const user = await User.findByIdAndDelete(req.params.id);
 if (!user) {
 
 ```js
-return res.status(404).json({ status: \`No user found with id ${req.params.id}\` });
+return res.status(404).json({ status: `No user found with id ${req.params.id}` });
 
 }
 
@@ -460,7 +460,7 @@ return res.status(200).json({ message: "Success. User Deleted" });
 }catch(error){
 
 ```js
-return res.status(400).json({ message: \`${err.reason}\` });
+return res.status(400).json({ message: `${err.reason}` });
 
 }
 
@@ -513,14 +513,14 @@ return res.status(201).json({ message: "Success. User created" });
 
 app.listen(PORT, () => console.log("Server started at PORT", PORT));
 ```
-## **Model View Controller in NodeJS**
+## Model View Controller in NodeJS
 
 We are following the model view controller pattern to restructure our crud app.
 
 Create 4 folders
 
--   models : All models schemas
--   controllers : All routes handlers
+-   models: All models schemas
+-   controllers: All routes handlers
 -   views: HTML
 -   routes: All routes path
 -   middlewares: All middleware
@@ -606,7 +606,7 @@ return res
 .status(404)
 
 ```js
-.json({ status: \`No user found with id ${req.params.id}\` });
+.json({ status: `No user found with id ${req.params.id}` });
 
 }
 
@@ -615,7 +615,7 @@ return res.status(200).json(user);
 } catch (error) {
 
 ```js
-return res.status(400).json({ message: \`${error.reason}\` });
+return res.status(400).json({ message: `${error.reason}` });
 
 }
 
@@ -637,7 +637,7 @@ return res
 .status(404)
 
 ```js
-.json({ status: \`No user found with id ${req.params.id}\` });
+.json({ status: `No user found with id ${req.params.id}` });
 
 }
 
@@ -646,7 +646,7 @@ return res.status(200).json(user);
 } catch (err) {
 
 ```js
-return res.status(400).json({ message: \`${err.reason}\` });
+return res.status(400).json({ message: `${err.reason}` });
 
 }
 
@@ -666,7 +666,7 @@ return res
 .status(404)
 
 ```js
-.json({ status: \`No user found with id ${req.params.id}\` });
+.json({ status: `No user found with id ${req.params.id}` });
 
 }
 
@@ -675,7 +675,7 @@ return res.status(200).json({ message: "Success. User Deleted" });
 } catch (error) {
 
 ```js
-return res.status(400).json({ message: \`${err.reason}\` });
+return res.status(400).json({ message: `${err.reason}` });
 
 }
 

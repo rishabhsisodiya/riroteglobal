@@ -27,7 +27,7 @@ There are three types of scope in JavaScript —
 
 3) Block Scope.
 
-### _Function scope_
+### Function scope
 
 ```js
 var myVar = 1;
@@ -96,25 +96,26 @@ let and const can’t be accessed from outside that pair of curly braces(Block S
 
 Lexical Scope (also known as Static Scope) literally means that scope is determined at the lexing time (generally referred to as compiling) rather than at runtime. For example:
 
-### let number = 42;
+**let number = 42;**
 
-### function printNumber() {
+**function printNumber() {**
 
-### console.log(number);
+```js
+**console.log(number);**
+```
+**}**
+
+**function log() {**
+
+**let number = 54;**
+
+**printNumber();**
 
 **}**
 
-### function log() {
+**// Prints 42**
 
-### let number = 54;
-
-### printNumber();
-
-**}**
-
-### // Prints 42
-
-### log();
+**log();**
 
 Here the console.log(number) will always print 42 no matter from where the function printNumber() is called. This is different from languages with the dynamic scope where the console.log(number) will print different values depending on from where the function printNumber() is called. **Here we are calling printNumber from log but we need to check compile time value. So printNumber is outside the log and can access Let number=42;**
 
@@ -172,7 +173,7 @@ There is a period between entering scope and being declared where they cannot be
 We are shrinking the Temporal Dead zone window to 0 while moving initialization to top
 
 ```js
-Console.log(“Hello ”);
+Console.log("Hello ");
 
 let a=10;
 
@@ -180,7 +181,7 @@ let a=100;
 ```
 
 ```js
-Output: Uncaught SyntaxError: Identifier ‘a’ has already been declared.
+Output: Uncaught SyntaxError: Identifier 'a' has already been declared.
 ```
 
 It will be rejected and will not run until syntax error will resolve but with var we can do the above thing.
@@ -242,10 +243,10 @@ console.log(a);
 ```
 
 ```js
-Output: Uncaught SyntaxError: Identifier ’a’ has already been declared
+Output: Uncaught SyntaxError: Identifier 'a' has already been declared
 ```
 
-### TypeError, Syntax and Reference Error
+**TypeError, Syntax and Reference Error**
 
 The **ReferenceError** object represents an error when a non-existent variable is referenced.
 
@@ -292,11 +293,11 @@ const c=30;
 ```
 So when we debug in the browser we will get to know that a **separate memory space is allocated to block** for let and const.
 
-![](/notes-img/javascript-notes/img-008.webp)
+![](/notes-img/JavaScript-notes/img-008.webp)
 
 **We cannot use let and const outside the block (ReferenceError b is not defined) but we can use var outside the block.**
 
-### _Shadowing_
+### Shadowing
 
 ```js
 var a=100;
@@ -345,25 +346,25 @@ Output:
 
 Let put 3 breakpoints in index.js and starts debugging (inspect element> source tab and put cursor as seen in below screenshot)
 
-![](/notes-img/javascript-notes/img-009.webp)
+![](/notes-img/JavaScript-notes/img-009.webp)
 
 Now reload the tab and starts observing value and their scope
 
-### 1\. Scope and Value at first breakpoints
+### 1. Scope and Value at first breakpoints
 
-![](/notes-img/javascript-notes/img-010.webp)
+![](/notes-img/JavaScript-notes/img-010.webp)
 
-### 2\. Scope and Value at second breakpoints
+### 2. Scope and Value at second breakpoints
 
-![](/notes-img/javascript-notes/img-011.webp)
+![](/notes-img/JavaScript-notes/img-011.webp)
 
-### 3\. Scope and Value at third breakpoints
+### 3. Scope and Value at third breakpoints
 
-![](/notes-img/javascript-notes/img-012.webp)
+![](/notes-img/JavaScript-notes/img-012.webp)
 
 Above screenshot will explain all concepts why we got an error when we redeclare let myVar=10 and let myVar=20.
 
-So in last we can conclude that :
+So in last we can conclude that:
 
 In case of **var:** The value of ‘a’ variable modifies the value of a that is inside the block.
 
@@ -388,7 +389,7 @@ var a = 100; // variable declared inside a block
 console.log(a);
 ```
 
-**Output** : 100
+**Output**: 100
 
 ### What if we declare the a inside the function scope
 
@@ -427,53 +428,12 @@ console.log(a);
 
 ### Illegal Shadowing:
 
-Illegal Shadowing
+| Illegal Shadowing | Legal Shadowing |
+| --- | --- |
+| let a=20; { var a=10; } | let a=20; function x(){ var a=10; } |
+|  | var a=20; { let a=10; } |
+| Output: Uncaught SyntaxError: Identifier 'a' has already been declared |  |
 
-Legal Shadowing
-
-| --- | ---
-```js
-let a=20;
-```
-{
-
-```js
-var a=10;
-
-}
-```
-
-```js
-let a=20;
-
-function x(){
-
-var a=10;
-
-}
-```
-
-| --- | ---
-|
-```js
-var a=20;
-```
-{
-
-```js
-let a=10;
-
-}
-```
-
-| --- | ---
-|  |
-| --- | ---
-```js
-Output: Uncaught SyntaxError: Identifier 'a' has already been declared
-```
- |
-| --- | ---
 **Explanation:**
 
 if a variable shadowing(the one which is inside the block) then it should not cross its boundary. Only var crosses its boundary and it will be in global scope. So when we use a function then var comes in the function boundary(function scope) and will not interfere with let outside function.

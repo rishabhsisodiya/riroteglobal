@@ -175,9 +175,9 @@ function tidy(md) {
     .replace(/ /g, ' ')
     .replace(/[ \t]+\n/g, '\n')
     .replace(/(?<!`)``(?!`)/g, '') // merge adjacent inline-code from neutralizeHtml, never triple fences
-    .replace(/^\s*\|?\s*:?-{3,}:?\s*\|?\s*$/gm, '') // table rule remnants
-    .replace(/^\s*\|\s*$/gm, '') // orphan cell pipes from layout tables
-    .replace(/[ \t]+\|\s*$/gm, '') // trailing cell pipe
+    .replace(/^\s*\|?\s*:?-{3,}:?\s*\|?\s*$/gm, '') // lone table-rule remnant (single column)
+    .replace(/^\s*\|\s*$/gm, '') // bare orphan pipe
+    .replace(/^([^|\n]*[^|\s])\s+\|\s*$/gm, '$1') // trailing pipe on a non-table line only
     .replace(/\\_/g, '_') // unescape identifiers like MAX\_TOKENS
     .replace(/^(?:\s*---\s*\n)+/, '')
     .replace(/\n{3,}/g, '\n\n')
@@ -258,6 +258,13 @@ function cleanChapterTitle(raw, body) {
   return t;
 }
 
+/** pull a trailing "(imp)" / "- imp" / "(very imp)" marker off a title */
+function stripImp(t) {
+  const m = t.match(/^(.*?)\s*[-–(]?\s*\(?\s*(?:v+\.?\s*)*imp(?:ortant)?\s*\)?\s*\)?\s*$/i);
+  if (m && m[1].trim() && m[1].trim().length < t.trim().length) return { title: m[1].trim(), imp: true };
+  return { title: t.trim(), imp: false };
+}
+
 /** split cleaned markdown into [{title, body}] on top-level "# " headings */
 function splitChapters(md) {
   const lines = md.split('\n');
@@ -282,10 +289,209 @@ function splitChapters(md) {
   return chapters
     .map((c) => {
       const body = c.body.join('\n').trim();
-      return { title: cleanChapterTitle(c.rawTitle, body), body };
+      const { title, imp } = stripImp(cleanChapterTitle(c.rawTitle, body));
+      return { title, imp, body };
     })
     // drop empty / pointer-only "chapters" (stray dividers, links to other docs)
     .filter((c) => c.body.split(/\s+/).filter(Boolean).length >= 8);
+}
+
+// ---------- table reconstruction ----------
+// turndown-gfm mangles the all-<th>, <p>-wrapped tables Google Docs emits, so we
+// pull <table> blocks out of the HTML, build proper pipe tables ourselves, and
+// splice them back after the markdown conversion.
+function decodeEntities(s) {
+  return s
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)));
+}
+
+function htmlTableToMarkdown(tableHtml) {
+  const rows = [];
+  const trRe = /<tr\b[^>]*>([\s\S]*?)<\/tr>/gi;
+  let tr;
+  while ((tr = trRe.exec(tableHtml))) {
+    const cells = [];
+    const tdRe = /<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi;
+    let td;
+    while ((td = tdRe.exec(tr[1]))) {
+      cells.push(
+        decodeEntities(td[1].replace(/<[^>]+>/g, ' '))
+          .replace(/\s+/g, ' ')
+          .trim()
+          .replace(/\|/g, '\\|'),
+      );
+    }
+    if (cells.some(Boolean)) rows.push(cells);
+  }
+  if (rows.length < 2 || Math.max(...rows.map((r) => r.length)) < 2) return null;
+  const cols = Math.max(...rows.map((r) => r.length));
+  const pad = (r) => { while (r.length < cols) r.push(''); return r; };
+  const line = (r) => `| ${pad(r).join(' | ')} |`;
+  return ['', line(rows[0]), `| ${Array(cols).fill('---').join(' | ')} |`, ...rows.slice(1).map(line), ''].join('\n');
+}
+
+function extractTables(html) {
+  const tables = [];
+  const out = html.replace(/<table\b[^>]*>[\s\S]*?<\/table>/gi, (m) => {
+    const t = htmlTableToMarkdown(m);
+    if (!t) return m; // leave it for turndown rather than dropping content
+    tables.push(t);
+    return `\n\nTBLPLACEHOLDER${tables.length - 1}\n\n`;
+  });
+  return { html: out, tables };
+}
+
+const restoreTables = (md, tables) =>
+  md.replace(/^\s*TBLPLACEHOLDER(\d+)\s*$/gm, (_, i) => tables[+i] ?? '');
+
+// ---------- heading / code / prose cleanup ----------
+function demoteJunkHeadings(md) {
+  return md
+    .split('\n')
+    .map((l) => {
+      const hm = l.match(/^(#{2,6})\s+(.*?)\s*$/);
+      if (!hm) return l;
+      let text = hm[2]
+        .replace(/^\\?\*+\s*/, '') // stray leading "*" / "\*"
+        .replace(/^\*\*(.+)\*\*$/, '$1') // fully-bold heading
+        .replace(/^_(.+)_$/, '$1') // fully-italic heading
+        .replace(/^\*+|\*+$/g, '')
+        .replace(/\\`/g, '`') // unescape backticks in headings
+        .trim();
+      if (!text) return '';
+      const hashes = hm[1];
+      const codey =
+        /^\/\//.test(text) ||
+        /^[\w.$]+\.[\w$]+\s*\(/.test(text) ||
+        /^(Type|Reference|Syntax|Range)Error\b/.test(text) ||
+        (/[=;]|=>/.test(text) && /[()[\]{}]/.test(text)) ||
+        /^[\w$]+\s*=[^=]/.test(text) ||
+        /^(function|const|let|var|return|class|async function)\b.*[({;]/.test(text) ||
+        /^(if|for|while|switch)\s*\(/.test(text) ||
+        /[;{]\s*$/.test(text) ||
+        /^[}\])]+;?\s*$/.test(text);
+      return codey ? `**${text}**` : `${hashes} ${text}`;
+    })
+    .join('\n');
+}
+
+function mergeSplitFences(md) {
+  const lines = md.split('\n');
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim() === '```') {
+      let j = i + 1;
+      const mid = [];
+      while (j < lines.length && (lines[j].trim() === '' || looksCode(lines[j]) === true)) {
+        mid.push(lines[j]);
+        j++;
+      }
+      if (j < lines.length && /^```[a-z]*$/.test(lines[j].trim()) && lines[j].trim() !== '```') {
+        out.push(...mid); // fold the gap into the block, drop the close + reopen fences
+        i = j;
+        continue;
+      }
+    }
+    out.push(lines[i]);
+  }
+  return out.join('\n');
+}
+
+function fixCodeBlocks(md) {
+  return md.replace(/```[\s\S]*?```/g, (b) =>
+    b
+      .replace(/[“”]/g, '"')
+      .replace(/[‘’]/g, "'")
+      .replace(/\\([*_\-=[\]<>.|`~^&])/g, '$1'),
+  );
+}
+
+const CONTRACTIONS = {
+  dont: "don't", cant: "can't", wont: "won't", isnt: "isn't", arent: "aren't",
+  doesnt: "doesn't", didnt: "didn't", wasnt: "wasn't", werent: "weren't",
+  couldnt: "couldn't", shouldnt: "shouldn't", wouldnt: "wouldn't",
+  havent: "haven't", hasnt: "hasn't", wouldve: "would've",
+};
+
+// targeted wording/accuracy fixes for the JavaScript notes
+function jsFactFixes(s) {
+  return s
+    .replace(
+      /JavaScript follows most Java expression syntax[^.]*\.\s*/,
+      'JavaScript was created at Netscape in 1995 by Brendan Eich. It borrows some syntax and naming conventions from Java, and was renamed from "LiveScript" to "JavaScript" as a marketing move tied to a Netscape–Sun partnership — not because the two languages are otherwise related. ',
+    )
+    .replace(/\s*\bso to avoid we can date api\.?/i, '. To avoid this, use the Date API — record a timestamp and compare the elapsed time.')
+    .replace(/\bcdF\(\)/g, 'cbF()')
+    .replace(/passing the control of the once callback to another/i, 'handing control of our callback over to another function')
+    .replace(/\bmore promising\b/g, 'more suitable')
+    .replace(/function got more than 3 times/g, 'the function got called more than 3 times')
+    .replace(/^Hello World$/gm, 'Hello World!');
+}
+
+function copyEdit(md, meta) {
+  return md
+    .split(/(```[\s\S]*?```|`[^`\n]*`)/g)
+    .map((s, i) => {
+      if (i % 2) {
+        // inside code: only fix invalid self-closing <script .../>
+        return s.replace(/<script([^`>]*?)\s*\/>/g, (_m, a) => `<script${a.replace(/[“”]/g, '"')}></script>`);
+      }
+      let out = s
+        .replace(/[⁡​‌‍﻿]/g, '')
+        .replace(/\bjava[\s-]?script\b/gi, 'JavaScript')
+        .replace(/\bnetflix\b/g, 'Netflix')
+        .replace(/\bsetTimout\b/g, 'setTimeout')
+        .replace(/\bLets\b/g, "Let's")
+        .replace(/\b(dont|cant|wont|isnt|arent|doesnt|didnt|wasnt|werent|couldnt|shouldnt|wouldnt|havent|hasnt|wouldve)\b/gi, (w) => {
+          const v = CONTRACTIONS[w.toLowerCase()];
+          return /^[A-Z]/.test(w) ? v[0].toUpperCase() + v.slice(1) : v;
+        })
+        .replace(/\\([=|.])/g, '$1')
+        .replace(/ +([,;:])(?=\s)/g, '$1')
+        .replace(/ +([’'](?:s\b|\s))/g, '$1') // "loop ‘s" -> "loop’s"
+        .replace(/ +\.(?= |$)/gm, '.')
+        .replace(/\bO\(\s*n\s*log[⁡ ]*n\s*\)/gi, 'O(n log n)')
+        .replace(/\bO\(\s*log\s*n\s*\)/gi, 'O(log n)')
+        .replace(/\bO\(nlogn\)/gi, 'O(n log n)')
+        .replace(/\bO\(n2\)/g, 'O(n²)');
+      if (meta?.track === 'javascript') out = jsFactFixes(out);
+      return out;
+    })
+    .join('');
+}
+
+/**
+ * Give standalone images a caption pulled from a short bold/label line just
+ * above them, so "see the figure below" has something to point at.
+ */
+function captionImages(md) {
+  const lines = md.split('\n');
+  const out = [];
+  for (const l of lines) {
+    const imgOnly = /^!\[[^\]]*\]\([^)]+\)(\s*!\[[^\]]*\]\([^)]+\))*\s*$/.test(l.trim());
+    if (imgOnly) {
+      let p = out.length - 1;
+      while (p >= 0 && out[p].trim() === '') p--;
+      const prev = p >= 0 ? out[p].trim() : '';
+      const m =
+        (!/^#{1,6}\s/.test(prev) && prev.match(/^\*\*(.{4,80}?)[:.]?\*\*$/)) ||
+        prev.match(/^([A-Z][^.!?]{4,70}):$/);
+      if (m) {
+        out.splice(p, out.length - p);
+        out.push('', l.trim(), `_${m[1].trim()}_`, '');
+        continue;
+      }
+    }
+    out.push(l);
+  }
+  return out.join('\n');
 }
 
 async function convertOne(file, meta) {
@@ -305,13 +511,20 @@ async function convertOne(file, meta) {
     },
   );
 
-  let md = td.turndown(html);
+  const { html: htmlNoTables, tables } = extractTables(html);
+  let md = td.turndown(htmlNoTables);
+  md = restoreTables(md, tables);
   md = dropLeadingJunk(md);
   md = fixHeadingImages(md);
   md = promoteBoldHeadings(md);
+  md = demoteJunkHeadings(md);
   if (!meta.noFence) md = fenceCode(md, meta.lang);
+  md = mergeSplitFences(md);
   md = indentCodeInLists(md);
   md = neutralizeHtml(md);
+  md = fixCodeBlocks(md);
+  md = captionImages(md);
+  md = copyEdit(md, meta);
   md = tidy(md);
   md = scrubSecrets(md);
 
@@ -331,6 +544,10 @@ async function convertOne(file, meta) {
 
   if (meta.split) {
     const chapters = splitChapters(md);
+    // a generic, oversized first chapter ("Introduction") is really "<Track> Basics"
+    if (chapters[0] && /^intro(duction)?$/i.test(chapters[0].title) && chapters[0].body.length > 12000) {
+      chapters[0].title = `${meta.title.replace(/\s+Notes.*/, '')} Basics`;
+    }
     chapters.forEach((ch, i) => {
       const n = i + 1;
       const fm = frontmatter({
@@ -338,6 +555,7 @@ async function convertOne(file, meta) {
         part: meta.title,
         ...base,
         order: n,
+        imp: ch.imp || undefined,
         description: `${meta.title.replace(/ Notes.*/, '')} — ${ch.title}.`,
       });
       fs.writeFileSync(path.join(NOTES_DIR, `${meta.slug}-${String(n).padStart(2, '0')}.md`), fm + ch.body + '\n');

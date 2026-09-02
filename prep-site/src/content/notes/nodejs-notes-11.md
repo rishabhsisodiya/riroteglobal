@@ -9,11 +9,11 @@ draft: false
 order: 11
 description: "Node.js — Building Node.js Authentication from Scratch."
 ---
-## **Using SSID (Stateful)**
+## Using SSID (Stateful)
 
 Create a user model under models folder.
 
-### _models/user.js_
+### models/user.js
 
 ```js
 const mongoose = require("mongoose");
@@ -186,7 +186,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended:false}));
 ```
-### app.use(cookieParser());
+**app.use(cookieParser());**
 
 ```js
 app.use("/url", restrictToLoggedinUserOnly, urlRouter);
@@ -195,7 +195,7 @@ app.use("/user", userRouter);
 
 app.use("/", checkAuth, staticRouter);
 
-app.listen(PORT, () => console.log(\`Server Started at PORT:${PORT}\`));
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
 ```
 Let’s create status routes for login and signup.
 
@@ -232,7 +232,7 @@ module.exports = router;
 ```
 Create pages for login and signup
 
-### _views/signup.ejs_
+### views/signup.ejs
 
 Make sure input fields name match with model fields.
 
@@ -289,7 +289,7 @@ font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
 `</html>`
 
-### _views/login.ejs_
+### views/login.ejs
 
 <!DOCTYPE html>
 
@@ -340,7 +340,7 @@ font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
 `</html>`
 
-### _Create service/auth.js_
+### Create service/auth.js
 
 ```js
 const sessionIdToUserMap = new Map();
@@ -366,7 +366,7 @@ getUser,
 ```js
 };
 ```
-### _Create middlewares/auth.js_
+### Create middlewares/auth.js
 
 Please note UUID will be saved per session only if we restart the server, UUID will be not valid
 
@@ -412,7 +412,7 @@ checkAuth,
 ```
 Find out who created the URL, We will need to update url model
 
-### _Update models/url.js_
+### Update models/url.js
 
 ```js
 const mongoose = require("mongoose");
@@ -442,7 +442,7 @@ required: true,
 },
 
 ```js
-visitHistory: \[{ timestamp: { type: Number } }\],
+visitHistory: [{ timestamp: { type: Number } }],
 
 createdBy: {
 
@@ -471,11 +471,11 @@ ref: "users",
 ```
 },
 
-users : user model will eventually becomes plural users in mongodb
+users: user model will eventually becomes plural users in mongodb
 
 Update the URL controller to add created by user.
 
-### _controller/user.js_
+### controller/user.js
 
 ```js
 const shortid = require("shortid");
@@ -497,7 +497,7 @@ shortId: shortID,
 
 redirectURL: body.url,
 
-visitHistory: \[\],
+visitHistory: [],
 
 createdBy: req.user._id,
 
@@ -609,27 +609,27 @@ return res.render("login");
 
 module.exports = router;
 ```
-## **Using JWT token (Stateless)**
+## Using JWT token (Stateless)
 
 In stateful we need to maintain a state in the backend.
 
 **Issue in stateful:**
 
-1.  Due to some reason, if our server restarts or our state is lost , all users will be logged off and they need to login again.
+1.  Due to some reason, if our server restarts or our state is lost, all users will be logged off and they need to login again.
 2.  Memory intensive. It uses server memory
 
 **What if you store the session in the database?**
 
 -   It will increase the latency. If we store it in a database then we need to query the database to check if the user is authenticated or not. This might be in delay on each request.
--   It will increase the read operation for DB . This will increase the database bill
+-   It will increase the read operation for DB. This will increase the database bill
 
-In Stateless, we need to keep in the backend. Our payload will be stored in a token. So even after restart , we can check the token and get the payload to verify it.
+In Stateless, we need to keep in the backend. Our payload will be stored in a token. So even after restart, we can check the token and get the payload to verify it.
 
 We need to install the library to use the jwt token.
 
 -   npm i jsonwebtoken
 
-### _Update service/auth.js_
+### Update service/auth.js
 
 ```js
 const jwt= require("jsonwebtoken");
@@ -679,7 +679,7 @@ getUser,
 ```js
 };
 ```
-### _Update controllers/user.js_
+### Update controllers/user.js
 
 ```js
 const { v4: uuidv4 } = require("uuid");
@@ -741,7 +741,7 @@ handleUserLogin,
 ```
 ## What are Cookies in NodeJS?
 
-We need to secure the token when we are transferring to the user . We have two ways
+We need to secure the token when we are transferring to the user. We have two ways
 
 1.  Cookie
 2.  Response
@@ -751,7 +751,7 @@ We need to secure the token when we are transferring to the user . We have two w
 -   Also, we can set the expiration time for the cookie
 -   But it will not work in mobile application as cookie is browser specific
 
-1.  Response: we can return the token in the response res.json({token}). Now it will be the user 's responsibility to pass this token in the request which the user can do by adding the token in the authorization header.
+1.  Response: we can return the token in the response res.json({token}). Now it will be the user's responsibility to pass this token in the request which the user can do by adding the token in the authorization header.
 
     ```js
     Authorization : Bearer <token>
@@ -829,11 +829,11 @@ async function restrictToLoggedinUserOnly(req, res, next) {
 
 // const userUid = req.cookies?.uid;
 
-const userUid = req.headers\["Authorization"\]
+const userUid = req.headers["Authorization"]
 
 if (!userUid) return res.redirect("/login");
 
-const token = userUid.split("Bearer ")\[1\];
+const token = userUid.split("Bearer ")[1];
 
 const user = getUser(token);
 
@@ -849,11 +849,11 @@ next();
 
 async function checkAuth(req, res, next) {
 
-const userUid = req.headers\["Authorization"\]
+const userUid = req.headers["Authorization"]
 
 if (!userUid) return res.redirect("/login");
 
-const token = userUid.split("Bearer ")\[1\];
+const token = userUid.split("Bearer ")[1];
 
 const user = getUser(token);
 
@@ -872,24 +872,24 @@ checkAuth,
 ```js
 };
 ```
-## **Authorization in NodeJS**
+## Authorization in NodeJS
 
 Restrict users as per their roles.
 
-### _Update middleware/auth.js_
+### Update middleware/auth.js
 
 ```js
 const { getUser } = require("../service/auth");
 
 const checkforAuthentication = (req, res, next) => {
 ```
-### const tokenCookie = req.cookies?.token;
+**const tokenCookie = req.cookies?.token;**
 
-### req.user = null;
+**req.user = null;**
 
-### if (!tokenCookie) return next();
+**if (!tokenCookie) return next();**
 
-### const user = getUser(tokenCookie);
+**const user = getUser(tokenCookie);**
 
 ```js
 req.user = user;
@@ -901,7 +901,7 @@ return next();
 //Restrict
 
 ```js
-const restrictTo = (roles = \[\]) => {
+const restrictTo = (roles = []) => {
 
 return function (req, res, next) {
 
@@ -924,7 +924,7 @@ restrictTo,
 ```js
 };
 ```
-### _index.js_
+### index.js
 
 ```js
 const express = require("express");
@@ -966,18 +966,18 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 ```
-### app.use(checkforAuthentication)
+**app.use(checkforAuthentication)**
 
-### app.use("/url", restrictTo(\["Normal","ADMIN"\]), urlRouter);
+**app.use("/url", restrictTo(\["Normal","ADMIN"\]), urlRouter);**
 
-### app.use("/user", userRouter);
+**app.use("/user", userRouter);**
 
-### app.use("/", staticRouter);
+**app.use("/", staticRouter);**
 
 ```js
-app.listen(PORT, () => console.log(\`Server Started at PORT:${PORT}\`));
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
 ```
-### _Update models/user.js_
+### Update models/user.js
 
 ```js
 const mongoose = require("mongoose");
@@ -1006,7 +1006,7 @@ unique: true,
 ```
 },
 
-### role:{
+**role:{**
 
 **type: String,**
 
@@ -1038,7 +1038,7 @@ module.exports = User;
 ```
 Remove the authentication in staticRouter
 
-### _Update routes/staticRouter.js_
+### Update routes/staticRouter.js
 
 ```js
 const express = require("express");
@@ -1049,7 +1049,7 @@ const { restrictTo } = require("../middlewares/auth");
 
 const router = express.Router();
 
-router.get("/", **restrictTo(\["Normal"\])**, async (req, res) => {
+router.get("/", **restrictTo(["Normal"])**, async (req, res) => {
 
 const allurls = await URL.find({ createdBy: req.user._id });
 
@@ -1120,9 +1120,9 @@ error: "Invalid Username or Password",
 
 const token=setUser(user);
 ```
-### res.cookie("token", token);
+**res.cookie("token", token);**
 
-### return res.redirect("/");
+**return res.redirect("/");**
 
 ```js
 // return res.json({token});
@@ -1211,12 +1211,12 @@ const URL = require("../models/url");
 const { restrictTo } = require("../middlewares/auth");
 
 const router = express.Router();
+
+**router.get("/admin/urls", restrictTo(["ADMIN"]), async (req, res) => {**
 ```
-### router.get("/admin/urls", restrictTo(\["ADMIN"\]), async (req, res) => {
+**const allurls = await URL.find({ });**
 
-### const allurls = await URL.find({ });
-
-### return res.render("home", {
+**return res.render("home", {**
 
 **urls: allurls,**
 
@@ -1225,7 +1225,7 @@ const router = express.Router();
 **});**
 
 ```js
-router.get("/", restrictTo(\["Normal","ADMIN"\]), async (req, res) => {
+router.get("/", restrictTo(["Normal","ADMIN"]), async (req, res) => {
 
 const allurls = await URL.find({ createdBy: req.user._id });
 

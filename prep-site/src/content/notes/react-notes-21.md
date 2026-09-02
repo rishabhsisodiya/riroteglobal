@@ -209,9 +209,9 @@ React.lazy currently only supports default exports. If the module you want to im
 // ManyComponents.js
 
 ```jsx
-export const MyComponent = /\* ... \*/;
+export const MyComponent = /* ... */;
 
-export const MyUnusedComponent = /\* ... \*/;
+export const MyUnusedComponent = /* ... */;
 ```
 // MyComponent.js
 

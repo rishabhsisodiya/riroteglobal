@@ -13,62 +13,68 @@ IN normal scenario we have one nodejs server and multiple users like below
 
 ![](/notes-img/nodejs-notes/img-026.webp)
 
-But this is not scalable as with increasing user , This will increase the load on server and there will be delay in response.
+But this is not scalable as with increasing user, This will increase the load on server and there will be delay in response.
 
 **Clusters of Node.js** processes can be used to run multiple instances of Node.js that can distribute workloads among their application threads. When process isolation is not needed, use the worker_threads module instead, which allows running multiple application threads within a single Node.js instance.
 
-### Lets understand it using code
+### Let's understand it using code
 
 ### index.js
 
-### const express = require("express");
+```js
+**const express = require("express");**
+```
+**const app = express();**
 
-### const app = express();
+**const PORT=8000;**
 
-### const PORT=8000;
-
-### app.get("/",(req,res)=>{
-
-### return res.json({message:\`Hello from express server ${process.pid}\`})
+```js
+**app.get("/",(req,res)=>{**
+```
+**return res.json({message:`Hello from express server ${process.pid}`})**
 
 **});**
 
-### app.listen(PORT, ()=>console.log("Server started at port ",PORT))
-
+```js
+**app.listen(PORT, ()=>console.log("Server started at port ",PORT))**
+```
 ### Create another file server.js
 
-### const cluster = require("cluster");
+```js
+**const cluster = require("cluster");**
 
-### const os = require("os");
+**const os = require("os");**
 
-### const express = require("express");
+**const express = require("express");**
+```
+**const totalCPUs = os.cpus().length;**
 
-### const totalCPUs = os.cpus().length;
+```js
+**// console.log("Total ",totalCPUs); // 4 CPU**
+```
+**if (cluster.isPrimary) {**
 
-### // console.log("Total ",totalCPUs); // 4 CPU
+**for (let i = 0; i < totalCPUs; i++) {**
 
-### if (cluster.isPrimary) {
-
-### for (let i = 0; i < totalCPUs; i++) {
-
-### cluster.fork();
+**cluster.fork();**
 
 **}**
 
-### } else {
+**} else {**
 
-### const app = express();
+**const app = express();**
 
-### const PORT = 8000;
+**const PORT = 8000;**
 
-### app.get("/", (req, res) => {
-
+```js
+**app.get("/", (req, res) => {**
+```
 **return res.json({ message: \`Hello from express server ${process.pid}\` });**
 
 **});**
 
 ```js
-**app.listen(PORT, () => console.log(\`Server ${process.pid} started at port ${PORT}\`));**
+**app.listen(PORT, () => console.log(`Server ${process.pid} started at port ${PORT}`));**
 ```
 **}**
 
