@@ -1,5 +1,5 @@
 ---
-title: "[JavaScript Interview Question](https://docs.google.com/document/d/1gDNJjr1uiiM4Mxwp8srcomYyXFY2MC-8-XOwGv27Wfg/edit?tab=t.0#heading=h.wtqqb4aesn3i)"
+title: "Algorithms & Big-O"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
@@ -7,7 +7,7 @@ updated: "2026-09-02"
 source: "JavaScript Notes.docx"
 draft: false
 order: 19
-description: "JavaScript — [JavaScript Interview Question](https://docs.google.com/document/d/1gDNJjr1uiiM4Mxwp8srcomYyXFY2MC-8-XOwGv27Wfg/edit?tab=t.0#heading=h.wtqqb4aesn3i)."
+description: "JavaScript — Algorithms & Big-O."
 ---
 DSA
 

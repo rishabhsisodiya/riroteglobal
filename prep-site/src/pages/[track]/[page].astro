@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import PrepLayout from '../../layouts/PrepLayout.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
-import Callout from '../../components/Callout.astro';
 import { trackBySlug, u, noteSlug } from '../../consts';
 
 export async function getStaticPaths() {
@@ -40,7 +39,6 @@ const { entry, prev, next } = Astro.props;
 const meta = trackBySlug(entry.data.track)!;
 const { Content, headings } = await render(entry);
 const updated = entry.data.updated;
-const isMigrated = !!entry.data.source;
 ---
 
 <PrepLayout
@@ -59,12 +57,6 @@ const isMigrated = !!entry.data.source;
     <h1>{entry.data.title}</h1>
     {updated && (
       <p class="reviewed">Last reviewed {updated.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-    )}
-    {isMigrated && (
-      <Callout type="note" label="Migrated notes">
-        Converted from older study material. Structure and code formatting are still being cleaned up, and
-        version-specific details may be dated — check against current documentation.
-      </Callout>
     )}
     <Content />
   </article>

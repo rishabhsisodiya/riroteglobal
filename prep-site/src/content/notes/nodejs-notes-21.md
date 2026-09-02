@@ -1,5 +1,5 @@
 ---
-title: "[Nodejs Interview Question](https://docs.google.com/document/d/1BCJyccGIQTt1T8VboRThQ4CF2GnbcFhGJHT2bvHLvCY/edit?tab=t.0)"
+title: "Production & Deployment Tips"
 part: "Node.js Notes"
 track: "nodejs"
 kind: "notes"
@@ -7,7 +7,7 @@ updated: "2026-09-02"
 source: "Nodejs.docx"
 draft: false
 order: 21
-description: "Node.js — [Nodejs Interview Question](https://docs.google.com/document/d/1BCJyccGIQTt1T8VboRThQ4CF2GnbcFhGJHT2bvHLvCY/edit?tab=t.0)."
+description: "Node.js — Production & Deployment Tips."
 ---
 Advance / Production
 

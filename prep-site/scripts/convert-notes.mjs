@@ -198,6 +198,30 @@ function frontmatter(obj) {
   return lines.join('\n');
 }
 
+// Hand fixes for chapter headings that were section dividers / pasted links
+// in the source doc rather than real titles.
+const TITLE_FIX = {
+  'JavaScript Interview Question': 'Algorithms & Big-O',
+  'Nodejs Interview Question': 'Production & Deployment Tips',
+};
+
+function cleanChapterTitle(raw, body) {
+  let t = raw
+    .replace(/\*\*/g, '')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1') // markdown link -> text
+    .replace(/\((?:https?:)?\/\/[^)]*\)/g, '') // leftover bare (url)
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/[|·\-–—:\s]+$/, '')
+    .trim();
+  if (TITLE_FIX[t]) return TITLE_FIX[t];
+  if (!t || /^https?:\/\//i.test(t) || t.length > 80) {
+    const h = body.match(/^#{2,3}\s+(.+)$/m);
+    return h ? h[1].replace(/\*\*/g, '').trim() : 'Section';
+  }
+  return t;
+}
+
 /** split cleaned markdown into [{title, body}] on top-level "# " headings */
 function splitChapters(md) {
   const lines = md.split('\n');
@@ -208,7 +232,7 @@ function splitChapters(md) {
     const m = line.match(/^# (.+)$/);
     if (m) {
       if (cur) chapters.push(cur);
-      cur = { title: m[1].replace(/\*\*/g, '').trim(), body: [] };
+      cur = { rawTitle: m[1], body: [] };
     } else if (cur) {
       cur.body.push(line);
     } else {
@@ -216,11 +240,16 @@ function splitChapters(md) {
     }
   }
   if (cur) chapters.push(cur);
-  // attach any preamble to the first chapter
   if (chapters.length && pre.join('').trim()) {
     chapters[0].body = [...pre, '', ...chapters[0].body];
   }
-  return chapters.map((c) => ({ title: c.title, body: c.body.join('\n').trim() }));
+  return chapters
+    .map((c) => {
+      const body = c.body.join('\n').trim();
+      return { title: cleanChapterTitle(c.rawTitle, body), body };
+    })
+    // drop empty / pointer-only "chapters" (stray dividers, links to other docs)
+    .filter((c) => c.body.split(/\s+/).filter(Boolean).length >= 8);
 }
 
 async function convertOne(file, meta) {
