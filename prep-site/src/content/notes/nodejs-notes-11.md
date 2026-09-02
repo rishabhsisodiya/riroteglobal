@@ -753,9 +753,9 @@ We need to secure the token when we are transferring to the user . We have two w
 
 1.  Response: we can return the token in the response res.json({token}). Now it will be the user 's responsibility to pass this token in the request which the user can do by adding the token in the authorization header.
 
-```js
-Authorization : Bearer <token>
-```
+    ```js
+    Authorization : Bearer <token>
+    ```
 ### JWT in response
 
 ### controllers/user.js

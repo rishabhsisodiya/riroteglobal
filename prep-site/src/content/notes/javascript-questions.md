@@ -3972,9 +3972,9 @@ Reason:**
     -   y = { name: "Satish" } (an object with a name property).
     -   z = { name: "Pratik" } (another object with a name property).
 2.  **First Assignment**
-```js
-    x\[y\] = { name: "Salman" };
-```
+    ```js
+        x\[y\] = { name: "Salman" };
+    ```
     -   When y is used as a key, it is converted to \[object Object\].
     -   This results in:
 
@@ -3987,15 +3987,15 @@ x = {
 };
 ```
 1.  **Second Assignment**
-```js
-    x\[z\] = { name: "Sharukh" };
-```
+    ```js
+        x\[z\] = { name: "Sharukh" };
+    ```
     -   Similarly, z is also converted to \[object Object\].
     -   Since the key \[object Object\] already exists in x, the value { name: "Sharukh" } overwrites the previous value { name: "Salman" }.
 2.  **Final State of x**
-```js
-    x = {
-```
+    ```js
+        x = {
+    ```
 "\[object Object\]": { name: "Sharukh" }
 
 ```js

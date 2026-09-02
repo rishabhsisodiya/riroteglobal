@@ -31,13 +31,13 @@ Advance / Production
 3.  We can use pm2 for managing automatic restart
 4.  Add global error handler for exit
 
-```js
-const ERROR_THRESHOLD = 50; _// Maximum number of consecutive errors before considering shutdown_
+    ```js
+    const ERROR_THRESHOLD = 50; _// Maximum number of consecutive errors before considering shutdown_
 
-const ERROR_RESET_INTERVAL = 60000; _// Reset error count after 1 minute_
+    const ERROR_RESET_INTERVAL = 60000; _// Reset error count after 1 minute_
 
-let errorCount = 0;
-```
+    let errorCount = 0;
+    ```
 _// Reset error count periodically_
 
 ```js

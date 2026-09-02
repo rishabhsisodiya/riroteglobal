@@ -344,15 +344,15 @@ Reserve usage of useNavigate to situations where the user is not interacting but
 -   Logging them out after inactivity
 -   Timed UIs like quizzes, etc.
 
-```jsx
-import { **useNavigate** } from "react-router";
+    ```jsx
+    import { **useNavigate** } from "react-router";
 
-export function LoginPage() {
+    export function LoginPage() {
 
-let **navigate** = useNavigate();
+    let **navigate** = useNavigate();
 
-return (
-```
+    return (
+    ```
 <>
 
 <MyHeader />

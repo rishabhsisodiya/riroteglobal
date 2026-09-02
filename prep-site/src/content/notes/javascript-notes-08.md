@@ -39,9 +39,9 @@ let a=7 ; (let, a, =, 7 are tokens)
 
 1.  **Compilation Phase & Execution phase**
 
-```js
-Interpreter: It takes code and executes code line by line.
-```
+    ```js
+    Interpreter: It takes code and executes code line by line.
+    ```
 Compiler: It takes code and compiles it before executing and a new optimized code will be generated which is very fast and performs better.
 
 Interpreter languages are fast but compiler languages provide more efficiency.

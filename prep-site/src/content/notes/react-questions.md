@@ -623,9 +623,9 @@ count: this.state.count + 1
 
 1.  Binding in constructor :
 
-```jsx
-constructor(){
-```
+    ```jsx
+    constructor(){
+    ```
 ….
 
 ### this.increment= this.increment.bind(this)
@@ -654,11 +654,11 @@ count: this.state.count + 1
 
 1.  **Using class property approach** : Use arrow function outside constructor
 
-```jsx
-constructor(){ ….}
+    ```jsx
+    constructor(){ ….}
 
-increment = () => {
-```
+    increment = () => {
+    ```
 this.setState({
 
 ```jsx
@@ -746,10 +746,10 @@ You cannot directly see the **virtual DOM**, but you can observe its behavior in
 1.  **React Developer Tools**:
     -   Inspect the React component tree, which represents the virtual DOM structure.
 2.  **Console Logs**:
-```jsx
-    -   Log React elements to see their JavaScript object representation.
-        Example: console.log(<div>Hello</div>);
-```
+    ```jsx
+        -   Log React elements to see their JavaScript object representation.
+            Example: console.log(<div>Hello</div>);
+    ```
 3.  **React Profiler**:
     -   Monitor updates and changes in the virtual DOM using the Profiler tool in React DevTools.
 4.  **Debugging with Hooks**:
@@ -915,9 +915,9 @@ this.setState({ **\[event.target.id\]**: event.target.value })
 
 1.  **Constructor(props)**
 
-```jsx
-Syntax: **constructor(props)**
-```
+    ```jsx
+    Syntax: **constructor(props)**
+    ```
 A special function that will **get called whenever a new component is created**. It is used for **initializing state and binding the event handler** and **Do not cause Side effects e.g. HTTP requests** (we should not use http requests in constructors ).
 
 **Note: use super(props) as the first line, directly overwrite this.state.**
@@ -2273,19 +2273,19 @@ Works seamlessly with useEffect
 1.  **useState with previous state:** setCount(prevCount=> prevCount+1)
 2.  **useState with Object:** e => setName({...name, firstName:e.target.value})
 3.  **useState with Array:** setItems(\[...items, { id: items.length, value: Math.floor(Math.random() \* 10) + 1 }\]);
-```
-## Is useState synchronous or asynchronous?
+    ```
+    ## Is useState synchronous or asynchronous?
 
-In React, useState is asynchronous.
+    In React, useState is asynchronous.
 
--   Batching of updates: React batches multiple state updates for performance reasons, especially in event handlers or concurrent mode. This behavior helps reduce unnecessary re-renders.
--   State updates don't happen immediately: You cannot rely on the updated value of state immediately after calling the setter.
+    -   Batching of updates: React batches multiple state updates for performance reasons, especially in event handlers or concurrent mode. This behavior helps reduce unnecessary re-renders.
+    -   State updates don't happen immediately: You cannot rely on the updated value of state immediately after calling the setter.
 
-## Is it mandatory for \`useState\` to have an initial value?
+    ## Is it mandatory for \`useState\` to have an initial value?
 
-No, there is no compulsion for useState to have an initial value, but it is recommended to set an appropriate initial state based on the requirements of your component. The initial value you pass to useState determines the starting state of the variable managed by React
+    No, there is no compulsion for useState to have an initial value, but it is recommended to set an appropriate initial state based on the requirements of your component. The initial value you pass to useState determines the starting state of the variable managed by React
 
-```jsx
+    ```jsx
 const \[value, setValue\] = useState(); // No initial value provided by default undefined
 ```
 ## What is useEffect?
@@ -2296,33 +2296,33 @@ The Effect hook **lets you perform side effects in functional components.** It i
 
 1.  **Run Effect only once**
 
-```jsx
-useEffect( () => {
+    ```jsx
+    useEffect( () => {
 
-console.log('useEffect called');
-```
+    console.log('useEffect called');
+    ```
 window.addEventListener('mousemove',logMousePosition)
 
 },\[\])
 
 1.  **Conditionally run effects**
 
-```jsx
-useEffect(() => {
+    ```jsx
+    useEffect(() => {
 
-console.log('useEffect-Updating document title');
+    console.log('useEffect-Updating document title');
 
-document.title= \`You Clicked ${count} times\`
-```
+    document.title= \`You Clicked ${count} times\`
+    ```
 },\[**count**\])
 
 1.  **useEffect with cleanup**
 
-```jsx
-useEffect( () => {
+    ```jsx
+    useEffect( () => {
 
-console.log('useEffect called');
-```
+    console.log('useEffect called');
+    ```
 window.addEventListener('mousemove',logMousePosition)
 
 ```jsx
@@ -3761,9 +3761,9 @@ The above components will create browser, hash, memory and static history instan
 -   **component:** This prop is used to specify the component that will be rendered when the route is matched. It automatically receives the route's props (such as history, location, and match).
     <Route path="/about" component={About} />
 -   **render:** The render prop is a function that returns a React element. It is useful when you need to pass extra props or handle logic inside the route.
-```jsx
-    <Route path="/profile" render={() => <Profile user={currentUser} />} />
-```
+    ```jsx
+        <Route path="/profile" render={() => <Profile user={currentUser} />} />
+    ```
 ## What is useHistory in React Router?
 
 **useHistory** is a hook in React Router that **allows you to programmatically navigate (or change the URL) in your application**. It provides access to the history object, which contains methods like push(), replace(), and goBack().

@@ -122,6 +122,42 @@ function dropLeadingJunk(md) {
   return lines.join('\n');
 }
 
+/**
+ * These docs are full of numbered lists where each item is followed by a code
+ * block at column 0, which breaks the list so every item renders as "1.".
+ * Indent such code blocks so they become part of the preceding list item and
+ * the numbering continues.
+ */
+function indentCodeInLists(md) {
+  const lines = md.split('\n');
+  const out = [];
+  const isListItem = (l) => /^(?:\d+\.|[-*])\s+\S/.test(l);
+  let afterTopLevelItem = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (isListItem(line)) {
+      afterTopLevelItem = true;
+      out.push(line);
+      continue;
+    }
+    if (line.trim() === '') {
+      out.push(line);
+      continue;
+    }
+    if (afterTopLevelItem && /^```/.test(line)) {
+      out.push('    ' + line);
+      i++;
+      while (i < lines.length && !/^```/.test(lines[i])) out.push('    ' + lines[i++]);
+      if (i < lines.length) out.push('    ' + lines[i]); // closing fence
+      continue; // stay in list context
+    }
+    afterTopLevelItem = false;
+    out.push(line);
+  }
+  return out.join('\n');
+}
+
 function neutralizeHtml(md) {
   let inFence = false;
   return md
@@ -274,6 +310,7 @@ async function convertOne(file, meta) {
   md = fixHeadingImages(md);
   md = promoteBoldHeadings(md);
   if (!meta.noFence) md = fenceCode(md, meta.lang);
+  md = indentCodeInLists(md);
   md = neutralizeHtml(md);
   md = tidy(md);
   md = scrubSecrets(md);

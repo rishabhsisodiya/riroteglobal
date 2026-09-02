@@ -277,9 +277,9 @@ count: this.state.count + 1
 
 1.  Binding in constructor :
 
-```jsx
-constructor(){
-```
+    ```jsx
+    constructor(){
+    ```
 ….
 
 ### this.increment= this.increment.bind(this)
@@ -308,11 +308,11 @@ count: this.state.count + 1
 
 1.  **Using class property approach** : Use arrow function outside constructor
 
-```jsx
-constructor(){ ….}
+    ```jsx
+    constructor(){ ….}
 
-increment = () => {
-```
+    increment = () => {
+    ```
 this.setState({
 
 ```jsx
@@ -378,9 +378,9 @@ Easy to spy/stub on prototype
 1.  First the **memory and performance;** When you use a class field to define a function, your whole method resides on each instance of the class and NOT on the prototype, but using the bind technique, just a small callback is stored on each instance, which calls your method that is stored on the prototype.
 2.  Second thing that can be affected is **how you write your unit tests**. You won't be able to use the component prototype to stub on function calls like below:
 
-```jsx
-const spy = jest.spyOn(MyComponent.prototype, 'clickHandler');
-```
+    ```jsx
+    const spy = jest.spyOn(MyComponent.prototype, 'clickHandler');
+    ```
 // …
 
 ```jsx

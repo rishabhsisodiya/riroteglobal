@@ -17,19 +17,19 @@ JavaScript is standardized at Ecma International — the European association fo
 
 1.  **JavaScript Can Change HTML Content:** This example uses the method to "find" an HTML element (with id="demo") and changes the element content (**innerHTML**) to "Hello JavaScript"
 
-```js
-document.getElementById("demo").innerHTML = "Hello JavaScript";
-```
+    ```js
+    document.getElementById("demo").innerHTML = "Hello JavaScript";
+    ```
 1.  **JavaScript Can Change HTML Styles (CSS)**
 
-```js
-document.getElementById("demo").style.fontSize = "35px";
-```
+    ```js
+    document.getElementById("demo").style.fontSize = "35px";
+    ```
 1.  **JavaScript Can Hide HTML Elements**
 
-```js
-document.getElementById("demo").style.display = "none";
-```
+    ```js
+    document.getElementById("demo").style.display = "none";
+    ```
 **Difference between synchronous and asynchronous JavaScript.**
 
 Javascript is the synchronous single-threaded language but with the help of event-loop and promises, JavaScript is used to do asynchronous programming.
@@ -485,11 +485,11 @@ CANCELED: Symbol('Canceled')
 task.setStatus(statuses.COMPLETED);
 ```
 -   1.  and Object
-```js
-        let obj = {
-        key:value
-        }
-```
+    ```js
+            let obj = {
+            key:value
+            }
+    ```
 ### Data type conversion
 
 ### JavaScript is a dynamically typed language.
@@ -988,25 +988,25 @@ Use the break statement to terminate a loop, switch, or in conjunction with a la
 -   When you use break without a label, it terminates the innermost enclosing while, do-while, for, or switch immediately and transfers control to the following statement.
 -   When you use break with a label, it terminates the specified labeled statement.
 
-```js
-let x = 0;
+    ```js
+    let x = 0;
 
-let z = 0;
+    let z = 0;
 
-labelCancelLoops: while (true) {
+    labelCancelLoops: while (true) {
 
-console.log('Outer loops: ' + x);
+    console.log('Outer loops: ' + x);
 
-x += 1;
+    x += 1;
 
-z = 1;
+    z = 1;
 
-while (true) {
+    while (true) {
 
-console.log('Inner loops: ' + z);
+    console.log('Inner loops: ' + z);
 
-z += 1;
-```
+    z += 1;
+    ```
 if (z === 10 && x === 10) {
 
 ```js
@@ -3131,15 +3131,15 @@ obj.greet(); // Alice
 
 -   Arrow functions do not bind their own this. Instead, this is inherited from the enclosing execution context.
 
-```js
-const obj = {
+    ```js
+    const obj = {
 
-name: 'Alice',
+    name: 'Alice',
 
-greet: () => {
+    greet: () => {
 
-console.log(this.name);
-```
+    console.log(this.name);
+    ```
 },
 
 ```js
@@ -3207,13 +3207,13 @@ console.log(this); // <button> element
 });
 ```
 -   Using arrow functions, this is inherited from the enclosing scope.
-```js
-    button.addEventListener('click', () => {
+    ```js
+        button.addEventListener('click', () => {
 
-console.log(this); // Window (or enclosing context)
+    console.log(this); // Window (or enclosing context)
 
-});
-```
+    });
+    ```
 ### 6\. Explicit Binding
 
 -   **call and apply:**
@@ -3281,13 +3281,13 @@ console.log(this); // Window
 ```
 -   Using arrow functions, this retains its value from the enclosing scope.
 
-```js
-    setTimeout(() => {
+    ```js
+        setTimeout(() => {
 
-console.log(this); // Inherits from surrounding context
+    console.log(this); // Inherits from surrounding context
 
-}, 1000);
-```
+    }, 1000);
+    ```
 ### 10\. Special Cases
 
 **Object Property Assignment:
@@ -3613,9 +3613,9 @@ Error occurs on console:
 -   Iterables can be accessed with simple and efficient code.
 -   Iterables can be iterated over with for..of loops
 
-```js
-for (variable of iterable) {
-```
+    ```js
+    for (variable of iterable) {
+    ```
 // code block to be executed
 
 ```js

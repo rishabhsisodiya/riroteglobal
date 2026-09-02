@@ -311,13 +311,13 @@ Remember below execution steps for now:
 
 1.  Code with top level code and timer
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-setTimeout(() => console.log("Hello from Timer 1"), 0);
+    setTimeout(() => console.log("Hello from Timer 1"), 0);
 
-console.log("Hello from top level code");
-```
+    console.log("Hello from top level code");
+    ```
 Output:
 
 Hello from top level code
@@ -326,17 +326,17 @@ Hello from Timer 1
 
 1.  Code with top level code, timer and setImmediate
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-setTimeout(() => console.log("Hello from Timer 1");, 0);
+    setTimeout(() => console.log("Hello from Timer 1");, 0);
 
-setImmediate( () => console.log("Hello from Immediate 1"));
+    setImmediate( () => console.log("Hello from Immediate 1"));
 
-console.log("Hello from top level code");
+    console.log("Hello from top level code");
 
-Output:
-```
+    Output:
+    ```
 Hello from top level code
 
 Hello from Timer 1
@@ -345,26 +345,26 @@ Hello from Immediate 1
 
 1.  Code with only time and Immediate function
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-setTimeout(() => console.log("Hello from Timer 1"), 0);
+    setTimeout(() => console.log("Hello from Timer 1"), 0);
 
-setImmediate(() => console.log("Hello from Immediate fn 1"));
+    setImmediate(() => console.log("Hello from Immediate fn 1"));
 
-Output: (Here output cannot be determined)
-```
+    Output: (Here output cannot be determined)
+    ```
 ![](/notes-img/nodejs-notes/img-006.webp)
 
 1.  Code with I/O operation
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-setTimeout(() => console.log("Hello from Timer 1"), 0);
+    setTimeout(() => console.log("Hello from Timer 1"), 0);
 
-setImmediate(() => console.log("Hello from Immediate fn 1"));
-```
+    setImmediate(() => console.log("Hello from Immediate fn 1"));
+    ```
 // below code might be expensive if test.txt is large
 
 ```js
@@ -408,13 +408,13 @@ IO polling finish
 
 1.  Code with multiple timeout in IO pooling
 
-```js
-const fs = require("fs");
+    ```js
+    const fs = require("fs");
 
-setTimeout(() => console.log("Hello from Timer 1"), 0);
+    setTimeout(() => console.log("Hello from Timer 1"), 0);
 
-setImmediate(() => console.log("Hello from Immediate fn 1"));
-```
+    setImmediate(() => console.log("Hello from Immediate fn 1"));
+    ```
 // below code might be expensive if test.txt is large
 
 ```js
