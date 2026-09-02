@@ -1,0 +1,200 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { SITE, TRACKS, trackBySlug, u } from '../consts';
+
+type PagerLink = { href: string; label: string };
+interface Props {
+  track: string;
+  title: string;
+  description?: string;
+  ogType?: 'website' | 'article';
+  /** override the default track-to-track pager (used for chapter navigation) */
+  prev?: PagerLink;
+  next?: PagerLink;
+}
+
+const { track, title, description, ogType = 'article', prev: prevProp, next: nextProp } = Astro.props;
+const current = trackBySlug(track);
+
+const idx = TRACKS.findIndex((t) => t.slug === track);
+const prev: PagerLink | null =
+  prevProp ??
+  (idx > 0 ? { href: u(`/${TRACKS[idx - 1].slug}`), label: TRACKS[idx - 1].title } : null);
+const next: PagerLink | null =
+  nextProp ??
+  (idx >= 0 && idx < TRACKS.length - 1 ? { href: u(`/${TRACKS[idx + 1].slug}`), label: TRACKS[idx + 1].title } : null);
+
+const pageUrl = new URL(Astro.url.pathname, SITE.url).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: title,
+    description,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    author: { '@type': 'Organization', name: SITE.parent, url: SITE.parentUrl },
+    publisher: { '@type': 'Organization', name: SITE.parent, url: SITE.parentUrl },
+    mainEntityOfPage: pageUrl,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Prep', item: new URL(u('/'), SITE.url).href },
+      { '@type': 'ListItem', position: 2, name: current?.title ?? title, item: new URL(u(`/${track}`), SITE.url).href },
+      { '@type': 'ListItem', position: 3, name: title, item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} ogType={ogType} jsonLd={jsonLd}>
+  <div class="read-progress" id="readProgress" aria-hidden="true"></div>
+  <div class="prep">
+    <aside class="prep-rail" aria-label="Tracks">
+      <p class="prep-rail__label">Tracks</p>
+      <ul>
+        {TRACKS.map((t) => (
+          <li>
+            <a href={u(`/${t.slug}`)} aria-current={t.slug === track ? 'page' : undefined}>
+              {t.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <article class="prep-body">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href={u('/')}>Prep</a>
+        <span aria-hidden="true">/</span>
+        <span>{current?.title ?? title}</span>
+      </nav>
+      <slot />
+
+      <nav class="pager" aria-label="Pagination">
+        {prev ? (
+          <a class="pager-link" rel="prev" href={prev.href}>
+            <span class="pager-dir">← Previous</span>
+            <span class="pager-title">{prev.label}</span>
+          </a>
+        ) : <span />}
+        {next ? (
+          <a class="pager-link pager-link--next" rel="next" href={next.href}>
+            <span class="pager-dir">Next →</span>
+            <span class="pager-title">{next.label}</span>
+          </a>
+        ) : <span />}
+      </nav>
+    </article>
+
+    <div class="prep-toc">
+      <slot name="toc" />
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const bar = document.getElementById('readProgress');
+  const article = document.querySelector<HTMLElement>('.prep-body');
+  if (bar && article) {
+    const update = () => {
+      const start = article.offsetTop;
+      const end = start + article.offsetHeight - window.innerHeight;
+      const pct = Math.min(1, Math.max(0, (window.scrollY - start) / Math.max(1, end - start)));
+      bar.style.transform = `scaleX(${pct})`;
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  }
+</script>
+
+<style>
+  .prep {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: 2.5rem clamp(1.1rem, 4vw, 3rem) 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 960px) {
+    .prep { grid-template-columns: 200px minmax(0, 1fr) 200px; }
+  }
+
+  .prep-rail { display: none; }
+  @media (min-width: 960px) {
+    .prep-rail { display: block; position: sticky; top: 5rem; align-self: start; }
+  }
+  .prep-rail__label,
+  .prep-toc :global(.toc-label) {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+  .prep-rail ul { list-style: none; display: flex; flex-direction: column; gap: 0.15rem; }
+  .prep-rail a {
+    display: block;
+    padding: 0.3rem 0 0.3rem 0.9rem;
+    border-left: 2px solid var(--navy-line);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .prep-rail a:hover { color: var(--white); }
+  .prep-rail a[aria-current='page'] { color: var(--cyan); border-left-color: var(--cyan); }
+
+  .prep-body { min-width: 0; }
+
+  .crumbs {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .prep-toc { display: none; }
+  @media (min-width: 960px) {
+    .prep-toc { display: block; position: sticky; top: 5rem; align-self: start; }
+  }
+
+  .read-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--electric), var(--cyan));
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    z-index: 120;
+  }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--navy-line);
+  }
+  .pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--navy-line);
+    border-radius: 6px;
+    max-width: 48%;
+  }
+  .pager-link:hover { border-color: var(--navy-line-2); }
+  .pager-link--next { text-align: right; align-items: flex-end; }
+  .pager-dir { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .pager-title { color: var(--white); font-weight: 600; }
+</style>

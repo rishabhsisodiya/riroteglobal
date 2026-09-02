@@ -1,0 +1,14 @@
+# The repo root is deployed as-is (your existing static pages). The prep hub is
+# an Astro project in prep-site/ that builds into ./prep during deploy.
+[build]
+  command = "cd prep-site && npm ci && npm run build"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Serve /prep and /prep/ as the hub index.
+[[redirects]]
+  from = "/prep"
+  to = "/prep/"
+  status = 301

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rishabhsisodiya.github.io/riroteglobal/prep/sitemap-index.xml

@@ -1,0 +1,13 @@
+# Prep hub — Astro tooling and build output
+prep-site/node_modules/
+prep-site/.astro/
+prep-site/dist/
+
+# Astro build output for /prep is produced by CI (see netlify.toml).
+# Uncomment the next line if you prefer to build locally and commit it instead.
+/prep/
+
+.DS_Store
+*.log
+
+/prep-notes-src

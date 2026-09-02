@@ -1,0 +1,131 @@
+---
+title: "System Design"
+track: "system-design"
+kind: "notes"
+order: 0
+description: "A repeatable framework for any system-design question, the building blocks you must be able to reason about, and three worked problems with diagrams."
+updated: 2026-09-02
+---
+
+import Callout from '../../components/Callout.astro';
+import Mermaid from '../../components/Mermaid.astro';
+
+There is a deeper set of [reference notes](/prep/system-design/reference) on rate limiting, an e-commerce microservice breakdown, and video transcoding. This page is the method and the worked examples.
+
+## The framework
+
+Say this structure out loud in every round. Spend the first five minutes on requirements and estimates before drawing anything.
+
+1. **Clarify scope** — core features only; explicitly park the rest.
+2. **Non-functional requirements** — scale (daily active users, requests per second, read-to-write ratio), latency target, consistency versus availability, data retention.
+3. **Estimate** — requests per second is roughly requests per day divided by 86,400; storage per year; peak is 2–10 times average.
+4. **API** — four to six endpoints with the key parameters.
+5. **Data model** — entities plus the access patterns that drive the SQL-versus-NoSQL choice and the indexes.
+6. **High-level architecture** — client, load balancer, services, and then cache, database, queue, blob store, CDN, search as needed. Draw it.
+7. **Deep dive** — the one or two hard parts the interviewer steers you to.
+8. **Scale and failure** — name the bottleneck, then the fix (replica, shard, cache, queue); say what happens when each component dies.
+9. **Trade-offs** — state what you gave up and why it is acceptable here.
+
+## Building blocks to have crisp
+
+- **Load balancing** — L4 versus L7, health checks, round robin versus least connections.
+- **Horizontal versus vertical scaling** — and why stateless services scale out cleanly while databases do not.
+- **Replication** — read replicas scale reads and give failover, but writes still bottleneck on one primary and replicas lag.
+- **Sharding** — splits writes and storage across primaries; costs cross-shard queries and rebalancing; watch for hot keys.
+- **Caching** — cache-aside pattern, TTLs and eviction, and the hard part: **invalidation**. Know cache stampede and how to prevent it (single-flight lock, early recompute, TTL jitter, serve-stale-while-revalidate).
+- **CAP in practice** — partitions happen, so you are really choosing consistency or availability *during* a partition. Most web systems pick availability with eventual consistency plus idempotency; money and inventory pick consistency for the critical path.
+- **Consistent hashing** — adding or removing a node reshuffles only about 1/N of keys; virtual nodes even out the spread.
+- **Message queues** — SQS or RabbitMQ for transient work with retries and a dead-letter queue; Kafka for a durable, replayable event log read by many consumers.
+- **Idempotency** — every consumer and every externally-triggered write must tolerate being run twice. There is no true exactly-once delivery over a network; you get effectively-once *processing* by deduplicating on an id or using conditional writes.
+- **Rate limiting** — token bucket is the usual default (smooth average, controlled bursts); see the reference notes for the alternatives.
+- **Outbox pattern** — write the domain change and an event row in the same transaction; a relay publishes the event. Removes the "committed but the message was lost" gap.
+- **CDN and blob storage** — static assets and large files never touch your origin.
+- **Observability** — metrics, logs, traces; alert on the symptom users feel (latency, error rate), not just on CPU.
+
+<Callout type="tip">
+When you get a problem you have not seen, still open with the brute-force or naïve architecture and its limits. It is a correct baseline and it buys you thinking time.
+</Callout>
+
+## Worked problem 1 — a support-ticketing system with SLA tracking
+
+**Scope.** Create tickets from several channels (web form, email, phone, an inbound webhook); assign and route; a fixed status workflow; SLA timers that can pause; notifications; agent and manager dashboards.
+
+**Scale.** Assume 10,000 tickets a day with about 50 events each — roughly 6 writes per second, read-heavy dashboards. One primary relational database with a read replica and a cache handles this comfortably.
+
+**API.** `POST /tickets`, `PATCH /tickets/:id/transition`, `POST /tickets/:id/comments`, `GET /tickets?filters`, `GET /dashboards/:role`.
+
+**Data model (relational).** `tickets` (status enum, priority, sla_policy_id, assignee, timestamps); `ticket_events` (append-only audit log); `sla_clocks` (policy, target_at, paused_at, elapsed_ms); `inbound_messages` (raw payload plus a dedupe key). Index `(tenant, status, priority, created_at)` and `(assignee, status)`.
+
+<Mermaid caption="Multi-channel intake funnels into one create path" code={`flowchart LR
+  Web[Web form] --> N[Normalise to a CreateTicket command]
+  Email[Email webhook] --> N
+  Phone[Telephony webhook] --> N
+  API[Partner webhook] --> N
+  N --> Dedupe{Seen this\\nchannel id?}
+  Dedupe -- yes --> Existing[Return existing ticket]
+  Dedupe -- no --> Create[CreateTicketService]
+  Create --> DB[(Tickets DB)]
+  Create --> Q[[Event queue]]
+  Q --> Notify[Notification worker]
+  Q --> SLA[SLA engine]
+`} />
+
+**Workflow.** An explicit state machine: an allowed-transitions table plus a guard that checks the actor's role and required fields. An illegal transition returns a conflict and writes nothing. Every valid transition appends a `ticket_events` row — that is both the audit trail and the trigger for the SLA clock.
+
+**SLA engine.** On each status change, start, pause, or stop the clock (pause while waiting on the customer). A job runs every minute and scans `sla_clocks WHERE target_at < now() + 15min AND not breached` for warnings and escalation — a small, indexed, bounded scan rather than a timer per ticket.
+
+**Dashboards.** Per-widget queries cached with a short TTL, keyed by role plus widget plus a hash of the filters, invalidated on relevant writes. Heavy aggregations hit the read replica or a nightly rollup table.
+
+**Failure.** Notification provider down — messages stay queued, dead-letter after N attempts. Replica lag — dashboards show a freshness timestamp. One channel adapter down — the others are unaffected.
+
+**Trade-offs.** A minute-granularity SLA scan instead of exact per-ticket timers: simpler and good enough. Cached dashboards can be up to a minute stale: acceptable for a management view.
+
+## Worked problem 2 — ride-hailing dispatch
+
+**Scope.** Drivers stream location; a rider requests a ride; match the nearest suitable available driver; handle accept, decline, and timeout; track the trip live.
+
+**Scale.** 50,000 active drivers sending location every 4 seconds is about 12,500 writes per second — location writes dominate, so they do **not** go in a relational database.
+
+<Mermaid caption="Location index in memory, trip state durable" code={`flowchart TD
+  D[Driver app] -->|location every 4s| LI[Location ingest]
+  LI --> Geo[(Redis geo index\\nper region)]
+  R[Rider app] -->|request ride| M[Matching service]
+  M -->|GEOSEARCH radius| Geo
+  M -->|filter + rank by ETA| M
+  M -->|atomic claim| Geo
+  M --> T[(Trip state DB)]
+  T --> WS[WebSocket gateway]
+  WS -->|driver location| R
+`} />
+
+**Matching.** On a request, search a radius in the geo index (grow it if empty) for candidates, filter by availability, vehicle type, and rating, rank by estimated time of arrival from a routing service (not straight-line distance), and offer to the top driver with a short accept timeout.
+
+**No double-assignment.** Before offering, take an atomic claim — a conditional set with a short expiry, or a conditional update `WHERE status = 'available'`. On decline or timeout, release and offer the next candidate. The trip row is the durable source of truth; the geo index is just a fast, self-healing cache rebuilt from the next heartbeats.
+
+**Live updates.** Driver location is pushed to the rider over a WebSocket through a gateway subscribed to that trip's channel, with polling as a fallback.
+
+**Trade-offs.** The in-memory geo index is approximate and volatile, but fast and self-healing. A straight-line prefilter with a routing-service rerank balances cost and accuracy.
+
+## Worked problem 3 — e-commerce checkout with no oversell
+
+**Core invariant.** Never sell more units than exist, even during a flash sale.
+
+**Reservation model.** On "begin checkout", create a reservation that decrements available stock with a short TTL; a sweeper releases expired reservations. The decrement is an atomic conditional update:
+
+```sql
+UPDATE inventory SET available = available - :qty
+WHERE sku = :sku AND available >= :qty;
+-- 0 rows affected  =>  out of stock
+```
+
+This serialises correctly under contention without application-level locks.
+
+**Flash-sale spike.** Put the hot SKUs' counters in an in-memory store with an atomic decrement-with-floor, and reconcile to the database asynchronously. Cache product pages at the CDN so only the buy action reaches the origin.
+
+**Payment.** Create the order as `pending`, call the payment provider, and confirm on its webhook. The webhook handler must be **idempotent** (deduplicate on the provider's event id) because providers retry. On payment failure or timeout, release the reservation.
+
+<Callout type="warning">
+Reservations can briefly show an item as unavailable that later frees up when a TTL expires. That is the correct trade-off against overselling — which is a real customer and finance problem.
+</Callout>
+
+**Failure.** A lost payment webhook is caught by a reconciliation job that polls the provider for pending orders. In-memory counter drift is trued up periodically from the database, which is the source of truth.
