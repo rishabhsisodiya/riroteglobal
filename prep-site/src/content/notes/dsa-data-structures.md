@@ -1,13 +1,14 @@
 ---
-title: "Data Structure"
-part: "JavaScript Notes"
-track: "javascript"
+title: "Data Structures"
+part: "DSA"
+track: "dsa"
 kind: "notes"
 updated: "2026-09-02"
 source: "JavaScript Notes.docx"
 draft: false
-order: 20
-description: "JavaScript — Data Structure."
+order: 2
+slug: "data-structures"
+description: "Arrays, objects, stacks, queues, linked lists, hash tables, trees and graphs — with JavaScript implementations."
 ---
 A data structure is a systematic way to organize, manage, and store data in a computer so that it can be accessed and modified efficiently. It provides a framework for solving problems by organizing data logically and enabling efficient operations such as insertion, deletion, searching, and sorting.
 

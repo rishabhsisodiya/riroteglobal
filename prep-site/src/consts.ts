@@ -23,6 +23,8 @@ export type Track = {
   badge: string;
   /** whether the track has a dedicated /questions drill page */
   hasQuestions?: boolean;
+  /** extra sidebar sub-links, path relative to the track (e.g. "algorithms" -> /prep/dsa/algorithms) */
+  sections?: { label: string; path: string }[];
 };
 
 export const TRACKS: Track[] = [
@@ -61,8 +63,15 @@ export const TRACKS: Track[] = [
   {
     slug: 'dsa',
     title: 'DSA',
-    blurb: 'Patterns with reference solutions, plus a 450-problem practice checklist.',
+    blurb: 'Theory, patterns, a 450-problem practice checklist, and worked solutions.',
     badge: '∑',
+    sections: [
+      { label: 'Algorithms & Big-O', path: 'algorithms' },
+      { label: 'Data Structures', path: 'data-structures' },
+      { label: 'Patterns', path: 'patterns' },
+      { label: 'Practice checklist', path: 'checklist' },
+      { label: 'Worked solutions', path: 'solutions' },
+    ],
   },
   {
     slug: 'behavioral',

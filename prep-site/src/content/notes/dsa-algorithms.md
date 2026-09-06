@@ -1,13 +1,14 @@
 ---
 title: "Algorithms & Big-O"
-part: "JavaScript Notes"
-track: "javascript"
+part: "DSA"
+track: "dsa"
 kind: "notes"
 updated: "2026-09-02"
 source: "JavaScript Notes.docx"
 draft: false
-order: 19
-description: "JavaScript — Algorithms & Big-O."
+order: 1
+slug: "algorithms"
+description: "Big-O notation, search and sorting algorithms, recursion, and classic algorithm problems."
 ---
 DSA
 

@@ -27,7 +27,12 @@ const BASE = '';
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const MAP = {
-  'JavaScript Notes.docx':             { slug: 'javascript-notes',     track: 'javascript',    kind: 'notes',     title: 'JavaScript Notes',              lang: 'js',  split: true },
+  'JavaScript Notes.docx':             { slug: 'javascript-notes',     track: 'javascript',    kind: 'notes',     title: 'JavaScript Notes',              lang: 'js',  split: true,
+    // these split chapters are really DSA theory — write them under the DSA track
+    reassign: {
+      'Algorithms & Big-O':  { file: 'dsa-algorithms',      track: 'dsa', slug: 'algorithms',      order: 1, title: 'Algorithms & Big-O', part: 'DSA', description: 'Big-O notation, search and sorting algorithms, recursion, and classic algorithm problems.' },
+      'Data Structure':      { file: 'dsa-data-structures',  track: 'dsa', slug: 'data-structures', order: 2, title: 'Data Structures',    part: 'DSA', description: 'Arrays, objects, stacks, queues, linked lists, hash tables, trees and graphs — with JavaScript implementations.' },
+    } },
   'JavaScript Interview Question.docx': { slug: 'javascript-questions', track: 'javascript',    kind: 'questions', title: 'JavaScript Interview Questions', lang: 'js' },
   'React JS.docx':                      { slug: 'react-notes',          track: 'react',         kind: 'notes',     title: 'React Notes',                   lang: 'jsx', split: true },
   'React JS Interview Question.docx':   { slug: 'react-questions',      track: 'react',         kind: 'questions', title: 'React Interview Questions',      lang: 'jsx' },
@@ -529,8 +534,9 @@ async function convertOne(file, meta) {
   md = scrubSecrets(md);
 
   // clear previously generated files for this doc
+  const reassignFiles = new Set(Object.values(meta.reassign ?? {}).map((r) => `${r.file}.md`));
   for (const f of fs.existsSync(NOTES_DIR) ? fs.readdirSync(NOTES_DIR) : []) {
-    if (f.startsWith(meta.slug) && f.endsWith('.md')) fs.rmSync(path.join(NOTES_DIR, f));
+    if ((f.startsWith(meta.slug) || reassignFiles.has(f)) && f.endsWith('.md')) fs.rmSync(path.join(NOTES_DIR, f));
   }
   fs.mkdirSync(NOTES_DIR, { recursive: true });
 
@@ -548,8 +554,21 @@ async function convertOne(file, meta) {
     if (chapters[0] && /^intro(duction)?$/i.test(chapters[0].title) && chapters[0].body.length > 12000) {
       chapters[0].title = `${meta.title.replace(/\s+Notes.*/, '')} Basics`;
     }
-    chapters.forEach((ch, i) => {
-      const n = i + 1;
+    let n = 0;
+    let reassigned = 0;
+    for (const ch of chapters) {
+      const ra = meta.reassign?.[ch.title];
+      if (ra) {
+        const fm = frontmatter({
+          title: ra.title, part: ra.part,
+          track: ra.track, kind: meta.kind, updated: TODAY, source: file, draft: false,
+          order: ra.order, slug: ra.slug, description: ra.description,
+        });
+        fs.writeFileSync(path.join(NOTES_DIR, `${ra.file}.md`), fm + ch.body + '\n');
+        reassigned++;
+        continue;
+      }
+      n++;
       const fm = frontmatter({
         title: ch.title,
         part: meta.title,
@@ -559,8 +578,8 @@ async function convertOne(file, meta) {
         description: `${meta.title.replace(/ Notes.*/, '')} — ${ch.title}.`,
       });
       fs.writeFileSync(path.join(NOTES_DIR, `${meta.slug}-${String(n).padStart(2, '0')}.md`), fm + ch.body + '\n');
-    });
-    console.log(`  ${meta.slug.padEnd(20)} split into ${chapters.length} chapters  ${imgCount} imgs` + (brokenImgs ? `  (${brokenImgs} emf/wmf)` : ''));
+    }
+    console.log(`  ${meta.slug.padEnd(20)} split into ${n} chapters` + (reassigned ? ` (+${reassigned} reassigned)` : '') + `  ${imgCount} imgs` + (brokenImgs ? `  (${brokenImgs} emf/wmf)` : ''));
   } else {
     const fm = frontmatter({
       title: meta.title,
