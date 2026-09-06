@@ -163,6 +163,6 @@ a();
 
 10
 
-![](/notes-img/JavaScript-notes/img-006.webp)![](/notes-img/JavaScript-notes/img-007.webp)
+![](/notes-img/javascript-notes/img-006.webp)![](/notes-img/javascript-notes/img-007.webp)
 
 JavaScript engine always creates a global execution context in the beginning to execute the code. it also creates a new lexical environment to store the variable defined in that function during the execution of that function. **A lexical environment is a data structure that holds identifier-variable mapping. Lexical Environment is the local memory along with the Lexical environment of its parent**. In the above screenshot you can see c() is lexically inside a() and a() is lexically in the global environment. Initially JavaScript Engine search variable in its own lexical environment then it will search in the lexical environment of its parent. **This search is called scope chain.** Global environment has null as parent.

@@ -33,7 +33,7 @@ x();
 
 You can see the function scope of y() have \[\[Scopes\]\] which has a in it. So when we return y() and use it later also it will have a with value 7 in it.
 
-![](/notes-img/JavaScript-notes/img-013.webp)![](/notes-img/JavaScript-notes/img-014.webp)
+![](/notes-img/javascript-notes/img-013.webp)![](/notes-img/javascript-notes/img-014.webp)
 
 A **closure** is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time. **So function (or expression) along with its lexical Scope bundled together forms a closure.**
 
@@ -106,7 +106,7 @@ z();
 Output: 7 900
 ```
 
-![](/notes-img/JavaScript-notes/img-015.webp)
+![](/notes-img/javascript-notes/img-015.webp)
 
 So now y forms closure with scope of x and z.
 

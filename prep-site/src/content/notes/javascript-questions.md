@@ -53,9 +53,9 @@ JavaScript can handle asynchronous tasks with the help of browser APIs (in the b
 -   async/await
 -   Event loop and Task queues
 
-![](/notes-img/JavaScript-questions/img-001.webp)
+![](/notes-img/javascript-questions/img-001.webp)
 
-![](/notes-img/JavaScript-questions/img-002.webp)
+![](/notes-img/javascript-questions/img-002.webp)
 
 ## Difference between Java and JavaScript
 
@@ -3500,7 +3500,7 @@ console.log(obj.height);
 
 30
 
-![](/notes-img/JavaScript-questions/img-003.webp)
+![](/notes-img/javascript-questions/img-003.webp)
 
 ## IIFE (Immediately Invoked function Expression)
 

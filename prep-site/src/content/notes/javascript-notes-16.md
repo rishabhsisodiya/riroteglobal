@@ -11,7 +11,7 @@ description: "JavaScript — Callback hell."
 ---
 Callback hell in JavaScript occurs when multiple callbacks are nested inside each other, which leads to creating complex and hard-to-manage code.
 
-![](/notes-img/JavaScript-notes/img-034.webp)
+![](/notes-img/javascript-notes/img-034.webp)
 
 **Callback Hell (Callback Pyramids)** in JavaScript, also known as the “Pyramid of Doom,” is a situation where nested callbacks lead to deeply indented and hard-to-read code. It can make your code look like a pyramid due to its visual structure.
 

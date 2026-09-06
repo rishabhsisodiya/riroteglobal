@@ -20,7 +20,7 @@ In JavaScript, **Execution context** is an abstract concept that holds informati
 | Key: Value pair | Commands |
 | Functions |  |
 
-![](/notes-img/JavaScript-notes/img-005.webp)
+![](/notes-img/javascript-notes/img-005.webp)
 _What happens when you run JavaScript code?_
 
 | Memory (Variable Environment) | Code (Thread of Execution) |  |

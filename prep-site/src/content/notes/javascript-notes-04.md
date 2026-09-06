@@ -293,7 +293,7 @@ const c=30;
 ```
 So when we debug in the browser we will get to know that a **separate memory space is allocated to block** for let and const.
 
-![](/notes-img/JavaScript-notes/img-008.webp)
+![](/notes-img/javascript-notes/img-008.webp)
 
 **We cannot use let and const outside the block (ReferenceError b is not defined) but we can use var outside the block.**
 
@@ -346,21 +346,21 @@ Output:
 
 Let put 3 breakpoints in index.js and starts debugging (inspect element> source tab and put cursor as seen in below screenshot)
 
-![](/notes-img/JavaScript-notes/img-009.webp)
+![](/notes-img/javascript-notes/img-009.webp)
 
 Now reload the tab and starts observing value and their scope
 
 ### 1. Scope and Value at first breakpoints
 
-![](/notes-img/JavaScript-notes/img-010.webp)
+![](/notes-img/javascript-notes/img-010.webp)
 
 ### 2. Scope and Value at second breakpoints
 
-![](/notes-img/JavaScript-notes/img-011.webp)
+![](/notes-img/javascript-notes/img-011.webp)
 
 ### 3. Scope and Value at third breakpoints
 
-![](/notes-img/JavaScript-notes/img-012.webp)
+![](/notes-img/javascript-notes/img-012.webp)
 
 Above screenshot will explain all concepts why we got an error when we redeclare let myVar=10 and let myVar=20.
 

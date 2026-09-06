@@ -20,14 +20,14 @@ In the **debouncing** technique, no matter how many times the user fires the eve
 ```js
 Throttle:
 ```
-![](/notes-img/JavaScript-notes/img-031.webp)
+![](/notes-img/javascript-notes/img-031.webp)
 
 ```js
 function executed after every 2 sec.
 
 Debounce:
 ```
-![](/notes-img/JavaScript-notes/img-032.webp)
+![](/notes-img/javascript-notes/img-032.webp)
 
 function executed when the user stopped typing for 2 sec.
 
@@ -39,7 +39,7 @@ function executed when the user stopped typing for 2 sec.
 
 **So in case of search bar debouncing is more suitable than throttling.**
 
-### ![](/notes-img/JavaScript-notes/img-033.webp)
+### ![](/notes-img/javascript-notes/img-033.webp)
 
 You can check when we have used both the debounce and throttle function on the input box. We have noticed that when we use first input box (debounce) for typing school bag, function got called only 3 times as we have kept delay of 300 ms but when we used second one then the function got called more than 3 times as there was limit of 300ms that means function will be called only once in interval of 300ms
 

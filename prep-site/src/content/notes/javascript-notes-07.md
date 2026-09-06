@@ -15,19 +15,19 @@ As we are aware about execution context and call stack. We know JavaScript is si
 
 We can’t do that in the call stack because the call stack doesn't have a timer. So here browser comes into picture. Browsers have timer, local storage and many more which our code can use. To use this functionality we need Web APIs (like setTimeout, fetch, ) which we can use in our code.
 
-![](/notes-img/JavaScript-notes/img-017.webp)
+![](/notes-img/javascript-notes/img-017.webp)
 
 We can use these web apis in our code using window global objects. Since window is a global object and our code is also in global scope we can directly use these web APIs.
 
-![](/notes-img/JavaScript-notes/img-018.webp)
+![](/notes-img/javascript-notes/img-018.webp)
 
 ## setTimeout()
 
 It will call the web api’s timeout function which gives access to Browser’s timer. It also takes a callback function and some delay. So when you pass a callback function to setTimeout, it will basically register a callback and at the same time it will also start the timer. After all, execution of code. Our global execution context will be gone from the call stack but the timer is still running. As soon as the timer expires the callback function needs to be executed. But we know everything runs inside the call stack only so somehow we need that callback inside the call stack. So when the timer expires, the callback function goes into the callback **queue**. Now **Event loop** comes into picture and its job is to check callback queue and push functions of callback queue into call stack.
 
-**![](/notes-img/JavaScript-notes/img-019.webp)What will happen when we pass time as 0 in setTimeout. Output will remain the same. Timeout callback will run after our main code will run completely.**
+**![](/notes-img/javascript-notes/img-019.webp)What will happen when we pass time as 0 in setTimeout. Output will remain the same. Timeout callback will run after our main code will run completely.**
 
-![](/notes-img/JavaScript-notes/img-020.webp)
+![](/notes-img/javascript-notes/img-020.webp)
 
 ## Event Handler
 
@@ -76,7 +76,7 @@ console.log("CB fetch Api");
 console.log("End");
 ```
 
-![](/notes-img/JavaScript-notes/img-021.webp)
+![](/notes-img/javascript-notes/img-021.webp)
 
 As usual Global Execution Context is created then it will go line by line then console Web api will print start on console and setTimeout will register cbT() in web api environment and will start the timer for 5000ms. Now fetch() will register cbF() in the web api environment and wait for data to be returned from Netflix server.
 
@@ -98,4 +98,4 @@ We have seen in the fetch api example that if there are millions lines of code t
 
 From fetch API example
 
-![](/notes-img/JavaScript-notes/img-022.webp)
+![](/notes-img/javascript-notes/img-022.webp)

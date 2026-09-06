@@ -18,7 +18,7 @@ DSA
 
 Algorithm is a set of well defined instructions to solve a particular problem.
 
-![](/notes-img/JavaScript-notes/img-039.webp)
+![](/notes-img/javascript-notes/img-039.webp)
 
 **Time Complexity:** Measures the execution time of an algorithm.
 
@@ -38,13 +38,13 @@ Algorithm is a set of well defined instructions to solve a particular problem.
 
 Big-O Time Complexity: Count the no of times a statement executed based on input size.
 
-![](/notes-img/JavaScript-notes/img-040.webp)
+![](/notes-img/javascript-notes/img-040.webp)
 
 Time complexity is O(n) - linear
 
-![](/notes-img/JavaScript-notes/img-041.webp)
+![](/notes-img/javascript-notes/img-041.webp)
 
-![](/notes-img/JavaScript-notes/img-042.webp)
+![](/notes-img/javascript-notes/img-042.webp)
 
 Space complexity:
 
@@ -54,7 +54,7 @@ O(n)-LInear
 
 O(log n)- Logrithm
 
-![](/notes-img/JavaScript-notes/img-043.webp)
+![](/notes-img/javascript-notes/img-043.webp)
 
 ### Big-O Time complexity of Object
 
@@ -439,7 +439,7 @@ Bubble Sort repeatedly compares adjacent elements in the array and swaps them if
 1.  For each element in the array:
     -   Compare adjacent elements.
     -   Swap them if they are in the wrong order.
-2.  Repeat the process until the array is sorted.![](/notes-img/JavaScript-notes/img-044.webp)
+2.  Repeat the process until the array is sorted.![](/notes-img/javascript-notes/img-044.webp)
 
 **Time Complexity:**
 
@@ -499,7 +499,7 @@ Insertion Sort builds the sorted portion of the array one element at a time by c
 4.  Insert the key in the correct position.
 5.  Repeat for all elements.
 
-![](/notes-img/JavaScript-notes/img-045.webp)
+![](/notes-img/javascript-notes/img-045.webp)
 
 **Time Complexity:**
 
@@ -717,7 +717,7 @@ Space Complexity: O(n×m)
 
 ## Climbing Staircase
 
-![](/notes-img/JavaScript-notes/img-046.webp)
+![](/notes-img/javascript-notes/img-046.webp)
 
 It looks like Fibonacci Series
 
@@ -750,7 +750,7 @@ console.log(climbStairs(5)); // Output: 8
 
 ## Tower of Hanoi
 
-![](/notes-img/JavaScript-notes/img-047.webp)
+![](/notes-img/javascript-notes/img-047.webp)
 
 The Tower of Hanoi is a classic recursive problem that involves moving disks from one rod to another while following specific rules.
 
@@ -803,4 +803,4 @@ const numDisks = 3;
 towerOfHanoi(numDisks, 'A', 'C', 'B');
 ```
 
-![](/notes-img/JavaScript-notes/img-048.webp)
+![](/notes-img/javascript-notes/img-048.webp)

@@ -9,7 +9,7 @@ draft: false
 order: 8
 description: "JavaScript — JavaScript Engine."
 ---
-![](/notes-img/JavaScript-notes/img-023.webp)
+![](/notes-img/javascript-notes/img-023.webp)
 
 A JavaScript engine is a computer program that executes JavaScript code and converts it into computer understandable language.JavaScript Engine in different browsers.
 
@@ -23,7 +23,7 @@ A JavaScript engine is not a machine but just a piece of code in some high level
 2.  Compilation
 3.  Execution
 
-![](/notes-img/JavaScript-notes/img-024.webp)
+![](/notes-img/javascript-notes/img-024.webp)
 
 1.  **Parsing Phase**
 
@@ -35,7 +35,7 @@ let a=7; (let, a, =, 7 are tokens)
 
 (you can check AST at astexplorer.net)
 
-![](/notes-img/JavaScript-notes/img-025.webp)
+![](/notes-img/javascript-notes/img-025.webp)
 
 1.  **Compilation Phase & Execution phase**
 
@@ -52,7 +52,7 @@ Execution is made possible using these 2 components: Call Stack and memory heap.
 
 Memory Heap is the space where all variables and functions are assigned memory. Garbage collector is also present which frees up the memory whenever possible and it uses Mark and Sweep Algorithm. Compiler also uses some optimization techniques.
 
-### ![](/notes-img/JavaScript-notes/img-026.webp)
+### ![](/notes-img/javascript-notes/img-026.webp)
 
 From a high-level view, the V8 JavaScript engine execution consists of 5 steps.
 

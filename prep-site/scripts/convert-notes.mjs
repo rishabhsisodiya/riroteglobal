@@ -450,7 +450,7 @@ function copyEdit(md, meta) {
       }
       let out = s
         .replace(/[⁡​‌‍﻿]/g, '')
-        .replace(/\bjava[\s-]?script\b/gi, 'JavaScript')
+        .replace(/(?<![/\w-])java[\s-]?script\b(?!-(?:notes|questions)|[/\w-])/gi, 'JavaScript')
         .replace(/\bnetflix\b/g, 'Netflix')
         .replace(/\bsetTimout\b/g, 'setTimeout')
         .replace(/\bLets\b/g, "Let's")

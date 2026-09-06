@@ -11,7 +11,7 @@ description: "JavaScript — Debouncing."
 ---
 When we use the search bar in any website like flipkart so whenever we search any word then in the backend website will call api to fetch results but it will take a pause then it will search, it will not search on every keystroke. In the below example there was a pause between school and bags so only 2 requests happened.
 
-![](/notes-img/JavaScript-notes/img-027.webp)
+![](/notes-img/javascript-notes/img-027.webp)
 
 The **debounce**() function forces a function to wait a certain amount of time before running again. The function is built to limit the number of times a function is called.
 
@@ -64,7 +64,7 @@ Enter anything in the text field and open console.
 
 Output:
 
-But we apply the same thing in a search bar or any place where we don’t need to call api on continuous typing. It should call api only when we take a pause. Let’s implement this thing.![](/notes-img/JavaScript-notes/img-028.webp)
+But we apply the same thing in a search bar or any place where we don’t need to call api on continuous typing. It should call api only when we take a pause. Let’s implement this thing.![](/notes-img/javascript-notes/img-028.webp)
 
 ### Index.htm
 
@@ -137,7 +137,7 @@ func.apply(context, args);
 const betterFunction = **debounce**(getData,1000);
 ```
 
-**![](/notes-img/JavaScript-notes/img-029.webp)I have typed School Bag and took pause after typing school:**
+**![](/notes-img/javascript-notes/img-029.webp)I have typed School Bag and took pause after typing school:**
 
 **Output:
 **0 Fetching Data.... school bag
@@ -207,7 +207,7 @@ Output: Earlier you saw 7 requests “Fetching Data… ” 0 to 7 but now when y
 
 **// betterFunction()**
 
-![](/notes-img/JavaScript-notes/img-030.webp)**I have typed School Bag and took pause after typing school:**
+![](/notes-img/javascript-notes/img-030.webp)**I have typed School Bag and took pause after typing school:**
 
 **Output:**
 

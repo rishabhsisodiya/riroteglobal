@@ -1422,7 +1422,7 @@ console.log(queue.peek());
 
 ## Doubly Linked List
 
-![](/notes-img/JavaScript-notes/img-049.webp)
+![](/notes-img/javascript-notes/img-049.webp)
 
 We have next and prev pointers in the node.
 
@@ -1815,19 +1815,19 @@ table.remove("name");
 table.display();
 ```
 
-![](/notes-img/JavaScript-notes/img-050.webp)![](/notes-img/JavaScript-notes/img-051.webp)
+![](/notes-img/javascript-notes/img-050.webp)![](/notes-img/javascript-notes/img-051.webp)
 
 You can see here if we do not use that extra code in the set method then we will override the values in the hashtable as the key is converted to integer index respective to character length. So the key with the same length will have an override value. This is called collision and it is handled by extra code.
 
 Before handling collision
 
-![](/notes-img/JavaScript-notes/img-052.webp)
+![](/notes-img/javascript-notes/img-052.webp)
 
 After handling a collision.
 
 We are saving the array instead of overriding the value at index.
 
-![](/notes-img/JavaScript-notes/img-053.webp)
+![](/notes-img/javascript-notes/img-053.webp)
 
 ## Tree
 
@@ -1860,7 +1860,7 @@ The data in a tree are not stored in a sequential manner i.e., they are not stor
 10.  **Neighbour of a Node:** Parent or child nodes of that node are called neighbors of that node.
 11.  **Subtree**: Any node of the tree along with its descendant.
 
-### ![](/notes-img/JavaScript-notes/img-054.webp)
+### ![](/notes-img/javascript-notes/img-054.webp)
 
 **BInary Tree**: In a binary tree, each node can have a maximum of two children linked to it.
 

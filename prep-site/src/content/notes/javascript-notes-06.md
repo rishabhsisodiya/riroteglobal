@@ -60,7 +60,7 @@ attachEventListeners();
 
 Now xyz() forms a closure with attachEventListeners. You can see event listeners attach to Click Me button and also scope chain.(Global and Script)
 
-![](/notes-img/JavaScript-notes/img-016.webp)
+![](/notes-img/javascript-notes/img-016.webp)
 
 ## Garbage collection and remove Event Listeners
 

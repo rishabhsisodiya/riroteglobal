@@ -2900,7 +2900,7 @@ JavaScript is a prototype based language, so, whenever we create a function usin
 
 There is a saying that “Everything in JavaScript is an object” comes from here where arrays or any method have a prototype of the object.
 
-![](/notes-img/JavaScript-notes/img-001.webp)
+![](/notes-img/javascript-notes/img-001.webp)
 
 ```js
 let object ={
@@ -2931,7 +2931,7 @@ name:"Aditya"
 object2.__proto__=object;
 ```
 
-object2 will have access to object properties. If suppose city is not defined in object2 then it will use object property and the same with methods also. ![](/notes-img/JavaScript-notes/img-002.webp)
+object2 will have access to object properties. If suppose city is not defined in object2 then it will use object property and the same with methods also. ![](/notes-img/javascript-notes/img-002.webp)
 
 ### Add properties to inbuilt function and object
 
@@ -2952,7 +2952,7 @@ function fun() {
 
 Now it will give access of mybind method to all function.
 
-![](/notes-img/JavaScript-notes/img-003.webp)
+![](/notes-img/javascript-notes/img-003.webp)
 
 They use __proto__ so people don’t end up messing with the prototype and nobody will use __proto__ by mistake.
 
@@ -3305,4 +3305,4 @@ console.log(gen.next()); // { value: 3, done: false }
 console.log(gen.next()); // { value: undefined, done: true }
 ```
 
-![](/notes-img/JavaScript-notes/img-004.webp)
+![](/notes-img/javascript-notes/img-004.webp)
