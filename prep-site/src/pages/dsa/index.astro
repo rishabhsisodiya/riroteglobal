@@ -2,9 +2,21 @@
 import { getCollection, render } from 'astro:content';
 import PrepLayout from '../../layouts/PrepLayout.astro';
 import dsa from '../../data/dsa.json';
+import { solutions } from '../../data/dsa-solutions.mjs';
+import { u } from '../../consts';
 
 const total = dsa.reduce((n, g) => n + g.problems.length, 0);
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+// name (and aliases) -> deep link into the per-topic solutions page
+const solvedBy = new Map<string, string>();
+for (const s of solutions as { problem: string; topic: string; also?: string[] }[]) {
+  const link = u(`/dsa/solutions/${slug(s.topic)}#${slug(s.problem)}`);
+  solvedBy.set(norm(s.problem), link);
+  for (const a of s.also ?? []) solvedBy.set(norm(a), link);
+}
+const solvedCount = solutions.length;
 
 const notes = await getCollection('notes', (e) => e.data.track === 'dsa' && e.data.kind === 'notes');
 const patterns = notes[0];
@@ -21,11 +33,15 @@ const Patterns = patterns ? (await render(patterns)).Content : null;
     <p class="lede">
       {total} problems across {dsa.length} topics — the widely-used interview practice set.
       Tick them off as you solve; progress is stored in your browser only.
-      Pattern write-ups with reference solutions land in a later build.
     </p>
     <p class="reviewed">
       <span id="dsa-count">0</span> / {total} done
       <button type="button" id="dsa-reset" class="reset">reset</button>
+    </p>
+    <p class="solcta">
+      <a href={u('/dsa/solutions')}>→ Worked solutions</a>
+      — multiple interview-ready approaches for {solvedCount} core problems.
+      A <span class="soltag">◆ solutions</span> tag below marks a problem that has one.
     </p>
   </div>
 
@@ -47,11 +63,16 @@ const Patterns = patterns ? (await render(patterns)).Content : null;
         <ul>
           {g.problems.map((p) => {
             const id = `${slug(g.topic)}::${slug(p.name)}`;
+            const sol = solvedBy.get(norm(p.name));
             return (
               <li>
                 <label>
                   <input type="checkbox" data-id={id} data-topic={slug(g.topic)} />
-                  <span>{p.name}{p.important && <b class="imp" title="Marked important in the source list"> ★</b>}</span>
+                  <span>
+                    {p.name}
+                    {p.important && <b class="imp" title="Marked important in the source list"> ★</b>}
+                    {sol && <a class="soltag" href={sol}>◆ solutions</a>}
+                  </span>
                 </label>
               </li>
             );
@@ -133,6 +154,24 @@ const Patterns = patterns ? (await render(patterns)).Content : null;
   .group input { margin-top: 0.35rem; accent-color: var(--cyan); flex-shrink: 0; }
   .group input:checked + span { color: var(--muted); text-decoration: line-through; }
   .imp { color: var(--gold); font-size: 0.8em; }
+
+  .solcta { font-size: 0.9rem; color: var(--text); margin: 0.9rem 0 0; }
+  .solcta a { font-family: var(--font-mono); font-size: 0.82rem; }
+  .soltag {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--cyan);
+    border: 1px solid var(--navy-line-2);
+    border-radius: 3px;
+    padding: 0 0.35rem;
+    text-decoration: none;
+    vertical-align: middle;
+  }
+  .soltag:hover { background: rgba(0, 180, 216, 0.12); }
+  .group input:checked + span .soltag { color: var(--muted); text-decoration: none; }
 </style>
 
 <script>
