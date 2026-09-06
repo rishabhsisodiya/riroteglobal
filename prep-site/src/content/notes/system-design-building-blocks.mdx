@@ -99,11 +99,11 @@ Split writes and storage across independent primaries when one can't hold the lo
 **Costs you must name:** cross-shard queries and joins (fan-out + merge in the app), cross-shard transactions (need 2PC or saga), rebalancing when you add capacity, and **hot keys** — one celebrity / one viral item can swamp a single shard regardless of scheme. Mitigate hot keys by splitting that key into sub-keys or caching it hard.
 
 <Mermaid caption="Hash sharding with an app-side router" code={`flowchart TD
-  A[App] --> RT[Shard router: hash(key) % N]
+  A[App] --> RT["Shard router: hash(key) mod N"]
   RT --> S0[(Shard 0)]
   RT --> S1[(Shard 1)]
   RT --> S2[(Shard 2)]
-  A -. cross-shard query .-> SC[Scatter to all, gather, merge]
+  A -. cross-shard query .-> SC["Scatter to all, gather, merge"]
 `} />
 
 ## Consistent hashing
