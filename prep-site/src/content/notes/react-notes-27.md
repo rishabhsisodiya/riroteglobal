@@ -497,7 +497,7 @@ Toggle display
 
 </button>
 
-### {display && <HookMouse />}
+`{display && <HookMouse />}`
 
 </div>
 

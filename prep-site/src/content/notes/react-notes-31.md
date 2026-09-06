@@ -656,7 +656,7 @@ return (
 
 ### <IceCreamContainer />
 
-### {/\* <HooksCakeContainer /> \*/}
+`{/* <HooksCakeContainer /> */}`
 
 </div>
 

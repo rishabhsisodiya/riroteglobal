@@ -287,9 +287,9 @@ Choosing the right rate-limiting algorithm can be tricky. Here are some simple g
 -   Keeping your implementation simple and light is a priority.
 -   You want to ensure sudden spikes in traffic don't overwhelm your system.
 
-# **Bloom Filters**
+# Bloom Filters
 
-# **Ecommerce Microservice architecture**
+# Ecommerce Microservice architecture
 
 ### 1. Basic Components
 
@@ -405,7 +405,7 @@ One way to implement this messaging pattern is to use publisher/subscriber or pu
 
 ![](/notes-img/system-design-notes/img-017.webp)
 
-# **Video Transcoding Service**
+# Video Transcoding Service
 
 [https://www.youtube.com/watch?v=wcdaIQjtWQI](https://www.youtube.com/watch?v=wcdaIQjtWQI)
 

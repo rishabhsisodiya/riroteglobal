@@ -3,160 +3,109 @@ title: "Fragments"
 part: "React Notes"
 track: "react"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-06"
 source: "React JS.docx"
 draft: false
 order: 14
 description: "React — Fragments."
 ---
-A common pattern in React is for a component to return multiple elements. **Fragments let you group a list of children without adding extra nodes to the DOM.**
 
-### Why we use Fragment
+A component often needs to return several elements. **Fragments let you group children without adding an extra DOM node.**
 
-A common pattern is for a component to return a list of children. Take this example React snippet:
+## Why we need Fragments
 
-```jsx
-class Table extends React.Component {
-```
-render() {
+A component that returns multiple elements has to wrap them in a single parent. If that wrapper is a `<div>`, it ends up in the DOM — which can break layouts or produce invalid HTML.
 
 ```jsx
-return (
-```
-### <table>
-
-<tr>
-
-### <Columns />
-
-</tr>
-
-### </table>
-
-```jsx
-);
-
-}
-
+function Table() {
+  return (
+    <table>
+      <tbody>
+        <tr>
+          <Columns />
+        </tr>
+      </tbody>
+    </table>
+  );
 }
 ```
 
-**<Columns /> would need to return multiple <td> elements** in order for the rendered HTML **to be valid.** **If** a parent **div** was **used** inside the render() of <Columns />, then the resulting HTML will be **invalid**.
+`<Columns />` must render several `<td>` elements. If it wraps them in a `<div>`:
 
 ```jsx
-class **Columns** extends React.Component {
-```
-render() {
-
-```jsx
-return (
-```
-<**div>**
-
-<td>Hello</td>
-
-<td>World</td>
-
-### </div>
-
-```jsx
-);
-
-}
-
+function Columns() {
+  return (
+    <div>
+      <td>Hello</td>
+      <td>World</td>
+    </div>
+  );
 }
 ```
 
-results in a <Table /> output of:
+…the output is invalid HTML — a `<div>` can't be a direct child of `<tr>`:
 
+```html
 <table>
-
-<tr>
-
-### <div>
-
-### <td>Hello</td>
-
-### <td>World</td>
-
-### </div>
-
-</tr>
-
+  <tbody>
+    <tr>
+      <div>
+        <td>Hello</td>
+        <td>World</td>
+      </div>
+    </tr>
+  </tbody>
 </table>
-
-**Fragments solve this problem.**
-
-```jsx
-class **Columns** extends React.Component {
 ```
-render() {
+
+## Fragments solve it
 
 ```jsx
-return (
-```
-### <React.Fragment>
-
-<td>Hello</td>
-
-<td>World</td>
-
-### </React.Fragment>
-
-```jsx
-);
-
-}
-
+function Columns() {
+  return (
+    <>
+      <td>Hello</td>
+      <td>World</td>
+    </>
+  );
 }
 ```
 
-which results in a correct <Table /> output of:
+Now the render output is correct — no extra node:
 
+```html
 <table>
-
-<tr>
-
-<td>Hello</td>
-
-<td>World</td>
-
-</tr>
-
+  <tbody>
+    <tr>
+      <td>Hello</td>
+      <td>World</td>
+    </tr>
+  </tbody>
 </table>
-
-### Shorter Syntax: <>.. </>
-
-### Keyed Fragments
-
-Fragments declared with the explicit <React.Fragment> syntax may have keys. A use case for this is mapping a collection to an array of fragments
-
-```jsx
-function Glossary(props) {
-
-return (
 ```
-<dl>
+
+## Shorter syntax `<>…</>`
+
+`<>…</>` is shorthand for `<React.Fragment>…</React.Fragment>`. Use it whenever you don't need a `key` or any props.
+
+## Keyed Fragments
+
+The shorthand can't take attributes, so when you map a collection to fragments and need a `key`, use the explicit form:
 
 ```jsx
-{**props.items.map**(item => (
-```
-// Without the \`key\`, React will fire a key warning
-
-**<React.Fragment key={item.id}>**
-
-<dt>{item.term}</dt>
-
-<dd>{item.description}</dd>
-
-### </React.Fragment>
-
-))}
-
-</dl>
-
-```jsx
-);
-
+function Glossary({ items }) {
+  return (
+    <dl>
+      {items.map((item) => (
+        // Without a key here, React logs a key warning
+        <React.Fragment key={item.id}>
+          <dt>{item.term}</dt>
+          <dd>{item.description}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
 }
 ```
+
+`key` is the only attribute a `<React.Fragment>` accepts.

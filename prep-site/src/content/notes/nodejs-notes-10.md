@@ -48,24 +48,18 @@ views/home.ejs
 
 `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
 
-<title>URL shortner App</title>
-
-`</head>`
-
-`<body>`
-
-<h1>Hello from HTML Server</h1>
-
-```js
-<% urls.forEach(url => { %>
+```html
+<head>
+  <title>URL Shortener App</title>
+</head>
+<body>
+  <h1>Hello from HTML Server</h1>
+  <% urls.forEach(url => { %>
+    <li><%= url.shortId %></li>
+  <% }) %>
+</body>
+</html>
 ```
-<li><%= url.shortId %></li>
-
-<% }) %>
-
-`</body>`
-
-`</html>`
 
 ## Create Views using EJS for URL shortener App
 
@@ -266,70 +260,45 @@ module.exports = router;
 
 `</head>`
 
-`<body>`
+```html
+<body>
+  <h1>URL Shortener</h1>
 
-<h1>URL Shortener</h1>
+  <% if (locals.id) { %>
+    <p>URL Generated: http://localhost:8001/url/<%= id %></p>
+  <% } %>
 
-<% if (locals.id) { %>
+  <form method="post" action="/url">
+    <label>Enter your original URL:</label>
+    <input type="text" name="url" placeholder="https://example.com" />
+    <button type="submit">Generate</button>
+  </form>
 
-<p>URL Generated: http://localhost:8001/url/<%= id %></p>
-
-<% } %>
-
-<form method="post" action="/url">
-
-<label>Enter your original URL:</label>
-
-<input type="text" name="url" placeholder="https://example.com" />
-
-<button type="submit">Generate</button>
-
-</form>
-
-<% if (locals.urls) { %>
-
-<table>
-
-<thead>
-
-<th>S.No</th>
-
-<th>Short ID</th>
-
-<th>Redirect URL</th>
-
-<th>Clicks</th>
-
-</thead>
-
-<tbody>
-
-```js
-<% urls.forEach((url,index) => { %>
+  <% if (locals.urls) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Short ID</th>
+          <th>Redirect URL</th>
+          <th>Clicks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% urls.forEach((url, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= url.shortId %></td>
+            <td><%= url.redirectURL %></td>
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</body>
+</html>
 ```
-<tr>
-
-<td><%= index+1 %></td>
-
-<td><%= url.shortId %></td>
-
-<td><%= url.redirectURL %></td>
-
-<td><%= url.visitHistory.length %></td>
-
-</tr>
-
-<% }); %>
-
-</tbody>
-
-</table>
-
-<% } %>
-
-`</body>`
-
-`</html>`
 
 package.json
 

@@ -268,7 +268,7 @@ return (
 
 <ComponentC />
 
-### {/\* </UserProvider> \*/}
+`{/* </UserProvider> */}`
 
 </div>
 
@@ -320,7 +320,7 @@ return (
 ```
 <div>
 
-### ComponentE context {this.context}
+`// ComponentE — context = {this.context}`
 
 <ComponentF />
 

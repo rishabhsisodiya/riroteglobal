@@ -53,6 +53,7 @@ export const TRACKS: Track[] = [
     title: 'Node.js',
     blurb: 'Runtime model, modules, Express, middleware, auth and backend fundamentals.',
     badge: '⬢',
+    hasQuestions: true,
   },
   {
     slug: 'system-design',
