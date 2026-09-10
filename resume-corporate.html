@@ -340,7 +340,7 @@
       <div class="section">
         <p class="section-title">Professional Summary</p>
         <p class="summary-text">
-          Full Stack Engineer and Technical Lead with 8+ years delivering enterprise web applications, microservices, and cloud platforms end to end. Currently leading a small engineering team at Wipro — owning architecture, code quality, and production operations for business-critical systems while remaining hands-on across React.js, Node.js, and AWS. Track record of modernizing legacy systems, shipping AI-powered features, and translating between engineering and business stakeholders.
+          Full Stack Engineer with 8+ years across React.js, Node.js, and AWS — building and maintaining web applications, backend services, data pipelines, and internal tooling end to end. Contributed production code to a large-scale competitive platform serving thousands of members globally, owned a DynamoDB/Informix-to-Redshift data pipeline feeding BI, modernized legacy automations into production-grade Node.js services, and served as the technical point of contact for a major enterprise client. Earlier delivered React/Redux and Spring Boot systems for a financial-services client at Capgemini. Also leads a small team — setting technical standards, reviewing code, and mentoring engineers.
         </p>
       </div>
 
@@ -359,34 +359,32 @@
             <span class="exp-date">Jul 2021 – Present</span>
           </div>
 
-          <p class="sub-role">Team Leadership</p>
-          <ul class="exp-bullets">
-            <li>Lead a team of 2 engineers within an Agile/Scrum delivery model — setting technical standards, conducting structured code reviews, and providing architecture guidance that measurably reduced post-release defects.</li>
-            <li>Mentor junior and mid-level developers through pair programming and regular feedback sessions, accelerating their growth and independent contribution.</li>
-            <li>Interface with contractors and offshore teams to align on scope, resolve blockers, and maintain delivery velocity across parallel workstreams.</li>
-          </ul>
-
           <p class="sub-role">Full Stack Engineering</p>
           <ul class="exp-bullets">
-            <li>Independently designed and delivered a Procurement Tool that digitized the end-to-end purchase approval workflow — eliminating lengthy email chains and multi-phase manual approvals, significantly reducing time to close procurement requests. Presented the tool to Wipro leadership as a candidate internal solution to drive revenue for the Topcoder project; built end-to-end using Cursor AI to accelerate solo delivery.</li>
-            <li>Contributed to platform-critical internal tools — Work Manager, AI Screener, and Review Module — core to the Topcoder competitive platform used by thousands of members globally.</li>
-            <li>Built a reporting API using NestJS serving day-to-day operational reports consumed by community managers, delivery teams, and support teams — consolidating data from multiple sources into a single reliable interface.</li>
-            <li>Replaced an unreliable job scheduler — prone to getting stuck or silently stopping, leaving challenge phases open or closed past their scheduled times — with an Auto-Pilot system built on AWS Step Functions that reliably orchestrates phase transitions at scale, eliminating missed phase events and reducing manual intervention by the delivery team.</li>
-            <li>Architected and delivered Node.js microservices covering authentication, user management, reporting, and admin workflows — deployed on AWS ECS with Lambda-based event triggers.</li>
-            <li>Built and maintained React.js applications used by internal operations teams and external business users across multiple product lines.</li>
-            <li>Designed scalable REST APIs with role-based access control, rate limiting, and audit logging; integrated with DynamoDB, PostgreSQL, and Redshift based on data access patterns.</li>
+            <li>Worked with the Topcoder platform team — diagnosed and fixed production bugs across Node.js/NestJS backend services and the React frontend, submitting reviewed, merged PRs against a codebase serving thousands of members globally.</li>
+            <li>Fixed production issues in and extended platform-critical internal tools — Work Manager, AI Screener, and Review Module — spanning challenge and phase lifecycle, submissions and reviews, and the Work Manager UI.</li>
+            <li>Worked as part of the platform team in scrum ceremonies — sprint planning, standups, and backlog grooming — picking up and delivering engineering tickets.</li>
             <li>Modernized legacy Google App Script automations into production-grade Node.js services — eliminating manual steps and reducing processing overhead by ~60%.</li>
-            <li>Built Zendesk applications and internal productivity tools that improved support agent efficiency and reduced manual operational effort significantly.</li>
-            <li>Developed AI-powered support features — ticket summarization and automated response generation using LLM APIs — reducing average first-response time for support agents.</li>
-            <li>Created Looker dashboards and reporting pipelines providing real-time visibility into ticket SLAs, team performance, and operational health.</li>
+            <li>Long-standing technical point of contact for Topgear, one of the platform's largest clients — single owner from our side for every issue they raised, advising their engineering team on API integration and how their automation consumed our services, with both architectural and code-level recommendations.</li>
+            <li>Resolved Topgear's operational issues hands-on — writing scripts to fix broken data and state, providing workarounds while permanent fixes were scoped, and guiding changes to their automation.</li>
+            <li>Point of contact for a set of Java-based data loaders — cron jobs on EC2 that extract from DynamoDB and Informix and load into Redshift, the source of truth for Looker dashboards and downstream automation; owned monitoring, failure recovery, and pipeline reliability.</li>
+            <li>Worked on a NestJS reporting API serving day-to-day operational reports consumed by community managers, delivery teams, and support teams — adding and maintaining endpoints that consolidate data from multiple sources into a single interface.</li>
+            <li>Built and maintained React.js applications used by internal operations teams and external business users across multiple product lines.</li>
+            <li>Built a suite of Zendesk apps for the support team — a bulk-email tool (multi-recipient with CC, HTML body, and attachments that auto-creates a ticket per send, delivered for a payment-provider migration requiring tax-compliance follow-up), a bulk challenge-extension tool, CC Master for auto-adding the correct SPOC to tickets, Quick Links for generating dynamic links, and a requester-info panel surfacing Topcoder user details in-ticket — collectively cutting manual, repetitive agent work.</li>
+            <li>Point of contact for Looker — built and maintained LookML models, reports, and dashboards giving teams real-time visibility into ticket SLAs, team performance, and operational health.</li>
+            <li>Design Node.js automation scripts and delegate implementation and enhancement work to a junior engineer — guiding their approach through feedback and pair programming.</li>
+            <li>Coordinate with contractors on production issues, using code-level knowledge to isolate likely root causes and unblock fixes.</li>
           </ul>
 
-          <p class="sub-role">Production Support &amp; Reliability</p>
+          <p class="sub-role">Production Support &amp; Site Reliability</p>
           <ul class="exp-bullets">
-            <li>Own end-to-end production support: incident triage, root cause analysis, stakeholder communication, and post-mortem documentation for business-critical applications.</li>
+            <li>Serve as L1 and L2 support for business-critical applications — triaging incoming issues, resolving application and data problems, and escalating to engineering only when a code fix is required.</li>
+            <li>Own end-to-end incident handling: triage, root cause analysis, stakeholder communication, and post-mortem documentation.</li>
+            <li>Use code-level knowledge to debug L2 issues directly — tracing errors through logs, APIs, and database state to identify and often patch the fault.</li>
+            <li>Held an SRE rotation for a period — monitored infrastructure and application health, triaged Opsgenie alerts, and remediated incidents to keep services within SLA.</li>
           </ul>
 
-          <div class="exp-stack">React.js · Next.js · Node.js · Express.js · AWS EC2 · Lambda · ECS · DynamoDB · PostgreSQL · Redshift · Docker · CircleCI · Looker · Zendesk · Jira</div>
+          <div class="exp-stack">React.js · Next.js · Node.js · Express.js · NestJS · Java · AWS EC2 · Lambda · ECS · DynamoDB · Informix · PostgreSQL · Redshift · Docker · CircleCI · Looker · LookML · Zendesk · Opsgenie · Jira</div>
         </div>
 
         <hr class="exp-divider">
@@ -405,9 +403,7 @@
             <li>Developed enterprise React.js + Redux applications supporting merchant onboarding workflows for Discover Financial Services — handling complex multi-step form orchestration and approval flows at scale.</li>
             <li>Built REST APIs and backend services using Spring Boot and Node.js, integrated with IBM MQ for reliable event-driven messaging across distributed financial systems.</li>
             <li>Automated operational and monitoring processes that reduced manual reporting effort and improved incident response time across the platform team.</li>
-            <li>Collaborated with cross-functional teams across multiple geographies — business analysts, QA, and infrastructure — to deliver quarterly release cycles on schedule.</li>
             <li>Used AppDynamics for application performance monitoring and ServiceNow for change/incident management in a regulated financial services environment.</li>
-            <li>Received Rising Star Award (2020) for performance and contributions within the first two years.</li>
           </ul>
           <div class="exp-stack">React.js · Redux · Node.js · Spring Boot · Core Java · IBM MQ · REST APIs · Jenkins · AWS · AppDynamics · ServiceNow</div>
         </div>
