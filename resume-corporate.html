@@ -287,6 +287,8 @@
     .main-col { padding-bottom: 1rem; }
     .side-col { padding-bottom: 1rem; }
     .exp-bullets li { line-height: 1.5; }
+    .side-col .section { break-inside: avoid; page-break-inside: avoid; }
+    .edu-table, .edu-table tr { break-inside: avoid; page-break-inside: avoid; }
   }
 
   @media (max-width: 700px) {
@@ -340,7 +342,7 @@
       <div class="section">
         <p class="section-title">Professional Summary</p>
         <p class="summary-text">
-          Full Stack Engineer with 8+ years across React.js, Node.js, and AWS — building and maintaining web applications, backend services, data pipelines, and internal tooling end to end. Contributed production code to a large-scale competitive platform serving thousands of members globally, owned a DynamoDB/Informix-to-Redshift data pipeline feeding BI, modernized legacy automations into production-grade Node.js services, and served as the technical point of contact for a major enterprise client. Earlier delivered React/Redux and Spring Boot systems for a financial-services client at Capgemini. Also leads a small team — setting technical standards, reviewing code, and mentoring engineers.
+          Full Stack Engineer with 8+ years across React.js, Node.js, and AWS — building and maintaining web applications, backend services, data pipelines, and internal tooling end to end. Contributed production code to a large-scale competitive platform serving thousands of members globally, owned a DynamoDB/Informix-to-Redshift data pipeline feeding BI, modernized legacy automations into production-grade Node.js services, and served as the technical point of contact for a major enterprise client. Comfortable leading a small team — mentoring engineers and guiding day-to-day technical delivery.
         </p>
       </div>
 
@@ -361,10 +363,10 @@
 
           <p class="sub-role">Full Stack Engineering</p>
           <ul class="exp-bullets">
-            <li>Worked with the Topcoder platform team — diagnosed and fixed production bugs across Node.js/NestJS backend services and the React frontend, submitting reviewed, merged PRs against a codebase serving thousands of members globally.</li>
-            <li>Fixed production issues in and extended platform-critical internal tools — Work Manager, AI Screener, and Review Module — spanning challenge and phase lifecycle, submissions and reviews, and the Work Manager UI.</li>
-            <li>Worked as part of the platform team in scrum ceremonies — sprint planning, standups, and backlog grooming — picking up and delivering engineering tickets.</li>
+            <li>Worked with the Topcoder platform team — diagnosed and fixed production bugs and shipped enhancements across Node.js backend services and the React frontend for the community platform and internal tools; delivered as reviewed, merged PRs against a codebase serving thousands of members globally.</li>
+            <li>Worked as part of the platform team's scrum process — joined daily standups and picked up stories and bug fixes from the sprint backlog.</li>
             <li>Modernized legacy Google App Script automations into production-grade Node.js services — eliminating manual steps and reducing processing overhead by ~60%.</li>
+            <li>Maintained and enhanced the Marathon Match automation scripts — updating them over time to keep pace with platform changes, fix issues, and add improvements.</li>
             <li>Long-standing technical point of contact for Topgear, one of the platform's largest clients — single owner from our side for every issue they raised, advising their engineering team on API integration and how their automation consumed our services, with both architectural and code-level recommendations.</li>
             <li>Resolved Topgear's operational issues hands-on — writing scripts to fix broken data and state, providing workarounds while permanent fixes were scoped, and guiding changes to their automation.</li>
             <li>Point of contact for a set of Java-based data loaders — cron jobs on EC2 that extract from DynamoDB and Informix and load into Redshift, the source of truth for Looker dashboards and downstream automation; owned monitoring, failure recovery, and pipeline reliability.</li>
@@ -382,6 +384,7 @@
             <li>Own end-to-end incident handling: triage, root cause analysis, stakeholder communication, and post-mortem documentation.</li>
             <li>Use code-level knowledge to debug L2 issues directly — tracing errors through logs, APIs, and database state to identify and often patch the fault.</li>
             <li>Held an SRE rotation for a period — monitored infrastructure and application health, triaged Opsgenie alerts, and remediated incidents to keep services within SLA.</li>
+            <li>For a short period, set up and configured EC2 environments end to end for Marathon Match events run for clients such as NASA — provisioning the scorer and running scripts against Topcoder APIs for scoring and test execution.</li>
           </ul>
 
           <div class="exp-stack">React.js · Next.js · Node.js · Express.js · NestJS · Java · AWS EC2 · Lambda · ECS · DynamoDB · Informix · PostgreSQL · Redshift · Docker · CircleCI · Looker · LookML · Zendesk · Opsgenie · Jira</div>
