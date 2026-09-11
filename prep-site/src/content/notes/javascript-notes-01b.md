@@ -16,10 +16,11 @@ description: "JavaScript basics — Data Types, Literals & Control Flow."
 
 The latest ECMAScript standard defines eight data types: (Undefined BigInt Number null Boolean String Symbol Object)
 
--   Seven data types that are primitives:
-    1.  [Boolean](https://developer.mozilla.org/en-US/docs/Glossary/Boolean). true and false. To convert values of other types into boolean values, you use the Boolean() function.
+Seven data types that are primitives, plus `Object`:
+
+1.  [Boolean](https://developer.mozilla.org/en-US/docs/Glossary/Boolean). true and false. To convert values of other types into boolean values, you use the Boolean() function.
 ```js
-        console.log(Boolean('Hi'));// true
+console.log(Boolean('Hi')); // true
 
 console.log(Boolean('')); // false
 
@@ -31,16 +32,71 @@ console.log(Boolean(0)); // false
 
 console.log(Boolean({foo: 100})); // true on non-empty object
 
+console.log(Boolean([])); // true, even an empty array is an object
+
+console.log(Boolean(NaN)); // false
+
+console.log(Boolean(undefined)); // false
+
+console.log(Boolean('0')); // true, non-empty string
+
+console.log(Boolean(-1)); // true, any non-zero number
+
+console.log(Boolean(function() {})); // true, functions are objects
+
 console.log(Boolean(null));// false
 ```
--   1.  [null](https://developer.mozilla.org/en-US/docs/Glossary/null). A special keyword denoting a null value. Because JavaScript is case-sensitive, null is not the same as Null, NULL, or any other variant.
-    2.  [undefined](https://developer.mozilla.org/en-US/docs/Glossary/undefined). A top-level property whose value is not defined.The undefined type is a primitive type that has only one value undefined. By default, when a variable is declared but not initialized, it defaults to undefined
-        JavaScript defines that null is equal to undefined as follows:
+2.  [null](https://developer.mozilla.org/en-US/docs/Glossary/null). A special keyword denoting a null value. Because JavaScript is case-sensitive, null is not the same as Null, NULL, or any other variant.
 
 ```js
-**console.log(null == undefined); // true**
+let user = null;
+
+console.log(user); // null
+
+console.log(typeof null); // "object" — a long-standing JS quirk
+
+console.log(null === undefined); // false, different types
+
+console.log(null == undefined); // true, loose equality treats them as equal
+
+console.log(Boolean(null)); // false
 ```
--   1.  [Number](https://developer.mozilla.org/en-US/docs/Glossary/Number). An integer or floating point number. For example: 42 or 3.14159.
+3.  [undefined](https://developer.mozilla.org/en-US/docs/Glossary/undefined). A top-level property whose value is not defined. The undefined type is a primitive type that has only one value, undefined. By default, when a variable is declared but not initialized, it defaults to undefined.
+    JavaScript defines that null is equal to undefined as follows:
+
+```js
+console.log(null == undefined); // true
+
+let x;
+console.log(x); // undefined, declared but not assigned
+
+function greet(name) {
+  console.log(name);
+}
+greet(); // undefined, missing argument
+
+let obj = { a: 1 };
+console.log(obj.b); // undefined, missing property
+
+console.log(typeof undefined); // "undefined"
+```
+4.  [Number](https://developer.mozilla.org/en-US/docs/Glossary/Number). An integer or floating point number. For example: 42 or 3.14159.
+
+```js
+console.log(42); // 42, integer
+
+console.log(3.14159); // 3.14159, floating point
+
+console.log(0.1 + 0.2); // 0.30000000000000004, floating point precision
+
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+
+console.log(typeof 42); // "number"
+
+console.log(1 / 0); // Infinity
+
+console.log(-1 / 0); // -Infinity
+```
         **NaN**
 NaN stands for Not a Number. It is a special numeric value that indicates an invalid number. For example, the division of a string by a number returns NaN:.
 
@@ -59,39 +115,70 @@ console.log(NaN/2); // NaN
 
 console.log(NaN == NaN); // false
 ```
--   1.  [BigInt](https://developer.mozilla.org/en-US/docs/Glossary/BigInt). An integer with arbitrary precision. For example: 9007199254740992n.
-    2.  [String](https://developer.mozilla.org/en-US/docs/Glossary/String). A sequence of characters that represent a text value. For example: "Howdy"
-    3.  [Symbol](https://developer.mozilla.org/en-US/docs/Glossary/Symbol) (new in ECMAScript 2015). A data type whose instances are unique and immutable.
-        The Symbol function creates a new unique value every time you call it.
+5.  [BigInt](https://developer.mozilla.org/en-US/docs/Glossary/BigInt). An integer with arbitrary precision. For example: 9007199254740992n.
+
+```js
+console.log(9007199254740992n); // 9007199254740992n
+
+console.log(typeof 9007199254740992n); // "bigint"
+
+console.log(Number.MAX_SAFE_INTEGER + 1n); // TypeError: can't mix BigInt and other types, need explicit conversion
+
+console.log(BigInt(9007199254740992)); // 9007199254740992n
+
+console.log(10n + 20n); // 30n
+
+console.log(10n === 10); // false, different types
+```
+6.  [String](https://developer.mozilla.org/en-US/docs/Glossary/String). A sequence of characters that represent a text value. For example: "Howdy"
+
+```js
+console.log('Howdy'); // "Howdy"
+
+console.log("Howdy" + " partner"); // "Howdy partner"
+
+console.log(typeof 'Howdy'); // "string"
+
+console.log('Howdy'.length); // 5
+
+console.log(`Total: ${2 + 2}`); // "Total: 4", template literal
+
+console.log(String(42)); // "42"
+```
+7.  [Symbol](https://developer.mozilla.org/en-US/docs/Glossary/Symbol) (new in ECMAScript 2015). A data type whose instances are unique and immutable.
+    The Symbol function creates a new unique value every time you call it.
 
 ```js
 console.log(Symbol() == Symbol()); // false
+
 let statuses = {
-
-OPEN: Symbol('Open'),
-```
-IN_PROGRESS: Symbol('In progress'),
-
-```js
-COMPLETED: Symbol('Completed'),
-
-HOLD: Symbol('On hold'),
-
-CANCELED: Symbol('Canceled')
-
+  OPEN: Symbol('Open'),
+  IN_PROGRESS: Symbol('In progress'),
+  COMPLETED: Symbol('Completed'),
+  HOLD: Symbol('On hold'),
+  CANCELED: Symbol('Canceled')
 };
-```
-// complete a task
 
-```js
+// complete a task
 task.setStatus(statuses.COMPLETED);
 ```
--   1.  and Object
-    ```js
-            let obj = {
-            key:value
-            }
-    ```
+8.  [Object](https://developer.mozilla.org/en-US/docs/Glossary/Object). A collection of key/value pairs — the only non-primitive type.
+
+```js
+let obj = {
+  key: 'value'
+};
+console.log(obj); // { key: "value" }
+
+console.log(typeof obj); // "object"
+
+console.log(typeof []); // "object", arrays are objects too
+
+console.log(typeof function() {}); // "function", but still an object under the hood
+
+let obj2 = { key: 'value' };
+console.log(obj === obj2); // false, objects compare by reference, not value
+```
 ### Data type conversion
 
 ### JavaScript is a dynamically typed language.
