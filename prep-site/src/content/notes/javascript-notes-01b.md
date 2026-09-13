@@ -61,6 +61,26 @@ console.log(null == undefined); // true, loose equality treats them as equal
 
 console.log(Boolean(null)); // false
 ```
+
+**Q: If `typeof null` is `"object"`, and objects are truthy, why is `Boolean(null)` false?**
+
+Because `null` is **not** an object — it is a primitive. `typeof null === "object"` is a bug from the first version of JavaScript that was never fixed, since changing it would break existing websites.
+
+- In the original engine, values were stored with a type tag; objects had tag `0`. `null` was represented as the NULL pointer (all zeros), so its tag also read as `0` → `typeof` reported `"object"`.
+- `Boolean()` does not use `typeof`. It follows the spec's `ToBoolean` rules, which list the falsy values explicitly: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN`. Everything else (including every real object, `[]`, `{}` and functions) is truthy.
+
+```js
+console.log(typeof null);            // "object" — historical bug
+console.log(null instanceof Object); // false — not actually an object
+console.log(Object.getPrototypeOf({}) === null); // true, null means "no object"
+console.log(Boolean(null));          // false — listed as falsy in ToBoolean
+console.log(Boolean({}));            // true — real objects are always truthy
+
+// Safe null check (don't rely on typeof)
+const value = null;
+console.log(value === null);                              // true
+console.log(typeof value === "object" && value !== null); // false — correct "is object" check
+```
 3.  [undefined](https://developer.mozilla.org/en-US/docs/Glossary/undefined). A top-level property whose value is not defined. The undefined type is a primitive type that has only one value, undefined. By default, when a variable is declared but not initialized, it defaults to undefined.
     JavaScript defines that null is equal to undefined as follows:
 
