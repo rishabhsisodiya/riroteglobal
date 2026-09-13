@@ -117,7 +117,7 @@ console.log(1 / 0); // Infinity
 
 console.log(-1 / 0); // -Infinity
 ```
-        **NaN**
+
 NaN stands for Not a Number. It is a special numeric value that indicates an invalid number. For example, the division of a string by a number returns NaN:.
 
 ```js
@@ -171,6 +171,26 @@ console.log(String(42)); // "42"
 ```js
 console.log(Symbol() == Symbol()); // false
 
+// Same description does NOT mean same symbol
+const a = Symbol('id');
+const b = Symbol('id');
+console.log(a === b);          // false — two separate calls, two unique values
+console.log(a.toString());     // "Symbol(id)" — description is only a label
+console.log(a === a);          // true — Symbol() ran once; `a` just holds that same value
+
+// Compare with strings: same content = equal
+console.log('id' === 'id');    // true
+
+// Practical effect: symbol keys never collide
+const user = {};
+user[a] = 'from library A';
+user[b] = 'from library B';
+console.log(user[a]);          // "from library A"
+console.log(user[b]);          // "from library B" — both kept, no overwrite
+
+// Need a shared symbol? Use the global registry
+console.log(Symbol.for('id') === Symbol.for('id')); // true
+
 let statuses = {
   OPEN: Symbol('Open'),
   IN_PROGRESS: Symbol('In progress'),
@@ -201,9 +221,7 @@ console.log(obj === obj2); // false, objects compare by reference, not value
 ```
 ### Data type conversion
 
-### JavaScript is a dynamically typed language.
-
-That means you don't have to specify the data type of a variable when you declare it, and data types are converted automatically as needed during script execution. So, for example, you could define a variable as follows:
+JavaScript is a dynamically typed language. That means you don't have to specify the data type of a variable when you declare it, and data types are converted automatically as needed during script execution. So, for example, you could define a variable as follows:
 
 ```js
 var answer = 42;
@@ -217,17 +235,21 @@ Because JavaScript is dynamically typed, this assignment does not cause an error
 
 In expressions involving numeric and string values with the + operator, JavaScript converts numeric values to strings. For example, consider the following statements:
 
-x = 'The answer is' + 42 // "The answer is 42"
+```js
+x = 'The answer is ' + 42; // "The answer is 42"
 
-y = 42 +' is the answer' // "42 is the answer"
+y = 42 + ' is the answer'; // "42 is the answer"
+```
 
 In statements involving other operators, **JavaScript does not convert numeric values to strings.** For example:
 
-**'37' - 7 // 30**
+```js
+'37' - 7; // 30, "-" converts the string to a number
 
-**'37' + 7 // "377"**
+'37' + 7; // "377", "+" with a string converts the number to a string
+```
 
-### Converting strings to numbers
+#### Converting strings to numbers
 
 In the case that a value representing a number is in memory as a string, there are methods for conversion.
 
@@ -263,7 +285,7 @@ You do not have to specify all elements in an array literal. If you put two comm
 ```js
 var fish = ['Lion', , 'Angel'];
 ```
-This array has two elements with values and one empty element (fish\[0\] is "Lion", **fish\[1\] is undefined**, and fish\[2\] is "Angel").
+This array has two elements with values and one empty element (fish\[0\] is "Lion", **fish\[1\] is an empty slot (reads as undefined)**, and fish\[2\] is "Angel").
 
 If you include a trailing comma at the end of the list of elements, the comma is ignored. In the following example, the length of the array is three. There is no myList\[3\]. All other commas in the list indicate a new element.
 
@@ -281,6 +303,107 @@ In the following example, the length of the array is four, and myList\[1\] and m
 
 ```js
 var myList = ['home', , 'school', , ];
+```
+
+#### Tricky array literal questions
+
+**Q1: Is an empty slot the same as `undefined`?**
+No. `[ , ]` creates a *hole* (the index does not exist). `[undefined]` creates a real element whose value is `undefined`. Reading either gives `undefined`, but they behave differently.
+
+```js
+const holes = [ , ];
+const undef = [undefined];
+
+console.log(holes.length, undef.length); // 1 1
+console.log(holes[0], undef[0]);         // undefined undefined
+console.log(0 in holes);                 // false — index 0 does not exist
+console.log(0 in undef);                 // true  — index 0 exists
+```
+
+**Q2: What do array methods do with holes?**
+`forEach`, `map`, `filter` and `reduce` skip holes. `for...of`, spread and `Array.from` treat them as `undefined`.
+
+```js
+const arr = [1, , 3];
+
+arr.forEach(v => console.log(v));  // 1, 3 — hole skipped
+console.log(arr.map(v => v * 2));  // [2, empty, 6] — hole kept as a hole
+console.log([...arr]);             // [1, undefined, 3] — hole becomes undefined
+console.log(arr.filter(() => true)); // [1, 3] — hole removed
+console.log(Object.keys(arr));     // ["0", "2"]
+```
+
+**Q3: What is the length?**
+
+```js
+console.log([,].length);      // 1 — the only comma is a trailing comma
+console.log([,,].length);     // 2 — last comma ignored
+console.log([1, 2, ,].length); // 3
+console.log([].length);       // 0
+```
+
+**Q4: `[3]` vs `new Array(3)`?**
+
+```js
+console.log([3]);          // [3] — one element, the number 3
+console.log(new Array(3)); // [empty × 3] — length 3, no elements
+console.log(Array.of(3));  // [3] — use this to avoid the confusion
+```
+
+**Q5: Why is `[] == []` false but `[] == ![]` true?**
+
+```js
+console.log([] == []);  // false — two different objects (compared by reference)
+console.log([] == ![]); // true
+// ![] → false (arrays are truthy) → [] == false
+// → "" == 0 → 0 == 0 → true
+```
+
+**Q6: What happens when you set a far index or change `length`?**
+
+```js
+const a = [1, 2];
+a[5] = 6;
+console.log(a);        // [1, 2, empty × 3, 6]
+console.log(a.length); // 6
+
+a.length = 1;
+console.log(a);        // [1] — shrinking length deletes elements
+```
+
+**Q7: Array to string conversions**
+
+```js
+console.log(String([1, [2, [3]]])); // "1,2,3" — nested arrays are flattened by join
+console.log([] + []);               // "" — both become empty strings
+console.log([] + {});               // "[object Object]"
+console.log([1, 2] + [3]);          // "1,23"
+console.log([null, undefined] + ''); // "," — null/undefined become empty strings
+```
+
+**Q8: Does `indexOf` find `NaN`?**
+
+```js
+const nums = [NaN];
+console.log(nums.indexOf(NaN));  // -1 — uses ===, and NaN !== NaN
+console.log(nums.includes(NaN)); // true — uses SameValueZero
+```
+
+**Q9: What does `typeof` say, and how do you check for an array?**
+
+```js
+console.log(typeof []);         // "object"
+console.log(Array.isArray([])); // true — the reliable check
+```
+
+**Q10: Does `const` make an array immutable?**
+
+```js
+const list = [1, 2];
+list.push(3);        // allowed — contents can change
+console.log(list);   // [1, 2, 3]
+// list = [];        // TypeError — the variable cannot be reassigned
+Object.freeze(list); // makes the contents read-only (shallow)
 ```
 ### Boolean literals
 
@@ -330,13 +453,9 @@ Object property names can be any string, including the empty string. If the prop
 
 ```js
 var unusualPropertyNames = {
-
-'': 'An empty string',
-```
-'!': 'Bang!'
-
-```js
-}
+  '': 'An empty string',
+  '!': 'Bang!'
+};
 
 console.log(unusualPropertyNames.''); // SyntaxError: Unexpected string
 
@@ -345,6 +464,356 @@ console.log(unusualPropertyNames['']); // An empty string
 console.log(unusualPropertyNames.!); // SyntaxError: Unexpected token !
 
 console.log(unusualPropertyNames['!']); // Bang!
+```
+
+#### Tricky object literal questions
+
+**Q1: Is a missing property the same as a property set to `undefined`?**
+No. Reading either gives `undefined`, but only one of them exists.
+
+```js
+const missing = {};
+const undef = { a: undefined };
+
+console.log(missing.a, undef.a);  // undefined undefined
+console.log('a' in missing);      // false — property does not exist
+console.log('a' in undef);        // true  — property exists
+console.log(Object.keys(undef));  // ["a"]
+console.log(JSON.stringify(undef)); // "{}" — JSON drops undefined values
+```
+
+**Q2: Are object keys really numbers?**
+No. Every key (except symbols) is converted to a string.
+
+```js
+const obj = { 1: 'one', true: 'yes' };
+console.log(obj['1']);          // "one" — 1 was stored as "1"
+console.log(obj[1] === obj['1']); // true
+console.log(Object.keys(obj));  // ["1", "true"]
+```
+
+**Q3: What happens when an object is used as a key?**
+
+```js
+const a = { id: 1 };
+const b = { id: 2 };
+const store = {};
+
+store[a] = 'first';
+store[b] = 'second';
+
+console.log(store[a]);         // "second" — both keys became "[object Object]"
+console.log(Object.keys(store)); // ["[object Object]"]
+// Use a Map when you need objects as keys
+```
+
+**How we got that output — step by step:**
+
+1. Object keys can only be strings (or symbols). When you write `store[a]`, JavaScript must first turn `a` into a string.
+2. It calls `String(a)`, which uses `a.toString()`. Plain objects inherit `Object.prototype.toString`, which always returns `"[object Object]"` — it ignores the contents (`id: 1`).
+3. `store[a] = 'first'` therefore becomes `store["[object Object]"] = 'first'`.
+4. `b` is converted the same way, so `store[b] = 'second'` becomes `store["[object Object]"] = 'second'` — the **same key**, so `'first'` is overwritten.
+5. `store[a]` is converted again to `store["[object Object]"]`, which now holds `'second'`.
+6. Only one key was ever created, so `Object.keys(store)` is `["[object Object]"]`.
+
+```js
+console.log(String(a));              // "[object Object]"
+console.log(String(b));              // "[object Object]"
+console.log(String(a) === String(b)); // true — that's why they collide
+console.log(store['[object Object]']); // "second" — same as store[a] and store[b]
+```
+
+**Q4: Duplicate keys?**
+No error — the last one wins.
+
+```js
+const user = { name: 'A', name: 'B' };
+console.log(user); // { name: "B" }
+```
+
+**Q5: In what order are keys listed?**
+Integer-like keys first (ascending), then string keys in insertion order, then symbols.
+
+```js
+const o = { b: 1, 2: 'x', a: 2, 1: 'y' };
+console.log(Object.keys(o)); // ["1", "2", "b", "a"]
+```
+
+**Q6: Why is `{} == {}` false?**
+
+```js
+console.log({} == {});   // false — two different objects
+const x = {};
+const y = x;
+console.log(x === y);    // true — same reference
+y.value = 10;
+console.log(x.value);    // 10 — both variables point to one object
+```
+
+**Q7: Why does `{}` at the start of a statement behave strangely?**
+`{` at the start is read as a block, not an object.
+
+```js
+// {} + []   → 0 in the console: {} is an empty block, then +[] → 0
+console.log({} + []);  // "[object Object]" — inside an expression it is an object
+
+// Arrow functions returning an object need parentheses
+const bad  = () => { a: 1 };   // returns undefined — { } is a function body, "a:" is a label
+const good = () => ({ a: 1 }); // returns { a: 1 }
+console.log(bad(), good());    // undefined { a: 1 }
+```
+
+**Q8: Computed keys and shorthand**
+
+```js
+const field = 'email';
+const name = 'Rishabh';
+
+const profile = {
+  name,                 // shorthand for name: name
+  [field]: 'a@b.com',   // computed key → email
+  [`${field}Verified`]: true,
+  greet() { return 'hi'; } // method shorthand
+};
+
+console.log(profile); // { name: "Rishabh", email: "a@b.com", emailVerified: true, greet: ƒ }
+```
+
+More computed key and shorthand examples:
+
+```js
+// 1. Expression inside [] is evaluated first
+let i = 0;
+const seq = { [`item${++i}`]: 'a', [`item${++i}`]: 'b' };
+console.log(seq); // { item1: "a", item2: "b" }
+
+// 2. Computed key is still converted to a string
+const calc = { [1 + 2]: 'three', [[1, 2]]: 'array', [{}]: 'object' };
+console.log(Object.keys(calc)); // ["3", "1,2", "[object Object]"]
+
+// 3. Dynamic update in a form handler (common in React)
+const form = { name: '', email: '' };
+function onChange(field, value) {
+  return { ...form, [field]: value }; // only the changed field is replaced
+}
+console.log(onChange('email', 'x@y.com')); // { name: "", email: "x@y.com" }
+
+// 4. Building an object from an array
+const roles = ['admin', 'editor'];
+const flags = roles.reduce((acc, role) => ({ ...acc, [role]: true }), {});
+console.log(flags); // { admin: true, editor: true }
+
+// 5. Computed key with a symbol
+const secret = Symbol('secret');
+const vault = { [secret]: 42 };
+console.log(vault[secret]);    // 42
+console.log(Object.keys(vault)); // [] — symbol keys are hidden
+
+// 6. Shorthand needs a variable with that name
+const age = 30;
+const person = { age };        // { age: 30 }
+// const bad = { height };     // ReferenceError: height is not defined
+
+// 7. Shorthand captures the value at creation time
+let count = 1;
+const snapshot = { count };
+count = 99;
+console.log(snapshot.count);   // 1 — later changes to the variable don't affect it
+
+// 8. Computed method names and getters
+const action = 'save';
+const api = {
+  [action]() { return 'saved'; },         // method named "save"
+  [`${action}All`]() { return 'all saved'; },
+  get [`${action}Count`]() { return 3; }  // computed getter
+};
+console.log(api.save(), api.saveAll(), api.saveCount); // "saved" "all saved" 3
+
+// 9. Method shorthand vs arrow — `this` differs
+const counter = {
+  value: 10,
+  short() { return this.value; },  // `this` is counter
+  arrow: () => this?.value         // `this` from outer scope
+};
+console.log(counter.short(), counter.arrow()); // 10 undefined
+
+// 10. Shorthand method cannot be used with `new`
+const factory = {
+  normal: function () {},
+  short() {}
+};
+new factory.normal();   // works
+// new factory.short(); // TypeError: factory.short is not a constructor
+
+// 11. Duplicate computed keys — last one wins
+const k = 'x';
+const dup = { x: 1, [k]: 2 };
+console.log(dup); // { x: 2 }
+```
+
+**Q9: Does spread copy nested objects?**
+No — it is a shallow copy.
+
+```js
+const original = { a: 1, nested: { b: 2 } };
+const copy = { ...original };
+
+copy.a = 100;
+copy.nested.b = 200;
+
+console.log(original.a);        // 1   — top level copied
+console.log(original.nested.b); // 200 — nested object is shared
+// Use structuredClone(original) for a deep copy
+
+console.log({ ...{ a: 1 }, ...{ a: 2 } }); // { a: 2 } — later spread wins
+```
+
+**Q10: Does `const` make an object immutable?**
+
+```js
+const config = { debug: false };
+config.debug = true;        // allowed
+// config = {};             // TypeError — cannot reassign
+
+Object.freeze(config);
+config.debug = false;       // silently ignored (TypeError in strict mode)
+console.log(config.debug); // true
+```
+
+**Q11: What does `this` refer to in an object literal?**
+
+```js
+const counter = {
+  count: 5,
+  normal() { return this.count; },
+  arrow: () => this.count
+};
+
+console.log(counter.normal()); // 5 — `this` is counter
+console.log(counter.arrow());  // undefined — arrow functions do not get their own `this`
+
+const fn = counter.normal;
+console.log(fn());             // undefined (TypeError in strict mode) — `this` is lost when the method is detached
+```
+
+**Q12: What happens when an array is used as a key?**
+The array is converted with `join(',')`, so different arrays can land on the same key.
+
+```js
+const map = {};
+map[[1, 2]] = 'array';
+console.log(map['1,2']);    // "array" — key is the string "1,2"
+console.log(map[[1, 2]]);   // "array" — a new array, but same string
+map[['1,2']] = 'string in array';
+console.log(map[[1, 2]]);   // "string in array" — overwritten
+map[[]] = 'empty';
+console.log(Object.keys(map)); // ["1,2", ""] — [] becomes ""
+```
+
+**Q13: What if the object used as a key has its own `toString`?**
+JavaScript calls it to build the key.
+
+```js
+const userA = { id: 1, toString() { return 'user-1'; } };
+const userB = { id: 2, toString() { return 'user-2'; } };
+const cache = {};
+
+cache[userA] = 'A';
+cache[userB] = 'B';
+
+console.log(cache[userA]);      // "A" — no collision now
+console.log(Object.keys(cache)); // ["user-1", "user-2"]
+console.log(cache['user-1']);   // "A" — any value turning into "user-1" matches
+```
+
+**Q14: What about `null`, `undefined` and booleans as keys?**
+
+```js
+const o = {};
+o[null] = 'n';
+o[undefined] = 'u';
+o[true] = 't';
+
+console.log(o.null);      // "n" — key is the string "null"
+console.log(o['undefined']); // "u"
+console.log(o.true);      // "t"
+
+let key;                  // forgot to assign
+o[key] = 'oops';
+console.log(o.undefined); // "oops" — silently overwrote the "undefined" key
+```
+
+**Q15: Which number keys collide?**
+The key is `String(number)`, so values that print the same collide and values that print differently do not.
+
+```js
+const n = {};
+n[1] = 'a';
+n[1.0] = 'b';   // String(1.0) → "1"
+n['1.0'] = 'c'; // stays "1.0"
+n[-0] = 'd';    // String(-0) → "0"
+n[1e3] = 'e';   // String(1e3) → "1000"
+
+console.log(Object.keys(n)); // ["0", "1", "1000", "1.0"]
+console.log(n[1]);           // "b" — 1.0 overwrote 1
+console.log(n[0]);           // "d"
+```
+
+**Q16: Are symbol keys converted to strings too?**
+No. Symbols stay symbols, so they never collide — but most key listings skip them.
+
+```js
+const id = Symbol('id');
+const item = { [id]: 123, name: 'pen' };
+
+console.log(item[id]);                   // 123
+console.log(item['id']);                 // undefined — not the string "id"
+console.log(Object.keys(item));          // ["name"] — symbol hidden
+console.log(JSON.stringify(item));       // '{"name":"pen"}' — symbol dropped
+console.log(Object.getOwnPropertySymbols(item)); // [Symbol(id)]
+```
+
+**Q17: Why does `obj['a.b']` not read a nested property?**
+Brackets take the whole string as one key; dots are not parsed.
+
+```js
+const settings = { a: { b: 1 }, 'a.b': 2 };
+console.log(settings.a.b);    // 1 — nested access
+console.log(settings['a.b']); // 2 — a single key named "a.b"
+```
+
+**Q18: Why can't I store a key called `__proto__`?**
+In an object literal, `__proto__: value` sets the prototype instead of creating a property.
+
+```js
+const safe = { __proto__: { isAdmin: true } };
+
+console.log(Object.keys(safe)); // [] — no own property, prototype was changed
+console.log(safe.isAdmin);      // true — inherited from the prototype
+
+const dict = Object.create(null); // object with no prototype
+dict['__proto__'] = 'value';
+console.log(Object.keys(dict));  // ["__proto__"] — stored as a normal key
+// Or simply use a Map for user-supplied keys
+```
+
+**Q19: The same idea with `Map` — does it fix all of the above?**
+Yes. `Map` keeps keys as they are, using reference/SameValueZero comparison.
+
+```js
+const a = { id: 1 };
+const b = { id: 1 };
+const m = new Map();
+
+m.set(a, 'A');
+m.set(b, 'B');
+m.set(1, 'number');
+m.set('1', 'string');
+
+console.log(m.get(a), m.get(b)); // "A" "B" — different objects, different keys
+console.log(m.get({ id: 1 }));   // undefined — new object, new reference
+console.log(m.get(1), m.get('1')); // "number" "string" — no string conversion
+console.log(m.size);             // 4
 ```
 
 RegExp literals
