@@ -3,406 +3,452 @@ title: "Intro to React"
 part: "React Notes"
 track: "react"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 2
-description: "React — Intro to React."
+order: 1
+description: "React — what React is, declarative UI, virtual DOM, data binding, and how to set up a project."
 ---
-A JavaScript library for building User interface. React has component based architecture which lets you break down applications into small encapsulated parts which can then be composed to make complex UI.
+### What is React?
+
+React is a **JavaScript library for building user interfaces**. It is maintained by Meta and the community. React has a **component-based architecture**, which lets you break an application into small, encapsulated parts (components) that can be composed to build complex UIs.
+
+React only handles the **view** layer. For routing, data fetching or global state you add other libraries (React Router, TanStack Query, Redux…) or use a framework built on React such as **Next.js** or **React Router (Remix)**.
+
+```jsx
+function Greeting({ name }) {
+  return <h1>Hello, {name}!</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Greeting name="Asha" />
+      <Greeting name="Rishabh" />
+    </div>
+  );
+}
+// Renders:
+// Hello, Asha!
+// Hello, Rishabh!
+```
 
 ### React is composable
 
-We have small pieces that we can put together and make something larger or greater than individual pieces together.
+We build small pieces (components) and put them together to make something larger. A `Page` can be made of a `Header`, `Sidebar` and `Article`, and each of those can be made of smaller components.
 
-### Declarative vs Imperative
+```jsx
+function Page() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Sidebar />
+        <Article />
+      </main>
+    </>
+  );
+}
+```
 
-A **declarative** style, like what react has, allows you to control flow and state in your application by saying "It should look like this". An **imperative** style turns that around and allows you to control your application by saying "This is what you should do".
+### Declarative vs imperative
 
-The benefit of declarative is that you don't get bogged down in the implementation details of representing the state. You're delegating the organizational component of keeping your application views consistent so you just have to worry about state.
+A **declarative** style, like React's, lets you describe the UI by saying **"it should look like this"** for the current state. An **imperative** style tells the browser **"this is what you should do"**, step by step.
 
-| Declarative | Imperative |
+The benefit of declarative code is that you don't get bogged down in the details of updating the DOM. You describe the UI for a given state, and React keeps the screen in sync when the state changes — you only have to worry about the state.
+
+| Declarative (React) | Imperative (plain DOM) |
 | --- | --- |
-| root.render(<h1 className=”header”>Hello, React</h1>) | const h1 = document.createElement(“h1”); h1.textContent=”Hello, React”; h1.className = “header”; document.getElementById(“root”).appendChild(h1); |
+| `root.render(<h1 className="header">Hello, React</h1>)` | `const h1 = document.createElement("h1");`<br>`h1.textContent = "Hello, React";`<br>`h1.className = "header";`<br>`document.getElementById("root").appendChild(h1);` |
+
+A clearer example — showing a count:
+
+```jsx
+// Declarative: describe the UI for the current state
+function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>Clicked {count} times</button>;
+}
+```
+
+```js
+// Imperative: you update the DOM yourself on every change
+let count = 0;
+const button = document.createElement('button');
+button.textContent = 'Clicked 0 times';
+button.addEventListener('click', () => {
+  count++;
+  button.textContent = `Clicked ${count} times`; // must remember to update the DOM
+});
+document.body.appendChild(button);
+```
+
+### Virtual DOM and reconciliation
+
+Updating the real DOM is relatively slow, and updating it by hand is error-prone. React keeps a lightweight JavaScript description of the UI — often called the **virtual DOM** (React elements).
+
+When state or props change:
+
+1.  React **re-renders** the component, producing a new tree of React elements.
+2.  It **compares (diffs)** the new tree with the previous one. This process is called **reconciliation**.
+3.  It applies **only the necessary changes** to the real DOM (the **commit** phase).
+
+```jsx
+function Clock({ time }) {
+  return (
+    <div>
+      <h1>Current time</h1>  {/* unchanged → DOM node is left alone */}
+      <p>{time}</p>          {/* changed → only this text node is updated */}
+    </div>
+  );
+}
+```
+
+Since React 16, the reconciliation engine is called **Fiber**. It can split rendering work into small units, pause it, and give priority to urgent updates like typing — this is what makes React 18's concurrent features possible.
+
+**Note:** the virtual DOM doesn't make React automatically faster than hand-written DOM code. Its benefit is that you write simple declarative code and still get **efficient enough** updates. (See **Lists and Keys** for how the diffing algorithm works.)
 
 ### Data binding
 
-Two type of data binding:
+There are two types of data binding:
 
-1.  One way data binding
-2.  Two way data binding
+1.  One-way data binding
+2.  Two-way data binding
 
-**One-way** means that the binding happens in one direction. In this case, changes in the data automatically update the UI, but changes in the UI do not automatically update the data.React achieves one-way data binding by using state and props.
+**One-way** data binding means data flows in **one direction**: from state to the UI. Changes in the data automatically update the UI, but changes in the UI don't automatically update the data. In React, data flows **down** from parent to child through **props**, and a component re-renders when its **state** changes.
 
-**Two-way** data binding allows bidirectional data flow, meaning that changes in the UI automatically update the component’s state, and changes in the state automatically update the UI. In React, two-way data binding is achieved using controlled components.
+**Two-way** data binding means changes in the UI automatically update the data, and changes in the data automatically update the UI (like Angular's `[(ngModel)]` or Vue's `v-model`). React doesn't have built-in two-way binding. You get the same result with **controlled components** — the input shows the state (`value`), and an event handler updates the state (`onChange`).
 
-### Advantages
+```jsx
+function NameForm() {
+  const [name, setName] = useState('');
 
-Advantages of React framework:-
+  return (
+    <>
+      <input value={name} onChange={e => setName(e.target.value)} /> {/* UI → state */}
+      <p>Hello, {name}</p>                                            {/* state → UI */}
+    </>
+  );
+}
+```
 
--   **No server dependency:** React apps run in the browser. They don't run on the server. Now we don't have to wait for a server response to get a new page or to render something new.
--   **Code Splitting:** If we split up our web app or website into such components (We could have a Header component, a Sidebar component and then a headline in the Article Content component), we can build these building blocks. (These components) contain pieces of code. We don't have to build our entire web page as one bigger picture. We can build all these tiny things on their own.
--   This of course makes **working in teams easier**.
--   **Code Manageable:** But even if we're working alone, it makes it easy for us to keep our code manageable. If we change the headline later on, we only have to go into that component and update it; we don't have to find that code in our entire web page code.
--   **Reusability**: We can also easily reuse components. For example, if we have a list item component and we want to output a list of these list items, then we only have to write the code once and can then easily reuse it and this is important.
--   **React is declarative:**
-    -   Tell React what you want and React will build the actual UI.
-    -   React will handle efficiently updating and rendering of the components.
-    -   DOM updates are handled gracefully in React
+### Advantages of React
 
-### React advantage over Angular
+-   **Component-based:** we split the UI into components (for example a `Header`, a `Sidebar`, and an `ArticleContent` component). We don't build the entire page as one big piece — we build these small building blocks on their own.
+-   **Easier teamwork:** different people can work on different components.
+-   **Manageable code:** even if we're working alone, it's easier to keep code organized. If we change the headline later, we only update that component; we don't have to search the whole page's code.
+-   **Reusability:** we write a component once and reuse it. For example, a `ListItem` component can be used to render every item in a list.
+-   **Declarative:**
+    -   Tell React what you want, and React builds the actual UI.
+    -   React efficiently updates and re-renders components when data changes.
+    -   DOM updates are handled for you.
+-   **Rich client-side interactivity:** the app can update the page without asking the server for a new page each time.
+-   **Huge ecosystem and community:** routing, forms, data fetching, testing and UI libraries, plus React Native for mobile apps.
+-   **Learn once, write anywhere:** the same concepts work for web (React DOM), mobile (React Native) and server rendering (Next.js).
 
-1.  **Data binding:** React works with **one-way data binding** whereas Angular operates using two-way data binding. Likewise, Angular uses real DOM while React relies upon virtual DOM.
-2.  **React is faster** than angular since it relies upon Virtual DOM.
-3.  **Flexibility and Freedom:** React has a diverse and vibrant environment that provides developers with the flexibility to create your applications. This makes it more popular than Angular.
-4.  **Learning curve**: Reactjs allows you to easily learn and make an app in the React ecosystem if you are good with JavaScript.
+### React vs Angular
 
-### React Major Drawback
+| | React | Angular |
+| --- | --- | --- |
+| Type | UI **library** | full **framework** (routing, forms, HTTP, DI built in) |
+| Language | JavaScript or TypeScript + JSX | TypeScript + HTML templates |
+| Data binding | one-way (two-way via controlled components) | two-way binding available (`[(ngModel)]`) |
+| DOM updates | virtual DOM + reconciliation | change detection (Signals in newer versions) updating the real DOM |
+| Flexibility | choose your own libraries | opinionated, "batteries included" |
+| Learning curve | smaller core, easy if you know JavaScript | steeper (RxJS, DI, modules, decorators) |
 
-React also offers the facility to make seamless transitions between two versions. But, the front-end development **library relies heavily on the external libraries** which make it possible to update and migrate the third-party components. Besides, **the developers have to check all the time if the used third-party libraries are compatible with the recent versions of the JavaScript framework or not,** which increases the efforts of the developers.
+1.  **Data binding:** React uses **one-way data flow**, which makes it easier to track where data changes. Angular supports two-way binding.
+2.  **Performance:** both are fast for real-world apps. React's virtual DOM avoids unnecessary DOM updates; Angular has its own optimized change detection. "React is faster than Angular" is too simple — it depends on the app.
+3.  **Flexibility and freedom:** React's large ecosystem lets you choose the tools you want, which is one reason it's so popular.
+4.  **Learning curve:** React is easier to start with if you already know JavaScript well.
+
+### React's major drawback
+
+React is only a view library, so a real app **relies heavily on third-party libraries** (routing, state management, forms, data fetching). Developers have to choose between many options and **keep checking that those libraries stay compatible** with new React versions, which increases effort. Other drawbacks:
+
+-   Fast-changing ecosystem and best practices (class components → hooks → Server Components).
+-   JSX and build tooling add a learning step for beginners.
+-   A client-only React app needs extra work for SEO and fast first load (solved by frameworks like Next.js).
 
 ### Babel
 
-**Babel** is a **JS transpiler** that converts new JS code into old ones. It is a very flexible tool in terms of transpiling. One can easily add presets such as es2015, es2016, es2017, or env; so that Babel compiles them to ES5.
-Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript in current and older browsers or environments. Here are the main things Babel can do for you:
+**Babel** is a **JavaScript compiler (transpiler)** that converts modern JavaScript (and JSX) into code that older browsers and environments understand.
 
--   Transform syntax
--   Polyfill features that are missing in your target environment (through a third-party polyfill such as core-js)
--   Source code transformations (codemods)
+Main things Babel can do:
 
-// Babel Input: ES2015 arrow function
+-   **Transform syntax** — e.g. arrow functions, optional chaining, JSX.
+-   **Polyfill features** missing in the target environment (through a third-party polyfill such as `core-js`).
+-   **Source code transformations** (codemods).
+
+Common presets: **`@babel/preset-env`** (modern JavaScript for your target browsers) and **`@babel/preset-react`** (JSX).
 
 ```jsx
+// Babel input: ES2015 arrow function
 [1, 2, 3].map(n => n + 1);
-```
-// Babel Output: ES5 equivalent
 
-\[1, 2, 3\].map(function(n) {
-
-```jsx
-return n + 1;
-
+// Babel output: ES5 equivalent
+[1, 2, 3].map(function (n) {
+  return n + 1;
 });
 ```
 
+```jsx
+// Babel input: JSX
+const element = <h1 className="title">Hello</h1>;
+
+// Babel output (React 17+ automatic JSX runtime)
+import { jsx as _jsx } from "react/jsx-runtime";
+const element = _jsx("h1", { className: "title", children: "Hello" });
+```
+
+Today many tools use faster compilers written in Rust or Go (**SWC**, **esbuild**, **Oxc**) for the same job, but the concept is the same.
+
 ### Webpack
 
-**Webpack** is a **modular build tool** that has two sets of functionality — Loaders and Plugins. Loaders transform the source code of a module. They allow you to pre-process files as you import or “load” them. For example, **style-loader** adds CSS to DOM using style tags. sass-loader compiles SASS files to CSS. babel-loader transpiles JS code given the presets. Plugins are the core of Webpack. It is a JavaScript object that has an apply method. This apply method is called by the webpack compiler, giving access to the entire compilation lifecycle. They can do things that loaders can’t. For example, there is a plugin called UglifyJS that minifies and uglifies the output of webpack. There is **plugin @babel/plugin-proposal-class-properties** plugin transforms static class properties as well as properties declared with the property initializer syntax.
+**Webpack** is a **module bundler**. It starts from an entry file, follows every `import`, and bundles your JavaScript, CSS, images and other files into optimized files for the browser. It has two main extension points — **loaders** and **plugins**.
 
-### React Project using webpack
+-   **Loaders** transform individual files as they are imported ("loaded"). For example, `babel-loader` transpiles JS/JSX, `css-loader` lets you `import './style.css'`, `style-loader` injects that CSS into the page with `<style>` tags, and `sass-loader` compiles SASS to CSS.
+-   **Plugins** hook into the whole build process and can do things loaders can't. A plugin is an object with an `apply` method that webpack calls with access to the entire compilation lifecycle. For example, `HtmlWebpackPlugin` generates the HTML file, and `TerserPlugin` minifies the output (it replaced the older UglifyJS plugin).
 
-### Step 1: Create package.json file
+### React project using webpack (manual setup)
 
-cd ~
+This setup is useful to **understand** what tools like Vite do for you. For new projects, use **Vite** or a framework (see below).
 
+#### Step 1: Create a package.json file
+
+```bash
 mkdir projectname
+cd projectname
+npm init -y   # creates package.json
+```
 
-cd ~/projectname
+#### Step 2: Install react and react-dom
 
-// Creates package.json file
-
-npm init –yes
-
-### Step 2: Install react and react-dom
-
+```bash
 npm i react react-dom
+```
 
-### Step 3: Install Babel
+#### Step 3: Install Babel
 
-Let's install babel and the required presets and plugins.
+```bash
+npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
+```
 
-npm i -D @babel/preset-react @babel/preset-env @babel/core babel-loader @babel/plugin-proposal-class-properties
+-   **@babel/core** contains the core functionality of Babel.
+-   **@babel/preset-env** lets you use the latest JavaScript without micromanaging which syntax transforms your target browsers need.
+-   **@babel/preset-react** transforms JSX.
+-   **babel-loader** is used by webpack to run Babel on your files.
 
-**@babel/preset-react** is preset for react,
+(Older setups also installed `@babel/plugin-proposal-class-properties` for class fields like `state = {}`. Class fields are now standard and included in `@babel/preset-env`, so it's no longer needed.)
 
-**@babel/preset-env** is a smart preset that allows you to use the latest JavaScript without needing to micromanage which syntax transforms are needed by your target environment(s).
+#### Step 4: Create a Babel config file (.babelrc)
 
-**@babel/core** contains the core functionality of Babel.
+Here we tell `@babel/preset-env` which browsers to support, and to leave `import`/`export` alone (`"modules": false`) so webpack can handle modules (and remove unused code). We also add `@babel/preset-react` for JSX, using the automatic runtime so you don't need `import React` in every file.
 
-**babel-loader** will be used by webpack to transpile Modern JS into the JS code that browsers can understand.
-
-Since all browsers don’t understand JavaScript’s static class’s properties features. **@babel/plugin-proposal-class-properties** plugin transforms static class properties as well as properties declared with the property initializer syntax.
-
-### Step 4: Create a babel config file .babelrc
-
-Here we tell babel to use @babel/preset-env target the last few versions of browsers and support them. This will ensure that when the browser is updated it will stop transpiling of the old browser version and will transpile for the new one.
-
-modules: false means hey babel! don’t do anything with the modules, let webpack handle it.
-
-We also tell webpack to use @babel/preset-react for React and @babel/plugin-proposal-class-properties to transform static class properties
-
+```json
 {
-
-```jsx
-"presets": [
-```
-\[ "@babel/preset-env", {
-
-```jsx
-"modules": false,
-
-"targets": {
-
-"browsers": [
-```
-"last 2 Chrome versions",
-
-"last 2 Firefox versions",
-
-"last 2 Safari versions",
-
-"last 2 iOS versions",
-
-"last 1 Android version",
-
-"last 1 ChromeAndroid version",
-
-"ie 11"
-
-\]
-
-```jsx
+  "presets": [
+    ["@babel/preset-env", {
+      "modules": false,
+      "targets": "> 0.5%, last 2 versions, not dead"
+    }],
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ]
 }
 ```
-} \],
 
-"@babel/preset-react"
+#### Step 5: Install webpack and the dev server
 
-\],
-
-```jsx
-"plugins": [ "@babel/plugin-proposal-class-properties" ]
-
-}
+```bash
+npm i -D webpack webpack-cli webpack-dev-server html-webpack-plugin
 ```
-### Step 5: Install Webpack and Webpack Dev Server
 
-npm i -D webpack webpack-cli webpack-dev-server html-webpack-plugin path
+(`path` is a built-in Node.js module, so it doesn't need to be installed.)
 
-### Step 6: Create directories and files for the project
+#### Step 6: Create directories and files
 
-Create directories called src and public .Create a HTML file public/index.htm, entry filesrc/index.js and a component file src/App.js inside of it.
+Create `src` and `public` folders, an HTML file `public/index.html`, the entry file `src/index.js`, and a component file `src/App.js`.
 
+```bash
 mkdir src public
-
 touch src/index.js src/App.js public/index.html
+```
 
-### Step 7: Set up Webpack configuration file webpack.config.js
+#### Step 7: Set up webpack.config.js
 
-Here html-webpack-plugin will use your custom index.html that will be rendered by webpack-dev-server
+`html-webpack-plugin` uses your custom `index.html` and injects the bundled script into it. (If you don't pass a template, it generates a basic HTML5 file that includes all bundles.)
 
-Please note that if you don’t pass any param in new HTMLWebpackPlugin(), then thehtml-webpack-plugin plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags.
+Webpack only understands JavaScript and JSON by default, so we add loaders for CSS and images:
 
-Also add the style loader, css loader and file-loader for styles and images. As webpack understands JavaScript so we need to convert the styles and images in JavaScript using these loaders
+```bash
+npm i -D style-loader css-loader
+```
 
-npm install style-loader css-loader file-loader
-
-```jsx
-const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
-
-const path = require( 'path' );
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-
-context: __dirname,
-
-entry: './src/index.js',
-
-output: {
-
-path: path.resolve( __dirname, 'dist' ),
-
-filename: 'main.js',
-
-publicPath: '/',
-```
-},
-
-```jsx
-devServer: {
-
-historyApiFallback: true
-```
-},
-
-```jsx
-module: {
-
-rules: [
-```
-{
-
-```jsx
-test: /\.js$/,
-
-use: 'babel-loader',
-```
-},
-
-{
-
-```jsx
-test: /\.css$/,
-
-use: ['style-loader', 'css-loader'],
-```
-},
-
-{
-
-```jsx
-test: /\.(png|j?g|svg|gif)?$/,
-
-use: 'file-loader'
-
-}
-```
-\]
-
-},
-
-```jsx
-plugins: [
-```
-new HtmlWebPackPlugin({
-
-```jsx
-template: path.resolve( __dirname, 'public/index.html' ),
-
-filename: 'index.html'
-```
-})
-
-\]
-
-```jsx
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.[contenthash].js',
+    publicPath: '/',
+    clean: true
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  devServer: {
+    historyApiFallback: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpe?g|svg|gif)$/,
+        type: 'asset/resource' // built-in in webpack 5 (replaces file-loader)
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public/index.html')
+    })
+  ]
 };
 ```
-Notice that we have also passed historyApiFallbackto true and public path to ‘/’
 
-What it does is that it redirects all server requests to /index.html which will download all the JS resources and allow React Router to take it from there. If we don’t do this then when you add routes later using react-router or @reach/router and if you access a route like /dashboard, the browser will make a GET request to /dashboard which will fail, as you have no logic on the server to handle that request.
+Notice `historyApiFallback: true` and `publicPath: '/'`:
 
-So publicPath allows you to specify the base path for all the assets within your application. historyAPIFallback will redirect 404s to /index.html.
+-   **`historyApiFallback`** makes the dev server return `index.html` for unknown URLs. Without it, if you add routes with React Router and open `/dashboard` directly, the browser requests `/dashboard` from the server, which has no such file → 404. With it, `index.html` loads, and React Router shows the right page.
+-   **`publicPath`** is the base path for all assets. With `'/'`, scripts load from `/main.js` even when you're on a nested URL like `/users/5`.
 
-### Step 8: Create a React Component src/App.js
-
-Create a class inside src/App.js and export it
+#### Step 8: Create a React component (src/App.js)
 
 ```jsx
-import React from 'react';
-
-class App extends React.Component {
-```
-render() {
-
-```jsx
-return(
-```
-<div>
-
-My App Component
-
-</div>
-
-```jsx
-);
-
+function App() {
+  return <div>My App Component</div>;
 }
 
-}
-
-export default App
+export default App;
 ```
-### Step 9: Create a div#root inside public/index.html
 
+(The original notes used a class component. Function components with hooks are the modern standard.)
+
+#### Step 9: Create a div#root inside public/index.html
+
+```html
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- html-webpack-plugin injects the <script> tag automatically -->
+  </body>
+</html>
+```
 
-`<html lang="en">`
+#### Step 10: Render the App component into the DOM
 
-`<head>`
-
-`<meta charset="UTF-8">`
-
-<title>React App</title>
-
-`</head>`
-
-`<body>`
-
-<div id="root"></div>
-
-`<script type="text/javascript" src="main.js"></script></body>`
-
-`</html>`
-
-### Step 10: Insert App.js component into the DOM
-
-Now let's insert the App.js component into div with the id root that exists public/index.html file
-
+```jsx
 // src/index.js
+import { createRoot } from 'react-dom/client';
+import App from './App';
 
-```jsx
-import React from 'react';
-
-import ReactDOM from 'react-dom';
-
-import App from "./App";
-
-ReactDOM.render( <App/>, document.getElementById('root') );
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
 ```
-### Step 11: Add scripts in the package.json
 
-```jsx
+**Note:** older code uses `ReactDOM.render(<App />, document.getElementById('root'))`. It was deprecated in React 18 and **removed in React 19** — use `createRoot`.
+
+#### Step 11: Add scripts to package.json
+
+```json
 "scripts": {
+  "dev": "webpack serve --mode=development --open",
+  "build": "webpack --mode=production"
+}
 ```
-"webpack-dev-server": "webpack-dev-server",
 
-```jsx
-"dev": "webpack-dev-server --mode=development",
+Now run the dev server:
 
-"prod": "webpack --mode=production"
-```
-},
-
-Now run the webpack dev server.
-
+```bash
 npm run dev
+```
 
-### React Project using create-react-app package
+### React project using Create React App (deprecated)
 
+```bash
 npx create-react-app project_name
+```
 
-**npx:** it is an npm package runner that can execute any package that you want from the npm registry without even installing that package.
+**npx** is an npm package runner. It can run any package from the npm registry without installing it globally first.
 
-### Understand Package.json
+**Create React App (CRA) was officially deprecated in February 2025.** It was slow, installed many dependencies, and is no longer maintained. You'll still see it in older projects and tutorials. For new apps, use **Vite** or a **framework**.
 
-**package.json** is used to store the metadata associated with the project as well as to store the list of dependency packages. In order to add dependency packages to your projects, you need to create a package.json file. The file makes it easy for others to manage and install the packages associated with the project.
+### React project using Vite (recommended for SPAs)
+
+Vite is a build tool that gives a faster, leaner development experience. It has two main parts:
+
+-   A **dev server** that serves your source files as native ES modules, with extremely fast **Hot Module Replacement (HMR)** — only the changed module is reloaded.
+-   A **build command** that bundles your code for production into highly optimized static files.
+
+```bash
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+npm run dev
+```
+
+Then follow the prompts (you can also choose `react-ts` for TypeScript).
+
+For full-stack apps with routing, server rendering and data loading, the React team recommends a **framework** such as **Next.js** or **React Router (framework mode)**:
+
+```bash
+npx create-next-app@latest
+```
+
+### Understand package.json
+
+**package.json** stores the project's metadata and the list of packages it depends on. It makes it easy for others to install the same packages and run the project.
 
 A package.json file:
 
--   lists the packages your project depends on
--   specifies versions of a package that your project can use.
+-   lists the packages your project depends on,
+-   specifies which versions of those packages your project can use,
+-   defines scripts like `dev`, `build` and `test`,
 -   makes your build reproducible, and therefore easier to share with other developers.
 
-A package.json file may look similar to this:![](/notes-img/react-notes/img-003.webp)
+A package.json file may look similar to this: ![](/notes-img/react-notes/img-003.webp)
 
--   **name** is the name of your app, which you give while executing create-react-app<name-of-application>. You can give any name of your choice to the app, the only condition being that it should be in lowercase. It may also contain hyphens and underscores.
--   **version** is the current version of your app. The version field must be of the form x.x.x. By default, create-react-app initializes it as 0.1.0
--   "**private**": true is one of the most crucial attributes. The problem is that if you set private as true in your package.json, then npm will refuse to publish it within the npm ecosystem. This is a way to prevent the accidental publication of private repositories.
--   **dependencies** contains all the required node modules and versions required for the application in production. In the snapshot above, it contains three dependencies, which allows us to use react, react-dom and react-scripts in our JavaScript. react-scripts provide a set of useful development scripts for working with React.
+-   **name** — the name of your app. It must be lowercase, and may contain hyphens and underscores.
+-   **version** — the current version, in the form `major.minor.patch` (e.g. `0.1.0`).
+-   **"private": true** — npm will **refuse to publish** the package. This prevents accidentally publishing a private project.
+-   **dependencies** — packages needed to **run** the app in production (e.g. `react`, `react-dom`).
+-   **devDependencies** — packages needed only during **development and build** (e.g. `vite`, `eslint`, testing tools).
+-   **scripts** — commands you run with `npm run <name>`.
 
-In the screenshot above, the react version is specified as ^16.6.3, which means that npm will install the most recent major version matching 16.x.x. In contrast, if you see something like ~5.6.7 in package.json, it means that it will install the most recent minor version matching 5.6.x.
+**Version ranges (semver):**
 
-In order to add a package under dependencies, while installing, use --save.
+| Written as | Means | Example allowed versions |
+| --- | --- | --- |
+| `^16.6.3` | same **major**, newest minor/patch | `16.6.3` … `16.14.0` (not `17.0.0`) |
+| `~5.6.7` | same **major and minor**, newest patch | `5.6.7` … `5.6.9` (not `5.7.0`) |
+| `5.6.7` | exactly this version | `5.6.7` |
 
-Since npx create-react-app is very slow and installs dependencies which are not required.
+The exact installed versions are locked in **package-lock.json**, so everyone gets the same versions.
 
-### React Project using vite package
-
-Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
-
--   A dev server that provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
--   A build command that bundles your code with Rollup, pre-configured to output highly optimized static assets for production
-
-npm create vite@latest.
-Then follow the prompts!
+`npm install <package>` saves it to `dependencies` automatically (the old `--save` flag is the default since npm 5). Use `-D` (`--save-dev`) for `devDependencies`.
