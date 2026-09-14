@@ -121,7 +121,7 @@ h1, h2, h3, h4 {
 }
 
 /* Collapsible answers (<details><summary>) in question pages */
-.prose details {
+.prose details:not(.qa) {
   margin: 0.8rem 0 1.4rem;
   border: 1px solid var(--navy-line);
   border-left: 3px solid var(--cyan);
@@ -129,14 +129,14 @@ h1, h2, h3, h4 {
   background: var(--navy-card);
   padding: 0 1rem;
 }
-.prose summary {
+.prose details:not(.qa) > summary {
   cursor: pointer;
   padding: 0.6rem 0;
   color: var(--cyan);
   font-weight: 700;
 }
-.prose details[open] { padding-bottom: 0.4rem; }
-.prose details[open] > summary { border-bottom: 1px solid var(--navy-line); margin-bottom: 0.4rem; }
+.prose details:not(.qa)[open] { padding-bottom: 0.4rem; }
+.prose details:not(.qa)[open] > summary { border-bottom: 1px solid var(--navy-line); margin-bottom: 0.4rem; }
 
 .prose :where(code):not(pre code) {
   font-family: var(--font-mono);
@@ -254,3 +254,18 @@ h1, h2, h3, h4 {
 }
 .mermaid:not([data-processed]) { color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; white-space: pre; }
 
+/* ---------------- small screens ---------------- */
+@media (max-width: 640px) {
+  /* less empty padding inside code blocks so more code fits */
+  .expressive-code { --ec-codePadInl: 0.85rem; --ec-codePadBlk: 0.7rem; }
+  .prose :where(.expressive-code, pre) { margin-inline: 0; }
+  .prose pre:not([class]) { padding: 0.8rem; font-size: 0.78rem; }
+
+  .prose table { font-size: 0.82rem; }
+  .prose th, .prose td { padding: 0.4rem 0.5rem; }
+  .prose h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
+  .prose h2 { font-size: 1.35rem; }
+  .prose details:not(.qa) { padding: 0 0.75rem; }
+}
+/* keep short code snippets in table cells on one line */
+.prose td > code:only-child { white-space: nowrap; }

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import TrackLinks from '../components/TrackLinks.astro';
 import { SITE, TRACKS, trackBySlug, u } from '../consts';
 
 type PagerLink = { href: string; label: string };
@@ -23,6 +24,9 @@ const prev: PagerLink | null =
 const next: PagerLink | null =
   nextProp ??
   (idx >= 0 && idx < TRACKS.length - 1 ? { href: u(`/${TRACKS[idx + 1].slug}`), label: TRACKS[idx + 1].title } : null);
+
+// The TOC slot is rendered twice: sticky sidebar on desktop, collapsible panel on mobile.
+const tocHtml = Astro.slots.has('toc') ? await Astro.slots.render('toc') : '';
 
 const pageUrl = new URL(Astro.url.pathname, SITE.url).href;
 const jsonLd = [
@@ -54,40 +58,7 @@ const jsonLd = [
   <div class="prep">
     <aside class="prep-rail" aria-label="Tracks">
       <p class="prep-rail__label">Tracks</p>
-      <ul>
-        {TRACKS.map((t) => {
-          const onTrack = t.slug === track;
-          const path = Astro.url.pathname.replace(/\/$/, '');
-          const onQuestions = onTrack && path.endsWith('/questions');
-          const activeSection = onTrack
-            ? t.sections?.find((sec) => path === u(`/${t.slug}/${sec.path}`).replace(/\/$/, '') || path.startsWith(u(`/${t.slug}/${sec.path}/`)))
-            : undefined;
-          return (
-            <li>
-              <a
-                href={u(`/${t.slug}`)}
-                aria-current={onTrack && !onQuestions && !activeSection ? 'page' : undefined}
-              >
-                {t.title}
-              </a>
-              {t.hasQuestions && (
-                <a class="sub" href={u(`/${t.slug}/questions`)} aria-current={onQuestions ? 'page' : undefined}>
-                  Interview questions
-                </a>
-              )}
-              {t.sections?.map((sec) => (
-                <a
-                  class="sub"
-                  href={u(`/${t.slug}/${sec.path}`)}
-                  aria-current={activeSection === sec ? 'page' : undefined}
-                >
-                  {sec.label}
-                </a>
-              ))}
-            </li>
-          );
-        })}
-      </ul>
+      <TrackLinks track={track} />
     </aside>
 
     <article class="prep-body">
@@ -96,6 +67,19 @@ const jsonLd = [
         <span aria-hidden="true">/</span>
         <span>{current?.title ?? title}</span>
       </nav>
+
+      <div class="mobile-nav">
+        {tocHtml && (
+          <details class="m-panel">
+            <summary>On this page</summary>
+            <div class="m-panel__body" set:html={tocHtml} />
+          </details>
+        )}
+        <details class="m-panel">
+          <summary>Tracks</summary>
+          <div class="m-panel__body"><TrackLinks track={track} /></div>
+        </details>
+      </div>
       <slot />
 
       <nav class="pager" aria-label="Pagination">
@@ -114,9 +98,7 @@ const jsonLd = [
       </nav>
     </article>
 
-    <div class="prep-toc">
-      <slot name="toc" />
-    </div>
+    <div class="prep-toc" set:html={tocHtml} />
   </div>
 </BaseLayout>
 
@@ -134,6 +116,13 @@ const jsonLd = [
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
   }
+
+  // Close the mobile panels after jumping to a link.
+  document.querySelectorAll<HTMLDetailsElement>('.m-panel').forEach((panel) => {
+    panel.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) panel.open = false;
+    });
+  });
 </script>
 
 <style>
@@ -162,23 +151,39 @@ const jsonLd = [
     color: var(--muted);
     margin-bottom: 0.8rem;
   }
-  .prep-rail ul { list-style: none; display: flex; flex-direction: column; gap: 0.15rem; }
-  .prep-rail a {
-    display: block;
-    padding: 0.3rem 0 0.3rem 0.9rem;
-    border-left: 2px solid var(--navy-line);
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-  .prep-rail a:hover { color: var(--white); }
-  .prep-rail a[aria-current='page'] { color: var(--cyan); border-left-color: var(--cyan); }
-  .prep-rail a.sub {
-    padding-left: 1.7rem;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-
   .prep-body { min-width: 0; }
+
+  /* mobile: section + track navigation (sidebars are hidden below 960px) */
+  .mobile-nav { display: flex; flex-direction: column; gap: 0.6rem; margin: -0.4rem 0 1.6rem; }
+  @media (min-width: 960px) { .mobile-nav { display: none; } }
+  .m-panel {
+    border: 1px solid var(--navy-line);
+    border-radius: 6px;
+    background: var(--navy-card);
+  }
+  .m-panel > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 0.65rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    display: flex;
+    justify-content: space-between;
+  }
+  .m-panel > summary::-webkit-details-marker { display: none; }
+  .m-panel > summary::after { content: '▾'; color: var(--muted); transition: transform 0.2s; }
+  .m-panel[open] > summary::after { transform: rotate(180deg); }
+  .m-panel__body {
+    border-top: 1px solid var(--navy-line);
+    padding: 0.7rem 0.9rem 0.9rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .m-panel__body :global(.toc-label) { display: none; }
+  .m-panel__body :global(.toc) { max-height: none; }
 
   .crumbs {
     font-family: var(--font-mono);
@@ -227,4 +232,8 @@ const jsonLd = [
   .pager-link--next { text-align: right; align-items: flex-end; }
   .pager-dir { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
   .pager-title { color: var(--white); font-weight: 600; }
+  @media (max-width: 520px) {
+    .pager { flex-direction: column; }
+    .pager-link { max-width: 100%; }
+  }
 </style>

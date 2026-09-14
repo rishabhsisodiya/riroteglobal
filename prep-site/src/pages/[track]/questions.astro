@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PrepLayout from '../../layouts/PrepLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
 import { TRACKS, trackBySlug, u } from '../../consts';
 
 export function getStaticPaths() {
@@ -13,8 +14,8 @@ const meta = trackBySlug(track!)!;
 const list = await getCollection('notes', (e) => e.data.track === track && e.data.kind === 'questions' && !e.data.draft);
 const entry = list[0];
 
-let Content;
-if (entry) ({ Content } = await render(entry));
+let Content, headings;
+if (entry) ({ Content, headings } = await render(entry));
 const updated = entry?.data.updated;
 ---
 
@@ -23,6 +24,9 @@ const updated = entry?.data.updated;
   title={`${meta.title} — Questions`}
   description={`Interview questions for ${meta.title}, with model answers you reveal on click.`}
 >
+  {headings && headings.some((h) => h.depth > 2) && (
+    <Fragment slot="toc"><TableOfContents headings={headings} maxDepth={2} /></Fragment>
+  )}
   {entry ? (
     <article class="prose">
       <h1>{meta.title} — Interview Questions</h1>
@@ -122,6 +126,7 @@ const updated = entry?.data.updated;
 
   /* pre-enhancement fallback: plain readable doc */
   .qa-root :global(h2) { cursor: default; }
+  .qa-root :global(details.qa[id]) { scroll-margin-top: 5rem; }
 </style>
 
 <script>
@@ -130,19 +135,28 @@ const updated = entry?.data.updated;
     const controls = document.querySelector<HTMLElement>('.qa-controls');
     const countEl = document.querySelector<HTMLElement>('.qa-count');
 
-    // Group each H2 (question) + following siblings up to the next H2 into <details>.
-    const kids = [...root.children];
+    // Turn each question heading + its content into a collapsible <details>.
+    // A heading is a "question" when its content (up to the next heading of the
+    // same or higher level) has no sub-headings and no <details> of its own.
+    // So flat "## Question" pages work, and sectioned pages (## Section → ### Question,
+    // or ### Group → #### Question with its own answer toggle) keep their structure.
+    const kids = [...root.children] as HTMLElement[];
+    const level = (el: HTMLElement) => (/^H[2-4]$/.test(el.tagName) ? Number(el.tagName[1]) : 0);
     const groups: { q: HTMLElement; body: HTMLElement[] }[] = [];
-    let currentBody: HTMLElement[] | null = null;
 
-    for (const el of kids as HTMLElement[]) {
-      if (el.tagName === 'H2') {
-        currentBody = [];
-        groups.push({ q: el, body: currentBody });
-      } else if (currentBody) {
-        currentBody.push(el);
+    kids.forEach((el, i) => {
+      const lv = level(el);
+      if (!lv) return;
+      const body: HTMLElement[] = [];
+      for (let j = i + 1; j < kids.length; j++) {
+        const next = kids[j];
+        const nlv = level(next);
+        if (nlv && nlv <= lv) break;
+        body.push(next);
       }
-    }
+      const isQuestion = body.length > 0 && !body.some((n) => level(n) || n.tagName === 'DETAILS' || n.querySelector('details'));
+      if (isQuestion) groups.push({ q: el, body });
+    });
 
     const details: HTMLDetailsElement[] = [];
     for (const g of groups) {
@@ -150,6 +164,7 @@ const updated = entry?.data.updated;
       d.className = 'qa';
       const s = document.createElement('summary');
       s.textContent = g.q.textContent?.replace(/^\*+/, '').trim() || 'Question';
+      if (g.q.id) d.id = g.q.id; // keep in-page links (TOC) working
       d.appendChild(s);
       const body = document.createElement('div');
       body.className = 'qa-body';
@@ -157,6 +172,13 @@ const updated = entry?.data.updated;
       d.appendChild(body);
       g.q.replaceWith(d);
       details.push(d);
+    }
+
+    // The layout changed after the browser applied the URL hash, so jump again.
+    if (location.hash) {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target instanceof HTMLDetailsElement) target.open = true;
+      target?.scrollIntoView();
     }
 
     if (details.length && controls) {
