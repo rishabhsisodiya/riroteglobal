@@ -73,19 +73,101 @@ For example, consider the following function definition:
 
 ```js
 var foo = function bar() {
+  // statements go here
+};
 ```
-// statements go here
 
-```js
-}
-```
 Within the function body, the following are all equivalent:
 
 1.  bar()
 2.  arguments.callee()
 3.  foo()
 
-Compared to the function loop, each recursive call itself makes many recursive calls here.
+#### 1. Using the function's name
+
+The name of a named function is always available **inside** its own body.
+
+```js
+function factorial(n) {
+  if (n <= 1) return 1;          // base case — stops the recursion
+  return n * factorial(n - 1);   // calls itself by name
+}
+
+console.log(factorial(5)); // 120 → 5 * 4 * 3 * 2 * 1
+```
+
+For a named function expression, the name (`bar`) exists only inside the function:
+
+```js
+const foo = function bar(n) {
+  if (n <= 0) return 'done';
+  return bar(n - 1);             // works — bar is visible inside
+};
+
+console.log(foo(3)); // "done"
+// console.log(bar(3)); // ReferenceError: bar is not defined — not visible outside
+```
+
+#### 2. Using `arguments.callee`
+
+`arguments.callee` points to the function that is currently running. Useful for anonymous functions in old code.
+
+```js
+const countdown = function (n) {
+  if (n < 0) return;
+  console.log(n);
+  arguments.callee(n - 1);       // calls the current function
+};
+
+countdown(2); // 2, 1, 0
+```
+
+> **Deprecated:** `arguments.callee` throws a `TypeError` in strict mode (and in ES modules / classes). It also does not exist in arrow functions. Prefer a named function expression instead.
+
+```js
+'use strict';
+const fn = function () { return arguments.callee; };
+// fn(); // TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed in strict mode
+```
+
+#### 3. Using an in-scope variable that refers to the function
+
+An anonymous function can call itself through the variable it was assigned to.
+
+```js
+const sum = function (arr) {
+  if (arr.length === 0) return 0;
+  return arr[0] + sum(arr.slice(1)); // calls itself through the variable "sum"
+};
+
+console.log(sum([1, 2, 3, 4])); // 10
+```
+
+**Trap:** this breaks if the variable is reassigned. A named function expression does not have this problem.
+
+```js
+let fact = function (n) {
+  return n <= 1 ? 1 : n * fact(n - 1);   // depends on the variable "fact"
+};
+const saved = fact;
+fact = null;
+// saved(5); // TypeError: fact is not a function
+
+let fact2 = function inner(n) {
+  return n <= 1 ? 1 : n * inner(n - 1);  // depends on its own name
+};
+const saved2 = fact2;
+fact2 = null;
+console.log(saved2(5)); // 120 — still works
+```
+
+| Way | Works in strict mode | Survives variable reassignment | Recommended |
+| --- | --- | --- | --- |
+| Function's name | Yes | Yes | Yes |
+| `arguments.callee` | No | Yes | No (deprecated) |
+| In-scope variable | Yes | No | Only when safe |
+
+#### Recursion and the call stack
 
 It is possible to convert any recursive algorithm to a non-recursive one, but the logic is often much more complex, and doing so requires the use of a stack.
 
@@ -93,39 +175,26 @@ In fact, recursion itself uses a stack: the function stack. The stack-like behav
 
 ```js
 function foo(i) {
-```
-if (i < 0)
-
-```js
-return;
-
-console.log('begin: ' + i);
-
-foo(i - 1);
-
-console.log('end: ' + i);
-
+  if (i < 0) return;
+  console.log('begin: ' + i);
+  foo(i - 1);
+  console.log('end: ' + i);
 }
 
 foo(3);
-```
+
 // Output:
-
 // begin: 3
-
 // begin: 2
-
 // begin: 1
-
 // begin: 0
-
 // end: 0
-
 // end: 1
-
 // end: 2
-
 // end: 3
+```
+
+Each call waits on the stack until the call it made returns, so the `end` lines print in reverse order. Without a base case (`if (i < 0) return;`) the stack keeps growing until `RangeError: Maximum call stack size exceeded`.
 
 ### Nested functions and closures
 
