@@ -651,6 +651,125 @@ const dup = { x: 1, [k]: 2 };
 console.log(dup); // { x: 2 }
 ```
 
+#### Getters and setters — a function that behaves like a property
+
+A **getter** (`get`) is a function that runs automatically when you *read* a property. A **setter** (`set`) runs when you *assign* to it. You use them without `()`.
+
+```js
+const user = {
+  firstName: 'Rishabh',
+  lastName: 'Sisodiya',
+
+  // normal method — must be called
+  getFullName() { return `${this.firstName} ${this.lastName}`; },
+
+  // getter — read like a property
+  get fullName() { return `${this.firstName} ${this.lastName}`; },
+
+  // setter — runs on assignment
+  set fullName(value) {
+    [this.firstName, this.lastName] = value.split(' ');
+  }
+};
+
+console.log(user.getFullName()); // "Rishabh Sisodiya" — method needs ()
+console.log(user.fullName);      // "Rishabh Sisodiya" — getter, no ()
+// user.fullName();              // TypeError: user.fullName is not a function
+
+user.fullName = 'John Doe';      // calls the setter with "John Doe"
+console.log(user.firstName);     // "John"
+```
+
+**Why use a getter instead of a normal property?**
+The value is computed *every time* it is read, so it is always up to date.
+
+```js
+const cart = {
+  items: [100, 250],
+  total: 350,                          // plain property — stored once
+  get liveTotal() {                    // getter — recalculated on each read
+    return this.items.reduce((sum, p) => sum + p, 0);
+  }
+};
+
+cart.items.push(50);
+console.log(cart.total);     // 350 — stale
+console.log(cart.liveTotal); // 400 — always correct
+```
+
+**Getter with no setter is read-only**
+
+```js
+const circle = {
+  radius: 2,
+  get area() { return Math.PI * this.radius ** 2; }
+};
+
+circle.area = 100;           // ignored (TypeError in strict mode)
+console.log(circle.area);    // 12.566... — still computed from radius
+circle.radius = 3;
+console.log(circle.area);    // 28.274... — updates automatically
+```
+
+**Setter for validation**
+
+```js
+const account = {
+  _balance: 0,                          // "_" = convention for internal value
+  get balance() { return this._balance; },
+  set balance(amount) {
+    if (amount < 0) throw new Error('Balance cannot be negative');
+    this._balance = amount;
+  }
+};
+
+account.balance = 500;
+console.log(account.balance); // 500
+// account.balance = -10;     // Error: Balance cannot be negative
+```
+
+**Common mistake — infinite recursion**
+Inside a getter/setter, don't use the same property name, or it calls itself forever.
+
+```js
+const bad = {
+  get value() { return this.value; }   // reads itself → RangeError: Maximum call stack size exceeded
+};
+const good = {
+  _value: 1,
+  get value() { return this._value; }  // reads a different key
+};
+```
+
+**Now the computed getter from the example above**
+`get [expression]()` is the same getter — only the *name* is computed.
+
+```js
+const action = 'save';
+const api = {
+  get [`${action}Count`]() { return 3; }
+};
+// Step 1: `${action}Count` → "saveCount"
+// Step 2: becomes  get saveCount() { return 3; }
+console.log(api.saveCount);   // 3 — read like a property, the function runs behind the scenes
+// api.saveCount();           // TypeError: api.saveCount is not a function
+```
+
+**How to tell a getter from a normal value**
+
+```js
+console.log(Object.getOwnPropertyDescriptor(api, 'saveCount'));
+// { get: ƒ, set: undefined, enumerable: true, configurable: true }  — no "value", has "get"
+
+console.log(Object.getOwnPropertyDescriptor({ a: 1 }, 'a'));
+// { value: 1, writable: true, enumerable: true, configurable: true }
+```
+
+**Things to remember**
+- A getter takes no parameters; a setter takes exactly one.
+- `JSON.stringify` and spread (`{...obj}`) call the getter and copy the *result*, not the getter itself.
+- Use getters for derived values (full name, totals, area); avoid heavy work inside them since they run on every read.
+
 **Q9: Does spread copy nested objects?**
 No — it is a shallow copy.
 
