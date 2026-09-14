@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 4
+order: 7
 description: "JavaScript — Scope."
 ---
 Scope in JavaScript refers to the accessibility or visibility of variables. That is, which parts of a program have access to a variable, or where the variable is visible.

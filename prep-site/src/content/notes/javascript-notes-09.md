@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 12
+order: 15
 description: "JavaScript — call, apply and bind method."
 ---
 The `call`, `apply` and `bind` methods are available on every function. They let us control the context (`this`) with which a function is invoked.

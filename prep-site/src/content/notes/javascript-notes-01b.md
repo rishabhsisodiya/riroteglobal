@@ -3,7 +3,7 @@ title: "Data Types, Literals & Control Flow"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-order: 1.1
+order: 2
 slug: "basics-types"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"

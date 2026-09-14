@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 5
+order: 8
 description: "JavaScript — Closure."
 ---
 ### What is a closure?

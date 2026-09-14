@@ -3,7 +3,7 @@ title: "Built-in Objects, this, Prototypes & Classes"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-order: 1.3
+order: 4
 slug: "basics-objects"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"

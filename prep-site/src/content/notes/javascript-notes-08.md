@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 11
+order: 14
 description: "JavaScript — JavaScript Engine."
 ---
 ![](/notes-img/javascript-notes/img-023.webp)

@@ -3,7 +3,7 @@ title: "Functions & Expressions"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-order: 1.2
+order: 3
 slug: "basics-functions"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"

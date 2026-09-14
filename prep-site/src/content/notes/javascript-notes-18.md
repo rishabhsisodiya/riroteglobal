@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 10
+order: 13
 description: "JavaScript — Async vs defer."
 ---
 `async` and `defer` are boolean attributes of the `<script>` tag that control **when** an external script is downloaded and executed relative to HTML parsing.

@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 14
+order: 17
 description: "JavaScript — Polyfill Reduce."
 ---
 A **polyfill for `reduce`** is another common interview question. First, recall how the real `reduce` works:

@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 8
+order: 11
 description: "JavaScript — Callback hell."
 ---
 **Callback hell** in JavaScript occurs when multiple callbacks are nested inside each other, which creates complex and hard-to-manage code.

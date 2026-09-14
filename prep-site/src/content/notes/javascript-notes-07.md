@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 7
+order: 10
 description: "JavaScript — Event Loop."
 ---
 We are already aware of the execution context and call stack, and we know JavaScript is single-threaded and synchronous. First, the global execution context (GEC) is created and pushed into the call stack. If a function is called in the global scope, an execution context is created for it (EC1) and pushed on top of the GEC. After EC1 finishes, it is removed from the call stack. Then the GEC continues, and when all code is done it is also removed from the call stack.

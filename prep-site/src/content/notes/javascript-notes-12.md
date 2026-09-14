@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 16
+order: 19
 description: "JavaScript — Debouncing, Throttling and when to use each."
 ---
 **Debouncing** and **throttling** are techniques to limit how many times a function runs when an event fires very often (typing, scrolling, resizing, clicking). They improve performance and reduce unnecessary API calls.

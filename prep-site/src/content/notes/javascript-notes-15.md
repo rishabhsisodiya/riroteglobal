@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 15
+order: 18
 description: "JavaScript — Currying."
 ---
 **Currying** is a technique from functional programming where a function with multiple arguments is transformed into a sequence of nested functions, each taking **one** argument. It returns a new function that expects the next argument.

@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 9
+order: 12
 description: "JavaScript — Promise."
 ---
 A **Promise** is an object representing a value that is not necessarily known when the promise is created — the **eventual completion (or failure) of an asynchronous operation**. It lets you attach handlers for the operation's eventual success value or failure reason. This lets asynchronous functions return something like synchronous functions do: instead of immediately returning the final value, they return a promise to supply the value at some point in the future.

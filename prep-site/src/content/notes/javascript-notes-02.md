@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 2
+order: 5
 description: "JavaScript — How JavaScript works."
 ---
 Everything in JavaScript happens inside an **execution context**. It is like a container in which the whole JavaScript code is executed. JavaScript is a synchronous, single-threaded language.

@@ -3,7 +3,7 @@ title: "Syntax, Variables & Operators"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-order: 1.0
+order: 1
 slug: "basics-syntax"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"

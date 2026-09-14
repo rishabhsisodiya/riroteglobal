@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 13
+order: 16
 description: "JavaScript — Polyfill for call, apply and bind method."
 ---
 **A polyfill is a piece of code that adds a feature to environments (usually older browsers) that don't support it natively.** It acts like a fallback: if the browser doesn't have a method, we write our own version.

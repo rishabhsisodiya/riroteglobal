@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 6
+order: 9
 description: "JavaScript — Event Listener."
 ---
 ### index.html

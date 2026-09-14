@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 3
+order: 6
 description: "JavaScript — Variable Hoisting."
 ---
 **Hoisting** means we can refer to a variable or function declared later in the code, without getting an exception. This happens because in the memory creation phase of the execution context, JavaScript allocates memory for variables and functions **before** running the code.
