@@ -3,136 +3,125 @@ title: "Component Lifecycle Methods"
 part: "React Notes"
 track: "react"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 11
-imp: true
-description: "React — Component Lifecycle Methods."
+order: 10
+description: "React — class component lifecycle (mounting, updating, unmounting, error handling), call order with children, error boundaries, and hook equivalents."
 ---
-**Mounting:** When an instance of a component is being created and inserted into the DOM. It uses **constructor, static getDerivedStateFromProps, render and componentDidMount**
+Lifecycle methods belong to **class components**. Function components use **hooks** (`useEffect`, `useLayoutEffect`) for the same jobs — see the mapping table at the end.
 
-**Updating:** When a component is being re-rendered as a result of changes to either its props or state. It uses **static getDerivedStateFromProps, shouldComponentUpdate, render, getSnapshotBeforeUpdate and componentDidUpdate.**
+A class component goes through four phases:
 
-**Unmounting:** When a component is being removed from the DOM. It uses **componentWillUnmount**.
+-   **Mounting:** an instance of the component is being created and inserted into the DOM. Methods: **`constructor`, `static getDerivedStateFromProps`, `render`, `componentDidMount`**.
+-   **Updating:** the component re-renders because its props or state changed. Methods: **`static getDerivedStateFromProps`, `shouldComponentUpdate`, `render`, `getSnapshotBeforeUpdate`, `componentDidUpdate`**.
+-   **Unmounting:** the component is being removed from the DOM. Method: **`componentWillUnmount`**.
+-   **Error handling:** there's an error during rendering, in a lifecycle method, or in the constructor of any **child** component. Methods: **`static getDerivedStateFromError`, `componentDidCatch`**.
 
-**Error Handling:** When there is an error during rendering, in a lifecycle method, or in the constructor of any child component. It uses static **getDerivedStateFromError and cornponentDidCatch.**
+React work happens in two phases:
 
-## Mounting LifeCycle Methods
+-   **Render phase** (`constructor`, `getDerivedStateFromProps`, `shouldComponentUpdate`, `render`) — must be **pure**, no side effects. React may call these more than once (e.g. in Strict Mode or with concurrent rendering).
+-   **Commit phase** (`getSnapshotBeforeUpdate`, `componentDidMount`, `componentDidUpdate`, `componentWillUnmount`) — the DOM is updated; **side effects are allowed** here.
 
-### Constructor(props)
+### Mounting lifecycle methods
 
-```jsx
-Syntax: **constructor(props)**
-```
-A special function that will **get called whenever a new component is created**. It is used for **initializing state and binding the event handler** and **Do not cause Side effects e.g. HTTP requests** (we should not use http requests in constructors ).
+#### constructor(props)
 
-**Note: use super(props) as the first line, directly overwrite this.state.**
+A special function that is **called when a new component instance is created**. Use it for **initializing state and binding event handlers**. **Don't cause side effects** here (e.g. HTTP requests or subscriptions).
 
-### static getDerivedStateFromProps(nextProps, state)
-
-It is called **when the state of the component depends upon change in the props over time**. It is used when the initial state of a component of props being passed in the component. Since it is static it **does not have access to this keyword** in this method. So **we cannot call this,setState** within this method and instead it simply **returns the state.** **Do not cause** S**ide effects e.g. HTTP requests.**
-static getDerivedStateFromProps(nextProps, prevState) {
-
-if (nextProps.initialValue !== prevState.derivedValue) {
+**Call `super(props)` as the first line**, and assign `this.state` directly (don't call `setState` in the constructor).
 
 ```jsx
-return { derivedValue: nextProps.initialValue };
-
-}
-
-return null; // No state update needed
-
+constructor(props) {
+  super(props);                       // otherwise this.props is undefined in the constructor
+  this.state = { count: 0 };
+  this.handleClick = this.handleClick.bind(this);
 }
 ```
-### render()
 
-It is the only **required method**. It **reads props and state and returns JSX**. Here **do not change state or interact with DOM or make ajax calls.** Children components lifecycle methods are also executed.
+(With class fields — `state = { count: 0 }` and arrow-function methods — you often don't need a constructor at all.)
 
-### componentDidMount ()
+#### static getDerivedStateFromProps(props, state)
 
-This method is invoked **immediately after a component** and all its children components have been **rendered** to the DOM. **Perfect place to cause side effects like interact with data or perform Ajax calls.**
+Called **right before `render`**, on the initial mount **and on every update**. Use it in the rare case where **state depends on changes in props over time**. It's `static`, so it **has no access to `this`** — you can't call `this.setState`. Instead, **return an object** to update state, or **`null`** for no change. **No side effects.**
 
-### App.js
+```jsx
+static getDerivedStateFromProps(props, state) {
+  if (props.initialValue !== state.prevInitialValue) {
+    return {
+      value: props.initialValue,          // reset value when the prop changes
+      prevInitialValue: props.initialValue
+    };
+  }
+  return null; // no state update needed
+}
+```
+
+**You probably don't need it.** Usually you can compute the value during render, make the component fully controlled, or reset it with a `key`.
+
+#### render()
+
+The **only required method**. It **reads props and state and returns JSX** (or `null`, strings, numbers, arrays, fragments, portals). **Don't change state, touch the DOM, or make AJAX calls** here — `render` must be pure. The child components' lifecycle methods run as part of rendering.
+
+#### componentDidMount()
+
+Called **immediately after the component and all its children have been rendered to the DOM**. **The right place for side effects**: fetching data, subscriptions, timers, reading DOM size, or integrating non-React libraries.
+
+```jsx
+componentDidMount() {
+  fetch(`/api/users/${this.props.userId}`)
+    .then(res => res.json())
+    .then(user => this.setState({ user }));
+}
+```
+
+(Calling `setState` here triggers an extra render before the browser paints, so the user won't see the intermediate state — but avoid it when you could set the state in the constructor.)
+
+#### Example: mounting order
+
+**App.js**
 
 ```jsx
 import LifecycleA from "./components/Lifecycle/LifecycleA";
 
 function App() {
-
-return (
-```
-<div className="App">
-
-### <LifecycleA />
-
-</div>
-
-```jsx
-);
-
+  return (
+    <div className="App">
+      <LifecycleA />
+    </div>
+  );
 }
 
 export default App;
 ```
 
-### LifecycleA.js under component/Lifecycle
+**components/Lifecycle/LifecycleA.js**
 
 ```jsx
-import React, { Component } from 'react'
+import { Component } from 'react';
 
 class LifecycleA extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "Rishabh"
+    };
+    console.log('LifecycleA constructor called');
+  }
 
-constructor(props) {
-```
-super(props)
+  static getDerivedStateFromProps(props, state) {
+    console.log('LifecycleA getDerivedStateFromProps called');
+    return null;
+  }
 
-```jsx
-this.state = {
-```
-name:"Rishabh"
+  componentDidMount() {
+    console.log('LifecycleA componentDidMount called');
+  }
 
-```jsx
-}
-
-console.log('LifeCycleA constructor called');
-
-}
-```
-static getDerivedStateFromProps(nextProps, prevState) {
-
-```jsx
-console.log('LifeCycleA getDerivedStateFromProps called');
-
-return null;
-
-}
-```
-componentDidMount(){
-
-```jsx
-console.log('LifeCycleA componentDidMount called');
-
-}
-```
-render() {
-
-```jsx
-console.log('LifeCycleA render called');
-
-return (
-```
-<div>
-
-LifeCycle A
-
-</div>
-
-```jsx
-)
-
-}
-
+  render() {
+    console.log('LifecycleA render called');
+    return <div>Lifecycle A</div>;
+  }
 }
 
 export default LifecycleA;
@@ -140,436 +129,78 @@ export default LifecycleA;
 
 **Output:**
 
-LifeCycleA constructor called
-
-LifeCycleA getDerivedStateFromProps called
-
-LifeCycleA render called
-
-LifeCycleA componentDidMount called
-
-### What if LifecycleA have child component LifecycleB
-
-### LifecycleA.js
-
-```jsx
-import React, { Component } from 'react'
 ```
-**import LifecycleB from './LifecycleB';**
-
-```jsx
-class LifecycleA extends Component {
-
-constructor(props) {
-```
-super(props)
-
-```jsx
-this.state = {
-```
-name:"Rishabh"
-
-```jsx
-}
-
-console.log('LifeCycleA constructor called');
-
-}
-```
-static getDerivedStateFromProps(props, state){
-
-```jsx
-console.log('LifeCycleA getDerivedStateFromProps called');
-
-return null;
-
-}
-```
-componentDidMount(){
-
-```jsx
-console.log('LifeCycleA componentDidMount called');
-
-}
-```
-render() {
-
-```jsx
-console.log('LifeCycleA render called');
-
-return (
-```
-<div>
-
-LifeCycle A
-
-### <LifecycleB />
-
-</div>
-
-```jsx
-)
-
-}
-
-}
-
-export default LifecycleA;
+LifecycleA constructor called
+LifecycleA getDerivedStateFromProps called
+LifecycleA render called
+LifecycleA componentDidMount called
 ```
 
-### LifecycleB.js
+(In development with `<StrictMode>`, React intentionally calls `constructor`, `getDerivedStateFromProps` and `render` twice to help find impure code, so you may see duplicate logs. Production runs them once.)
+
+#### What if LifecycleA has a child component LifecycleB?
+
+**LifecycleA.js** — renders `LifecycleB`:
 
 ```jsx
-import React, { Component } from 'react'
-
-class LifecycleB extends Component {
-
-constructor(props) {
-```
-super(props)
-
-```jsx
-this.state = {
-```
-name:"Rishabh"
-
-```jsx
-}
-
-console.log('LifeCycleB constructor called');
-
-}
-```
-static getDerivedStateFromProps(props, state){
-
-```jsx
-console.log('LifeCycleB getDerivedStateFromProps called');
-
-return null;
-
-}
-```
-componentDidMount(){
-
-```jsx
-console.log('LifeCycleB componentDidMount called');
-
-}
-```
-render() {
-
-```jsx
-console.log('LifeCycleB render called');
-
-return (
-```
-<div>
-
-LifeCycle B
-
-</div>
-
-```jsx
-)
-
-}
-
-}
-
-export default LifecycleB;
-```
-
-**Output:**
-
-LifeCycleA constructor called
-
-LifeCycleA getDerivedStateFromProps called
-
-LifeCycleA render called
-
-LifeCycleB constructor called
-
-LifeCycleB getDerivedStateFromProps called
-
-LifeCycleB render called
-
-LifeCycleB componentDidMount called
-
-LifeCycleA componentDidMount called
-
-## Updating LifeCycle Methods
-
-### static getDerivedStateFromProps(nextProps, state)
-
-It is **called every time when a component is re-rendered.** It is used to set state directly and Do not cause side effects.
-
-### shouldComponentUpdate(nextProps, nextState)
-
-It dictates if the component should re-render or not. Default behavior is by returning false. It is used for performance optimization.
-
-shouldComponentUpdate(nextProps, nextState) {
-
-if (
-
-nextProps.position.x === this.props.position.x &&
-
-nextProps.position.y === this.props.position.y &&
-
-nextProps.size.width === this.props.size.width &&
-
-nextProps.size.height === this.props.size.height &&
-
-nextState.isHovered === this.state.isHovered
-
-) {
-
-// Nothing has changed, so a re-render is unnecessary
-
-```jsx
-return false;
-
-}
-
-return true;
-
-}
-```
-### render()
-
-It is the only required method. It reads props and state and returns JSX. Here do not change state or interact with DOM or make ajax calls. Children components lifecycle methods are also executed.
-
-### getSnapshotBeforeUpdate(prevProps, prevState)
-
-This method is **called right before the changes from the virtual DOM are to be reflected in the DOM. It is used for capturing some information from DOM.** Method **will either return a null or return a value**. Returned value will be passed as the third parameter to the next method.
-
-getSnapshotBeforeUpdate(prevProps, prevState) {
-
-// Are we adding new items to the list?
-
-// Capture the scroll position so we can adjust the scroll later.
-
-if (prevProps.list.length < this.props.list.length) {
-
-```jsx
-const list = this.listRef.current;
-
-return list.scrollHeight - list.scrollTop;
-
-}
-
-return null;
-
-}
-```
-In the above example, it is important to read the scrollHeight property directly in getSnapshotBeforeUpdate. It is not safe to read it in render, UNSAFE_componentWillReceiveProps, or UNSAFE_componentWillUpdate because there is a potential time gap between these methods getting called and React updating the DOM.
-
-### componentDidUpdate(prevProps, prevState, snapshot)
-
-Called after the render is finished in the re-render cycle. This method will guarantee to call once in the re-render cycle. Cause side effects but before making ajax calls you need to compare previous props with new props.
-
-componentDidUpdate(prevProps, prevState) {
-
-if (
-
-this.props.roomId !== prevProps.roomId ||
-
-this.state.serverUrl !== prevState.serverUrl
-
-) {
-
-```jsx
-this.destroyConnection();
-
-this.setupConnection();
-
-}
-
-}
-```
-We will add some changes in our previous code.
-
-### LifecycleA.js
-
-```jsx
-import React, { Component } from 'react'
-
+import { Component } from 'react';
 import LifecycleB from './LifecycleB';
 
 class LifecycleA extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { name: "Rishabh" };
+    console.log('LifecycleA constructor called');
+  }
 
-constructor(props) {
-```
-super(props)
+  static getDerivedStateFromProps(props, state) {
+    console.log('LifecycleA getDerivedStateFromProps called');
+    return null;
+  }
 
-```jsx
-this.state = {
-```
-name:"Rishabh"
+  componentDidMount() {
+    console.log('LifecycleA componentDidMount called');
+  }
 
-```jsx
-}
-
-console.log('LifeCycleA constructor called');
-
-}
-```
-static getDerivedStateFromProps(props, state){
-
-```jsx
-console.log('LifeCycleA getDerivedStateFromProps called');
-
-return null;
-
-}
-```
-componentDidMount(){
-
-```jsx
-console.log('LifeCycleA componentDidMount called');
-
-}
-```
-**shouldComponentUpdate(){**
-
-```jsx
-**console.log('LifeCycleA shouldComponentUpdate called');**
-```
-**return true;**
-
-**}**
-
-**getSnapshotBeforeUpdate(prevProps, prevState){**
-
-```jsx
-**console.log('LifeCycleA getSnapshotBeforeUpdate called');**
-```
-**return null;**
-
-**}**
-
-**componentDidUpdate(){**
-
-```jsx
-**console.log('LifeCycleA componentDidUpdate called');**
-```
-**}**
-
-```jsx
-**changeState = ()=>{**
-```
-**this.setState({ name:"Rishabh Sisodiya"})**
-
-**}**
-
-render() {
-
-```jsx
-console.log('LifeCycleA render called');
-
-return (
-```
-<div>
-
-LifeCycle A
-
-**<button onClick={this.changeState}>Change state</button>**
-
-<LifecycleB />
-
-</div>
-
-```jsx
-)
-
-}
-
+  render() {
+    console.log('LifecycleA render called');
+    return (
+      <div>
+        Lifecycle A
+        <LifecycleB />
+      </div>
+    );
+  }
 }
 
 export default LifecycleA;
 ```
 
-### LifecycleB.js
+**LifecycleB.js**
 
 ```jsx
-import React, { Component } from 'react'
+import { Component } from 'react';
 
 class LifecycleB extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { name: "Rishabh" };
+    console.log('LifecycleB constructor called');
+  }
 
-constructor(props) {
-```
-super(props)
+  static getDerivedStateFromProps(props, state) {
+    console.log('LifecycleB getDerivedStateFromProps called');
+    return null;
+  }
 
-```jsx
-this.state = {
-```
-name:"Rishabh"
+  componentDidMount() {
+    console.log('LifecycleB componentDidMount called');
+  }
 
-```jsx
-}
-
-console.log('LifeCycleB constructor called');
-
-}
-```
-static getDerivedStateFromProps(props, state){
-
-```jsx
-console.log('LifeCycleB getDerivedStateFromProps called');
-
-return null;
-
-}
-```
-componentDidMount(){
-
-```jsx
-console.log('LifeCycleB componentDidMount called');
-
-}
-```
-**shouldComponentUpdate(){**
-
-```jsx
-**console.log('LifeCycleB shouldComponentUpdate called');**
-```
-**return true;**
-
-**}**
-
-**getSnapshotBeforeUpdate(prevProps, prevState){**
-
-```jsx
-**console.log('LifeCycleB getSnapshotBeforeUpdate called');**
-```
-**return null;**
-
-**}**
-
-**componentDidUpdate(){**
-
-```jsx
-**console.log('LifeCycleB componentDidUpdate called');**
-```
-**}**
-
-render() {
-
-```jsx
-console.log('LifeCycleB render called');
-
-return (
-```
-<div>
-
-LifeCycle B
-
-</div>
-
-```jsx
-)
-
-}
-
+  render() {
+    console.log('LifecycleB render called');
+    return <div>Lifecycle B</div>;
+  }
 }
 
 export default LifecycleB;
@@ -577,211 +208,457 @@ export default LifecycleB;
 
 **Output:**
 
-LifeCycleA constructor called
+```
+LifecycleA constructor called
+LifecycleA getDerivedStateFromProps called
+LifecycleA render called
+LifecycleB constructor called
+LifecycleB getDerivedStateFromProps called
+LifecycleB render called
+LifecycleB componentDidMount called
+LifecycleA componentDidMount called
+```
 
-LifeCycleA getDerivedStateFromProps called
+**Why is `componentDidMount` child-first?** The parent's `render` runs first and creates the children. But the parent is only "mounted" once its whole subtree is in the DOM — so the **child's `componentDidMount` runs before the parent's**.
 
-LifeCycleA render called
+### Updating lifecycle methods
 
-LifeCycleB constructor called
+#### static getDerivedStateFromProps(props, state)
 
-LifeCycleB getDerivedStateFromProps called
+**Called on every render** (mount and update), whether the update came from new props, `setState` or `forceUpdate`. Use it only to derive state from props; **no side effects**.
 
-LifeCycleB render called
+#### shouldComponentUpdate(nextProps, nextState)
 
-LifeCycleB componentDidMount called
-
-LifeCycleA componentDidMount called
-
-**//After clicking on change state button – updating phase**
-
-LifeCycleA getDerivedStateFromProps called
-
-LifeCycleA shouldComponentUpdate called
-
-LifeCycleA render called
-
-LifeCycleB getDerivedStateFromProps called
-
-LifeCycleB shouldComponentUpdate called
-
-LifeCycleB render called
-
-### LifeCycleB getSnapshotBeforeUpdate called
-
-### LifeCycleA getSnapshotBeforeUpdate called
-
-### LifeCycleB componentDidUpdate called
-
-LifeCycleA componentDidUpdate called
-
-## Unmounting Lifecycle Methods
-
-### componentWillUnmount()
-
-Method is invoked immediately before a component is unmounted or destroyed. Canceling any network requests, removing event handlers, cancel any subscriptions and also invalidating timers. **Do not call the setState method** componentWillUnmount should not return anything.
-
-componentWillUnmount() {
+Decides **whether the component should re-render**. **By default it returns `true`** (always re-render). Return `false` to skip `render`, `getSnapshotBeforeUpdate` and `componentDidUpdate` for this update. It's used for **performance optimization**.
 
 ```jsx
-this.destroyConnection();
-
+shouldComponentUpdate(nextProps, nextState) {
+  if (
+    nextProps.position.x === this.props.position.x &&
+    nextProps.position.y === this.props.position.y &&
+    nextProps.size.width === this.props.size.width &&
+    nextProps.size.height === this.props.size.height &&
+    nextState.isHovered === this.state.isHovered
+  ) {
+    // Nothing has changed, so a re-render is unnecessary
+    return false;
+  }
+  return true;
 }
 ```
-## Error handling Lifecycle Method
 
-### static getDerivedStateFromError(error) & componentDidCatch(error, info)
+Instead of writing it by hand, you can extend **`PureComponent`**, which does a shallow comparison of props and state for you. Don't use it to "block" renders for correctness — only as an optimization.
 
-These methods are called when there is an error either during rendering, in a lifecycle method or in the constructor of any child component.
+#### render()
 
-### Error Boundary
+Same as in mounting: the only required method, reads props and state and returns JSX. **No state changes, DOM access or AJAX calls.** Children re-render as part of it.
 
-**A class component that implements either one or both lifecycle methods** getDerivedStateFromError and componentDidCatch becomes an error Boundary
+#### getSnapshotBeforeUpdate(prevProps, prevState)
 
-The static **getDerivedStateFromError** method is used to render a fallback UI after an error is thrown and the **componentDidCatch** method is used to log the error information.
-
-### App.js
-
-**import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";**
-
-**import Hero from "./components/ErrorBoundary/Hero";**
+Called **right after `render`, just before the changes are applied to the real DOM**. Use it to **capture information from the DOM** (like scroll position) before it changes. It **returns a value or `null`**, and that value is passed as the **third argument** to `componentDidUpdate`.
 
 ```jsx
-function App() {
+getSnapshotBeforeUpdate(prevProps, prevState) {
+  // Are we adding new items to the list?
+  // Capture the scroll position so we can adjust the scroll later.
+  if (prevProps.list.length < this.props.list.length) {
+    const list = this.listRef.current;
+    return list.scrollHeight - list.scrollTop;
+  }
+  return null;
+}
 
-return (
+componentDidUpdate(prevProps, prevState, snapshot) {
+  // If we have a snapshot value, we've just added new items.
+  // Adjust scroll so these new items don't push the old ones out of view.
+  if (snapshot !== null) {
+    const list = this.listRef.current;
+    list.scrollTop = list.scrollHeight - snapshot;
+  }
+}
 ```
-<div className="App">
 
-### <ErrorBoundary>
+In the example above, it's important to read `scrollHeight` in `getSnapshotBeforeUpdate`. It isn't safe to read it in `render` (or the legacy `UNSAFE_componentWillReceiveProps` / `UNSAFE_componentWillUpdate`), because there can be a time gap between those methods and React actually updating the DOM.
 
-### <Hero heroName="Superman" />
+#### componentDidUpdate(prevProps, prevState, snapshot)
 
-### </ErrorBoundary>
-
-### <ErrorBoundary>
-
-### <Hero heroName="Batman" />
-
-### </ErrorBoundary>
-
-### <ErrorBoundary>
-
-### <Hero heroName="Joker" />
-
-### </ErrorBoundary>
-
-</div>
+Called **after the re-render is committed to the DOM**. It runs **once per update** (not on the initial mount). **Side effects are allowed**, but compare the previous and current props/state first — otherwise you can create an infinite loop.
 
 ```jsx
-);
+componentDidUpdate(prevProps, prevState) {
+  if (
+    this.props.roomId !== prevProps.roomId ||
+    this.state.serverUrl !== prevState.serverUrl
+  ) {
+    this.destroyConnection();
+    this.setupConnection();
+  }
+}
+```
 
+```jsx
+// ❌ Infinite loop — setState on every update without a condition
+componentDidUpdate() {
+  this.setState({ updated: true });
+}
+```
+
+#### Example: updating order
+
+We add the update methods and a button that changes state in `LifecycleA`.
+
+**LifecycleA.js**
+
+```jsx
+import { Component } from 'react';
+import LifecycleB from './LifecycleB';
+
+class LifecycleA extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { name: "Rishabh" };
+    console.log('LifecycleA constructor called');
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('LifecycleA getDerivedStateFromProps called');
+    return null;
+  }
+
+  componentDidMount() {
+    console.log('LifecycleA componentDidMount called');
+  }
+
+  shouldComponentUpdate() {
+    console.log('LifecycleA shouldComponentUpdate called');
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('LifecycleA getSnapshotBeforeUpdate called');
+    return null;
+  }
+
+  componentDidUpdate() {
+    console.log('LifecycleA componentDidUpdate called');
+  }
+
+  changeState = () => {
+    this.setState({ name: "Rishabh Sisodiya" });
+  };
+
+  render() {
+    console.log('LifecycleA render called');
+    return (
+      <div>
+        Lifecycle A
+        <button onClick={this.changeState}>Change state</button>
+        <LifecycleB />
+      </div>
+    );
+  }
+}
+
+export default LifecycleA;
+```
+
+**LifecycleB.js** — same methods, logging "LifecycleB":
+
+```jsx
+import { Component } from 'react';
+
+class LifecycleB extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { name: "Rishabh" };
+    console.log('LifecycleB constructor called');
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('LifecycleB getDerivedStateFromProps called');
+    return null;
+  }
+
+  componentDidMount() {
+    console.log('LifecycleB componentDidMount called');
+  }
+
+  shouldComponentUpdate() {
+    console.log('LifecycleB shouldComponentUpdate called');
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('LifecycleB getSnapshotBeforeUpdate called');
+    return null;
+  }
+
+  componentDidUpdate() {
+    console.log('LifecycleB componentDidUpdate called');
+  }
+
+  render() {
+    console.log('LifecycleB render called');
+    return <div>Lifecycle B</div>;
+  }
+}
+
+export default LifecycleB;
+```
+
+**Output:**
+
+```
+LifecycleA constructor called
+LifecycleA getDerivedStateFromProps called
+LifecycleA render called
+LifecycleB constructor called
+LifecycleB getDerivedStateFromProps called
+LifecycleB render called
+LifecycleB componentDidMount called
+LifecycleA componentDidMount called
+
+// After clicking the "Change state" button — updating phase
+LifecycleA getDerivedStateFromProps called
+LifecycleA shouldComponentUpdate called
+LifecycleA render called
+LifecycleB getDerivedStateFromProps called
+LifecycleB shouldComponentUpdate called
+LifecycleB render called
+LifecycleB getSnapshotBeforeUpdate called
+LifecycleA getSnapshotBeforeUpdate called
+LifecycleB componentDidUpdate called
+LifecycleA componentDidUpdate called
+```
+
+**Why does `LifecycleB` re-render when only A's state changed?** When a parent re-renders, its children re-render by default — even if their props didn't change. `PureComponent`, `shouldComponentUpdate` or `React.memo` can skip that.
+
+**Why is the order parent-first for render, but child-first for snapshot and didUpdate?** Rendering goes top-down (the parent's render produces the children). The commit phase then processes the tree **children before parents**.
+
+### Unmounting lifecycle method
+
+#### componentWillUnmount()
+
+Called **immediately before a component is unmounted and destroyed**. Use it for cleanup: **cancel network requests, remove event listeners, cancel subscriptions and clear timers**. **Don't call `setState`** here — the component will never re-render. It should not return anything.
+
+```jsx
+componentDidMount() {
+  this.timerID = setInterval(() => this.tick(), 1000);
+  window.addEventListener('resize', this.handleResize);
+}
+
+componentWillUnmount() {
+  clearInterval(this.timerID);
+  window.removeEventListener('resize', this.handleResize);
+  this.destroyConnection();
+}
+```
+
+Without this cleanup, timers and listeners keep running after the component is gone (memory leaks, and warnings in older React about updating an unmounted component).
+
+### Error handling lifecycle methods
+
+#### static getDerivedStateFromError(error) and componentDidCatch(error, info)
+
+These are called when an error is thrown **during rendering, in a lifecycle method, or in the constructor of any child component**.
+
+-   **`static getDerivedStateFromError(error)`** — runs during the render phase; **return new state** to show a **fallback UI**. No side effects.
+-   **`componentDidCatch(error, info)`** — runs during the commit phase; used to **log the error** (e.g. to Sentry). `info.componentStack` shows which components the error came from.
+
+#### Error boundary
+
+**A class component that implements `getDerivedStateFromError` and/or `componentDidCatch` becomes an error boundary.** It catches errors in the components **below** it and shows a fallback instead of crashing the whole app.
+
+(In React 16+, an uncaught rendering error **unmounts the whole React tree** — a blank page. Error boundaries prevent that.)
+
+**App.js**
+
+```jsx
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import Hero from "./components/ErrorBoundary/Hero";
+
+function App() {
+  return (
+    <div className="App">
+      <ErrorBoundary>
+        <Hero heroName="Superman" />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <Hero heroName="Batman" />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <Hero heroName="Joker" />
+      </ErrorBoundary>
+    </div>
+  );
 }
 
 export default App;
 ```
 
-### Hero.js
+**Hero.js**
 
 ```jsx
-import React from 'react'
+const Hero = ({ heroName }) => {
+  if (heroName === 'Joker') {
+    throw new Error('not a hero');
+  }
+  return <div>{heroName}</div>;
+};
 
-const Hero = ({heroName}) => {
-```
-if (heroName === 'Joker') {
-
-```jsx
-throw new Error('not a hero');
-
-}
-
-return (
-```
-<div>
-
-{heroName}
-
-</div>
-
-```jsx
-)
-
-}
-
-export default Hero
+export default Hero;
 ```
 
-### ErrorBoundary.js
+**ErrorBoundary.js**
 
 ```jsx
-import React, { Component } from 'react'
+import { Component } from 'react';
 
 class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false
+    };
+  }
 
-constructor(props) {
-```
-super(props)
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true
+    };
+  }
 
-```jsx
-this.state = {
-```
-hasError:false
+  componentDidCatch(error, info) {
+    console.log(error);                // Error: not a hero
+    console.log(info.componentStack);  // where the error happened
+  }
 
-```jsx
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong</h1>;
+    }
+    return this.props.children;
+  }
 }
 
-}
+export default ErrorBoundary;
 ```
-**static getDerivedStateFromError(error){**
 
-**return {**
+**Output on screen:**
 
-### hasError:true
+```
+Superman
+Batman
+Something went wrong
+```
 
-**}**
+Because each `Hero` has its **own** boundary, only the Joker section shows the fallback. If a single `ErrorBoundary` wrapped all three, the **whole group** would be replaced by "Something went wrong".
 
-**}**
+(In development, React also shows an error overlay on top of the page; close it to see the fallback. Production shows only the fallback.)
 
-**componentDidCatch(error, info){**
+**Error boundaries do NOT catch errors in:**
+
+-   **Event handlers** (use `try...catch` inside the handler),
+-   **Asynchronous code** (`setTimeout`, promises, `fetch` callbacks),
+-   **Server-side rendering**,
+-   errors thrown **in the error boundary itself** (only in its children).
 
 ```jsx
-**console.log(error);**
+function SaveButton() {
+  const [error, setError] = useState(null);
 
-**console.log(info);**
+  async function handleClick() {
+    try {
+      await save();
+    } catch (e) {
+      setError(e);           // handle event/async errors yourself
+    }
+  }
+
+  if (error) throw error;    // optional: re-throw during render so the nearest boundary catches it
+  return <button onClick={handleClick}>Save</button>;
+}
 ```
-**}**
 
-render() {
+**There is no hook for error boundaries** — they still require a class component. Many apps use the **`react-error-boundary`** package, which provides a ready-made `<ErrorBoundary FallbackComponent={...}>` and a `resetErrorBoundary` function.
 
-if (this.state.hasError) {
+### Legacy methods (deprecated)
+
+The lifecycle methods below are **legacy**. They still work (with the `UNSAFE_` prefix), but don't use them in new code — they're unsafe with async/concurrent rendering because they can run multiple times before a commit.
+
+**`UNSAFE_componentWillMount()`** is called just **before mounting**, before `render()`. Calling `setState()` here doesn't cause an extra render. Use the **constructor** for initializing state instead, and **`componentDidMount()`** for side effects and subscriptions. It was the only lifecycle method called during server rendering.
+
+**`UNSAFE_componentWillReceiveProps(nextProps)`** is called before a mounted component receives new props. People used it to update state when props changed (e.g. to reset it) by comparing `this.props` with `nextProps`. Note that if the parent re-renders, this method is called **even if the props haven't changed**, so you must compare values yourself. **Use `getDerivedStateFromProps`** (or better, a `key` or derived values) instead.
+
+**`UNSAFE_componentWillUpdate(nextProps, nextState)`** is called just before rendering when new props or state are received (not on the initial render). You can't call `this.setState()` here, or do anything else that triggers an update. It can usually be **replaced by `componentDidUpdate()`**. If you read from the DOM here (e.g. to save a scroll position), move that logic to **`getSnapshotBeforeUpdate()`**.
+
+| Legacy method | Use instead |
+| --- | --- |
+| `UNSAFE_componentWillMount` | `constructor` (state) / `componentDidMount` (side effects) |
+| `UNSAFE_componentWillReceiveProps` | `getDerivedStateFromProps`, a `key`, or compute during render |
+| `UNSAFE_componentWillUpdate` | `componentDidUpdate` / `getSnapshotBeforeUpdate` |
+
+### Lifecycle methods vs hooks
+
+| Class component | Function component (hooks) |
+| --- | --- |
+| `constructor` (initialize state) | `useState(initialValue)` / `useState(() => expensiveInit())` |
+| `componentDidMount` | `useEffect(() => { ... }, [])` |
+| `componentDidUpdate` (when X changes) | `useEffect(() => { ... }, [x])` |
+| `componentWillUnmount` | cleanup function: `useEffect(() => { return () => { ... }; }, [])` |
+| `shouldComponentUpdate` / `PureComponent` | `React.memo(Component)` |
+| `getSnapshotBeforeUpdate` + DOM measurement | `useLayoutEffect` |
+| `getDerivedStateFromProps` | update state during render, or compute the value directly |
+| `getDerivedStateFromError` / `componentDidCatch` | no hook — still a class (or `react-error-boundary`) |
 
 ```jsx
-return <h1>Something went wrong</h1>
+function ChatRoom({ roomId }) {
+  useEffect(() => {
+    const connection = createConnection(roomId);  // didMount + didUpdate(roomId)
+    connection.connect();
+    return () => connection.disconnect();         // willUnmount + before the next roomId
+  }, [roomId]);
 
+  return <h1>Welcome to {roomId}</h1>;
 }
 ```
-**return this.props.children;**
+
+### Interview questions
 
 ```jsx
-}
-
-}
-
-export default ErrorBoundary
+// Q1: Parent renders Child. What is the order of these logs on mount?
+// Parent: constructor, render, componentDidMount
+// Child:  constructor, render, componentDidMount
+// Answer:
+// Parent constructor → Parent render → Child constructor → Child render
+// → Child componentDidMount → Parent componentDidMount
 ```
 
-## Legacy Methods (Deprecated)
+```jsx
+// Q2: What is wrong?
+componentDidUpdate(prevProps) {
+  fetch(`/api/user/${this.props.id}`).then(r => r.json()).then(user => this.setState({ user }));
+}
+// Answer: it fetches after EVERY update, and setState causes another update → infinite loop.
+// Wrap it: if (this.props.id !== prevProps.id) { ... }
+```
 
-The lifecycle methods below are marked as “legacy”. They still work, but we don’t recommend using them in the new code.
+```jsx
+// Q3: Does an error boundary catch this?
+function Button() {
+  return <button onClick={() => { throw new Error('boom'); }}>Click</button>;
+}
+// Answer: No — errors in event handlers aren't caught by error boundaries. Use try...catch.
+```
 
-UNSAFE_**componentWillMount()** is invoked just before mounting occurs. It is **called before render()**, therefore calling setState() synchronously in this method will not trigger an extra rendering. Generally, we recommend using the constructor() instead for initializing state. Avoid introducing any side-effects or subscriptions in this method. For those use cases, **use componentDidMount() instead.** This is the only lifecycle method called on server rendering.
+```jsx
+// Q4: shouldComponentUpdate returns false. Are the children re-rendered?
+// Answer: No — render isn't called, so the children aren't rendered again by this update.
+// (A child can still re-render from its own state change or context.)
+```
 
-UNSAFE_**componentWillReceiveProps**() is invoked before a mounted component receives new props. If you need to update the state in response to prop changes (for example, to reset it), you may compare this.props and nextProps and perform state transitions using this.setState() in this method. Note that if a parent component causes your component to re-render, this method will be called even if props have not changed. Make sure to compare the current and next values if you only want to handle changes.
-
-### Use getDerivedStateFromProps instead
-
-### UNSAFE_componentWillReceiveProps(nextProps)
-
-UNSAFE_**componentWillUpdate**() is invoked just before rendering when new props or state are being received. Use this as an opportunity to perform preparation before an update occurs. This method is not called for the initial render. Note that you cannot call this.setState() here; nor should you do anything else (e.g. dispatch a Redux action) that would trigger an update to a React component before UNSAFE_componentWillUpdate() returns. Typically, this method can be **replaced** **by** **componentDidUpdate**(). If you were reading from the DOM in this method (e.g. to save a scroll position), you can move that logic to getSnapshotBeforeUpdate().
-
-### UNSAFE_componentWillUpdate(nextProps, nextState)
+```jsx
+// Q5: Why might componentDidMount's log appear twice in development?
+// Answer: In React 18+ Strict Mode, React mounts, unmounts and remounts components in
+// development to check that effects/cleanup are written correctly.
+```
