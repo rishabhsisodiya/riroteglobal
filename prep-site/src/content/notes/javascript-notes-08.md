@@ -3,21 +3,22 @@ title: "JavaScript Engine"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 8
+order: 11
 description: "JavaScript — JavaScript Engine."
 ---
 ![](/notes-img/javascript-notes/img-023.webp)
 
-A JavaScript engine is a computer program that executes JavaScript code and converts it into computer understandable language.JavaScript Engine in different browsers.
+A **JavaScript engine** is a program that executes JavaScript code by converting it into machine code the computer understands. JavaScript engines in different environments:
 
--   Chakra in Edge
--   Spidermonkey in Firefox. (First js engine)
--   V8 in google chrome ( and also in nodejs) written in c++.
+-   **V8** — Google Chrome, new Microsoft Edge, and Node.js. Written in C++.
+-   **SpiderMonkey** — Firefox. It was the **first** JavaScript engine (created by Brendan Eich at Netscape).
+-   **JavaScriptCore** — Safari.
+-   **Chakra** — the old (legacy) Microsoft Edge and Internet Explorer.
 
-A JavaScript engine is not a machine but just a piece of code in some high level language. This code goes through 3 major steps
+A JavaScript engine is not a machine — it is just a program written in a high-level language (like C++). JavaScript code goes through 3 major steps inside it:
 
 1.  Parsing
 2.  Compilation
@@ -25,136 +26,177 @@ A JavaScript engine is not a machine but just a piece of code in some high level
 
 ![](/notes-img/javascript-notes/img-024.webp)
 
-1.  **Parsing Phase**
+### 1. Parsing phase
 
-During this parsing phase the code which we have written is broken down into tokens.
+During parsing, the code we have written is broken down into **tokens**.
 
-let a=7; (let, a, =, 7 are tokens)
+```js
+let a = 7; // tokens: let, a, =, 7, ;
+```
 
-**Syntax parser:** It takes the code and converts it into AST(Abstract Syntax Tree).
+**Syntax parser:** takes the tokens and converts them into an **AST (Abstract Syntax Tree)** — a tree structure representing the code. Syntax errors are found at this stage, which is why a `SyntaxError` stops the whole script before any line runs.
 
-(you can check AST at astexplorer.net)
+(You can explore the AST at [astexplorer.net](https://astexplorer.net).)
 
 ![](/notes-img/javascript-notes/img-025.webp)
 
-1.  **Compilation Phase & Execution phase**
+### 2. Compilation and 3. Execution phase
 
-    ```js
-    Interpreter: It takes code and executes code line by line.
-    ```
-Compiler: It takes code and compiles it before executing and a new optimized code will be generated which is very fast and performs better.
+-   **Interpreter:** reads the code and executes it **line by line**, without compiling first. It starts running quickly, but the code runs slower.
+-   **Compiler:** compiles the **whole** code before executing it, generating optimized machine code. It takes time up front, but the resulting code runs much faster.
 
-Interpreter languages are fast but compiler languages provide more efficiency.
+So interpreted code **starts faster**, while compiled code **runs faster and more efficiently**.
 
-**JavaScript can behave as a compiler as well as interpreter language**. Everything depends on the JS engine. Initially when JavaScript was developed it was supposed to be an interpreter language but now most modern browsers use JIT(Just in time) compiler (Compiler along with interpreter). So that’s why the compilation and execution phase go hand in hand. So after parsing, AST goes into interpreter and interpreter converts high level code to byte code and moves to the execution phase. While converting, the interpreter takes help from the compiler to optimize the code as much as it can on runtime that’s why it is called JIT.
+**JavaScript can behave like both a compiled and an interpreted language** — it depends on the JS engine. When JavaScript was first created it was meant to be interpreted, but modern engines use a **JIT (Just-In-Time) compiler**, which combines an interpreter and a compiler. That's why the compilation and execution phases go hand in hand.
 
-Execution is made possible using these 2 components: Call Stack and memory heap.
+After parsing, the AST goes to the **interpreter**, which converts the high-level code into **bytecode** and starts executing it. While the code runs, the engine watches for "hot" code (functions called many times) and sends it to the **optimizing compiler**, which generates highly optimized machine code at runtime. That's why it is called **Just-In-Time** compilation. If an assumption turns out wrong (e.g. a function suddenly receives a string instead of a number), the engine **de-optimizes** back to bytecode.
 
-Memory Heap is the space where all variables and functions are assigned memory. Garbage collector is also present which frees up the memory whenever possible and it uses Mark and Sweep Algorithm. Compiler also uses some optimization techniques.
+In V8, the interpreter is called **Ignition** and the optimizing compiler is called **TurboFan**.
 
-### ![](/notes-img/javascript-notes/img-026.webp)
+Execution uses 2 main components: the **call stack** and the **memory heap**.
 
-From a high-level view, the V8 JavaScript engine execution consists of 5 steps.
+-   **Call stack** — keeps track of execution contexts (which function is running).
+-   **Memory heap** — where objects, arrays and functions are stored. The **garbage collector** frees memory in the heap that is no longer reachable, using the **Mark and Sweep** algorithm.
 
--   Initialize environment in the host
--   Compile JavaScript codes
--   Generate bytecodes
--   Interpret and execute bytecodes
--   Optimize some bytecodes for better performance
+![](/notes-img/javascript-notes/img-026.webp)
 
-### Mark and Sweep Algorithm
+From a high-level view, V8 execution consists of 5 steps:
 
-Any garbage collection algorithm must perform 2 basic operations. One, it should be able to detect all the unreachable objects and secondly, it must reclaim the heap space used by the garbage objects and make the space available again to the program.
+1.  Initialize the environment in the host (browser or Node.js)
+2.  Parse and compile the JavaScript code
+3.  Generate bytecode
+4.  Interpret and execute the bytecode
+5.  Optimize frequently used code into machine code for better performance
 
-The above operations are performed by Mark and Sweep Algorithm in two phases:
+**Write optimization-friendly code:**
 
-1) Mark phase
+```js
+function add(a, b) {
+  return a + b;
+}
 
-2) Sweep phase
+for (let i = 0; i < 100000; i++) add(i, i); // always numbers → V8 optimizes add
 
-### Mark Phase
+add('x', 'y'); // different types → may cause de-optimization
+```
 
-When an object is created, its mark bit is set to 0(false). In the Mark phase, we set the marked bit for all the reachable objects (or the objects which a user can refer to) to 1(true). Now to perform this operation we simply need to do a graph traversal, a depth first search approach would work for us. Here we can consider every object as a node and then all the nodes (objects) that are reachable from this node (object) are visited and it goes on till we have visited all the reachable nodes.
+### Mark and Sweep algorithm
 
-Root is a variable that refers to an object and is directly accessible by local variable. We will assume that we have one root only.
+Any garbage collection algorithm must do 2 basic things:
 
-We can access the mark bit for an object by: markedBit(obj).
+1.  **Detect** all unreachable objects.
+2.  **Reclaim** the heap memory used by those objects, making it available to the program again.
 
-Algorithm -Mark phase:
+Mark and Sweep does this in two phases:
 
+1.  Mark phase
+2.  Sweep phase
+
+#### Mark phase
+
+When an object is created, its mark bit is set to `0` (false). In the mark phase, the mark bit of every **reachable** object (objects the program can still refer to) is set to `1` (true). This is a graph traversal — for example depth-first search. Each object is a node, and from each node we visit all objects it references, until every reachable node has been visited.
+
+A **root** is a variable that refers to an object and is directly accessible — e.g. global variables and local variables on the current call stack. Here we assume there is only one root.
+
+We access the mark bit of an object with `markedBit(obj)`.
+
+**Algorithm — Mark phase:**
+
+```
 Mark(root)
+  If markedBit(root) = false then
+    markedBit(root) = true
+    For each v referenced by root
+      Mark(v)
+```
 
-If markedBit(root) = false then
+**Note:** if there is more than one root, call `Mark()` for every root.
 
-markedBit(root) = true
+#### Sweep phase
 
-For each v referenced by root
+As the name suggests, it "sweeps" (clears) the unreachable objects: every object whose mark bit is still `false` is removed from the heap. For reachable objects (mark bit `true`), the mark bit is reset to `false`, so that the next time the garbage collector runs, it can mark reachable objects again from scratch.
 
-Mark(v)
+**Algorithm — Sweep phase:**
 
-Note: If we have more than one root, then we simply have to call Mark() for all the root variables.
-
-### Sweep Phase
-
-As the name suggests it “sweeps” the unreachable objects i.e. it clears the heap memory for all the unreachable objects. All those objects whose marked value is set to false are cleared from the heap memory, for all other objects (reachable objects) the marked bit is set to true.
-
-Now the mark value for all the reachable objects is set to false, since we will run the algorithm (if required) and again we will go through the mark phase to mark all the reachable objects.
-
-Algorithm – Sweep Phase
-
+```
 Sweep()
+  For each object p in heap
+    If markedBit(p) = true then
+      markedBit(p) = false
+    else
+      heap.release(p)
+```
 
-For each object p in heap
+The mark-and-sweep algorithm is called a **tracing garbage collector**, because it traces the entire collection of objects that are directly or indirectly reachable by the program.
 
-If markedBit(p) = true then
+```js
+let user = { name: 'Asha' }; // object reachable through `user`
+let admin = user;             // two references
 
-markedBit(p) = false
+user = null;                  // still reachable through admin
+admin = null;                 // no references left → unreachable → collected in the next GC
 
-else
+// Cyclic references are handled too
+function makeCycle() {
+  const a = {};
+  const b = {};
+  a.ref = b;
+  b.ref = a;                  // a and b point to each other
+}
+makeCycle();                  // after it returns, neither is reachable from a root → both collected
+```
 
-heap.release(p)
+#### Advantages of Mark and Sweep
 
-The mark-and-sweep algorithm is called a tracing garbage collector because it traces out the entire collection of objects that are directly or indirectly accessible by the program.
+-   It handles **cyclic references**. Even with a cycle, the algorithm never ends up in an infinite loop (already-marked objects are skipped), and unreachable cycles are collected.
+-   There is no extra cost while the program runs normally (e.g. no reference counters to update on every assignment).
 
-### Advantages of Mark and Sweep Algorithm
+#### Disadvantages of Mark and Sweep
 
--   It handles the case with cyclic references, even in the case of a cycle, this algorithm never ends up in an infinite loop.
--   There are no additional overheads incurred during the execution of the algorithm.
+-   Normal program execution is **paused** while the garbage collector runs ("stop-the-world"). Modern engines reduce this with incremental and concurrent GC.
+-   After running many times, reachable objects end up separated by many small unused memory gaps (**fragmentation**). Engines use compaction to fix this.
 
-### Disadvantages of Mark and Sweep Algorithm
+### Copy elision
 
--   The main disadvantage of the mark-and-sweep approach is the fact that normal program execution is suspended while the garbage collection algorithm runs.
--   Another disadvantage is that, after the Mark and Sweep Algorithm is run several times on a program, reachable objects end up being separated by many, small unused memory regions.
-
-### Copy Elision
-
-Copy elision is an optimization implemented by most compilers to prevent extra (potentially expensive) copies in certain situations. It makes returning by value or pass-by-value feasible in practice
+Copy elision is a **compiler optimization** (mainly a C++ concept) that avoids making unnecessary copies of objects, for example when returning an object from a function by value. It is not something you control in JavaScript — objects are already passed by reference — but engines written in C++ (like V8) benefit from it internally.
 
 ### Inline caching
 
-Let's take a look at a code snippet.
+Let's look at this code:
 
 ```js
-function printUserName(user){
-
-return `Hello ${user.firstName} ${user.lastName}`
-
+function printUserName(user) {
+  return `Hello ${user.firstName} ${user.lastName}`;
 }
 
-const userName={
-```
-firstName:’John’,
+const userName = {
+  firstName: 'John',
+  lastName: 'Doe'
+};
 
-lastName:’Doe’
-
-```js
+for (let i = 0; i < 10000; i++) {
+  printUserName(userName);
 }
 ```
 
-Let’s analyze what the above code does. We create a function that takes an argument and returns a template string. Next, we create a userName object with keys — firstName and lastName. Now, we call function printUserName with the argument of userName object several times.
+We create a function that takes an object and returns a template string, then call it many times with objects that have the same structure.
 
-So, what V8 engine or many other JavaScript engines does is that first they run the function normally as you would expect. But, after some time when the function is called repeatedly, they assume or they act smart and just equals the repeated function calls to what the function returns to save time and improve the efficiency or speed. In this case, they equals
+Reading a property like `user.firstName` normally requires the engine to **look up** where `firstName` is stored inside the object. V8 gives every object a hidden **shape** (also called a hidden class) based on its properties and their order. The first time `printUserName` runs, V8 looks up `firstName` and `lastName` normally and **caches where they are located** for that shape. On the next calls, if the object has the **same shape**, V8 skips the lookup and reads the value directly from the cached location. This is called **inline caching**, and it makes repeated property access much faster.
 
-printUserName(userName) = “Hello John Doe”
+**Note:** inline caching caches *where the property is*, **not** the result of the function. If `userName.firstName` changes, the function still returns the new value.
 
-This is called or better known as Inline Caching. So, the gist of this whole inline caching is to write better and efficient codes knowing how the code will be processed by the engine or compiler.
+**How to write inline-cache-friendly code:**
+
+```js
+// Good — same properties, same order → same shape
+const u1 = { firstName: 'John', lastName: 'Doe' };
+const u2 = { firstName: 'Jane', lastName: 'Roe' };
+
+// Bad — different order or added later → different shapes, slower lookups
+const u3 = { lastName: 'Roe', firstName: 'Jane' };
+const u4 = { firstName: 'Max' };
+u4.lastName = 'Moe';
+```
+
+-   Create objects with the same properties in the same order (constructors or classes help).
+-   Avoid adding or deleting properties after creation (`delete` changes the shape).

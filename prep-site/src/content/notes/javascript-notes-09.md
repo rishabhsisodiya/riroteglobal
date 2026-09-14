@@ -3,92 +3,163 @@ title: "call, apply and bind method"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 9
+order: 12
 description: "JavaScript — call, apply and bind method."
 ---
-The call, apply, and bind methods are functions available in JavaScript for controlling the context (this) in which a function is invoked.
+The `call`, `apply` and `bind` methods are available on every function. They let us control the context (`this`) with which a function is invoked.
+
+### call — function borrowing
 
 ```js
 let name = {
+  firstName: "Rishabh",
+  lastName: "Sisodiya",
+  printFullName: function () {
+    console.log(this.firstName + " " + this.lastName);
+  }
+};
 
-firstName: "Rishabh",
-```
-lastName:"Sisodiya",
-
-```js
-printFullName: function (){
-
-console.log(this.firstName+" "+this.lastName);
-
-}
-
-}
-
-name.printFullName();
+name.printFullName(); // "Rishabh Sisodiya"
 
 let name2 = {
+  firstName: "Any",
+  lastName: "Random"
+};
 
-firstName: "Any",
-```
-lastName:"Random",
-
-```js
-}
-```
-**//function borrowing**
-
-```js
-name.printFullName.call(name2);
+// function borrowing
+name.printFullName.call(name2); // "Any Random"
 ```
 
-So when we use method.call() then our method will now use a new pointer ‘**this’.**
+When we use `method.call(obj)`, the method runs with `this` pointing to the new object `obj`. `name2` doesn't have `printFullName`, but it can **borrow** it from `name`.
 
 ### Method with arguments
 
+In practice, we keep the function separate from the objects:
+
 ```js
 let name = {
+  firstName: "Rishabh",
+  lastName: "Sisodiya"
+};
 
-firstName: "Rishabh",
-```
-lastName:"Sisodiya",
-
-```js
-}
-
-let printFullName= function (hometown, state){
-
-console.log(this.firstName+" "+this.lastName+" from "+hometown+", "+state);
-
-}
+let printFullName = function (hometown, state) {
+  console.log(this.firstName + " " + this.lastName + " from " + hometown + ", " + state);
+};
 
 printFullName.call(name, "Chittorgarh", "Rajasthan");
+// "Rishabh Sisodiya from Chittorgarh, Rajasthan"
 
 let name2 = {
+  firstName: "Any",
+  lastName: "Random"
+};
 
-firstName: "Any",
+// function borrowing
+printFullName.call(name2, "Udaipur", "Rajasthan");
+// "Any Random from Udaipur, Rajasthan"
+
+printFullName.apply(name2, ["Udaipur", "Rajasthan"]);
+// "Any Random from Udaipur, Rajasthan"
+
+// bind returns a copy of the function with `this` fixed — it does not call it
+let printMyName = printFullName.bind(name2, "Udaipur", "Rajasthan");
+console.log(typeof printMyName); // "function"
+printMyName();
+// "Any Random from Udaipur, Rajasthan"
 ```
-lastName:"Random",
+
+The only difference between `call` and `apply` is how we pass arguments. Both **invoke the function immediately**: `call` takes arguments one by one, `apply` takes them as an **array**. `bind` does **not** invoke the function — it returns a new copy of the function with `this` (and optionally some arguments) bound, which we can call later.
+
+If we do not pass the arguments to `apply` as an array (or array-like), it throws an error:
 
 ```js
-}
+printFullName.apply(name2, "Udaipur");
+// TypeError: CreateListFromArrayLike called on non-object
 ```
-**//function borrowing**
 
-**printFullName.call(name2, "Udaipur", "Rajasthan");**
+| | `call` | `apply` | `bind` |
+| --- | --- | --- | --- |
+| Invokes immediately | Yes | Yes | No — returns a new function |
+| Arguments | one by one: `fn.call(obj, a, b)` | array: `fn.apply(obj, [a, b])` | one by one: `fn.bind(obj, a)` |
+| Returns | result of the function | result of the function | bound function |
 
-**printFullName.apply(name2, \["Udaipur", "Rajasthan"\]);**
+### More examples
 
-**// bind method return a copy of method**
+**Using apply with Math.max**
 
-**let printMyName= printFullName.bind(name2,"Udaipur", "Rajasthan" )**
+```js
+const numbers = [5, 1, 9, 3];
+console.log(Math.max.apply(null, numbers)); // 9
+console.log(Math.max(...numbers));          // 9 — modern alternative with spread
+```
 
-**printMyName();**
+**Partial application with bind** — pass some arguments now, the rest later:
 
-Only difference between call and apply is how we pass arguments in them (In apply, we invoke the function and allow us to pass in arguments as an array while in call we pass arguments one by one) while bind returns a new copy of function and binds it which we can use later.
+```js
+function multiply(a, b) {
+  return a * b;
+}
 
-If we do not pass argos in array form to apply method then it will throw error:
+const double = multiply.bind(null, 2); // a is fixed to 2
+console.log(double(5));  // 10
+console.log(double(10)); // 20
+```
 
-**TypeError: CreateListFromArrayLike called on non-object**
+**Fixing lost `this` with bind**
+
+```js
+const user = {
+  name: "Rishabh",
+  greet() {
+    console.log("Hi " + this.name);
+  }
+};
+
+setTimeout(user.greet, 0);            // "Hi undefined" — this is lost
+setTimeout(user.greet.bind(user), 0); // "Hi Rishabh"
+```
+
+**Borrowing array methods for array-like objects**
+
+```js
+function sumAll() {
+  return Array.prototype.reduce.call(arguments, (sum, n) => sum + n, 0);
+}
+console.log(sumAll(1, 2, 3)); // 6
+```
+
+### Tricky questions
+
+```js
+// Q1: Can a bound function be re-bound?
+function show() { return this.x; }
+const bound = show.bind({ x: 1 });
+console.log(bound.call({ x: 2 }));      // 1 — bind wins; call cannot change it
+console.log(bound.bind({ x: 3 })());    // 1 — bind only works the first time
+```
+
+```js
+// Q2: call/apply/bind with arrow functions
+const obj = { x: 10 };
+const arrow = () => this?.x;
+console.log(arrow.call(obj));           // undefined — arrow functions ignore call/apply/bind for `this`
+```
+
+```js
+// Q3: new overrides bind
+function Person(name) { this.name = name; }
+const BoundPerson = Person.bind({ name: "ignored" });
+const p = new BoundPerson("Asha");
+console.log(p.name);                    // "Asha" — `new` creates a fresh `this`
+```
+
+```js
+// Q4: What if we pass null as this?
+function whoAmI() { return this; }
+console.log(whoAmI.call(null) === globalThis); // true in non-strict mode (undefined in strict mode)
+```
+
+For how to write your own versions of these methods, see **Polyfill for call, apply and bind method**.

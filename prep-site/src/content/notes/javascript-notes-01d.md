@@ -5,7 +5,7 @@ track: "javascript"
 kind: "notes"
 order: 1.3
 slug: "basics-objects"
-updated: "2026-09-06"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
 description: "JavaScript basics — Built-in Objects, this, Prototypes & Classes."
@@ -13,1443 +13,1525 @@ description: "JavaScript basics — Built-in Objects, this, Prototypes & Classes
 ### Date object
 
 ```js
-var dateObjectName = new Date([parameters]);
+const dateObjectName = new Date([parameters]);
 ```
-The parameters in the preceding syntax can be any of the following:
 
--   Nothing: creates today's date and time. For example,today = new Date();.
--   A string representing a date in the following form: "Month day, year hours:minutes:seconds." For example, var Xmas95 = new Date("December 25, 1995 13:30:00"). If you omit hours, minutes, or seconds, the value will be set to zero.
--   A set of integer values for year, month, and day. For example, var Xmas95 = new Date(1995, 11, 25).
--   A set of integer values for year, month, day, hour, minute, and seconds. For example, var Xmas95 = new Date(1995, 11, 25, 9, 30, 0);.
+The parameters can be:
 
-In the following example, the function JSClock() returns the time in the format of a digital clock.
+-   **Nothing** — the current date and time: `new Date()`.
+-   **A date string** — e.g. `new Date("December 25, 1995 13:30:00")`. Omitted hours, minutes or seconds are set to zero. The ISO format `"1995-12-25T13:30:00"` is the most reliable.
+-   **Year, month, day** — e.g. `new Date(1995, 11, 25)`. **Months start at 0** (0 = January, 11 = December).
+-   **Year, month, day, hour, minute, second** — e.g. `new Date(1995, 11, 25, 9, 30, 0)`.
+-   **A timestamp** — milliseconds since 1 January 1970 UTC, e.g. `new Date(0)`.
+
+```js
+const xmas = new Date(1995, 11, 25, 9, 30, 0);
+
+console.log(xmas.getFullYear()); // 1995
+console.log(xmas.getMonth());    // 11 — December (0-based)
+console.log(xmas.getDate());     // 25 — day of the month
+console.log(xmas.getDay());      // 1 — day of the week (0 = Sunday, so 1 = Monday)
+console.log(xmas.getHours());    // 9
+
+console.log(new Date(2026, 0, 31 + 1).getDate()); // 1 — overflow rolls into February
+console.log(Date.now());         // current timestamp in ms, e.g. 1789000000000
+console.log(typeof new Date());  // "object"
+console.log(typeof Date());      // "string" — without `new`, Date returns a string
+```
+
+The function `JSClock()` below returns the current time in digital clock format:
 
 ```js
 function JSClock() {
+  const time = new Date();
+  const hour = time.getHours();
+  const minute = time.getMinutes();
+  const second = time.getSeconds();
 
-var time = new Date();
-
-var hour = time.getHours();
-
-var minute = time.getMinutes();
-
-var second = time.getSeconds();
-
-var temp = '' + ((hour > 12) ? hour - 12 : hour);
-```
-if (hour == 0)
-
-```js
-temp = '12';
-
-temp += ((minute < 10) ? ':0' : ':') + minute;
-
-temp += ((second < 10) ? ':0' : ':') + second;
-
-temp += (hour >= 12) ? ' P.M.' : ' A.M.';
-
-return temp;
-
+  let temp = '' + (hour > 12 ? hour - 12 : hour);
+  if (hour === 0) temp = '12';
+  temp += (minute < 10 ? ':0' : ':') + minute;
+  temp += (second < 10 ? ':0' : ':') + second;
+  temp += hour >= 12 ? ' P.M.' : ' A.M.';
+  return temp;
 }
+
+console.log(JSClock()); // e.g. "9:05:07 P.M."
+
+// Modern alternative
+console.log(new Date().toLocaleTimeString('en-US')); // e.g. "9:05:07 PM"
 ```
-### Text Formatting
 
-### String Object
+### Text formatting
 
-The String Object is a wrapper around the string primitive data type.
+#### String object
+
+The `String` object is a **wrapper** around the string primitive. You rarely create one directly — JavaScript wraps primitives automatically when you call a method.
 
 ```js
-const foo = new String('foo'); // Creates a String object
+const foo = new String('foo'); // String object
+const bar = 'foo';             // string primitive
 
-console.log(foo); // Displays: [String: 'foo']
+console.log(foo);              // [String: 'foo']
+console.log(typeof foo);       // "object"
+console.log(typeof bar);       // "string"
+console.log(foo == bar);       // true — value compared
+console.log(foo === bar);      // false — object vs primitive
+console.log(bar.toUpperCase());// "FOO" — primitive temporarily wrapped
 ```
-typeof foo; // Returns 'object'
 
-### Methods of String
+#### String methods
 
 | Method | Description |
 | --- | --- |
-| charAt, charCodeAt, codePointAt | Return the character or character code at the specified position in the string. |
-| indexOf, lastIndexOf | Return the position of specified substring in the string or last position of specified substring, respectively. |
-| startsWith, endsWith, includes | Returns whether or not the string starts, ends or contains a specified string. |
-| concat | Combines the text of two strings and returns a new string. |
-| fromCharCode, fromCodePoint | Constructs a string from the specified sequence of Unicode values. This is a method of the String class, not a String instance. |
-| split | Splits a String object into an array of strings by separating the string into substrings. |
-| slice | Extracts a section of a string and returns a new string. |
-| substring, substr | Return the specified subset of the string, either by specifying the start and end indexes or the start index and a length. |
-| match, matchAll, replace, replaceAll, search | Work with regular expressions. |
-| toLowerCase, toUpperCase | Return the string in all lowercase or all uppercase, respectively. |
-| normalize | Returns the Unicode Normalization Form of the calling string value. |
-| repeat | Returns a string consisting of the elements of the object repeated the given times. |
-| trim | Trims whitespace from the beginning and end of the string. |
+| `charAt`, `charCodeAt`, `codePointAt`, `at` | Return the character or character code at a position. |
+| `indexOf`, `lastIndexOf` | Return the position of a substring (first or last), or `-1`. |
+| `startsWith`, `endsWith`, `includes` | Return whether the string starts with, ends with or contains a substring. |
+| `concat` | Joins strings and returns a new string. |
+| `String.fromCharCode`, `String.fromCodePoint` | Build a string from Unicode values. Called on `String`, not on an instance. |
+| `split` | Splits a string into an array of substrings. |
+| `slice` | Extracts a section and returns a new string (supports negative indexes). |
+| `substring` | Extracts characters between two indexes (no negative indexes). `substr` is deprecated. |
+| `match`, `matchAll`, `replace`, `replaceAll`, `search` | Work with regular expressions or patterns. |
+| `toLowerCase`, `toUpperCase` | Return the string in lowercase or uppercase. |
+| `normalize` | Returns the Unicode Normalization Form of the string. |
+| `repeat` | Returns the string repeated a given number of times. |
+| `trim`, `trimStart`, `trimEnd` | Remove whitespace from both ends, the start or the end. |
+| `padStart`, `padEnd` | Pad the string to a given length. |
 
-### Embedded expressions
+```js
+const s = 'Hello, World';
 
-console.log(\`Fifteen is ${five + ten} and not ${2 \* five + ten}.\`);
+console.log(s.charAt(0));          // "H"
+console.log(s.at(-1));             // "d" — negative index counts from the end
+console.log(s.indexOf('o'));       // 4
+console.log(s.lastIndexOf('o'));   // 8
+console.log(s.includes('World'));  // true
+console.log(s.startsWith('Hell')); // true
+console.log(s.split(', '));        // ["Hello", "World"]
+console.log(s.slice(-5));          // "World"
+console.log(s.substring(0, 5));    // "Hello"
+console.log(s.replace('l', 'L'));  // "HeLlo, World" — only the first match
+console.log(s.replaceAll('l', 'L'));// "HeLLo, WorLd"
+console.log('  hi  '.trim());      // "hi"
+console.log('ab'.repeat(3));       // "ababab"
+console.log('5'.padStart(3, '0')); // "005"
+console.log(String.fromCharCode(65, 66)); // "AB"
 
-### Internationalization
+// Common interview task — reverse a string
+console.log('abc'.split('').reverse().join('')); // "cba"
+```
 
-The **Intl** object is the namespace for the ECMAScript Internationalization API, which provides language sensitive string comparison, number formatting, and date and time formatting. The constructors for Collator, NumberFormat, and DateTimeFormat objects are properties of the Intl object.
+#### Embedded expressions (template literals)
 
-The DateTimeFormat object is useful for formatting date and time. The following formats a date for English as used in the United States. (The result is different in another time zone.)
+```js
+const five = 5;
+const ten = 10;
+console.log(`Fifteen is ${five + ten} and not ${2 * five + ten}.`);
+// "Fifteen is 15 and not 20."
+```
+
+#### Internationalization (Intl)
+
+The **Intl** object is the namespace for the ECMAScript Internationalization API. It provides language-sensitive string comparison (`Collator`), number formatting (`NumberFormat`) and date/time formatting (`DateTimeFormat`).
+
+**Date and time formatting**
 
 ```js
 const msPerDay = 24 * 60 * 60 * 1000;
-```
-// July 17, 2014 00:00:00 UTC.
 
-```js
+// July 17, 2014 00:00:00 UTC
 const july172014 = new Date(msPerDay * (44 * 365 + 11 + 197));
 
-const options = { year: '2-digit', month: '2-digit', day: '2-digit',
-
-hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
+const options = {
+  year: '2-digit', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+  timeZone: 'America/Los_Angeles'
+};
 
 const americanDateTime = new Intl.DateTimeFormat('en-US', options).format;
-
-console.log(americanDateTime(july172014)); // 07/16/14, 5:00 PM PDT
+console.log(americanDateTime(july172014)); // "07/16/14, 05:00 PM PDT"
 ```
-### Number formatting
 
-The [NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) object is useful for formatting numbers, for example currencies.
+Without the `timeZone` option, the output depends on the time zone of the computer running the code.
 
 ```js
-const gasPrice = new Intl.NumberFormat('en-US',
+const d = new Date(Date.UTC(2026, 0, 15));
+console.log(new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeZone: 'UTC' }).format(d)); // "15 January 2026"
+console.log(new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeZone: 'UTC' }).format(d)); // "January 15, 2026"
 ```
-{ style: 'currency', currency: 'USD',
+
+**Number formatting**
+
+[NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) formats numbers, for example currencies.
 
 ```js
-minimumFractionDigits: 3 });
+const gasPrice = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 3
+});
+console.log(gasPrice.format(5.259)); // "$5.259"
 
-console.log(gasPrice.format(5.259)); // $5.259
+const hanDecimalRMBInChina = new Intl.NumberFormat('zh-CN-u-nu-hanidec', {
+  style: 'currency',
+  currency: 'CNY'
+});
+console.log(hanDecimalRMBInChina.format(1314.25)); // "¥一,三一四.二五"
 
-const hanDecimalRMBInChina = new Intl.NumberFormat('zh-CN-u-nu-hanidec',
-
-{ style: 'currency', currency: 'CNY' });
-
-console.log(hanDecimalRMBInChina.format(1314.25)); // ￥ 一,三一四.二五
+console.log(new Intl.NumberFormat('en-IN').format(1234567.891)); // "12,34,567.891" — Indian grouping
+console.log(new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(2500)); // "₹2,500.00"
 ```
-### Array Object
 
-An array is an ordered list of values that you refer to with a name and an index.
+### Array object
 
-### Creating an array
+An array is an ordered list of values that you access by an index (starting at 0).
 
-The following statements create equivalent arrays:
+#### Creating an array
+
+These statements create equivalent arrays:
 
 ```js
-let arr = new Array(element0, element1, ..., elementN)
-
-let arr = Array(element0, element1, ..., elementN)
-
-let arr = [element0, element1, ..., elementN]
-
-let arr = Array(42) // Creates an array with no elements
+const arr1 = new Array(element0, element1, /* ..., */ elementN);
+const arr2 = Array(element0, element1, /* ..., */ elementN);
+const arr3 = [element0, element1, /* ..., */ elementN];
 ```
-// and arr.length set to 42.
+
+**Trap — a single number argument sets the length:**
 
 ```js
-let arr = Array(9.3) // RangeError: Invalid array length
+const a = Array(42);
+console.log(a.length);  // 42 — no elements, just 42 empty slots
+console.log(a[0]);      // undefined
 
-let wisenArray = Array.of(9.3) // wisenArray contains only one element 9.3
+// const b = Array(9.3); // RangeError: Invalid array length
+const c = Array.of(9.3);
+console.log(c);         // [9.3] — Array.of always creates elements
+
+console.log(Array.from('abc'));            // ["a", "b", "c"]
+console.log(Array.from({ length: 3 }, (_, i) => i * 2)); // [0, 2, 4]
 ```
-Note: If you supply a non-integer value to the array operator in the code above, a property will be created in the object representing the array, instead of an array element.
+
+If you use a **non-integer** index, a normal property is created instead of an array element:
 
 ```js
-let arr = []
+const arr = [];
+arr[3.4] = 'Oranges';
+console.log(arr.length);               // 0
+console.log(arr.hasOwnProperty(3.4));  // true — stored as the key "3.4"
 ```
-arr\[3.4\] = 'Oranges'
+
+Arrays are objects, so they can also hold extra named properties (these are ignored by `length` and most array methods):
 
 ```js
-console.log(arr.length) // 0
-
-console.log(arr.hasOwnProperty(3.4)) // true
+const nums = [1, 2, 3];
+nums.property = 'value';
+console.log(nums.property); // "value"
+console.log(nums.length);   // 3
 ```
-### Array methods
 
-The Array object has the following methods:
+#### Array methods
 
-[concat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) joins two or more arrays and returns a new array.
+**Methods that change (mutate) the original array:** `push`, `pop`, `shift`, `unshift`, `splice`, `reverse`, `sort`, `fill`.
+**Methods that return a new array/value:** `concat`, `slice`, `map`, `filter`, `reduce`, `join`, `toSorted`, `toReversed`, …
+
+[concat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) joins arrays/values and returns a **new** array.
 
 ```js
-let myArray = new Array('1', '2', '3')
-
-myArray = myArray.concat('a', 'b', 'c')
+const myArray = ['1', '2', '3'];
+const joined = myArray.concat('a', ['b', 'c']);
+console.log(joined);  // ["1", "2", "3", "a", "b", "c"]
+console.log(myArray); // ["1", "2", "3"] — unchanged
 ```
-// myArray is now \["1", "2", "3", "a", "b", "c"\]
 
-[join(delimiter = ',')](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) joins all elements of an array into a string.
+[join(delimiter = ',')](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) joins all elements into a string.
 
 ```js
-let myArray = new Array('Wind', 'Rain', 'Fire')
+const elements = ['Wind', 'Rain', 'Fire'];
+console.log(elements.join(' - ')); // "Wind - Rain - Fire"
+console.log(elements.join());      // "Wind,Rain,Fire"
 ```
-let list = myArray.join(' - ') // list is "Wind - Rain - Fire"
 
-[push()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) adds one or more elements to the end of an array and returns the resulting length of the array.
+[push()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) adds elements to the end and returns the **new length**.
 
 ```js
-let myArray = new Array('1', '2')
+const list = ['1', '2'];
+console.log(list.push('3')); // 3 — new length, not the array
+console.log(list);           // ["1", "2", "3"]
 ```
-myArray.push('3') // myArray is now \["1", "2", "3"\]
 
-[pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop) removes the last element from an array and returns that element.
+[pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop) removes the last element and returns it.
 
 ```js
-let myArray = new Array('1', '2', '3')
-
-let last = myArray.pop()
+const list = ['1', '2', '3'];
+const last = list.pop();
+console.log(list, last); // ["1", "2"] "3"
 ```
-// myArray is now \["1", "2"\], last = "3"
 
-[shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift) removes the first element from an array and returns that element.
+[shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift) removes the first element and returns it.
 
 ```js
-let myArray = new Array('1', '2', '3')
-
-let first = myArray.shift()
+const list = ['1', '2', '3'];
+const first = list.shift();
+console.log(list, first); // ["2", "3"] "1"
 ```
-// myArray is now \["2", "3"\], first is "1"
 
-[unshift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift) adds one or more elements to the front of an array and returns the new length of the array.
+[unshift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift) adds elements to the front and returns the new length.
 
 ```js
-let myArray = new Array('1', '2', '3')
+const list = ['1', '2', '3'];
+console.log(list.unshift('4', '5')); // 5
+console.log(list);                   // ["4", "5", "1", "2", "3"]
 ```
-myArray.unshift('4', '5')
 
-// myArray becomes \["4", "5", "1", "2", "3"\]
-
-[slice(start_index, upto_index)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) extracts a section of an array and returns a new array.
+[slice(start, end)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) returns a **new** array from `start` up to (but not including) `end`.
 
 ```js
-let myArray = new Array('a', 'b', 'c', 'd', 'e')
-
-myArray = myArray.slice(1, 4) // starts at index 1 and extracts all elements
+const letters = ['a', 'b', 'c', 'd', 'e'];
+console.log(letters.slice(1, 4)); // ["b", "c", "d"]
+console.log(letters.slice(-2));   // ["d", "e"]
+console.log(letters);             // unchanged
 ```
-// until index 3, returning \[ "b", "c", "d"\]
 
-[splice(index, count_to_remove, addElement1, addElement2, ...)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) removes elements from an array and (optionally) replaces them. It returns the items which were removed from the array.
+[splice(index, countToRemove, ...itemsToAdd)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) removes and/or inserts elements **in place**, and returns the removed items.
 
 ```js
-let myArray = new Array('1', '2', '3', '4', '5')
+const list = ['1', '2', '3', '4', '5'];
+const removed = list.splice(1, 3, 'a', 'b', 'c', 'd');
+console.log(removed); // ["2", "3", "4"]
+console.log(list);    // ["1", "a", "b", "c", "d", "5"]
+// Started at index 1, removed 3 elements, then inserted 4 new ones there.
+
+const nums = [1, 2, 3];
+nums.splice(1, 0, 99); // insert without removing
+console.log(nums);     // [1, 99, 2, 3]
 ```
-myArray.splice(1, 3, 'a', 'b', 'c', 'd')
 
-// myArray is now \["1", "a", "b", "c", "d", "5"\]
+**slice vs splice**
 
-// This code started at index one (or where the "2" was),
+| | `slice` | `splice` |
+| --- | --- | --- |
+| Changes original | No | Yes |
+| Returns | new array with the selected part | array of removed items |
+| Arguments | `(start, end)` | `(start, deleteCount, ...items)` |
 
-// removed 3 elements there, and then inserted all consecutive
-
-// elements in its place.
-
-[reverse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse) transposes the elements of an array, in place: the first array element becomes the last and the last becomes the first. It returns a reference to the array.
+[reverse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse) reverses the array **in place** and returns the same array.
 
 ```js
-let myArray = new Array('1', '2', '3')
+const list = ['1', '2', '3'];
+const result = list.reverse();
+console.log(list);            // ["3", "2", "1"]
+console.log(result === list); // true — same array
 ```
-myArray.reverse()
 
-// transposes the array so that myArray = \["3", "2", "1"\]
-
-[sort()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) sorts the elements of an array in place, and returns a reference to the array.
+[sort()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) sorts **in place** and returns the same array. By default it converts elements to **strings** and compares them.
 
 ```js
-let myArray = new Array('Wind', 'Rain', 'Fire')
+const words = ['Wind', 'Rain', 'Fire'];
+words.sort();
+console.log(words); // ["Fire", "Rain", "Wind"]
+
+// Trap — numbers are sorted as strings by default
+console.log([10, 1, 5, 100].sort());                // [1, 10, 100, 5]
+console.log([10, 1, 5, 100].sort((a, b) => a - b)); // [1, 5, 10, 100]
+console.log([10, 1, 5, 100].sort((a, b) => b - a)); // [100, 10, 5, 1]
 ```
-myArray.sort()
 
-// sorts the array so that myArray = \["Fire", "Rain", "Wind"\]
+`sort()` can take a compare function `(a, b)`:
 
-sort() can also take a callback function to determine how array elements are compared.For instance, the following will sort by the last letter of a string:
+-   return a **negative** number if `a` should come before `b`
+-   return a **positive** number if `a` should come after `b`
+-   return `0` if they are equal
 
 ```js
-let sortFn = function(a, b) {
+// Sort by the last letter of each word
+const sortFn = function (a, b) {
+  if (a[a.length - 1] < b[b.length - 1]) return -1;
+  if (a[a.length - 1] > b[b.length - 1]) return 1;
+  return 0;
+};
 
-if (a[a.length - 1] < b[b.length - 1]) return -1;
+const words2 = ['Wind', 'Rain', 'Fire'];
+words2.sort(sortFn);
+console.log(words2); // ["Wind", "Fire", "Rain"] — d, e, n
 
-if (a[a.length - 1] > b[b.length - 1]) return 1;
-
-if (a[a.length - 1] == b[b.length - 1]) return 0;
-
-}
+const users = [{ name: 'Zed', age: 30 }, { name: 'Amy', age: 25 }];
+users.sort((a, b) => a.name.localeCompare(b.name));
+console.log(users.map(u => u.name)); // ["Amy", "Zed"]
 ```
-myArray.sort(sortFn)
 
-// sorts the array so that myArray = \["Wind","Fire","Rain"\]
-
--   if a is less than b by the sorting system, return -1 (or any negative number)
--   if a is greater than b by the sorting system, return 1 (or any positive number)
--   if a and b are considered equivalent, return 0.
-
-[indexOf(searchElement\[, fromIndex\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) searches the array for searchElement and returns the index of the first match.
+[indexOf(searchElement, fromIndex)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) returns the index of the first match, or `-1`.
 
 ```js
-let a = ['a', 'b', 'a', 'b', 'a']
-
-console.log(a.indexOf('b')) // logs 1
+const a = ['a', 'b', 'a', 'b', 'a'];
+console.log(a.indexOf('b'));    // 1
+console.log(a.indexOf('b', 2)); // 3 — start searching from index 2
+console.log(a.indexOf('z'));    // -1 — not found
+console.log([NaN].indexOf(NaN));// -1 — use includes(NaN) instead
 ```
-// Now try again, starting from after the last match
+
+[lastIndexOf(searchElement, fromIndex)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf) works like `indexOf`, but searches backwards from the end.
 
 ```js
-console.log(a.indexOf('b', 2)) // logs 3
+const a = ['a', 'b', 'c', 'd', 'a', 'b'];
+console.log(a.lastIndexOf('b'));    // 5
+console.log(a.lastIndexOf('b', 4)); // 1 — search backwards from index 4
+console.log(a.lastIndexOf('z'));    // -1
 ```
-console.log(a.indexOf('z')) // logs -1, because 'z' was not found
 
-[lastIndexOf(searchElement\[, fromIndex\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf) works like indexOf, but starts at the end and searches backwards.
+[forEach(callback)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) runs the callback for every item and returns `undefined`. You cannot `break` out of it.
 
 ```js
-let a = ['a', 'b', 'c', 'd', 'a', 'b']
-
-console.log(a.lastIndexOf('b')) // logs 5
+const a = ['a', 'b', 'c'];
+const result = a.forEach((element, index) => console.log(index, element));
+// 0 "a"
+// 1 "b"
+// 2 "c"
+console.log(result); // undefined
 ```
-// Now try again, starting from before the last match
+
+[map(callback)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) returns a **new** array with the callback's return value for each item.
 
 ```js
-console.log(a.lastIndexOf('b', 4)) // logs 1
+const a1 = ['a', 'b', 'c'];
+const a2 = a1.map(item => item.toUpperCase());
+console.log(a2); // ["A", "B", "C"]
 
-console.log(a.lastIndexOf('z')) // logs -1
+console.log([1, 2, 3].map(n => { n * 2 })); // [undefined, undefined, undefined] — forgot return
 ```
-[forEach(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) executes callback on every array item and returns undefined.
+
+[filter(callback)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) returns a **new** array with the items for which the callback returns a truthy value.
 
 ```js
-let a = ['a', 'b', 'c']
-
-a.forEach(function(element) { console.log(element) })
+const mixed = ['a', 10, 'b', 20, 'c', 30];
+console.log(mixed.filter(item => typeof item === 'number')); // [10, 20, 30]
+console.log([0, 1, '', 'x', null].filter(Boolean));           // [1, "x"] — remove falsy values
 ```
-// logs each item in turn
 
-[map(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) returns a new array of the return value from executing callback on every array item.
+[find(callback)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) returns the **first** matching item (or `undefined`); `findIndex` returns its index (or `-1`).
 
 ```js
-let a1 = ['a', 'b', 'c']
-
-let a2 = a1.map(function(item) { return item.toUpperCase() })
-
-console.log(a2) // logs ['A', 'B', 'C']
+const users = [{ id: 1 }, { id: 2 }];
+console.log(users.find(u => u.id === 2));      // { id: 2 }
+console.log(users.findIndex(u => u.id === 3)); // -1
 ```
-[filter(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) returns a new array containing the items for which callback returned true.
+
+[every(callback)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) returns `true` if the callback is true for **every** item.
+[some(callback)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) returns `true` if it is true for **at least one** item.
 
 ```js
-let a1 = ['a', 10, 'b', 20, 'c', 30]
+const isNumber = value => typeof value === 'number';
 
-let a2 = a1.filter(function(item) { return typeof item === 'number'; })
+console.log([1, 2, 3].every(isNumber));     // true
+console.log([1, '2', 3].every(isNumber));   // false
+console.log([1, '2', 3].some(isNumber));    // true
+console.log(['1', '2', '3'].some(isNumber));// false
 
-console.log(a2) // logs [10, 20, 30]
+console.log([].every(isNumber)); // true — nothing fails on an empty array
+console.log([].some(isNumber));  // false
 ```
-[every(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) returns true if callback returns true for every item in the array.
+
+[reduce(callback, initialValue)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) calls `callback(accumulator, currentValue, currentIndex, array)` for each item to reduce the array to a **single value**, and returns the final accumulator.
 
 ```js
-function isNumber(value) {
+const a = [10, 20, 30];
+const total = a.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+console.log(total); // 60
 
-return typeof value === 'number'
+// Step by step: acc=0 → 0+10=10 → 10+20=30 → 30+30=60
 
-}
+// Group items by a key
+const people = [{ name: 'A', city: 'Pune' }, { name: 'B', city: 'Delhi' }, { name: 'C', city: 'Pune' }];
+const byCity = people.reduce((acc, p) => {
+  (acc[p.city] ||= []).push(p.name);
+  return acc;
+}, {});
+console.log(byCity); // { Pune: ["A", "C"], Delhi: ["B"] }
 
-let a1 = [1, 2, 3]
-
-console.log(a1.every(isNumber)) // logs true
-
-let a2 = [1, '2', 3]
-
-console.log(a2.every(isNumber)) // logs false
+// console.log([].reduce((a, b) => a + b)); // TypeError: Reduce of empty array with no initial value
 ```
-[some(callback\[, thisObject\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) returns true if callback returns true for at least one item in the array.
+
+**map vs forEach**
+
+| | `map` | `forEach` |
+| --- | --- | --- |
+| Returns | new array | `undefined` |
+| Chainable | Yes (`.map().filter()`) | No |
+| Use when | you need a transformed array | you only need side effects (logging, saving) |
+
+### Keyed collections
+
+#### Map object
+
+A `Map` is a collection of key/value pairs. Keys can be **any type**, and entries are iterated in **insertion order**.
 
 ```js
-function isNumber(value) {
-
-return typeof value === 'number'
-
-}
-
-let a1 = [1, 2, 3]
-
-console.log(a1.some(isNumber)) // logs true
-
-let a2 = [1, '2', 3]
-
-console.log(a2.some(isNumber)) // logs true
-
-let a3 = ['1', '2', '3']
-
-console.log(a3.some(isNumber)) // logs false
-```
-[reduce(callback\[, initialValue\])](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) applies _callback_(_accumulator_, _currentValue_\[, _currentIndex_\[, _array_\]\]) for each value in the array for the purpose of reducing the list of items down to a single value.  The reduce function returns the final value returned by _callback_ function.
-
-```js
-let a = [10, 20, 30]
-
-let total = a.reduce(function(accumulator, currentValue) { return accumulator + currentValue }, 0)
-
-console.log(total) // Prints 60[g arrays to store other properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections#using_arrays_to_store_other_properties)
-```
-**Arrays can also be used like objects, to store related information.**
-
-```js
-const arr = [1, 2, 3];
-
-arr.property = "value";
-
-console.log(arr.property); // Logs "value"
-```
-**
-Map object**
-
-A Map object is a simple key/value map and can iterate its elements in insertion order.
-
-```js
-let sayings = new Map();
-
+const sayings = new Map();
 sayings.set('dog', 'woof');
-
 sayings.set('cat', 'meow');
-
 sayings.set('elephant', 'toot');
-```
-sayings.size; // 3
 
-sayings.get('dog'); // woof
+console.log(sayings.size);        // 3
+console.log(sayings.get('dog'));  // "woof"
+console.log(sayings.get('fox'));  // undefined
+console.log(sayings.has('bird')); // false
 
-sayings.get('fox'); // undefined
-
-sayings.has('bird'); // false
-
-```js
 sayings.delete('dog');
-```
-sayings.has('dog'); // false
+console.log(sayings.has('dog'));  // false
 
-```js
-for (let [key, value] of sayings) {
-
-console.log(key + ' goes ' + value);
-
+for (const [key, value] of sayings) {
+  console.log(key + ' goes ' + value);
 }
-```
 // "cat goes meow"
-
 // "elephant goes toot"
 
-```js
 sayings.clear();
+console.log(sayings.size);        // 0
 ```
-sayings.size; // 0
 
-### Object and Map Compared
+```js
+// Any value can be a key
+const objKey = { id: 1 };
+const m = new Map([[objKey, 'object'], [1, 'number'], ['1', 'string']]);
+console.log(m.get(objKey)); // "object"
+console.log(m.get(1));      // "number"
+console.log(m.get('1'));    // "string" — 1 and "1" are different keys
 
-Traditionally, objects have been used to map strings to values. Objects allow you to set keys to values, retrieve those values, delete keys, and detect whether something is stored at a key. Map objects, however, have a few more advantages that make them better maps.
+// Convert between Map and object
+const obj = Object.fromEntries(new Map([['a', 1], ['b', 2]]));
+console.log(obj);                                // { a: 1, b: 2 }
+console.log(new Map(Object.entries(obj)).get('a')); // 1
+```
 
-1.  The keys of an Object are Strings or Symbols, where they can be of any value for a Map.
-2.  You can get the size of a Map easily, while you have to manually keep track of size for an Object.
-3.  The iteration of maps is in insertion order of the elements.
-4.  An Object has a prototype, so there are default keys in the map. (This can be bypassed using map = Object.create(null).)
+#### Object vs Map
 
-These three tips can help you to decide whether to use a Map or an Object:
+Objects have traditionally been used to map strings to values. `Map` has some advantages:
 
-1.  Use maps over objects when keys are unknown until run time, and when all keys are the same type and all values are the same type.
-2.  Use maps if there is a need to store primitive values as keys because the object treats each key as a string whether it's a number value, boolean value or any other primitive value.
-3.  Use objects when there is logic that operates on individual elements.
+1.  Object keys are strings or symbols; `Map` keys can be **any value** (objects, numbers, functions).
+2.  A `Map` has a `size` property; for an object you must count keys yourself (`Object.keys(obj).length`).
+3.  A `Map` always iterates in insertion order. (Objects mostly do too, but integer-like keys come first.)
+4.  An object has a prototype, so it has default keys that can clash with yours (like `toString` or `__proto__`). This can be avoided with `Object.create(null)`.
+5.  `Map` is optimized for frequent additions and removals.
 
-### WeakMap object
+How to choose:
 
-The WeakMap object is a collection of key/value pairs in which the keys are objects only and the values can be arbitrary values. **The object references in the keys are held weakly, meaning that they are a target of garbage collection (GC) if there is no other reference to the object anymore.** The WeakMap API is the same as the Map API.
+1.  Use a **Map** when keys are unknown until run time, or when keys are not strings.
+2.  Use a **Map** when you need primitive keys kept as their own type — an object turns every key into a string.
+3.  Use an **object** for fixed, known properties with logic that works on individual fields, and for data you will send as JSON.
 
-One difference to Map objects is that WeakMap keys are not enumerable (i.e., there is no method giving you a list of the keys).
+```js
+const o = {};
+o[1] = 'number';
+o['1'] = 'string';
+console.log(Object.keys(o)); // ["1"] — the number key was converted to a string and overwritten
 
-One use case of WeakMap objects is to store private data for an object, or to hide implementation details. The private data and methods belong inside the object and are stored in the privates WeakMap object. Everything exposed on the instance and prototype is public; everything else is inaccessible from the outside world because privates is not exported from the module.
+console.log(JSON.stringify(new Map([['a', 1]]))); // "{}" — Map is not serialized by JSON
+```
+
+#### WeakMap object
+
+A `WeakMap` is a collection of key/value pairs where **keys must be objects** and values can be anything. **Keys are held weakly: if nothing else refers to a key object, it can be garbage collected** and its entry disappears.
+
+Because entries can disappear at any time, a `WeakMap` is **not enumerable** — there is no `size`, `keys()`, `values()` or `forEach`. It only has `set`, `get`, `has` and `delete`.
+
+```js
+const visits = new WeakMap();
+let user = { name: 'Asha' };
+
+visits.set(user, 3);
+console.log(visits.get(user)); // 3
+console.log(visits.has(user)); // true
+
+user = null; // no other reference — the entry can now be garbage collected
+
+// visits.set('key', 1); // TypeError: Invalid value used as weak map key
+```
+
+One use case is storing **private data** for objects. Only code with access to the `privates` WeakMap can read the data:
 
 ```js
 const privates = new WeakMap();
 
-function Public() {
-
-const me = {
-```
-// Private data goes here
-
-```js
-};
-
-privates.set(this, me);
-
+function Public(secret) {
+  const me = { secret }; // private data
+  privates.set(this, me);
 }
 
-Public.prototype.method = function () {
-
-const me = privates.get(this);
-```
-// Do stuff with private data in \`me\`...
-
-```js
+Public.prototype.reveal = function () {
+  const me = privates.get(this);
+  return me.secret;
 };
 
-module.exports = Public;
+const p = new Public('hidden');
+console.log(p.reveal()); // "hidden"
+console.log(p.secret);   // undefined — not stored on the instance
+
+// module.exports = Public; // export only Public, not privates
 ```
 
-### Set Object
+#### Set object
 
-Set objects are collections of values. You can iterate its elements in insertion order. A value in a Set may only occur once; it is unique in the Set's collection.
+A `Set` is a collection of **unique values** of any type, iterated in insertion order.
 
 ```js
-let mySet = new Set();
-
+const mySet = new Set();
 mySet.add(1);
-
 mySet.add('some text');
-
 mySet.add('foo');
-```
-mySet.has(1); // true
+mySet.add(1);               // ignored — already present
 
-```js
+console.log(mySet.has(1));  // true
 mySet.delete('foo');
-```
-mySet.size; // 2
+console.log(mySet.size);    // 2
 
-```js
-for (let item of mySet) console.log(item);
-```
+for (const item of mySet) console.log(item);
 // 1
-
 // "some text"
-
-### Array and Set compared
-
-Create Array from set and vice versa
-
-```js
-Array.from(mySet);
-
-[...mySet2];
-
-mySet2 = new Set([1, 2, 3, 4]);
 ```
 
-Traditionally, a set of elements has been stored in arrays in JavaScript in a lot of situations. The new Set object, however, has some advantages:
-
-1.  Deleting Array elements by value (arr.splice(arr.indexOf(val), 1)) is very slow.
-2.  Set objects let you delete elements by their value. With an array, you would have to splice based on an element's index.
-3.  The value NaN cannot be found with indexOf in an array.
-4.  Set objects store unique values. You don't have to manually keep track of duplicates.
-
-### Set objects let you delete elements by their value
-
-// Create a new set using Set() constructor
+**Converting between Array and Set**
 
 ```js
-let myset = new Set();
+const mySet2 = new Set([1, 2, 3, 4]);
+
+console.log(Array.from(mySet2)); // [1, 2, 3, 4]
+console.log([...mySet2]);        // [1, 2, 3, 4]
+
+// Remove duplicates from an array
+console.log([...new Set([1, 2, 2, 3, 1])]); // [1, 2, 3]
 ```
-// Append new elements to the set
 
-// using add() method
+#### Array vs Set
+
+Sets have some advantages over arrays for collections of unique values:
+
+1.  Deleting by value from an array (`arr.splice(arr.indexOf(val), 1)`) is slow; `set.delete(val)` is fast.
+2.  Sets let you delete by **value**; arrays need the **index**.
+3.  `NaN` cannot be found with `indexOf` in an array, but `set.has(NaN)` works.
+4.  Sets keep values unique automatically.
+5.  `set.has()` is much faster than `array.includes()` for large collections.
 
 ```js
+const myset = new Set();
 myset.add(75);
-
 myset.add(12);
-```
-// As 75 exists, it will be removed
 
-// and it will return true
+console.log(myset.delete(75)); // true — 75 existed and was removed
+console.log(myset.delete(99)); // false — not found
+console.log(myset);            // Set(1) { 12 }
 
-```js
-console.log(myset.delete(75));
-
-console.log(myset)
-```
-### WeakSet object
-
-WeakSet objects are collections of objects. An object in the WeakSet may only occur once. It is unique in the WeakSet's collection, and objects are not enumerable.
-
-The main differences to the Set object are:
-
-1.  In contrast to Sets, WeakSets are collections of objects only, and not of arbitrary values of any type.
-2.  The WeakSet is weak: References to objects in the collection are held weakly. If there is no other reference to an object stored in the WeakSet, they can be garbage collected. That also means that there is no list of current objects stored in the collection.
-3.  WeakSets are not enumerable.
-
-The use cases of WeakSet objects are limited. They will not leak memory, so it can be safe to use DOM elements as a key and mark them for tracking purposes
-
-### Working with object
-
-An object is a collection of properties, and a property is an association between a name (or key) and a value.
-
-### Object Initialization
-
-```js
-var myCar = new Object();
-
-myCar.make = 'Ford';
-
-myCar.model = 'Mustang';
-
-myCar.year = 1969;
+console.log(new Set([NaN]).has(NaN)); // true
+console.log(new Set([{}, {}]).size);  // 2 — objects are compared by reference
 ```
 
+#### WeakSet object
+
+A `WeakSet` is a collection of **objects only**, each appearing once.
+
+Differences from `Set`:
+
+1.  A WeakSet can hold **only objects**, not primitive values.
+2.  References are held **weakly** — if no other reference to an object exists, it can be garbage collected.
+3.  A WeakSet is **not enumerable** (no `size`, no iteration). It only has `add`, `has` and `delete`.
+
+Use cases are limited, but it is handy for **tagging objects** (e.g. DOM elements) without causing memory leaks.
+
 ```js
-var myCar = {
+const processed = new WeakSet();
 
-make: 'Ford',
+function processOnce(obj) {
+  if (processed.has(obj)) return 'already done';
+  processed.add(obj);
+  return 'processing';
+}
 
-model: 'Mustang',
+const task = { id: 1 };
+console.log(processOnce(task)); // "processing"
+console.log(processOnce(task)); // "already done"
+// processed.add(1);           // TypeError: Invalid value used in weak set
+```
 
-year: 1969
+**Map / Set vs WeakMap / WeakSet**
 
+| | Map / Set | WeakMap / WeakSet |
+| --- | --- | --- |
+| Key / value types | any | objects only |
+| Prevents garbage collection | Yes | No |
+| Iterable / `size` | Yes | No |
+| Use case | general collections | metadata or private data attached to objects |
+
+### Working with objects
+
+An object is a collection of **properties**, and a property is a pair of a name (key) and a value. A property whose value is a function is called a **method**.
+
+#### Creating objects
+
+**1. Object initializer (literal)** — the most common way.
+
+```js
+const myCar = {
+  make: 'Ford',
+  model: 'Mustang',
+  year: 1969
+};
+
+const obj = {
+  property_1: 'value_1', // key may be an identifier...
+  2: 'value_2',          // or a number...
+  'property n': 'value_n' // or a string
 };
 ```
 
-| --- | --- |
-
-Unassigned properties of an object are undefined (and not null).
-
-myCar.color; // undefined
+The same object can be built step by step with `new Object()`:
 
 ```js
-function showProps(obj, objName) {
-
-var result = ;
-
-for (var i in obj) {
+const myCar2 = new Object();
+myCar2.make = 'Ford';
+myCar2.model = 'Mustang';
+myCar2.year = 1969;
 ```
-**// obj.hasOwnProperty() is used to filter out properties from the object's prototype chain**
 
-**if (obj.hasOwnProperty(i)) {**
+Properties that were never assigned are `undefined` (not `null`):
 
 ```js
-result += `${objName}.${i} = ${obj[i]}\\n`;
-
-}
-
-}
-
-return result;
-
-}
+console.log(myCar.color); // undefined
 ```
-### Enumerate the properties of an object
 
-Starting with ECMAScript 5, there are three native ways to list/traverse object properties:
+**2. Constructor function** — useful to create many objects of the same type:
 
-1.  **for...in loops:** This method traverses all enumerable properties of an object and its prototype chain.
-2.  **Object.keys(o):** This method returns an array with all the own (not in the prototype chain) enumerable properties' names ("keys") of an object o.
-3.  **Object.getOwnPropertyNames(o):** This method returns an array containing all properties' names (enumerable or not) of an object o.
-
-### Creating new objects
-
-1.  **_Object initializer_**
-
-```js
-var obj = { property_1: value_1, // property_# may be an identifier...
-
-2: value_2, // or a number...
-```
-// ...,
-
-'property n': value_n }; // or a string
-
-1.  **_Using a constructor function
-    _**Alternatively, you can create an object with these two steps:
-2.  Define the object type by writing a constructor function.
-3.  Create an instance of the object with new.
-
-To do this, you would write the following function:
+1.  Define the object type with a constructor function (by convention, it starts with a capital letter).
+2.  Create instances with `new`.
 
 ```js
 function Car(make, model, year) {
-
-this.make = make;
-
-this.mod.el = model;
-
-this.year = year;
-
-}
-```
-Notice the use of this to assign values to the object's properties based on the values passed to the function.
-
-Now you can create an object called mycar as follows:
-
-```js
-var mycar = new Car('Eagle', 'Talon TSi', 1993);
-```
-1.  **_Using the object.create method_**
-
-This method can be very useful, because it allows you to choose the prototype object for the object you want to create, without having to define a constructor function.
-
-// Animal properties and method encapsulation
-
-```js
-var Animal = {
-
-type: 'Invertebrates', // Default value of properties
-```
-displayType: function() { // Method which will display type of Animal
-
-```js
-console.log(this.type);
-
+  this.make = make;
+  this.model = model;
+  this.year = year;
 }
 
+const mycar = new Car('Eagle', 'Talon TSi', 1993);
+console.log(mycar.model); // "Talon TSi"
+```
+
+`this` refers to the new object being created, so each argument is stored on that object.
+
+**3. `Object.create()`** — creates an object with a chosen **prototype**, without writing a constructor:
+
+```js
+// Animal properties and method
+const Animal = {
+  type: 'Invertebrates', // default value
+  displayType() {        // method to display the type
+    console.log(this.type);
+  }
 };
+
+const animal1 = Object.create(Animal);
+animal1.displayType(); // "Invertebrates" — inherited from Animal
+
+const fish = Object.create(Animal);
+fish.type = 'Fishes';  // own property shadows the inherited one
+fish.displayType();    // "Fishes"
+
+console.log(Object.getPrototypeOf(fish) === Animal); // true
 ```
-// Create new animal type called animal1
+
+#### Enumerating object properties
+
+There are three native ways to list object properties:
+
+1.  **`for...in`** — all **enumerable** properties, including inherited ones from the prototype chain.
+2.  **`Object.keys(o)`** — the object's **own** enumerable property names.
+3.  **`Object.getOwnPropertyNames(o)`** — all **own** property names, enumerable or not.
 
 ```js
-var animal1 = Object.create(Animal);
-```
-animal1.displayType(); // Output:Invertebrates
-
-// Create new animal type called Fishes
-
-```js
-var fish = Object.create(Animal);
-
-fish.type = 'Fishes';
-```
-fish.displayType(); // Output:Fishes
-
-### JavaScript static Method
-
-### Points to remember
-
-1.  The static keyword is used to declare a static method.
-2.  The static method can be of any name.
-3.  A class can contain more than one static method.
-4.  If we declare more than one static method with a similar name, JavaScript always invokes the last one.
-5.  The static method can be used to create utility functions.
-6.  We can use this keyword to call a static method within another static method.
-7.  We cannot use this keyword directly to call a static method within the non-static method. In such cases, we can call the static method either using the class name or as the property of the constructor.
-
-### Inheritance
-
-All objects in JavaScript inherit from at least one other object. The object being inherited from is known as the prototype, and the inherited properties can be found in the prototype object of the constructor
-
-You can add a property to a previously defined object type by using the prototype property. This defines a property that is shared by all objects of the specified type, rather than by just one instance of the object. The following code adds a color property to all objects of type Car, and then assigns a value to the color property of the object car1.
-
-```js
-Car.prototype.color = null;
-
-car1.color = 'black';
-```
-A **method** is a function associated with an object, or, put differently, a method is a property of an object that is a function. Methods are defined the way normal functions are defined, except that they have to be assigned as the property of an object.
-
-An example is:
-
-```js
-objectName.methodname = functionName;
-
-var myObj = {
-
-myMethod: function(params) {
-```
-// ...do something
-
-```js
-}
-```
-// OR THIS WORKS TOO
-
-myOtherMethod(params) {
-
-// ...do something else
-
-```js
+function showProps(obj, objName) {
+  let result = '';
+  for (const key in obj) {
+    // Object.hasOwn filters out properties from the prototype chain
+    if (Object.hasOwn(obj, key)) {
+      result += `${objName}.${key} = ${obj[key]}\n`;
+    }
+  }
+  return result;
 }
 
+console.log(showProps(myCar, 'myCar'));
+// myCar.make = Ford
+// myCar.model = Mustang
+// myCar.year = 1969
+```
+
+```js
+const parent = { inherited: 1 };
+const child = Object.create(parent);
+child.own = 2;
+Object.defineProperty(child, 'hidden', { value: 3, enumerable: false });
+
+for (const k in child) console.log(k);           // "own", "inherited"
+console.log(Object.keys(child));                 // ["own"]
+console.log(Object.getOwnPropertyNames(child));  // ["own", "hidden"]
+console.log(Object.entries(child));              // [["own", 2]]
+```
+
+#### Defining methods
+
+A **method** is a function stored as a property of an object.
+
+```js
+function sayHello() {
+  return 'hello';
+}
+
+const myObj = {
+  myMethod: function (params) {
+    return 'method';
+  },
+
+  // shorthand — works too
+  myOtherMethod(params) {
+    return 'other method';
+  }
 };
-```
-Getters and setters can also be added to an object at any time after creation using the **Object.defineProperties method.**
 
-**example:**
+myObj.sayHello = sayHello; // assign an existing function as a method
+
+console.log(myObj.myMethod(), myObj.myOtherMethod(), myObj.sayHello());
+// "method" "other method" "hello"
+```
+
+#### Adding getters and setters later
+
+Getters and setters can be added to an existing object with **`Object.defineProperty`** or **`Object.defineProperties`**:
 
 ```js
-var o = { a: 0 };
+const o = { a: 0 };
+
+Object.defineProperties(o, {
+  b: { get() { return this.a + 1; } },
+  c: { set(x) { this.a = x / 2; } }
+});
+
+o.c = 10;         // runs the setter, which assigns 10 / 2 (5) to a
+console.log(o.b); // 6 — runs the getter, which returns a + 1
+console.log(o.a); // 5
 ```
-**Object.defineProperties(o, {**
 
-**'b': { get: function() { return this.a + 1; } },**
+#### Adding properties to all instances (prototype)
 
-**'c': { set: function(x) { this.a = x / 2; } }**
+Every object inherits from another object called its **prototype**. For objects created with a constructor, that prototype is `Constructor.prototype`.
 
-**});**
-
-o.c = 10; // Runs the setter, which assigns 10 / 2 (5) to the 'a' property
-
-console.log(o.b); // Runs the getter, which yields a + 1 or 6
-
-## this keyword
-
-In JavaScript, this keyword is a fundamental concept used to refer to the execution context or the object that is currently being acted upon. Its value depends on **where and how it is used**, making it both versatile and sometimes tricky to understand. Here's a detailed breakdown:
-
-**1. Default Behavio**r
-
--   **Global Context (Non-Strict Mode):**
-    -   this refers to the global object (window in browsers, global in Node.js).
-
-console.log(this); // In browsers, outputs the Window object
-
--   **Global Context (Strict Mode):**
-    -   this is undefined.
+A property added to the prototype is **shared by all instances**, not just one:
 
 ```js
-'use strict';
+const car1 = new Car('Honda', 'City', 2020);
+const car2 = new Car('Tata', 'Nexon', 2022);
 
-console.log(this); // undefined
+Car.prototype.color = null;            // shared default
+Car.prototype.describe = function () { // shared method
+  return `${this.make} ${this.model}`;
+};
+
+car1.color = 'black';                  // own property on car1 only
+
+console.log(car1.color);      // "black"
+console.log(car2.color);      // null — from the prototype
+console.log(car2.describe()); // "Tata Nexon"
+console.log(Object.hasOwn(car2, 'color')); // false — inherited
 ```
-### 2. Inside Functions
 
--   **Non-Strict Mode:**
-    -   this refers to the global object.
+### this keyword
+
+`this` refers to the object that is **executing the current code**. Its value is **not** decided where the function is written — it depends on **how the function is called** (except for arrow functions).
+
+**Quick rules (in priority order):**
+
+1.  Called with `new` → `this` is the new object.
+2.  Called with `call`, `apply` or `bind` → `this` is the object you pass.
+3.  Called as a method (`obj.fn()`) → `this` is `obj`.
+4.  Called as a plain function (`fn()`) → `undefined` in strict mode, the global object otherwise.
+5.  Arrow function → uses `this` from the surrounding scope (rules 1–4 do not apply).
+
+#### 1. Global context
+
+```js
+// Non-strict script in a browser
+console.log(this); // Window object
+```
+
+-   In a browser script, `this` at the top level is `window`, even in strict mode.
+-   In an ES module (`<script type="module">`), top-level `this` is `undefined`.
+-   In a Node.js CommonJS file, top-level `this` is `module.exports` (`{}`), not `global`.
+
+#### 2. Inside regular functions
 
 ```js
 function showThis() {
-
-console.log(this);
-
+  console.log(this);
 }
+showThis(); // Window (browser) or globalThis (Node) — non-strict mode
 ```
-showThis(); // Window (or global in Node.js)
-
--   **Strict Mode:**
-    -   this is undefined.
 
 ```js
 'use strict';
-
 function showThis() {
-
-console.log(this);
-
+  console.log(this);
 }
-```
 showThis(); // undefined
+```
 
--   **As a Method of an Object:**
-    -   this refers to the object that owns the method.
+**As a method of an object** — `this` is the object before the dot:
 
 ```js
 const obj = {
-
-name: 'Alice',
-
-greet: function() {
-
-console.log(this.name);
-```
-},
-
-```js
-};
-```
-obj.greet(); // Alice
-
-### 3. Inside Arrow Functions
-
--   Arrow functions do not bind their own this. Instead, this is inherited from the enclosing execution context.
-
-    ```js
-    const obj = {
-
-    name: 'Alice',
-
-    greet: () => {
-
+  name: 'Alice',
+  greet: function () {
     console.log(this.name);
-    ```
-},
+  }
+};
+
+obj.greet(); // "Alice"
+```
+
+#### 3. Inside arrow functions
+
+Arrow functions do not have their own `this`. They use `this` from the scope where they were **defined**.
 
 ```js
+const obj = {
+  name: 'Alice',
+  greet: () => {
+    console.log(this.name);
+  },
+  greetLater() {
+    setTimeout(() => console.log(this.name), 0); // arrow inside a method
+  }
 };
+
+obj.greet();      // undefined — `this` is the outer (module/global) scope, not obj
+obj.greetLater(); // "Alice" — the arrow uses greetLater's `this`, which is obj
 ```
-obj.greet(); // undefined (or Window.name in browsers)
 
-In this case, this is inherited from the surrounding scope (e.g., global or parent function).
+#### 4. Inside classes
 
-### 4. Inside Classes
-
--   **Methods in Classes:**
-    -   this refers to the instance of the class.
+**Instance methods** — `this` is the instance:
 
 ```js
 class Person {
-
-constructor(name) {
-
-this.name = name;
-
-}
-```
-greet() {
-
-```js
-console.log(`Hello, my name is ${this.name}`);
-
-}
-
+  constructor(name) {
+    this.name = name;
+  }
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
 }
 
 const person = new Person('Alice');
-```
-person.greet(); // Hello, my name is Alice
+person.greet(); // "Hello, my name is Alice"
 
--   **Static Methods:**
-    -   this refers to the class itself, not an instance.
+const greet = person.greet;
+// greet(); // TypeError: Cannot read properties of undefined — class bodies are always strict
+```
+
+**Static methods** — `this` is the class itself:
 
 ```js
-class Person {
-```
-static info() {
-
-```js
-console.log(this);
-
+class Person2 {
+  static info() {
+    console.log(this === Person2);
+  }
 }
 
-}
+Person2.info(); // true
 ```
-Person.info(); // Person
 
-### 5. In Event Handlers
+#### 5. In event handlers
 
-In regular functions, this refers to the element that received the event.
+With a regular function, `this` is the element the listener is attached to (same as `event.currentTarget`):
+
 ```js
 const button = document.querySelector('button');
-```
-button.addEventListener('click', function() {
 
-```js
-console.log(this); // <button> element
-
+button.addEventListener('click', function () {
+  console.log(this); // <button> element
 });
 ```
--   Using arrow functions, this is inherited from the enclosing scope.
-    ```js
-        button.addEventListener('click', () => {
 
-    console.log(this); // Window (or enclosing context)
-
-    });
-    ```
-### 6. Explicit Binding
-
--   **call and apply:**
-    -   You can explicitly set the value of this.
+With an arrow function, `this` comes from the surrounding scope:
 
 ```js
-function greet() {
+button.addEventListener('click', (event) => {
+  console.log(this);                // Window (or the enclosing context)
+  console.log(event.currentTarget); // <button> — use this instead
+});
+```
 
-console.log(this.name);
+#### 6. Explicit binding: call, apply and bind
 
+`call` and `apply` invoke the function immediately with a chosen `this`. `bind` returns a **new function** with `this` fixed.
+
+```js
+function greet(greeting, punctuation) {
+  console.log(`${greeting}, ${this.name}${punctuation}`);
 }
 
 const person = { name: 'Alice' };
+
+greet.call(person, 'Hi', '!');     // "Hi, Alice!" — arguments one by one
+greet.apply(person, ['Hey', '?']); // "Hey, Alice?" — arguments as an array
+
+const boundGreet = greet.bind(person, 'Hello');
+boundGreet('.');                   // "Hello, Alice."
+
+const other = { name: 'Bob' };
+boundGreet.call(other, '!');       // "Hello, Alice!" — a bound function cannot be re-bound
 ```
-greet.call(person); // Alice
 
-greet.apply(person); // Alice
+#### 7. In constructors (with `new`)
 
--   **bind:**
-    -   Returns a new function with this bound to the specified object.
+When a function is called with `new`, `this` is the newly created object:
 
-```js
-const boundGreet = greet.bind(person);
-```
-boundGreet(); // Alice
-
-### 7. In Constructors
-
-In constructor functions, this refers to the newly created object.
-```js
-function Person(name) {
-
-this.name = name;
-
-}
-
-const person = new Person('Alice');
-
-console.log(person.name); // Alice
-```
-### 8. With new Keyword
-
-When a function is invoked with new, this refers to the new object being created.
 ```js
 function Animal(type) {
-
-this.type = type;
-
+  this.type = type;
 }
 
 const cat = new Animal('cat');
-
-console.log(cat.type); // cat
+console.log(cat.type); // "cat"
 ```
-### 9. In setTimeout and setInterval
 
-Inside regular functions passed to setTimeout, this refers to the global object (window or global).
+#### 8. In setTimeout and setInterval
 
-setTimeout(function() {
+A regular function callback is called as a plain function, so `this` is the global object (`window` in browsers; in Node it is the `Timeout` object):
 
 ```js
-console.log(this); // Window
-
+setTimeout(function () {
+  console.log(this); // Window (browser)
 }, 1000);
 ```
--   Using arrow functions, this retains its value from the enclosing scope.
 
-    ```js
-        setTimeout(() => {
+An arrow function keeps `this` from the enclosing scope:
 
-    console.log(this); // Inherits from surrounding context
-
-    }, 1000);
-    ```
-### 10. Special Cases
-
-**Object Property Assignment:
 ```js
-**const obj = { name: 'Alice' };
+const timer = {
+  seconds: 5,
+  start() {
+    setTimeout(() => {
+      console.log(this.seconds); // 5 — `this` is timer
+    }, 1000);
+  }
+};
+timer.start();
+```
 
-const greet = function() {
+#### 9. Special cases
 
-console.log(this.name);
+**Assigning a function to an object property** — `this` depends on the call, not where the function was created:
 
+```js
+const obj = { name: 'Alice' };
+
+const greet = function () {
+  console.log(this.name);
 };
 
 obj.greet = greet;
+obj.greet(); // "Alice"
 ```
-obj.greet(); // Alice
 
-**Losing this Context:
-**const obj = {
+**Losing `this`** — taking a method out of its object:
 
 ```js
-name: 'Alice',
-
-greet: function() {
-
-console.log(this.name);
-```
-},
-
-```js
+const obj2 = {
+  name: 'Alice',
+  greet: function () {
+    console.log(this.name);
+  }
 };
 
-const greet = obj.greet;
+const greet2 = obj2.greet;
+greet2(); // undefined (or TypeError in strict mode) — called without an object
+
+setTimeout(obj2.greet, 0);              // undefined — same problem
+setTimeout(() => obj2.greet(), 0);      // "Alice" — fix 1: wrap in an arrow
+setTimeout(obj2.greet.bind(obj2), 0);   // "Alice" — fix 2: bind
 ```
-greet(); // undefined (loses context)
 
-## Prototype and prototypal inheritance
+**Interview question — what does this print?**
 
-JavaScript is a prototype based language, so, whenever we create a function using JavaScript, JavaScript engine adds a prototype property inside a function, **Prototype property** is basically an object (also known as **Prototype** object), where we can attach methods and properties in a prototype object, which enables all the other objects to inherit these methods and properties.
+```js
+const user = {
+  name: 'Sam',
+  regular() { return this.name; },
+  arrow: () => this?.name,
+  nested() {
+    function inner() { return this?.name; }
+    const innerArrow = () => this.name;
+    return [inner(), innerArrow()];
+  }
+};
 
-**Prototypes** are the mechanism by which JavaScript objects inherit features from one another. An object's prototype object may also have a prototype object, which it inherits methods and properties from, and so on. This is often referred to as a **prototype chain**, and explains why different objects have properties and methods defined on other objects available to them.
+console.log(user.regular()); // "Sam"
+console.log(user.arrow());   // undefined — arrow takes outer `this`
+console.log(user.nested());  // [undefined, "Sam"] — plain inner() loses `this`; the arrow keeps it
+```
 
-There is a saying that “Everything in JavaScript is an object” comes from here where arrays or any method have a prototype of the object.
+### Prototypes and prototypal inheritance
+
+JavaScript is a **prototype-based** language. Every object has a hidden link to another object called its **prototype** (`[[Prototype]]`, readable with `Object.getPrototypeOf(obj)` or the older `obj.__proto__`).
+
+When you read a property, JavaScript first looks on the object itself. If it is not there, it looks on the prototype, then the prototype's prototype, and so on until it reaches `null`. This is the **prototype chain**. It is why arrays have `map`, strings have `toUpperCase`, and every object has `toString`.
+
+Every regular function also has a **`prototype` property** — an object that becomes the prototype of instances created with `new`. Methods placed there are shared by all instances.
+
+The saying "everything in JavaScript is an object" comes from this: arrays, functions and dates all have `Object.prototype` at the end of their prototype chain.
 
 ![](/notes-img/javascript-notes/img-001.webp)
 
 ```js
-let object ={
-```
-name:"Akshay",
+const arr = [1, 2];
+console.log(Object.getPrototypeOf(arr) === Array.prototype);            // true
+console.log(Object.getPrototypeOf(Array.prototype) === Object.prototype); // true
+console.log(Object.getPrototypeOf(Object.prototype));                   // null — end of the chain
 
-city:"Dehradun",
-
-getIntro:function(){
-
-```js
-console.log(this.name+"from "+this.city);
-
-}
-
-}
-
-let object2={
-```
-name:"Aditya"
-
-```js
-}
-```
-**// Never do this, it would have performance issue**
-
-```js
-object2.__proto__=object;
+function fn() {}
+console.log(fn.__proto__ === Function.prototype);                       // true
+console.log(Function.prototype.__proto__ === Object.prototype);         // true
 ```
 
-object2 will have access to object properties. If suppose city is not defined in object2 then it will use object property and the same with methods also. ![](/notes-img/javascript-notes/img-002.webp)
+```js
+const object = {
+  name: "Akshay",
+  city: "Dehradun",
+  getIntro: function () {
+    console.log(this.name + " from " + this.city);
+  }
+};
 
-### Add properties to inbuilt function and object
+const object2 = {
+  name: "Aditya"
+};
+
+// Never do this in real code — changing __proto__ is slow
+object2.__proto__ = object;
+
+console.log(object2.name); // "Aditya" — own property
+console.log(object2.city); // "Dehradun" — not on object2, found on its prototype
+object2.getIntro();        // "Aditya from Dehradun" — inherited method, `this` is object2
+```
+
+`object2` now inherits from `object`. Because `city` is not defined on `object2`, it is read from `object`; the same happens for methods.
+
+![](/notes-img/javascript-notes/img-002.webp)
+
+**Better alternatives to setting `__proto__`:**
 
 ```js
-Function.prototype.mybind = function(){
+const object3 = Object.create(object); // set the prototype at creation
+object3.name = 'Neha';
+object3.getIntro(); // "Neha from Dehradun"
 
-console.log("User defined bind method");
+Object.setPrototypeOf(object2, object); // standard API (still slow — avoid in hot code)
+```
 
-}
+#### Adding methods to built-in prototypes
+
+Methods added to a built-in prototype become available on every object of that type:
+
+```js
+Function.prototype.mybind = function () {
+  console.log("User defined bind method");
+};
 
 function fun() {
-```
-// any function
-
-```js
+  // any function
 }
-```
 
-Now it will give access of mybind method to all function.
+fun.mybind(); // "User defined bind method" — every function now has mybind
+```
 
 ![](/notes-img/javascript-notes/img-003.webp)
 
-They use __proto__ so people don’t end up messing with the prototype and nobody will use __proto__ by mistake.
+This is how **polyfills** are written. In application code, avoid modifying built-in prototypes — it can clash with future JavaScript features or other libraries.
 
-## JavaScript Classes
+**`prototype` vs `__proto__`**
 
-```js
-class Employee
-```
-{
+| | `prototype` | `__proto__` |
+| --- | --- | --- |
+| Exists on | functions (and classes) | every object |
+| What it is | object that will become the prototype of instances created with `new` | link to *this* object's own prototype |
+| Example | `Car.prototype` | `mycar.__proto__ === Car.prototype` |
 
-//Initializing an object
+`__proto__` is a legacy accessor kept for compatibility; prefer `Object.getPrototypeOf` / `Object.setPrototypeOf`.
 
-```js
-constructor(id,name)
-```
-{
+### JavaScript classes
 
-```js
-this.id=id;
-
-this.name=name;
-
-}
-```
-//Declaring method
-
-detail()
-
-{
-
-document.writeln(this.id+" "+this.name+"<br>")
+A class is a template for creating objects. It is mostly **syntactic sugar** over constructor functions and prototypes.
 
 ```js
+class Employee {
+  // Initializing an object
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  // Declaring a method (stored on Employee.prototype)
+  detail() {
+    return `${this.id} ${this.name}`;
+  }
 }
 
-}
-```
-//passing object to a variable
+const e1 = new Employee(101, "Martin Roy");
+const e2 = new Employee(102, "Duke William");
 
-```js
-var e1=new Employee(101,"Martin Roy");
-
-var e2=new Employee(102,"Duke William");
-```
-e1.detail(); //calling method
-
-```js
-e2.detail();
+console.log(e1.detail()); // "101 Martin Roy"
+console.log(e2.detail()); // "102 Duke William"
+console.log(typeof Employee);                         // "function"
+console.log(e1.detail === e2.detail);                 // true — shared via the prototype
+console.log(Object.getPrototypeOf(e1) === Employee.prototype); // true
 ```
 
-1.  Unlike function declaration, t**he class declaration is not a part of JavaScript hoisting.** So, it is required to declare the class before invoking it. It will throw a ReferenceError: Employee is not defined if we use class before declaring it.
-2.  A class **can be declared once only**. If we try to declare class more than one time, it throws an error. SyntaxError: identifier ‘Employee’ has already declared
+Points to remember:
 
-### Class expressions
-
-Another way to define a class is by using a class expression. Here, it is not mandatory to assign the name of the class. So, the class expression can be named or unnamed. The class expression allows us to fetch the class name. However, this will not be possible with class declaration.
-
-### Unnamed Class Expression
-
-The class can be expressed without assigning any name to it.
-
-Let's see an example.
+1.  **Class declarations are hoisted but not initialized** (temporal dead zone). Using a class before its declaration throws `ReferenceError: Cannot access 'Employee' before initialization`.
+2.  A class **cannot be declared twice** in the same scope: `SyntaxError: Identifier 'Employee' has already been declared`.
+3.  A class must be called with `new`: `Employee()` throws `TypeError: Class constructor Employee cannot be invoked without 'new'`.
+4.  Code inside a class body always runs in **strict mode**.
 
 ```js
-var emp = class {
-
-constructor(id, name) {
-
-this.id = id;
-
-this.name = name;
-
-}
-
-};
+// const early = new Late(); // ReferenceError: Cannot access 'Late' before initialization
+class Late {}
 ```
-document.writeln(emp.name); // will print emp
+
+#### Class expressions
+
+A class can also be defined with a **class expression**. The name is optional, so it can be named or unnamed.
+
+**Unnamed class expression**
 
 ```js
-var emp = class stud{
-
-constructor(id, name) {
-
-this.id = id;
-
-this.name = name;
-
-}
-
+const emp = class {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
 };
 
-var emp1 = new emp("1","employee");
-
-var emp2 = new stud("1","employee");
-
-console.log(emp1.name); // ReferenceError: stud is not defined
-
-console.log(emp2.name); // employee
+console.log(emp.name); // "emp" — takes the variable name
 ```
 
-### Class Expression Example: Re-declaring Class
+**Named class expression**
 
-Unlike class declaration, **the class expression allows us to re-declare the same class.**
-
-//Declaring class
+The class name is visible **only inside the class body**. From outside, use the variable.
 
 ```js
-var emp=class
-```
-{
-
-//Initializing an object
-
-```js
-constructor(id,name)
-```
-{
-
-```js
-this.id=id;
-
-this.name=name;
-
-}
-```
-//Declaring method
-
-detail()
-
-{
-
-document.writeln(this.id+" "+this.name+"<br>")
-
-```js
-}
-
-}
-```
-//passing object to a variable
-
-```js
-var e1=new emp(101,"Martin Roy");
-
-var e2=new emp(102,"Duke William");
-```
-e1.detail(); //calling method
-
-```js
-e2.detail();
-```
-//Re-declaring class
-
-```js
-var emp=class
-```
-{
-
-//Initializing an object
-
-```js
-constructor(id,name)
-```
-{
-
-```js
-this.id=id;
-
-this.name=name;
-
-}
-```
-detail()
-
-{
-
-document.writeln(this.id+" "+this.name+"<br>")
-
-```js
-}
-
-}
-```
-//passing object to a variable
-
-```js
-var e1=new emp(103,"James Bella");
-
-var e2=new emp(104,"Nick Johnson");
-```
-e1.detail(); //calling method
-
-```js
-e2.detail();
-```
-
-### Named Class Expression Example
-
-We can express the class with a particular name. Here, the scope of the class name is up to the class body. The class is retrieved using class.name property.
-
-```js
-var emp = class Employee {
-
-constructor(id, name) {
-
-this.id = id;
-
-this.name = name;
-
-}
-
+const emp2 = class Employee2 {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+  whoAmI() {
+    return Employee2.name; // allowed inside the class
+  }
 };
 
-document.writeln(emp.name);
+const emp1 = new emp2("1", "employee");
+console.log(emp1.name);     // "employee"
+console.log(emp2.name);     // "Employee2" — the class's own name
+console.log(emp1.whoAmI()); // "Employee2"
 
-/*document.writeln(Employee.name);
+// const emp3 = new Employee2("1", "employee"); // ReferenceError: Employee2 is not defined
 ```
-Error occurs on console:
+
+**Re-declaring a class expression**
+
+A class **declaration** cannot be declared twice, but a class expression stored in a `var` (or reassigned `let`) can be replaced:
 
 ```js
-"ReferenceError: Employee is not defined
+var Emp = class {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+  detail() {
+    return `${this.id} ${this.name}`;
+  }
+};
+
+console.log(new Emp(101, "Martin Roy").detail()); // "101 Martin Roy"
+
+// Re-declaring the class
+var Emp = class {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+  detail() {
+    return `#${this.id} - ${this.name}`;
+  }
+};
+
+console.log(new Emp(103, "James Bella").detail()); // "#103 - James Bella"
 ```
-\*/
 
-## JavaScript Iterables
+#### Static methods
 
--   Iterables are iterable objects (like Arrays).
--   Iterables can be accessed with simple and efficient code.
--   Iterables can be iterated over with for..of loops
+A **static** method belongs to the class itself, not to instances. It is often used for utility functions.
 
-    ```js
-    for (variable of iterable) {
-    ```
-// code block to be executed
+Points to remember:
+
+1.  The `static` keyword declares a static method.
+2.  A static method can have any name, and a class can have several.
+3.  If two static methods have the same name, the **last one** wins.
+4.  Inside a static method, `this` is the class, so `this.otherStatic()` calls another static method.
+5.  Inside an instance (non-static) method, `this` is the instance, so call static methods with the class name (`ClassName.method()`) or `this.constructor.method()`.
 
 ```js
+class MathUtil {
+  static add(a, b) {
+    return a + b;
+  }
+  static double(n) {
+    return this.add(n, n);             // `this` is MathUtil
+  }
+  static add(a, b) {                   // same name — this one wins
+    return `sum: ${a + b}`;
+  }
+  instanceMethod() {
+    return MathUtil.add(1, 2) + ' / ' + this.constructor.add(3, 4);
+  }
+}
+
+console.log(MathUtil.double(5));             // "sum: 10"
+console.log(new MathUtil().instanceMethod()); // "sum: 3 / sum: 7"
+// new MathUtil().add(1, 2);                  // TypeError: add is not a function — not on instances
+```
+
+#### Inheritance with extends and super
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    return `${this.name} makes a sound`;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);         // must call super() before using `this`
+    this.breed = breed;
+  }
+  speak() {
+    return `${super.speak()} — woof`; // call the parent method
+  }
+}
+
+const d = new Dog('Rex', 'Labrador');
+console.log(d.speak());           // "Rex makes a sound — woof"
+console.log(d instanceof Dog);    // true
+console.log(d instanceof Animal); // true
+```
+
+#### Class fields, private members and getters
+
+```js
+class BankAccount {
+  currency = 'INR';      // public field — set on every instance
+  #balance = 0;          // private field — only accessible inside the class
+  static count = 0;      // static field
+
+  constructor(owner) {
+    this.owner = owner;
+    BankAccount.count++;
+  }
+
+  deposit(amount) {
+    if (amount <= 0) throw new Error('Invalid amount');
+    this.#balance += amount;
+    return this;         // return this to allow chaining
+  }
+
+  get balance() {        // read like a property
+    return `${this.#balance} ${this.currency}`;
+  }
+
+  #log() {               // private method
+    return 'secret';
+  }
+}
+
+const acc = new BankAccount('Asha');
+acc.deposit(100).deposit(50);
+console.log(acc.balance);       // "150 INR"
+console.log(BankAccount.count); // 1
+console.log(acc['#balance']);   // undefined — not a normal property
+// acc.#balance;                // SyntaxError: Private field '#balance' must be declared in an enclosing class
+```
+
+### Iterables, iterators and generators
+
+#### Iterables
+
+An **iterable** is an object that can be looped over with `for...of`, spread (`...`) and destructuring. Arrays, strings, `Map`, `Set`, `arguments` and NodeList are built-in iterables. Plain objects are **not**.
+
+```js
+for (const variable of iterable) {
+  // code block to be executed
 }
 ```
-### JavaScript Iterators
 
-The iterator protocol defines how to produce a sequence of values from an object.
+```js
+for (const ch of 'hey') console.log(ch); // "h", "e", "y"
+console.log([...new Set([1, 1, 2])]);    // [1, 2]
+const [first, second] = 'ab';            // "a", "b"
 
-An object becomes an iterator when it implements a next() method.
+// for (const x of { a: 1 }) {} // TypeError: {(intermediate value)} is not iterable
+```
 
-The next() method must return an object with two properties:
+#### Iterators
 
--   value (the next value)
--   done (true or false)
+The **iterator protocol** defines how to produce a sequence of values. An object is an **iterator** when it has a `next()` method that returns an object with two properties:
 
-| value | The value returned by the iterator (Can be omitted if done is true) |
+| Property | Meaning |
 | --- | --- |
-| done | true if the iterator has completed false if the iterator has produced a new value |
+| `value` | The value returned by the iterator (can be omitted when `done` is `true`) |
+| `done` | `true` if the iterator has finished, `false` if it produced a new value |
 
-### Custom Iterable
+```js
+const it = ['a', 'b'][Symbol.iterator]();
+console.log(it.next()); // { value: "a", done: false }
+console.log(it.next()); // { value: "b", done: false }
+console.log(it.next()); // { value: undefined, done: true }
+```
 
-// Home Made Iterable
+**A home-made iterator**
 
 ```js
 function myNumbers() {
-
-let n = 0;
-
-return {
-
-next: function() {
-
-n += 10;
-
-return {value:n, done:false};
-
+  let n = 0;
+  return {
+    next: function () {
+      n += 10;
+      return { value: n, done: false };
+    }
+  };
 }
 
-};
-
-}
-```
-// Create Iterable
-
-```js
 const n = myNumbers();
+console.log(n.next().value); // 10
+console.log(n.next().value); // 20
+console.log(n.next().value); // 30
 ```
-n.next(); // Returns 10
 
-n.next(); // Returns 20
+This is an iterator but **not an iterable** — it cannot be used with `for...of`.
 
-n.next(); // Returns 30
+#### Custom iterables
 
-A JavaScript iterable is an object that has a Symbol.iterator.
-
-The Symbol.iterator is a function that returns a next() function.
-
-An iterable can be iterated over with the code: for (const x of iterable) { }
-
-// Create an Object
+An object is **iterable** when it has a `[Symbol.iterator]` method that returns an iterator (an object with `next()`).
 
 ```js
-myNumbers = {};
-```
-// Make it Iterable
+const myNumbers2 = {};
 
-myNumbers\[Symbol.iterator\] = function() {
-
-```js
-let n = 0;
-
-done = false;
-
-return {
-```
-next() {
-
-```js
-n += 10;
-```
-if (n == 100) {done = true}
-
-```js
-return {value:n, done:done};
-
-}
-
+myNumbers2[Symbol.iterator] = function () {
+  let n = 0;
+  let done = false;
+  return {
+    next() {
+      n += 10;
+      if (n === 100) done = true;
+      return { value: n, done: done };
+    }
+  };
 };
 
+for (const num of myNumbers2) {
+  console.log(num); // 10, 20, 30, ..., 90 — stops when done is true (100 is not logged)
 }
+
+console.log([...myNumbers2].length); // 9
 ```
 
-### Generator
+```js
+// A range object that works with for...of
+const range = {
+  from: 1,
+  to: 4,
+  [Symbol.iterator]() {
+    let current = this.from;
+    const last = this.to;
+    return {
+      next: () => current <= last
+        ? { value: current++, done: false }
+        : { value: undefined, done: true }
+    };
+  }
+};
 
-A **generator function** in JavaScript is a special type of function that can pause and resume its execution, allowing you to produce (or "generate") values on demand. It is defined using the function\* syntax, and its execution is controlled using an **iterator** returned by calling the function.
+console.log([...range]); // [1, 2, 3, 4]
+```
+
+#### Generators
+
+A **generator function** (`function*`) can **pause and resume**. Calling it does not run the body — it returns a **generator object**, which is both an iterator and an iterable. Each `next()` runs the code until the next `yield`, which pauses and returns a value.
 
 ```js
 function* myGenerator() {
-```
-yield 1; // Pause and return 1
-
-yield 2; // Pause and return 2
-
-yield 3; // Pause and return 3
-
-```js
+  yield 1; // pause and return 1
+  yield 2; // pause and return 2
+  yield 3; // pause and return 3
 }
 
-const gen = myGenerator(); // Returns an iterator
+const gen = myGenerator(); // returns an iterator — nothing has run yet
 
 console.log(gen.next()); // { value: 1, done: false }
-
 console.log(gen.next()); // { value: 2, done: false }
-
 console.log(gen.next()); // { value: 3, done: false }
-
 console.log(gen.next()); // { value: undefined, done: true }
 ```
 
 ![](/notes-img/javascript-notes/img-004.webp)
+
+```js
+// Generators work with for...of and spread
+console.log([...myGenerator()]); // [1, 2, 3]
+
+// return value — included in next(), but NOT in for...of
+function* withReturn() {
+  yield 'a';
+  return 'end';
+}
+const g = withReturn();
+console.log(g.next()); // { value: "a", done: false }
+console.log(g.next()); // { value: "end", done: true }
+console.log([...withReturn()]); // ["a"] — the return value is skipped
+
+// Infinite sequence — values are produced only when asked
+function* idGenerator() {
+  let id = 1;
+  while (true) yield id++;
+}
+const ids = idGenerator();
+console.log(ids.next().value, ids.next().value, ids.next().value); // 1 2 3
+
+// Passing a value back into the generator
+function* conversation() {
+  const name = yield 'What is your name?';
+  yield `Hello, ${name}!`;
+}
+const chat = conversation();
+console.log(chat.next().value);        // "What is your name?"
+console.log(chat.next('Asha').value);  // "Hello, Asha!" — 'Asha' becomes the result of the first yield
+
+// The simplest way to make a class iterable
+class Team {
+  constructor(...members) { this.members = members; }
+  *[Symbol.iterator]() {
+    yield* this.members; // delegate to the array's iterator
+  }
+}
+console.log([...new Team('A', 'B')]); // ["A", "B"]
+```

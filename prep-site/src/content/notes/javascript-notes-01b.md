@@ -5,61 +5,68 @@ track: "javascript"
 kind: "notes"
 order: 1.1
 slug: "basics-types"
-updated: "2026-09-06"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
 description: "JavaScript basics — Data Types, Literals & Control Flow."
 ---
-### Data structures and types
-
 ### Data types
 
-The latest ECMAScript standard defines eight data types: (Undefined BigInt Number null Boolean String Symbol Object)
+The latest ECMAScript standard defines **eight** data types:
 
-Seven data types that are primitives, plus `Object`:
+-   **Seven primitives:** `Boolean`, `null`, `undefined`, `Number`, `BigInt`, `String`, `Symbol`
+-   **One non-primitive:** `Object` (arrays, functions, dates, maps … are all objects)
 
-1.  [Boolean](https://developer.mozilla.org/en-US/docs/Glossary/Boolean). true and false. To convert values of other types into boolean values, you use the Boolean() function.
+A **primitive** is a single, immutable value with no methods of its own (JavaScript temporarily wraps it in an object when you call a method like `'hi'.toUpperCase()`). Primitives are copied **by value**; objects are copied **by reference**.
+
 ```js
-console.log(Boolean('Hi')); // true
+let a = 10;
+let b = a;       // copies the value
+b = 20;
+console.log(a);  // 10 — a is unaffected
 
-console.log(Boolean('')); // false
-
-console.log(Boolean(20)); // true
-
-console.log(Boolean(Infinity)); // true
-
-console.log(Boolean(0)); // false
-
-console.log(Boolean({foo: 100})); // true on non-empty object
-
-console.log(Boolean([])); // true, even an empty array is an object
-
-console.log(Boolean(NaN)); // false
-
-console.log(Boolean(undefined)); // false
-
-console.log(Boolean('0')); // true, non-empty string
-
-console.log(Boolean(-1)); // true, any non-zero number
-
-console.log(Boolean(function() {})); // true, functions are objects
-
-console.log(Boolean(null));// false
+let obj1 = { n: 10 };
+let obj2 = obj1; // copies the reference
+obj2.n = 20;
+console.log(obj1.n); // 20 — both point to the same object
 ```
-2.  [null](https://developer.mozilla.org/en-US/docs/Glossary/null). A special keyword denoting a null value. Because JavaScript is case-sensitive, null is not the same as Null, NULL, or any other variant.
+
+#### 1. Boolean
+
+[Boolean](https://developer.mozilla.org/en-US/docs/Glossary/Boolean) has two values: `true` and `false`. To convert other values to a boolean, use `Boolean()` (or `!!value`).
+
+```js
+console.log(Boolean('Hi'));          // true
+console.log(Boolean(''));            // false — empty string
+console.log(Boolean(20));            // true
+console.log(Boolean(Infinity));      // true
+console.log(Boolean(0));             // false
+console.log(Boolean({ foo: 100 }));  // true — any object
+console.log(Boolean({}));            // true — even an empty object
+console.log(Boolean([]));            // true — even an empty array is an object
+console.log(Boolean(NaN));           // false
+console.log(Boolean(undefined));     // false
+console.log(Boolean('0'));           // true — non-empty string
+console.log(Boolean(' '));           // true — a space is still a character
+console.log(Boolean('false'));       // true — non-empty string
+console.log(Boolean(-1));            // true — any non-zero number
+console.log(Boolean(function () {}));// true — functions are objects
+console.log(Boolean(null));          // false
+```
+
+#### 2. null
+
+[null](https://developer.mozilla.org/en-US/docs/Glossary/null) means **"intentionally no value"**. You assign it yourself to say a variable is empty. Because JavaScript is case-sensitive, `null` is not the same as `Null` or `NULL`.
 
 ```js
 let user = null;
 
-console.log(user); // null
-
-console.log(typeof null); // "object" — a long-standing JS quirk
-
+console.log(user);               // null
+console.log(typeof null);        // "object" — a long-standing JS quirk
 console.log(null === undefined); // false, different types
-
-console.log(null == undefined); // true, loose equality treats them as equal
-
-console.log(Boolean(null)); // false
+console.log(null == undefined);  // true, loose equality treats them as equal
+console.log(Boolean(null));      // false
+console.log(null + 1);           // 1 — null converts to 0 in arithmetic
 ```
 
 **Q: If `typeof null` is `"object"`, and objects are truthy, why is `Boolean(null)` false?**
@@ -72,7 +79,7 @@ Because `null` is **not** an object — it is a primitive. `typeof null === "obj
 ```js
 console.log(typeof null);            // "object" — historical bug
 console.log(null instanceof Object); // false — not actually an object
-console.log(Object.getPrototypeOf({}) === null); // true, null means "no object"
+console.log(Object.getPrototypeOf(Object.prototype) === null); // true — null means "no object"
 console.log(Boolean(null));          // false — listed as falsy in ToBoolean
 console.log(Boolean({}));            // true — real objects are always truthy
 
@@ -81,92 +88,123 @@ const value = null;
 console.log(value === null);                              // true
 console.log(typeof value === "object" && value !== null); // false — correct "is object" check
 ```
-3.  [undefined](https://developer.mozilla.org/en-US/docs/Glossary/undefined). A top-level property whose value is not defined. The undefined type is a primitive type that has only one value, undefined. By default, when a variable is declared but not initialized, it defaults to undefined.
-    JavaScript defines that null is equal to undefined as follows:
+
+#### 3. undefined
+
+[undefined](https://developer.mozilla.org/en-US/docs/Glossary/undefined) means **"a value has not been assigned yet"**. JavaScript gives it automatically. The `undefined` type has only one value: `undefined`.
 
 ```js
-console.log(null == undefined); // true
-
 let x;
-console.log(x); // undefined, declared but not assigned
+console.log(x); // undefined — declared but not assigned
 
 function greet(name) {
   console.log(name);
 }
-greet(); // undefined, missing argument
+greet(); // undefined — missing argument
+
+function noReturn() {}
+console.log(noReturn()); // undefined — function without return
 
 let obj = { a: 1 };
-console.log(obj.b); // undefined, missing property
+console.log(obj.b); // undefined — missing property
 
-console.log(typeof undefined); // "undefined"
+console.log(typeof undefined);   // "undefined"
+console.log(null == undefined);  // true
+console.log(undefined + 1);      // NaN — undefined converts to NaN in arithmetic
 ```
-4.  [Number](https://developer.mozilla.org/en-US/docs/Glossary/Number). An integer or floating point number. For example: 42 or 3.14159.
+
+**`null` vs `undefined`**
+
+| | `null` | `undefined` |
+| --- | --- | --- |
+| Meaning | intentionally empty | not assigned yet |
+| Set by | the developer | JavaScript |
+| `typeof` | `"object"` (bug) | `"undefined"` |
+| In arithmetic | `0` (`null + 1 → 1`) | `NaN` (`undefined + 1 → NaN`) |
+| In JSON | kept (`{"a":null}`) | property is removed |
+
+#### 4. Number
+
+[Number](https://developer.mozilla.org/en-US/docs/Glossary/Number) is used for both integers and decimals (64-bit floating point). For example: `42` or `3.14159`.
 
 ```js
-console.log(42); // 42, integer
-
-console.log(3.14159); // 3.14159, floating point
-
-console.log(0.1 + 0.2); // 0.30000000000000004, floating point precision
-
-console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
-
-console.log(typeof 42); // "number"
-
-console.log(1 / 0); // Infinity
-
-console.log(-1 / 0); // -Infinity
+console.log(42);                       // 42, integer
+console.log(3.14159);                  // 3.14159, floating point
+console.log(0.1 + 0.2);                // 0.30000000000000004, floating point precision
+console.log(0.1 + 0.2 === 0.3);        // false
+console.log(Math.abs(0.1 + 0.2 - 0.3) < Number.EPSILON); // true — safe way to compare decimals
+console.log(Number.MAX_SAFE_INTEGER);  // 9007199254740991
+console.log(9007199254740992 === 9007199254740993); // true — precision lost beyond the safe range
+console.log(typeof 42);                // "number"
+console.log(1 / 0);                    // Infinity
+console.log(-1 / 0);                   // -Infinity
 ```
 
-NaN stands for Not a Number. It is a special numeric value that indicates an invalid number. For example, the division of a string by a number returns NaN:.
+**NaN**
+
+`NaN` stands for "Not a Number". It is a special **number** value that represents an invalid numeric result — for example, dividing a string by a number:
 
 ```js
-console.log('a'/2); // NaN;
+console.log('a' / 2);      // NaN
+console.log(typeof NaN);   // "number" — NaN is still of type number
 ```
-The NaN has two special characteristics:
 
--   Any operation with NaN returns NaN.
--   The NaN does not equal any value, including itself.
+`NaN` has two special characteristics:
 
-Here are some examples:
+-   Any arithmetic operation with `NaN` returns `NaN`.
+-   `NaN` is not equal to any value, including itself.
 
 ```js
-console.log(NaN/2); // NaN
+console.log(NaN / 2);            // NaN
+console.log(NaN == NaN);         // false
+console.log(NaN === NaN);        // false
 
-console.log(NaN == NaN); // false
+// How to check for NaN
+console.log(Number.isNaN(NaN));  // true
+console.log(Number.isNaN('abc'));// false — 'abc' is not the NaN value
+console.log(isNaN('abc'));       // true — global isNaN converts to number first
+console.log(Object.is(NaN, NaN));// true
 ```
-5.  [BigInt](https://developer.mozilla.org/en-US/docs/Glossary/BigInt). An integer with arbitrary precision. For example: 9007199254740992n.
+
+#### 5. BigInt
+
+[BigInt](https://developer.mozilla.org/en-US/docs/Glossary/BigInt) is an integer of any size (arbitrary precision). Create one by adding `n` to the end of an integer or by calling `BigInt()`. For example: `9007199254740993n`.
 
 ```js
-console.log(9007199254740992n); // 9007199254740992n
+console.log(9007199254740993n);        // 9007199254740993n — exact, no precision loss
+console.log(typeof 10n);               // "bigint"
+console.log(BigInt(9007199254740991)); // 9007199254740991n
+console.log(10n + 20n);                // 30n
+console.log(7n / 2n);                  // 3n — decimals are cut off
+console.log(10n === 10);               // false, different types
+console.log(10n == 10);                // true, loose equality compares the value
 
-console.log(typeof 9007199254740992n); // "bigint"
-
-console.log(Number.MAX_SAFE_INTEGER + 1n); // TypeError: can't mix BigInt and other types, need explicit conversion
-
-console.log(BigInt(9007199254740992)); // 9007199254740992n
-
-console.log(10n + 20n); // 30n
-
-console.log(10n === 10); // false, different types
+// console.log(Number.MAX_SAFE_INTEGER + 1n); // TypeError: Cannot mix BigInt and other types, use explicit conversions
+console.log(BigInt(Number.MAX_SAFE_INTEGER) + 1n); // 9007199254740992n
 ```
-6.  [String](https://developer.mozilla.org/en-US/docs/Glossary/String). A sequence of characters that represent a text value. For example: "Howdy"
+
+#### 6. String
+
+[String](https://developer.mozilla.org/en-US/docs/Glossary/String) is a sequence of characters that represents text. For example: `"Howdy"`. Strings are **immutable** — string methods return a new string.
 
 ```js
-console.log('Howdy'); // "Howdy"
+console.log('Howdy');               // "Howdy"
+console.log("Howdy" + " partner");  // "Howdy partner"
+console.log(typeof 'Howdy');        // "string"
+console.log('Howdy'.length);        // 5
+console.log('Howdy'[0]);            // "H"
+console.log(`Total: ${2 + 2}`);     // "Total: 4", template literal
+console.log(String(42));            // "42"
 
-console.log("Howdy" + " partner"); // "Howdy partner"
-
-console.log(typeof 'Howdy'); // "string"
-
-console.log('Howdy'.length); // 5
-
-console.log(`Total: ${2 + 2}`); // "Total: 4", template literal
-
-console.log(String(42)); // "42"
+let word = 'cat';
+word[0] = 'b';                      // ignored — strings cannot be changed in place
+console.log(word);                  // "cat"
+console.log(word.toUpperCase());    // "CAT" — returns a new string
 ```
-7.  [Symbol](https://developer.mozilla.org/en-US/docs/Glossary/Symbol) (new in ECMAScript 2015). A data type whose instances are unique and immutable.
-    The Symbol function creates a new unique value every time you call it.
+
+#### 7. Symbol
+
+[Symbol](https://developer.mozilla.org/en-US/docs/Glossary/Symbol) (added in ES2015) is a primitive whose values are **unique** and immutable. Every call to `Symbol()` creates a new, unique value. Symbols are mainly used as object keys that cannot clash with other keys.
 
 ```js
 console.log(Symbol() == Symbol()); // false
@@ -191,85 +229,120 @@ console.log(user[b]);          // "from library B" — both kept, no overwrite
 // Need a shared symbol? Use the global registry
 console.log(Symbol.for('id') === Symbol.for('id')); // true
 
-let statuses = {
+// Using symbols as enum-like constants
+const statuses = {
   OPEN: Symbol('Open'),
-  IN_PROGRESS: Symbol('In progress'),
   COMPLETED: Symbol('Completed'),
-  HOLD: Symbol('On hold'),
   CANCELED: Symbol('Canceled')
 };
 
-// complete a task
-task.setStatus(statuses.COMPLETED);
+let taskStatus = statuses.COMPLETED;
+console.log(taskStatus === statuses.COMPLETED); // true
+console.log(taskStatus === 'Completed');        // false — cannot be faked with a string
 ```
-8.  [Object](https://developer.mozilla.org/en-US/docs/Glossary/Object). A collection of key/value pairs — the only non-primitive type.
+
+#### 8. Object
+
+[Object](https://developer.mozilla.org/en-US/docs/Glossary/Object) is a collection of key/value pairs — the only non-primitive type. Arrays, functions, dates, `Map` and `Set` are all objects.
 
 ```js
 let obj = {
   key: 'value'
 };
-console.log(obj); // { key: "value" }
-
-console.log(typeof obj); // "object"
-
-console.log(typeof []); // "object", arrays are objects too
-
-console.log(typeof function() {}); // "function", but still an object under the hood
+console.log(obj);                    // { key: "value" }
+console.log(typeof obj);             // "object"
+console.log(typeof []);              // "object", arrays are objects too
+console.log(typeof function () {});  // "function", but still an object under the hood
 
 let obj2 = { key: 'value' };
-console.log(obj === obj2); // false, objects compare by reference, not value
-```
-### Data type conversion
-
-JavaScript is a dynamically typed language. That means you don't have to specify the data type of a variable when you declare it, and data types are converted automatically as needed during script execution. So, for example, you could define a variable as follows:
-
-```js
-var answer = 42;
-```
-And later, you could assign the same variable a string value, for example:
-
-```js
-answer = 'Thanks for all the fish...';
-```
-Because JavaScript is dynamically typed, this assignment does not cause an error message.
-
-In expressions involving numeric and string values with the + operator, JavaScript converts numeric values to strings. For example, consider the following statements:
-
-```js
-x = 'The answer is ' + 42; // "The answer is 42"
-
-y = 42 + ' is the answer'; // "42 is the answer"
+console.log(obj === obj2);           // false, objects compare by reference, not value
 ```
 
-In statements involving other operators, **JavaScript does not convert numeric values to strings.** For example:
+### Type conversion
+
+JavaScript is a **dynamically typed** language. You don't specify the type of a variable when you declare it, the same variable can hold different types over time, and values are converted automatically when needed.
 
 ```js
-'37' - 7; // 30, "-" converts the string to a number
+let answer = 42;
+answer = 'Thanks for all the fish...'; // no error — the type can change
+console.log(typeof answer);            // "string"
+```
 
-'37' + 7; // "377", "+" with a string converts the number to a string
+#### Implicit conversion (coercion)
+
+With the `+` operator, if one operand is a string, JavaScript converts the other to a string:
+
+```js
+console.log('The answer is ' + 42); // "The answer is 42"
+console.log(42 + ' is the answer'); // "42 is the answer"
+```
+
+With other arithmetic operators (`-`, `*`, `/`, `%`), JavaScript converts strings **to numbers**:
+
+```js
+console.log('37' - 7);   // 30  — "-" converts the string to a number
+console.log('37' + 7);   // "377" — "+" with a string converts the number to a string
+console.log('6' * '2');  // 12
+console.log('abc' * 2);  // NaN
+console.log(true + 1);   // 2 — true → 1
+console.log([] + 1);     // "1" — [] → ""
+console.log(+'');        // 0
 ```
 
 #### Converting strings to numbers
 
-In the case that a value representing a number is in memory as a string, there are methods for conversion.
+When a number is stored as a string, convert it explicitly:
 
-[parseInt()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt)
+| Method | `'42px'` | `'3.14'` | `''` | `'abc'` |
+| --- | --- | --- | --- | --- |
+| [`parseInt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt) | `42` | `3` | `NaN` | `NaN` |
+| [`parseFloat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat) | `42` | `3.14` | `NaN` | `NaN` |
+| `Number()` | `NaN` | `3.14` | `0` | `NaN` |
+| Unary `+` | `NaN` | `3.14` | `0` | `NaN` |
 
-[parseFloat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)
+```js
+console.log(parseInt('42px'));      // 42 — reads digits until the first invalid character
+console.log(parseInt('px42'));      // NaN — must start with a number
+console.log(parseInt('101', 2));    // 5 — always pass the radix (base) for clarity
+console.log(parseFloat('3.14abc')); // 3.14
+console.log(Number('42px'));        // NaN — the whole string must be valid
+console.log(Number(''));            // 0
+console.log(Number(null));          // 0
+console.log(Number(undefined));     // NaN
+console.log(+'7');                  // 7 — unary plus is a shortcut for Number()
+
+// Classic interview trap
+console.log(['1', '2', '3'].map(parseInt)); // [1, NaN, NaN]
+// map passes (value, index): parseInt('1', 0) → 1, parseInt('2', 1) → NaN, parseInt('3', 2) → NaN
+console.log(['1', '2', '3'].map(Number));   // [1, 2, 3]
+```
+
+#### Converting to strings and booleans
+
+```js
+console.log(String(123));       // "123"
+console.log((123).toString());  // "123"
+console.log(String(null));      // "null"
+// null.toString();             // TypeError — use String() for null/undefined
+console.log(String([1, 2]));    // "1,2"
+console.log(String({}));        // "[object Object]"
+
+console.log(Boolean('text'));   // true
+console.log(!!0);               // false
+```
 
 ### Literals
 
-You use literals to represent values in JavaScript. These are fixed values, not variables, that you _literally_ provide in your script. This section describes the following types of literals:
+Literals are fixed values that you write directly in your code (not variables). JavaScript has these kinds of literals:
 
--   Array literals
--   Boolean literals
--   Floating-point literals
--   Integers
--   Object literals
--   RegExp literals
--   String literals
+-   Array literals — `[1, 2, 3]`
+-   Boolean literals — `true`, `false`
+-   Numeric literals — `42`, `0xff`, `3.14`
+-   Object literals — `{ a: 1 }`
+-   RegExp literals — `/ab+c/`
+-   String literals — `'hello'`, `` `hi ${name}` ``
 
-### Array literals
+#### Array literals
 
 An array literal is a list of zero or more expressions, each of which represents an array element, enclosed in square brackets (\[\]). When you create an array using an array literal, it is initialized with the specified values as its elements, and its length is set to the number of arguments specified.
 
@@ -278,7 +351,7 @@ The following example creates the coffees array with three elements and a length
 ```js
 var coffees = ['French Roast', 'Colombian', 'Kona'];
 ```
-### Extra commas in array literals
+##### Extra commas in array literals
 
 You do not have to specify all elements in an array literal. If you put two commas in a row, the array is created with undefined for the unspecified elements. The following example creates the fish array:
 
@@ -305,7 +378,7 @@ In the following example, the length of the array is four, and myList\[1\] and m
 var myList = ['home', , 'school', , ];
 ```
 
-#### Tricky array literal questions
+##### Tricky array literal questions
 
 **Q1: Is an empty slot the same as `undefined`?**
 No. `[ , ]` creates a *hole* (the index does not exist). `[undefined]` creates a real element whose value is `undefined`. Reading either gives `undefined`, but they behave differently.
@@ -405,38 +478,62 @@ console.log(list);   // [1, 2, 3]
 // list = [];        // TypeError — the variable cannot be reassigned
 Object.freeze(list); // makes the contents read-only (shallow)
 ```
-### Boolean literals
+#### Boolean literals
 
-The Boolean type has two literal values: **true and false.**
+The Boolean type has two literal values: **`true` and `false`**.
 
-Do not confuse the primitive Boolean values true and false with the true and false values of the Boolean object. The Boolean object is a wrapper around the primitive Boolean data type.
+Do not confuse the primitive values `true` and `false` with the `Boolean` **object**. `new Boolean(false)` creates a wrapper object, and every object is truthy.
 
-### Numeric literals
+```js
+const primitive = false;
+const wrapper = new Boolean(false);
 
-Integers can be expressed in decimal (base 10), hexadecimal (base 16), octal (base 8) and binary (base 2).
+console.log(typeof primitive); // "boolean"
+console.log(typeof wrapper);   // "object"
 
-### Floating-point literals
+if (wrapper) {
+  console.log('runs!');        // runs! — an object is always truthy
+}
+console.log(wrapper == false); // true — == unwraps the value
+console.log(wrapper === false);// false — object vs primitive
+```
 
-A floating-point literal can have the following parts:
+#### Numeric literals
 
--   A decimal integer which can be signed (preceded by "+" or "-"),
--   A decimal point ("."),
--   A fraction (another decimal number),
--   An exponent.
+Integers can be written in decimal (base 10), hexadecimal (base 16), octal (base 8) and binary (base 2).
 
-The exponent part is an "e" or "E" followed by an integer, which can be signed (preceded by "+" or "-"). A floating-point literal must have at least one digit and either a decimal point or "e" (or "E").
+```js
+console.log(255);        // 255 — decimal
+console.log(0xff);       // 255 — hexadecimal, starts with 0x
+console.log(0o377);      // 255 — octal, starts with 0o
+console.log(0b11111111); // 255 — binary, starts with 0b
+console.log(1_000_000);  // 1000000 — underscores improve readability
+console.log(10n);        // 10n — BigInt literal
+```
 
-For example:
+#### Floating-point literals
 
-3.1415926
+A floating-point literal can have these parts:
 
-\-.123456789
+-   An integer part, optionally signed (`+` or `-`)
+-   A decimal point (`.`)
+-   A fraction (digits after the point)
+-   An exponent — `e` or `E` followed by an integer, optionally signed
 
-\-3.1E+12
+It must have at least one digit and either a decimal point or an exponent.
 
-.1e-23
+```js
+console.log(3.1415926);    // 3.1415926
+console.log(-.123456789);  // -0.123456789 — leading 0 is optional
+console.log(-3.1E+12);     // -3100000000000 — -3.1 × 10¹²
+console.log(.1e-23);       // 1e-24 — 0.1 × 10⁻²³
+console.log(5e3);          // 5000
+// console.log(5.toFixed(2)); // SyntaxError — the dot is read as a decimal point
+console.log(5..toFixed(2));  // "5.00" — first dot is the decimal point
+console.log((5).toFixed(2)); // "5.00" — clearer
+```
 
-### Object literals
+#### Object literals
 
 An object literal is a list of zero or more pairs of property names and associated values of an object, enclosed in curly braces ({}). Do not use an object literal at the beginning of a statement. This will lead to an error or not behave as you expect, because the { will be interpreted as the beginning of a block.
 
@@ -466,7 +563,7 @@ console.log(unusualPropertyNames.!); // SyntaxError: Unexpected token !
 console.log(unusualPropertyNames['!']); // Bang!
 ```
 
-#### Tricky object literal questions
+##### Tricky object literal questions
 
 **Q1: Is a missing property the same as a property set to `undefined`?**
 No. Reading either gives `undefined`, but only one of them exists.
@@ -651,7 +748,7 @@ const dup = { x: 1, [k]: 2 };
 console.log(dup); // { x: 2 }
 ```
 
-#### Getters and setters — a function that behaves like a property
+##### Getters and setters — a function that behaves like a property
 
 A **getter** (`get`) is a function that runs automatically when you *read* a property. A **setter** (`set`) runs when you *assign* to it. You use them without `()`.
 
@@ -935,126 +1032,128 @@ console.log(m.get(1), m.get('1')); // "number" "string" — no string conversion
 console.log(m.size);             // 4
 ```
 
-RegExp literals
+#### RegExp literals
 
-A regex literal (which is defined in detail [later](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)) is a pattern enclosed between slashes. The following is an example of a regex literal.
-
-```js
-var re = /ab+c/;
-```
-### String literals
-
-A string literal is zero or more characters enclosed in double (") or single (') quotation marks. A string must be delimited by quotation marks of the same type; that is, either both single quotation marks or both double quotation marks. The following are examples of string literals:
-
-'foo'
-
-"bar"
-
-'1234'
-
-'one line \\n another line'
-
-"John's cat"
-
-In ES2015, template literals are also available. Template literals are enclosed **by the back-tick (\` \`) (grave accent)** character instead of double or single quotes. Template strings provide syntactic sugar for constructing strings. This is similar to **string interpolation** features in Perl, Python and more. Optionally, a tag can be added to allow the string construction to be customized, avoiding injection attacks or constructing higher level data structures from string contents.
-
-// Basic literal string creation
-
-\`In JavaScript '\\n' is a line-feed.\`
-
-// Multiline strings
-
-\`In JavaScript template strings can run
-
-over multiple lines, but double and single
-
-quoted strings cannot.\`
-
-// String interpolation
+A regular expression literal is a pattern enclosed between slashes, optionally followed by flags. It is covered in detail in [Regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).
 
 ```js
-var name = 'Bob', time = 'today';
+const re = /ab+c/;           // "a", one or more "b", then "c"
+console.log(re.test('abbc')); // true
+console.log(re.test('ac'));   // false
+
+const email = /^\S+@\S+\.\S+$/i; // i = case-insensitive flag
+console.log(email.test('A@B.COM')); // true
+
+console.log('a-b-c'.replace(/-/g, '+')); // "a+b+c" — g = replace all matches
 ```
-\`Hello ${name}, how are you ${time}?\`
 
-// Construct an HTTP request prefix used to interpret the replacements and construction
+#### String literals
 
-POST\`http://foo.org/bar?a=${a}&b=${b}
-
-Content-Type: application/json
-
-X-Credentials: ${credentials}
-
-{ "foo": ${foo},
+A string literal is zero or more characters enclosed in double (`"`) or single (`'`) quotes. Both quotes must be of the same type.
 
 ```js
-"bar": ${bar}}`(myOnReadyStateChangeHandler);
+const s1 = 'foo';
+const s2 = "bar";
+const s3 = '1234';                     // a string, not a number
+const s4 = 'one line \n another line'; // \n is a line break
+const s5 = "John's cat";               // single quote inside double quotes
+// const bad = 'John's cat';           // SyntaxError — quote ends the string early
 ```
 
-### Escaping characters
+##### Template literals
 
-For characters not listed in the table, a preceding backslash is ignored, but this usage is deprecated and should be avoided.
+ES2015 added **template literals**, enclosed in back-ticks (`` ` ``). They support:
 
-You can insert a quotation mark inside a string by preceding it with a backslash. This is known as _escaping_ the quotation mark. For example:
-
-var quote = "He read \\"The Cremation of Sam McGee\\" by R.W. Service.";
+-   **String interpolation** — insert any expression with `${...}`
+-   **Multiline strings** — line breaks are kept as written
+-   **Tagged templates** — a function processes the string parts and values
 
 ```js
-console.log(quote);
+// Basic
+console.log(`In JavaScript '\n' is a line-feed.`);
+
+// Multiline
+const poem = `Roses are red,
+Violets are blue.`;
+console.log(poem);
+// Roses are red,
+// Violets are blue.
+
+// Interpolation
+const name = 'Bob', time = 'today';
+console.log(`Hello ${name}, how are you ${time}?`); // "Hello Bob, how are you today?"
+console.log(`2 + 3 = ${2 + 3}`);                     // "2 + 3 = 5" — any expression works
+console.log(`Status: ${name ? 'known' : 'guest'}`);  // "Status: known"
 ```
-The result of this would be:
 
-He read "The Cremation of Sam McGee" by R.W. Service.
-
-To include a literal backslash inside a string, you must escape the backslash character. For example, to assign the file path c:\\temp to a string, use the following:
+**Tagged templates** — the tag function receives the string pieces and the values separately, so it can escape or format them (e.g. to avoid injection attacks).
 
 ```js
-var home = 'c:\\\\temp';
+function highlight(strings, ...values) {
+  // strings: ["Hello ", ", you are ", " years old"]
+  // values:  ["Bob", 30]
+  return strings.reduce((out, str, i) =>
+    out + str + (i < values.length ? `[${values[i]}]` : ''), '');
+}
+
+const age = 30;
+console.log(highlight`Hello ${name}, you are ${age} years old`);
+// "Hello [Bob], you are [30] years old"
 ```
-You can also escape line breaks by preceding them with backslash. The backslash and line break are both removed from the value of the string.
+
+##### Escaping characters
+
+A backslash (`\`) before a character gives it a special meaning or lets you use a quote inside a string. This is called **escaping**.
+
+| Code | Meaning |
+| --- | --- |
+| `\n` | new line |
+| `\t` | tab |
+| `\\` | backslash |
+| `\'` | single quote |
+| `\"` | double quote |
+| `` \` `` | back-tick |
+| `\u00A9` | Unicode character (©) |
 
 ```js
-var str = 'this string \\
+const quote = "He read \"The Cremation of Sam McGee\" by R.W. Service.";
+console.log(quote); // He read "The Cremation of Sam McGee" by R.W. Service.
+
+const home = 'c:\\temp';
+console.log(home);  // c:\temp — "\\" becomes one backslash
+
+console.log('Tab:\tEnd');   // Tab:    End
+console.log('\u00A9 2026'); // © 2026
+console.log('\d');          // "d" — unknown escapes just drop the backslash (avoid this)
 ```
-is broken \\
 
-across multiple \\
-
-lines.'
-
-console.log(str); // this string is broken across multiple lines.
-
-Although JavaScript does not have "heredoc" syntax, you can get close by adding a line break escape and an escaped line break at the end of each line:
+A backslash at the end of a line continues the string on the next line. The backslash and line break are **not** part of the value:
 
 ```js
-var poem =
+const str = 'this string \
+is broken \
+across multiple \
+lines.';
+console.log(str); // "this string is broken across multiple lines."
 ```
-'Roses are red,\\n\\
 
-Violets are blue.\\n\\
-
-Sugar is sweet,\\n\\
-
-and so is foo.'
-
-ECMAScript 2015 introduces a new type of literal, namely [**template literals**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/template_strings). This allows for many new features including multiline strings
+Before template literals, multiline text needed `\n` plus a line continuation:
 
 ```js
-var poem =
+const oldPoem = 'Roses are red,\n\
+Violets are blue.';
+
+const newPoem = `Roses are red,
+Violets are blue.`;
+
+console.log(oldPoem === newPoem); // true
 ```
-\`Roses are red,
 
-Violets are blue.
+### Control flow
 
-Sugar is sweet,
+#### Block statement
 
-and so is foo.\`
-
-### Control flow and error handling
-
-### Block statement
-
-The most basic statement is a block statement that is used to group statements. The block is delimited by a pair of curly brackets:
+A block statement groups statements together. It is delimited by a pair of curly brackets:
 
 ```js
 {
@@ -1064,308 +1163,497 @@ The most basic statement is a block statement that is used to group statements. 
   statement_n;
 }
 ```
-### Conditional statements
 
-A conditional statement is a set of commands that executes if a specified condition is true. JavaScript supports two conditional statements: if...else and switch.
-
-### Falsy values
-
-The following values evaluate to false (also known as Falsy values):
-
--   false
--   undefined
--   null
--   0
--   NaN
--   the empty string ("")
-
-All other values—including all objects—evaluate to true when passed to a conditional statement.
-
-Caution: Do not confuse the primitive boolean values true and false with the true and false values of the Boolean object!
-
-For example:
-```js
-var b = new Boolean(false);
-```
-if (b) // this condition evaluates to true
-
-if (b == true) // this condition evaluates to false
-
-### Exception handling statements
-
-You can throw exceptions using the throw statement and handle them using the try...catch statements.
-
-throw statement
+`let` and `const` are scoped to the block; `var` is not.
 
 ```js
-try...catch statement
+var x = 1;
+{
+  var x = 2;   // same variable
+}
+console.log(x); // 2
+
+let y = 1;
+{
+  let y = 2;   // new variable, only inside the block
+}
+console.log(y); // 1
 ```
-You may throw any expression, not just expressions of a specific type. The following code throws several exceptions of varying types:
 
-throw 'Error2'; // String type
+#### Conditional statements
 
-throw 42; // Number type
+A conditional statement runs code only if a condition is true. JavaScript has two: `if...else` and `switch`.
 
-throw true; // Boolean type
+##### if...else
 
 ```js
-throw {toString: function() { return "I'm an object!"; } };
+function grade(score) {
+  if (score >= 90) {
+    return 'A';
+  } else if (score >= 75) {
+    return 'B';
+  } else {
+    return 'C';
+  }
+}
+
+console.log(grade(95)); // "A"
+console.log(grade(80)); // "B"
+console.log(grade(40)); // "C"
 ```
-### Create an object type UserException
+
+**Common mistake — `=` instead of `===`**
+
+```js
+let role = 'user';
+if (role = 'admin') {       // assigns 'admin', which is truthy
+  console.log('Welcome admin'); // always runs!
+}
+console.log(role);          // "admin" — the variable was changed
+```
+
+##### switch
+
+`switch` compares a value against each `case` using **strict equality (`===`)**. Without `break`, execution "falls through" into the next case.
+
+```js
+function dayType(day) {
+  switch (day) {
+    case 'Sat':
+    case 'Sun':            // grouped cases
+      return 'Weekend';
+    case 'Mon':
+      return 'Start of week';
+    default:
+      return 'Weekday';
+  }
+}
+
+console.log(dayType('Sun')); // "Weekend"
+console.log(dayType('Tue')); // "Weekday"
+```
+
+```js
+// Fall-through when break is missing
+const n = 1;
+switch (n) {
+  case 1:
+    console.log('one');
+  case 2:
+    console.log('two');
+    break;
+  case 3:
+    console.log('three');
+}
+// Output:
+// one
+// two
+
+// switch uses ===
+switch ('1') {
+  case 1:
+    console.log('number');
+    break;
+  default:
+    console.log('no match'); // "no match" — '1' !== 1
+}
+```
+
+#### Falsy values
+
+These values are treated as `false` in a condition (**falsy**):
+
+-   `false`
+-   `0`, `-0` and `0n` (BigInt zero)
+-   `""` (empty string)
+-   `null`
+-   `undefined`
+-   `NaN`
+
+**Every other value is truthy**, including all objects, `[]`, `{}`, `"0"`, `"false"` and `" "`.
+
+```js
+const values = [false, 0, -0, 0n, '', null, undefined, NaN, '0', 'false', ' ', [], {}];
+values.forEach(v => console.log(v, '→', v ? 'truthy' : 'falsy'));
+// false → falsy, 0 → falsy, -0 → falsy, 0n → falsy, '' → falsy,
+// null → falsy, undefined → falsy, NaN → falsy,
+// '0' → truthy, 'false' → truthy, ' ' → truthy, [] → truthy, {} → truthy
+```
+
+**Caution:** do not confuse the primitive booleans with the `Boolean` object:
+
+```js
+const b = new Boolean(false);
+if (b) console.log('truthy');  // "truthy" — b is an object
+console.log(b == true);        // false — b's value is false
+
+// Another trap: [] is truthy, but [] == false is true
+if ([]) console.log('[] is truthy'); // runs
+console.log([] == false);            // true — [] → "" → 0, false → 0
+```
+
+### Exception handling
+
+You throw an exception with `throw` and handle it with `try...catch...finally`.
+
+#### throw statement
+
+You can throw any value, but throwing an `Error` object is best because it includes a `message` and a stack trace.
+
+```js
+// throw 'Error2';   // String
+// throw 42;         // Number
+// throw true;       // Boolean
+// throw { toString() { return "I'm an object!"; } }; // Object
+
+try {
+  throw new Error('Something went wrong');
+} catch (e) {
+  console.log(e.name);    // "Error"
+  console.log(e.message); // "Something went wrong"
+}
+```
+
+Built-in error types include `Error`, `TypeError`, `ReferenceError`, `SyntaxError` and `RangeError`.
+
+```js
+try { null.x; }           catch (e) { console.log(e.name); } // "TypeError"
+try { notDefined; }       catch (e) { console.log(e.name); } // "ReferenceError"
+try { new Array(-1); }    catch (e) { console.log(e.name); } // "RangeError"
+try { JSON.parse('{'); }  catch (e) { console.log(e.name); } // "SyntaxError"
+```
+
+#### Custom error types
+
+The old way uses a constructor function:
 
 ```js
 function UserException(message) {
+  this.message = message;
+  this.name = 'UserException';
+}
 
-this.message = message;
+// Make the exception print nicely when converted to a string
+UserException.prototype.toString = function () {
+  return `${this.name}: "${this.message}"`;
+};
 
-this.name = 'UserException';
-
+try {
+  throw new UserException('Value too high');
+} catch (e) {
+  console.log(String(e)); // UserException: "Value too high"
 }
 ```
-// Make the exception convert to a pretty string when used as a string
 
-// (e.g., by the error console)
-
-**UserException.prototype.toString = function() {**
-
-**return `${this.name}: "${this.message}"`;**
-
-**}**
-
-// Create an instance of the object type and throw it
+The modern way extends `Error` with a class (this also gives a stack trace and makes `instanceof Error` true):
 
 ```js
-throw new UserException('Value too high');
+class ValidationError extends Error {
+  constructor(message, field) {
+    super(message);
+    this.name = 'ValidationError';
+    this.field = field;
+  }
+}
+
+try {
+  throw new ValidationError('Email is required', 'email');
+} catch (e) {
+  console.log(e instanceof ValidationError); // true
+  console.log(e instanceof Error);           // true
+  console.log(`${e.name} on ${e.field}: ${e.message}`);
+  // "ValidationError on email: Email is required"
+}
 ```
-### try...catch statement
+
+#### try...catch statement
+
+Code in `try` runs first. If it throws, control jumps straight to `catch` with the thrown value; the rest of `try` is skipped.
 
 ```js
 function getMonthName(mo) {
-
-mo = mo - 1; // Adjust month number for array index (1 = Jan, 12 = Dec)
-
-let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-
-'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-```
-if (months\[mo\]) {
-
-```js
-return months[mo];
-```
-} else {
-
-throw 'InvalidMonthNo'; // throw keyword is used here
-
-```js
+  mo = mo - 1; // adjust for array index (1 = Jan, 12 = Dec)
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  if (months[mo]) {
+    return months[mo];
+  } else {
+    throw new Error('InvalidMonthNo');
+  }
 }
 
+let monthName;
+try {
+  monthName = getMonthName(15); // throws
+  console.log('never printed');  // skipped
+} catch (e) {
+  monthName = 'unknown';
+  console.log(e.message);        // "InvalidMonthNo"
 }
-
-try { // statements to try
+console.log(monthName);          // "unknown"
 ```
-monthName = getMonthName(myMonth); // function could throw exception
+
+`try...catch` only catches errors thrown **synchronously** inside it:
 
 ```js
+try {
+  setTimeout(() => { throw new Error('late'); }, 0);
+} catch (e) {
+  console.log('caught');  // never runs — the callback runs after try...catch has finished
 }
 
-catch (e) {
-
-monthName = 'unknown';
+// For async code, catch inside the async function
+async function load() {
+  try {
+    await Promise.reject(new Error('failed'));
+  } catch (e) {
+    console.log(e.message); // "failed"
+  }
+}
+load();
 ```
-logMyErrors(e); // pass exception object to error handler (i.e. your own function)
+
+#### finally block
+
+The `finally` block runs after `try` and `catch`, **whether or not** an exception was thrown — even if there is a `return` in `try` or `catch`. It is used for cleanup (closing files, hiding loaders, etc.).
 
 ```js
+function readFile() {
+  try {
+    console.log('open');
+    return 'data';
+  } finally {
+    console.log('close');  // still runs before the function returns
+  }
 }
+console.log(readFile());
+// Output:
+// open
+// close
+// data
 ```
-### The Finally Block
 
-The finally block contains statements to be executed after the try and catch blocks execute. Additionally, the finally block executes before the code that follows the try…catch…finally statement.
-
-It is also important to note that the finally block will execute whether or not an exception is thrown. If an exception is thrown, however, the statements in the finally block execute even if no catch block handles the exception that was thrown.
+If `finally` itself returns a value, it **overrides** any `return` or `throw` from `try`/`catch`:
 
 ```js
 function f() {
-
-try {
-
-throw 'bogus';
-```
-} catch(e) {
-
-```js
-console.log('caught inner "bogus"');
-```
-throw e; // this throw statement is suspended until
-
-// finally block has completed
-
-} finally {
-
-```js
-return false; // overwrites the previous "throw"
-
-}
-```
-// "return false" is executed now
-
-```js
+  try {
+    throw 'bogus';
+  } catch (e) {
+    console.log('caught inner "bogus"');
+    throw e; // paused until finally finishes
+  } finally {
+    return false; // overrides the throw above
+  }
 }
 
 try {
-
-console.log(f());
-```
-} catch(e) {
-
-// this is never reached!
-
-// while f() executes, the \`finally\` block returns false,
-
-// which overwrites the \`throw\` inside the above \`catch\`
-
-```js
-console.log('caught outer "bogus"');
-
+  console.log(f());
+} catch (e) {
+  // never reached — finally returned false, so the throw was discarded
+  console.log('caught outer "bogus"');
 }
-```
-// OUTPUT
 
+// Output:
 // caught inner "bogus"
-
 // false
+```
+
+**Avoid `return` inside `finally`** — it silently swallows errors.
 
 ### Loops and iteration
 
-### for statement
+#### for statement
 
-A for loop repeats until a specified condition evaluates to false. The JavaScript for loop is similar to the Java and C for loop.
-
-```js
-for ([initialExpression]; [conditionExpression]; [incrementExpression])
-```
-statement
-
-### do...while statement
-
-The do...while statement repeats until a specified condition evaluates to false.
-
-A do...while statement looks as follows:
-
-do
-
-statement
+A `for` loop repeats until its condition becomes false.
 
 ```js
-while (condition);
-```
-### while statement
-
-A while statement executes its statements as long as a specified condition evaluates to true. A while statement looks as follows:
-
-```js
-while (condition)
-```
-statement
-
-### break statement
-
-Use the break statement to terminate a loop, switch, or in conjunction with a labeled statement.
-
--   When you use break without a label, it terminates the innermost enclosing while, do-while, for, or switch immediately and transfers control to the following statement.
--   When you use break with a label, it terminates the specified labeled statement.
-
-    ```js
-    let x = 0;
-
-    let z = 0;
-
-    labelCancelLoops: while (true) {
-
-    console.log('Outer loops: ' + x);
-
-    x += 1;
-
-    z = 1;
-
-    while (true) {
-
-    console.log('Inner loops: ' + z);
-
-    z += 1;
-    ```
-if (z === 10 && x === 10) {
-
-```js
-break labelCancelLoops;
-```
-} else if (z === 10) {
-
-```js
-break;
-
-}
-
-}
-
+for (initialization; condition; afterthought) {
+  // statements
 }
 ```
-### continue statement
 
-The continue statement can be used to restart a while, do-while, for, or label statement.
+```js
+for (let i = 0; i < 3; i++) {
+  console.log(i);
+}
+// 0
+// 1
+// 2
+```
 
--   When you use continue without a label, it terminates the current iteration of the innermost enclosing while, do-while, or for statement and continues execution of the loop with the next iteration. In contrast to the break statement, continue does not terminate the execution of the loop entirely. In a while loop, it jumps back to the condition. In a for loop, it jumps to the increment-expression.
--   When you use continue with a label, it applies to the looping statement identified with that label.
+**Interview trap — `var` vs `let` in loops with callbacks**
 
-### for...in statement
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log('var', i), 0);
+}
+// var 3, var 3, var 3 — one shared i, already 3 when callbacks run
 
-The for...in statement iterates a specified variable over all the enumerable properties of an object. For each distinct property, JavaScript executes the specified statements.
+for (let j = 0; j < 3; j++) {
+  setTimeout(() => console.log('let', j), 0);
+}
+// let 0, let 1, let 2 — a new j for each iteration
+```
 
-### for...of statement
+#### while statement
 
-The for...of statement creates a loop Iterating over iterable objects (including Array, Map, Set, arguments object and so on), invoking a custom iteration hook with statements to be executed for the value of each distinct property. The following example shows the difference between a for...of loop and a for...in loop. While for...in iterates over property names, for...of iterates over property values:
+A `while` loop runs **as long as** the condition is true. The condition is checked **before** each iteration, so the body may run zero times.
+
+```js
+let count = 0;
+while (count < 3) {
+  console.log(count);
+  count++;
+}
+// 0
+// 1
+// 2
+
+let n = 10;
+while (n < 3) {
+  console.log('never runs');
+}
+```
+
+#### do...while statement
+
+A `do...while` loop checks the condition **after** each iteration, so the body always runs **at least once**.
+
+```js
+let k = 10;
+do {
+  console.log(k); // 10 — runs once even though 10 < 3 is false
+  k++;
+} while (k < 3);
+```
+
+#### break statement
+
+`break` exits a loop or `switch` immediately.
+
+-   Without a label, it exits the innermost `while`, `do...while`, `for` or `switch`.
+-   With a label, it exits the labeled statement (useful for nested loops).
+
+```js
+for (let i = 0; i < 10; i++) {
+  if (i === 3) break;
+  console.log(i);
+}
+// 0
+// 1
+// 2
+```
+
+```js
+// Labeled break — exit both loops at once
+outer: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    if (i === 1 && j === 1) break outer;
+    console.log(i, j);
+  }
+}
+// 0 0
+// 0 1
+// 0 2
+// 1 0
+```
+
+#### continue statement
+
+`continue` skips the rest of the current iteration and moves to the next one (it does not end the loop).
+
+-   In a `while` loop, it jumps back to the condition.
+-   In a `for` loop, it jumps to the afterthought (`i++`).
+-   With a label, it continues the labeled loop.
+
+```js
+for (let i = 0; i < 5; i++) {
+  if (i % 2 === 0) continue; // skip even numbers
+  console.log(i);
+}
+// 1
+// 3
+```
+
+```js
+// Trap — continue in a while loop can skip the increment
+let i = 0;
+while (i < 3) {
+  // if (i === 1) continue; // infinite loop! i++ below is never reached
+  i++;
+}
+```
+
+```js
+// Labeled continue
+outer: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    if (j === 1) continue outer; // go to the next i
+    console.log(i, j);
+  }
+}
+// 0 0
+// 1 0
+// 2 0
+```
+
+#### for...in statement
+
+`for...in` loops over the **enumerable property names (keys)** of an object, including inherited ones.
+
+```js
+const car = { make: 'Honda', model: 'Accord' };
+for (const key in car) {
+  console.log(key, car[key]);
+}
+// make Honda
+// model Accord
+
+// Inherited properties are included
+const base = { inherited: true };
+const child = Object.create(base);
+child.own = 1;
+for (const key in child) console.log(key); // "own", "inherited"
+console.log(Object.keys(child));            // ["own"] — only own keys
+```
+
+Avoid `for...in` on arrays — keys are strings and extra properties are included.
+
+#### for...of statement
+
+`for...of` loops over the **values** of an iterable (Array, String, Map, Set, `arguments`, NodeList, …). Plain objects are not iterable.
 
 ```js
 const arr = [3, 5, 7];
-
 arr.foo = 'hello';
 
-for (let i in arr) {
-
-console.log(i); // logs "0", "1", "2", "foo"
-
+for (const i in arr) {
+  console.log(i); // "0", "1", "2", "foo" — keys (as strings)
 }
 
-for (let i of arr) {
-
-console.log(i); // logs 3, 5, 7
-
+for (const v of arr) {
+  console.log(v); // 3, 5, 7 — values only
 }
 ```
-Functions
-
-A function in JavaScript is similar to a procedure—a set of statements that performs a task or calculates a value, but for a procedure to qualify as a function, it should take some input and return an output where there is some obvious relationship between the input and the output. To use a function, you must define it somewhere in the scope from which you wish to call it.
-
-Primitive parameters (such as a number) are passed to functions by value; the value is passed to the function, but if the function changes the value of the parameter, this change is not reflected globally or in the calling function.
-
-If you pass an object (i.e. a non-primitive value, such as Array or a user-defined object) as a parameter and the function changes the object's properties, that change is visible outside the function, as shown in the following example:
 
 ```js
-function myFunc(theObject) {
+for (const ch of 'hi') console.log(ch);       // "h", "i"
 
-theObject.make = 'Toyota';
+const map = new Map([['a', 1], ['b', 2]]);
+for (const [key, value] of map) console.log(key, value); // a 1, b 2
 
+for (const [index, value] of ['x', 'y'].entries()) {
+  console.log(index, value);                  // 0 "x", 1 "y"
 }
 
-var mycar = {make: 'Honda', model: 'Accord', year: 1998};
-
-var x, y;
+// for (const v of { a: 1 }) {}  // TypeError: {a: 1} is not iterable
+for (const v of Object.values({ a: 1 })) console.log(v); // 1
 ```
-x = mycar.make; // x gets the value "Honda"
 
-```js
-myFunc(mycar);
-```
-y = mycar.make; // y gets the value "Toyota"
-
-// (the make property was changed by the function)
+| | `for...in` | `for...of` |
+| --- | --- | --- |
+| Gives you | keys (strings) | values |
+| Works on | any object | iterables only |
+| Includes inherited keys | yes | no |
+| Best for | plain objects | arrays, strings, Map, Set |

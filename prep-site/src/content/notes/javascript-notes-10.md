@@ -3,233 +3,239 @@ title: "Polyfill for call, apply and bind method"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
-order: 10
+order: 13
 description: "JavaScript — Polyfill for call, apply and bind method."
 ---
-**Polyfill is like a browser's fallback and you have to write your own bind method.**
+**A polyfill is a piece of code that adds a feature to environments (usually older browsers) that don't support it natively.** It acts like a fallback: if the browser doesn't have a method, we write our own version.
 
-Because older browsers are generally also slower browsers, it is far more critical than most people recognize to create performance polyfills to make the browsing experience in outdated browsers slightly less horrible.
+Writing polyfills for `call`, `apply` and `bind` is a very common interview question, because it tests your understanding of `this`, prototypes and closures. (See **call, apply and bind method** for how the real methods work.)
 
-Thus, presented below are two options for Function.prototype.bind() polyfills:
+**The core trick:** when a function is called as a method — `obj.fn()` — `this` inside it is `obj`. So to run a function with a chosen `this`, we temporarily attach the function to that object, call it as a method, then remove it.
 
--   The first one is much smaller and more performant, but does not work when using the new operator.
--   The second one is bigger and less performant, but it permits some usage of the new operator on bound functions.
-
-### Create user defined call method
+Common setup for all examples:
 
 ```js
 let name = {
+  firstName: "Rishabh",
+  lastName: "Sisodiya"
+};
 
-firstName: "Rishabh",
+let printName = function (hometown, state) {
+  console.log(this.firstName + " " + this.lastName + ", " + hometown + ", " + state);
+  return "done";
+};
 ```
-lastName:"Sisodiya",
+
+### Create a user-defined call method
+
+**Simple version**
 
 ```js
-}
+// Real method
+printName.call(name, "Chittorgarh", "Rajasthan");
 
-let printName= function (hometown, state){
+Function.prototype.mycall = function (obj, ...args) {
+  // this = printName (the function mycall was called on)
+  obj.fnRef = this;           // attach the function to obj
+  const result = obj.fnRef(...args); // call it as a method → `this` is obj
+  delete obj.fnRef;           // clean up
+  return result;
+};
 
-console.log(this.firstName+" "+this.lastName+" ,"+hometown+", "+state);
-
-}
-
-// printName.call(name, "Chittorgarh","Rajasthan");
-
-Function.prototype.mycall = function(obj,...args){
+printName.mycall(name, "Chittorgarh", "Rajasthan");
+// "Rishabh Sisodiya, Chittorgarh, Rajasthan"
 ```
-// this = printName
 
-```js
-obj.fnRef = this;
+**Problem with the simple version:** if `obj` already has a property called `fnRef`, we overwrite it. And if we forget `delete`, `fnRef` stays on the object.
 
-// console.log(obj);
-
-obj.fnRef(...args);
-
-}
-
-printName.mycall(name,"Chittorgarh","Rajasthan");
-```
-//Advance
+**Advanced version**
 
 ```js
 Function.prototype.myCall = function (obj, ...args) {
-```
-if (typeof this !== "function") {
+  if (typeof this !== "function") {
+    throw new TypeError("myCall must be called on a function");
+  }
 
-```js
-throw new TypeError("myCall must be called on a function");
+  // null/undefined → global object; primitives (e.g. 5, "a") → wrapped in an object
+  obj = obj === null || obj === undefined ? globalThis : Object(obj);
 
-}
-```
-obj = obj || globalThis; // Default to global object if \`obj\` is null or undefined
-
-```js
-const uniqueKey = Symbol(); // Use a unique key to avoid overwriting existing properties
-```
-obj\[uniqueKey\] = this; // Temporarily store the function as a property of \`obj\`
-
-const result = obj\[uniqueKey\](...args); // Call the function with the provided arguments
-
-delete obj\[uniqueKey\]; // Remove the temporary property
-
-return result; // Return the result of the function call
-
-```js
+  const uniqueKey = Symbol();   // unique key, so no existing property is overwritten
+  obj[uniqueKey] = this;        // temporarily store the function on obj
+  const result = obj[uniqueKey](...args); // call the function with the arguments
+  delete obj[uniqueKey];        // remove the temporary property
+  return result;                // return the function's result
 };
+
+console.log(printName.myCall(name, "Chittorgarh", "Rajasthan"));
+// "Rishabh Sisodiya, Chittorgarh, Rajasthan"
+// "done"
+console.log(Object.getOwnPropertySymbols(name).length); // 0 — nothing left behind
 ```
-### Create user defined apply method
+
+**Why `Object(obj)` instead of `obj || globalThis`?** `obj || globalThis` would also replace valid falsy values like `0` or `""` with the global object, and you cannot add properties to primitives.
+
+### Create a user-defined apply method
+
+`apply` is the same as `call`, except the arguments come as an **array**.
+
+**Simple version**
 
 ```js
-let name = {
+// Real method
+printName.apply(name, ["Chittorgarh", "Rajasthan"]);
 
-firstName: "Rishabh",
+Function.prototype.myapply = function (obj, args) {
+  if (!Array.isArray(args)) {
+    throw new TypeError("CreateListFromArrayLike called on non-object");
+  }
+  // this = printName
+  obj.fnRef = this;
+  const result = obj.fnRef(...args);
+  delete obj.fnRef;
+  return result;
+};
+
+printName.myapply(name, ["Chittorgarh", "Rajasthan"]);
+// "Rishabh Sisodiya, Chittorgarh, Rajasthan"
+
+// printName.myapply(name, "Chittorgarh", "Rajasthan");
+// TypeError: CreateListFromArrayLike called on non-object — arguments must be in an array
 ```
-lastName:"Sisodiya",
 
-```js
-}
-
-let printName= function (hometown, state){
-
-console.log(this.firstName+" "+this.lastName+" ,"+hometown+", "+state);
-
-}
-
-printName.apply(name, ["Chittorgarh","Rajasthan"]);
-
-Function.prototype.myapply = function(obj,args){
-```
-if (!Array.isArray(args)) {
-
-```js
-throw new TypeError("CreateListFromArrayLike called on non-object");
-
-}
-```
-// this = printName
-
-```js
-obj.fnRef = this;
-
-obj.fnRef(...args);
-
-}
-
-printName.myapply(name,"Chittorgarh","Rajasthan");
-```
-// Advance
+**Advanced version**
 
 ```js
 Function.prototype.myApply = function (obj, args) {
+  if (typeof this !== "function") {
+    throw new TypeError("myApply must be called on a function");
+  }
+  if (args !== null && args !== undefined && typeof args !== "object") {
+    throw new TypeError("CreateListFromArrayLike called on non-object");
+  }
+
+  obj = obj === null || obj === undefined ? globalThis : Object(obj);
+
+  const uniqueKey = Symbol();
+  obj[uniqueKey] = this;
+  const result = obj[uniqueKey](...Array.from(args || [])); // supports arrays and array-likes
+  delete obj[uniqueKey];
+  return result;
+};
+
+printName.myApply(name, ["Udaipur", "Rajasthan"]);
+// "Rishabh Sisodiya, Udaipur, Rajasthan"
+
+console.log(Math.max.myApply(null, [3, 9, 2])); // 9
 ```
-if (typeof this !== "function") {
+
+Once `myCall` exists, `myApply` can also be written in one line:
 
 ```js
-throw new TypeError("myApply must be called on a function");
-
-}
-```
-if (!Array.isArray(args) && args !== null && args !== undefined) {
-
-```js
-throw new TypeError("Second argument must be an array or array-like object");
-
-}
-
-obj = obj || globalThis; // Use globalThis for null/undefined (global object in any environment)
-
-const uniqueKey = Symbol(); // Use a unique key to avoid property conflicts
-```
-obj\[uniqueKey\] = this; // Temporarily assign the function to the object
-
-const result = obj\[uniqueKey\](...(args || \[\])); // Call the function with spread arguments
-
-delete obj\[uniqueKey\]; // Cleanup the temporary property
-
-return result; // Return the result of the function call
-
-```js
+Function.prototype.myApply2 = function (obj, args = []) {
+  return this.myCall(obj, ...args);
 };
 ```
-### Create user defined bind method
+
+### Create a user-defined bind method
+
+`bind` does **not** call the function. It returns a **new function** that remembers `obj` and any arguments passed so far (using a **closure**), and calls the original function later.
 
 ```js
-let name = {
-
-firstName: "Rishabh",
-```
-lastName:"Sisodiya",
-
-```js
-}
-
-let printName= function (hometown, state){
-
-console.log(this.firstName+" "+this.lastName+" ,"+hometown+", "+state);
-
-}
-
-let printMyName= printName.bind(name, "Chittorgarh")
-
+// Real method
+let printMyName = printName.bind(name, "Chittorgarh");
 printMyName("Rajasthan");
+// "Rishabh Sisodiya, Chittorgarh, Rajasthan"
+```
 
+**Simple version**
+
+```js
 Function.prototype.mybind = function (obj, ...args) {
-```
-if (typeof this !== "function") {
+  if (typeof this !== "function") {
+    throw new TypeError("myBind must be called on a function");
+  }
+  const func = this; // save the original function (closure)
 
-```js
-throw new TypeError("myBind must be called on a function");
-
-}
-```
-const func = this; // Save the original function reference
-
-```js
-return function (...innerArgs) {
-```
-// Combine the arguments from .myBind and the returned function
-
-```js
-return func.apply(obj, [...args, ...innerArgs]);
-
+  return function (...innerArgs) {
+    // combine arguments from mybind with arguments from the returned function
+    return func.apply(obj, [...args, ...innerArgs]);
+  };
 };
 
-};
+let printMyName2 = printName.mybind(name, "Chittorgarh");
+printMyName2("Rajasthan");
+// "Rishabh Sisodiya, Chittorgarh, Rajasthan"
 ```
-// Advance
+
+**Why do we need `const func = this`?** Inside the returned `function`, `this` would be different (it depends on how the returned function is called). Saving it in `func` lets the closure remember the original function.
+
+**Without using apply/call (advanced)**
 
 ```js
 Function.prototype.myBind = function (obj, ...args) {
+  if (typeof this !== "function") {
+    throw new TypeError("myBind must be called on a function");
+  }
+  const func = this;
+  const context = obj === null || obj === undefined ? globalThis : Object(obj);
+
+  return function (...innerArgs) {
+    const uniqueKey = Symbol();
+    context[uniqueKey] = func;                      // attach at call time
+    const result = context[uniqueKey](...args, ...innerArgs);
+    delete context[uniqueKey];                      // clean up after each call
+    return result;
+  };
+};
+
+let printMyName3 = printName.myBind(name, "Chittorgarh");
+printMyName3("Rajasthan");
+// "Rishabh Sisodiya, Chittorgarh, Rajasthan"
 ```
-if (typeof this !== "function") {
+
+(The key is attached **inside** the returned function, at call time, so the object is not left with an extra property between calls.)
+
+**Supporting `new` (bonus)**
+
+The real `bind` lets you use `new` on a bound function; in that case the bound `this` is ignored. A polyfill that supports this:
 
 ```js
-throw new TypeError("myBind must be called on a function");
+Function.prototype.myBindWithNew = function (obj, ...args) {
+  const func = this;
 
+  function bound(...innerArgs) {
+    const isNew = this instanceof bound;             // called with new?
+    return func.apply(isNew ? this : obj, [...args, ...innerArgs]);
+  }
+
+  bound.prototype = Object.create(func.prototype);   // keep the prototype chain
+  return bound;
+};
+
+function Person(first, last) {
+  this.full = first + " " + last;
 }
 
-obj = obj || globalThis; // Use globalThis for null/undefined (global object in any environment)
-
-const uniqueKey = Symbol(); // Use a unique key to avoid property conflicts
+const BoundPerson = Person.myBindWithNew({ ignored: true }, "Rishabh");
+const p = new BoundPerson("Sisodiya");
+console.log(p.full);              // "Rishabh Sisodiya"
+console.log(p instanceof Person); // true
 ```
-obj\[uniqueKey\] = this; // Temporarily assign the function to the object
+
+### Checking if a native method exists (real polyfill style)
+
+Real polyfills only add the method if the browser doesn't already have it:
 
 ```js
-return function (...innerArgs) {
-
-const newArgs = [...args, ...innerArgs];
-
-return obj[uniqueKey](..newArgs);
-
-};
-
-};
-
-let printMyName2= printName.mybind(name, "Chittorgarh");
-
-printMyName2("Rajasthan");
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function (obj, ...args) {
+    const func = this;
+    return function (...innerArgs) {
+      return func.apply(obj, [...args, ...innerArgs]);
+    };
+  };
+}
 ```

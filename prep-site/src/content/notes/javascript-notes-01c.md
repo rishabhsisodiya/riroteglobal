@@ -5,61 +5,179 @@ track: "javascript"
 kind: "notes"
 order: 1.2
 slug: "basics-functions"
-updated: "2026-09-06"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
 description: "JavaScript basics — Functions & Expressions."
 ---
-### Function expressions
+### Defining functions
 
-While the function declaration above is syntactically a statement, functions can also be created by a function expression.
+A function is a reusable block of code that performs a task or calculates a value. It usually takes some input (parameters) and returns an output. To use a function, it must be defined in a scope from which you call it.
 
-Such a function can be anonymous; it does not have to have a name. For example, the function square could have been defined as:
+#### Function declarations
 
 ```js
-const square = function(number) { return number * number }
+function square(number) {
+  return number * number;
+}
+
+console.log(square(4)); // 16
 ```
-var x = square(4) // x gets the value 16
 
-**A method is a function that is a property of an object. function hoisting only works with function declarations—not with function expressions.**
+#### Passing primitives vs objects
 
-**Difference between Function Statement(or function declaration) & Expression**
+**Primitives** (numbers, strings, …) are passed **by value** — the function gets a copy, so changing the parameter does not affect the caller.
 
 ```js
-a();
+function addTen(num) {
+  num = num + 10;
+  return num;
+}
 
-b();
+let value = 5;
+console.log(addTen(value)); // 15
+console.log(value);         // 5 — unchanged
 ```
-**// function statement**
+
+**Objects** (including arrays) are passed as a **copy of the reference**. Changing a property is visible outside, but reassigning the parameter is not.
 
 ```js
+function myFunc(theObject) {
+  theObject.make = 'Toyota';          // changes the shared object
+}
+
+const mycar = { make: 'Honda', model: 'Accord', year: 1998 };
+const x = mycar.make;                 // "Honda"
+myFunc(mycar);
+const y = mycar.make;                 // "Toyota" — changed by the function
+console.log(x, y);                    // "Honda" "Toyota"
+
+function replace(theObject) {
+  theObject = { make: 'Ford' };       // points the local parameter to a new object
+}
+replace(mycar);
+console.log(mycar.make);              // "Toyota" — the caller's object is unchanged
+```
+
+#### Function expressions
+
+A function can also be created inside an expression and stored in a variable. Such a function can be **anonymous** (no name):
+
+```js
+const square = function (number) {
+  return number * number;
+};
+
+console.log(square(4)); // 16
+```
+
+A **method** is simply a function stored as a property of an object:
+
+```js
+const calculator = {
+  square(n) { return n * n; }
+};
+console.log(calculator.square(5)); // 25
+```
+
+#### Function declaration vs function expression
+
+The main difference is **hoisting**. A function declaration is hoisted with its body, so it can be called before it appears in the code. A function expression is just a value assigned to a variable, so it is not available until that line runs.
+
+```js
+a(); // "a called"
+b(); // TypeError: b is not a function
+
+// Function declaration (function statement)
 function a() {
-
-console.log("a called");
-
+  console.log("a called");
 }
+
+// Function expression
+var b = function () {
+  console.log("b called");
+};
 ```
-**// Function Expression**
+
+**Why the different errors?**
+
+-   `var b` is hoisted and set to `undefined`, so calling `b()` gives **TypeError: b is not a function**.
+-   With `let` or `const`, the variable is in the temporal dead zone, so you get **ReferenceError: Cannot access 'b' before initialization**.
 
 ```js
-var b = function(){
-
-console.log("b called");
-
-}
+c(); // ReferenceError: Cannot access 'c' before initialization
+const c = function () {};
 ```
 
-**Output:**
+| | Declaration | Expression |
+| --- | --- | --- |
+| Syntax | `function a() {}` | `const a = function () {}` |
+| Hoisted with body | Yes | No |
+| Can be anonymous | No | Yes |
+| Can be called before definition | Yes | No |
 
-a called
+#### Anonymous functions
 
-Uncaught TypeError: b is not a function
+An anonymous function is a function **without a name**. It cannot be written as a standalone statement:
 
-at index.js:2
+```js
+function () {
+}
+// SyntaxError: Function statements require a function name
+```
 
-Only difference is hoisting. Function expressions are not hoisted onto the beginning of the scope, therefore they cannot be used before they appear in the code.
+**If that throws an error, what is the use of an anonymous function?**
+Anonymous functions are used where a function is used **as a value** — assigned to a variable, passed as an argument, or returned from another function.
 
-Scope and the function stack
+```js
+const greet = function () { return 'hi'; };        // assigned to a variable
+setTimeout(function () { console.log('done'); }, 0); // passed as an argument
+[1, 2, 3].map(function (n) { return n * 2; });       // callback
+(function () { console.log('IIFE runs immediately'); })(); // IIFE
+```
+
+#### Named function expressions
+
+A function expression can also have a name:
+
+```js
+var b = function xyz() {
+  console.log("b called");
+};
+```
+
+**What happens when we call it by that name?**
+
+```js
+var b = function xyz() {
+  console.log("xyz called");
+  console.log(typeof xyz); // "function" — xyz is visible inside
+};
+
+b();   // "xyz called", "function"
+xyz(); // ReferenceError: xyz is not defined
+```
+
+`xyz` is **not** created in the outer scope. It exists only inside the function's own body, which is useful for recursion and for clearer stack traces. From outside, you must use `b`.
+
+#### Parameters vs arguments
+
+-   **Parameters** are the names listed in the function definition. They act as local variables.
+-   **Arguments** are the actual values passed when the function is called.
+
+```js
+function add(a, b) {   // a, b → parameters
+  return a + b;
+}
+add(2, 3);             // 2, 3 → arguments
+
+function show(a, b) {
+  console.log(a, b);
+}
+show(1);        // 1 undefined — missing arguments are undefined
+show(1, 2, 3);  // 1 2 — extra arguments are ignored (but available in `arguments`)
+console.log(add.length); // 2 — number of declared parameters
+```
 
 ### Recursion
 
@@ -198,887 +316,839 @@ Each call waits on the stack until the call it made returns, so the `end` lines 
 
 ### Nested functions and closures
 
-You may nest a function within another function. The nested (inner) function is private to its containing (outer) function.
+You can define a function inside another function. The inner (nested) function is private to the outer function.
 
-**It also forms a closure. A closure is an expression (most commonly, a function) that can have free variables together with an environment that binds those variables (that "closes" the expression).**
-
-Since a nested function is a closure, this means that a nested function can "inherit" the arguments and variables of its containing function. In other words, the inner function contains the scope of the outer function.
+The inner function also forms a **closure**: it remembers and can use the variables and parameters of the outer function, even after the outer function has finished running. (Closures are covered in detail in the Closure chapter.)
 
 To summarize:
 
--   The inner function can be accessed only from statements in the outer function.
--   The inner function forms a closure: the inner function can use the arguments and variables of the outer function, while the outer function cannot use the arguments and variables of the inner function.
-
-The following example shows nested functions:
+-   The inner function can be accessed only from code inside the outer function (unless the outer function returns it).
+-   The inner function can use the arguments and variables of the outer function, but the outer function **cannot** use the variables of the inner function.
 
 ```js
 function addSquares(a, b) {
-
-function square(x) {
-
-return x * x;
-
+  function square(x) {
+    return x * x;
+  }
+  return square(a) + square(b);
 }
 
-return square(a) + square(b);
-
-}
-
-a = addSquares(2, 3); // returns 13
-
-b = addSquares(3, 4); // returns 25
-
-c = addSquares(4, 5); // returns 41
+console.log(addSquares(2, 3)); // 13
+console.log(addSquares(3, 4)); // 25
+// square(2);                  // ReferenceError: square is not defined — private to addSquares
 ```
-Since the inner function forms a closure, you can call the outer function and specify arguments for both the outer and inner function:
+
+Because the inner function is a closure, you can call the outer function with one argument and the returned inner function with another:
 
 ```js
 function outside(x) {
-
-function inside(y) {
-
-return x + y;
-
+  function inside(y) {
+    return x + y;
+  }
+  return inside;
 }
 
-return inside;
-
-}
+const addThree = outside(3); // a function that adds 3 to whatever you give it
+console.log(addThree(5));    // 8
+console.log(outside(3)(5));  // 8 — same thing in one line
 ```
-fn_inside = outside(3); // Think of it like: give me a function that adds 3 to whatever you give it
+
+#### Preservation of variables
+
+In the example above, `x` is **preserved** after `outside` returns. A closure keeps the variables of every scope it uses. Each call to `outside` creates a **new** closure with its own `x`. That memory is freed only when the returned function is no longer reachable.
 
 ```js
-result = fn_inside(5); // returns 8
+const addTwo = outside(2);
+const addTen = outside(10);
 
-result1 = outside(3)(5); // returns 8
+console.log(addTwo(1)); // 3  — its own x = 2
+console.log(addTen(1)); // 11 — its own x = 10
 ```
-### Preservation of variables
 
-Notice how x is preserved when inside is returned. A closure must preserve the arguments and variables in all scopes it references. Since each call provides potentially different arguments, a new closure is created for each call to outside. The memory can be freed only when the returned inside is no longer accessible.
+#### Multiply-nested functions (scope chain)
 
-This is not different from storing references in other objects, but is often less obvious because one does not set the references directly and cannot inspect them.
-
-### Multiply-nested functions
-
-Functions can be multiply-nested. For example:
-
-A function (A) contains a function (B), which itself contains a function (C).
-
-Both functions B and C form closures here. So, B can access A, and C can access B.
-
-In addition, since C can access B which can access A, C can also access A.
-Thus, the closures can contain multiple scopes; they recursively contain the scope of the functions containing it. **This is called scope chaining.**
-
-Consider the following example:
+Functions can be nested several levels deep. If function `A` contains `B`, and `B` contains `C`, then `C` can access variables of both `B` and `A`. This lookup through enclosing scopes is called the **scope chain**.
 
 ```js
 function A(x) {
-
-function B(y) {
-
-function C(z) {
-
-console.log(x + y + z);
-
+  function B(y) {
+    function C(z) {
+      console.log(x + y + z);
+    }
+    C(3);
+  }
+  B(2);
 }
 
-C(3);
-
-}
-
-B(2);
-
-}
+A(1); // 6 (1 + 2 + 3)
 ```
-A(1); // logs 6 (1 + 2 + 3)
 
-In this example, C accesses B's y and A's x.
+-   `C` uses `z` (its own), `y` (from `B`) and `x` (from `A`).
+-   The reverse is not true: `A` cannot access `y` or `z`, and cannot call `C`, because `C` is private to `B`.
 
-This can be done because:
+#### Name conflicts (shadowing)
 
--   B forms a closure including A (i.e. B can access A's arguments and variables).
--   C forms a closure including B.
--   Because B's closure includes A, C's closure includes A, C can access both B and A's arguments and variables. In other words, C chains the scopes of B and A, in that order.
-
-The reverse, however, is not true. A cannot access C, because A cannot access any argument or variable of B, which C is a variable of. Thus, C remains private to only B.
-
-### Name conflicts
-
-When two arguments or variables in the scopes of a closure have the same name, there is a name conflict. More nested scopes take precedence. So, the innermost scope takes the highest precedence, while the outermost scope takes the lowest.
+If an inner scope declares a variable with the same name as an outer one, the **innermost** one wins. This is called **shadowing**.
 
 ```js
 function outside() {
-
-var x = 5;
-
-function inside(x) {
-
-return x * 2;
-
+  const x = 5;
+  function inside(x) {  // parameter x shadows the outer x
+    return x * 2;
+  }
+  return inside;
 }
 
-return inside;
-
-}
+console.log(outside()(10)); // 20 — uses the inner x (10), not 5
 ```
-outside()(10); // returns 20 instead of 10
 
-However, the outer function does not have access to the variables and functions defined inside the inner function. This **provides a sort of encapsulation** for the variables of the inner function.
+#### Encapsulation with closures
 
-var pet = function(name) { // The outer function defines a variable called "name"
+The outer function's variables cannot be reached from outside — only through the inner functions. This gives a form of **private data**.
 
 ```js
-var getName = function() {
-```
-return name; // The inner function has access to the "name" variable of the outer
-
-//function
-
-```js
-}
-```
-return getName; // Return the inner function, thereby exposing it to outer scopes
-
-```js
-}
-
-myPet = pet('Vivie');
-```
-myPet(); // Returns "Vivie"
-
-It can be much more complex than the code above. An object containing methods for **manipulating the inner variables of the outer function** can be returned.
-
-```js
-var createPet = function(name) {
-
-var sex;
-
-return {
-
-setName: function(newName) {
-
-name = newName;
-```
-},
-
-```js
-getName: function() {
-
-return name;
-```
-},
-
-```js
-getSex: function() {
-
-return sex;
-```
-},
-
-```js
-setSex: function(newSex) {
-```
-if(typeof newSex === 'string' && (newSex.toLowerCase() === 'male' ||
-
-newSex.toLowerCase() === 'female')) {
-
-```js
-sex = newSex;
-
-}
-
-}
-
-}
-
-}
-
-var pet = createPet('Vivie');
-```
-pet.getName(); // Vivie
-
-```js
-pet.setName('Oliver');
-
-pet.setSex('male');
-```
-pet.getSex(); // male
-
-pet.getName(); // Oliver
-
-In the code above, the name variable of the outer function is accessible to the inner functions, and there is no other way to access the inner variables except through the inner functions. The inner variables of the inner functions act as safe stores for the outer arguments and variables. They hold "persistent" and "encapsulated" data for the inner functions to work with. The functions do not even have to be assigned to a variable, or have a name.
-
-```js
-var getCode = (function() {
-
-var apiCode = '0]Eal(eh&2'; // A code we do not want outsiders to be able to modify...
-
-return function() {
-
-return apiCode;
-
+const pet = function (name) {       // outer function has a "name" variable
+  const getName = function () {
+    return name;                    // inner function can read it
+  };
+  return getName;                   // expose only the inner function
 };
 
+const myPet = pet('Vivie');
+console.log(myPet());   // "Vivie"
+console.log(myPet.name);// "getName" — the function's own name, not the pet's name
+```
+
+An outer function can return an object with several methods that read and change its private variables:
+
+```js
+const createPet = function (name) {
+  let sex;
+
+  return {
+    setName(newName) {
+      name = newName;
+    },
+    getName() {
+      return name;
+    },
+    getSex() {
+      return sex;
+    },
+    setSex(newSex) {
+      if (typeof newSex === 'string' &&
+          (newSex.toLowerCase() === 'male' || newSex.toLowerCase() === 'female')) {
+        sex = newSex;
+      }
+    }
+  };
+};
+
+const pet1 = createPet('Vivie');
+console.log(pet1.getName()); // "Vivie"
+
+pet1.setName('Oliver');
+pet1.setSex('male');
+pet1.setSex('robot');        // ignored — fails validation
+console.log(pet1.getSex());  // "male"
+console.log(pet1.getName()); // "Oliver"
+console.log(pet1.name);      // undefined — no direct access to the private variable
+```
+
+The functions do not even need a name or a variable. An **IIFE** (Immediately Invoked Function Expression) can hide a value completely:
+
+```js
+const getCode = (function () {
+  const apiCode = '0]Eal(eh&2'; // cannot be changed from outside
+  return function () {
+    return apiCode;
+  };
 })();
+
+console.log(getCode()); // "0]Eal(eh&2"
 ```
-getCode(); // Returns the apiCode
 
-**Caution:** There are a number of pitfalls to watch out for when using closures!
+**Pitfall — shadowing hides the outer variable**
 
-If an enclosed function defines a variable with the same name as a variable in the outer scope, then there is no way to refer to the variable in the outer scope again. (The inner scope variable "overrides" the outer one, until the program exits the inner scope.)
-
-var createPet = function(name) { // The outer function defines a variable called "name".
+If the inner function uses the same name as the outer variable, there is no way to reach the outer one from inside:
 
 ```js
-return {
+const createPet2 = function (name) {   // outer "name"
+  return {
+    setName(name) {                    // parameter also called "name"
+      name = name;                     // assigns the parameter to itself — outer name never changes
+    },
+    getName() {
+      return name;
+    }
+  };
+};
+
+const p = createPet2('Vivie');
+p.setName('Oliver');
+console.log(p.getName()); // "Vivie" — not updated!
+
+// Fix: use a different parameter name, e.g. setName(newName) { name = newName; }
 ```
-setName: function(name) { // The enclosed function also defines a variable called "name".
 
-name = name; // How do we access the "name" defined by the outer function?
+### The arguments object
 
-```js
-}
+Inside a regular function, `arguments` is an **array-like** object holding every value passed in. `arguments[0]` is the first argument, and `arguments.length` is the number of arguments actually passed.
 
-}
-
-}
-```
-### Using the arguments object
-
-The arguments of a function are maintained in an array-like object. Within a function, you can address the arguments passed to it as follows:
-
-### arguments\[i\]
-
-where i is the ordinal number of the argument, starting at 0. So, the first argument passed to a function would be arguments\[0\]. The total number of arguments is indicated by arguments.length.
-
-Using the arguments object, you can call a function with more arguments than it is formally declared to accept. This is often useful if you don't know in advance how many arguments will be passed to the function.
-
-The function is defined as follows:
+This lets a function accept more arguments than it declares:
 
 ```js
 function myConcat(separator) {
-
-var result = ''; // initialize list
-
-var i;
-```
-// iterate through arguments
-
-```js
-for (i = 1; i < arguments.length; i++) {
-
-result += arguments[i] + separator;
-
+  let result = '';
+  for (let i = 1; i < arguments.length; i++) { // start at 1 to skip separator
+    result += arguments[i] + separator;
+  }
+  return result;
 }
 
-return result;
+console.log(myConcat(', ', 'red', 'orange', 'blue'));
+// "red, orange, blue, "
+console.log(myConcat('; ', 'elephant', 'giraffe', 'lion', 'cheetah'));
+// "elephant; giraffe; lion; cheetah; "
+console.log(myConcat('. ', 'sage', 'basil', 'oregano', 'pepper', 'parsley'));
+// "sage. basil. oregano. pepper. parsley. "
+```
 
+**Note:** `arguments` is array-like, **not** an array. It has indexes and `length`, but no array methods like `map` or `join`.
+
+```js
+function test() {
+  console.log(arguments.length);          // 3
+  console.log(Array.isArray(arguments));  // false
+  // arguments.map(x => x);               // TypeError: arguments.map is not a function
+  console.log(Array.from(arguments));     // [1, 2, 3] — convert to a real array
 }
-```
-You can pass any number of arguments to this function, and it concatenates each argument into a string "list":
+test(1, 2, 3);
 
-// returns "red, orange, blue, "
-
-```js
-myConcat(', ', 'red', 'orange', 'blue');
-```
-// returns "elephant; giraffe; lion; cheetah; "
-
-```js
-myConcat('; ', 'elephant', 'giraffe', 'lion', 'cheetah');
-```
-// returns "sage. basil. oregano. pepper. parsley. "
-
-```js
-myConcat('. ', 'sage', 'basil', 'oregano', 'pepper', 'parsley');
-```
-**Note:** The arguments variable is "array-like", but not an array. It is array-like in that it has a numbered index and a length property. However, it does _not_ possess all of the array-manipulation methods.
-
-### Function parameters
-
-Starting with ECMAScript 2015, there are two new kinds of parameters: default parameters and rest parameters.
-
-Default Parameters
-
-### Without default parameters (pre-ECMAScript 2015)
-
-```js
-function multiply(a, b) {
-
-b = typeof b !== 'undefined' ? b : 1;
-
-return a * b;
-
-}
-```
-multiply(5); // 5
-
-### With default parameters (post-ECMAScript 2015)
-
-```js
-function multiply(a, b = 1) {
-
-return a * b;
-
-}
-```
-multiply(5); // 5
-
-### Rest parameters
-
-The rest parameter syntax allows us to represent an indefinite number of arguments as an array.
-
-```js
-function multiply(multiplier, ...theArgs) {
-
-return theArgs.map(x => multiplier * x);
-
-}
-
-var arr = multiply(2, 1, 2, 3);
-
-console.log(arr); // [2, 4, 6]
-```
-### Anonymous function
-
-A function which does not have an identity. But if we declare an anonymous function without function body and assigning in a variable then it will throw error
-
-```js
-function (){
-
-}
-```
-
-```js
-Output: Uncaught SyntaxError: Function statements require a function name
-```
-
-**_If it is throwing an error then what is the use of an anonymous function?_**
-
-Anonymous functions are used in places where functions are used as value. So we cannot use anonymous functions in function statements. We can use it as a function expression.
-
-### Named function statement
-
-A function expression with a name. for examples
-
-```js
-var b = function **xyz**(){
-
-console.log("b called");
-
-}
-```
-
-### What happens when we call a named function statement
-
-```js
-var b = function **xyz**(){
-
-console.log("xyz called");
-
-}
-
-b();
-```
-**xyz();**
-
-**Output**:
-
-xyz called
-
-Uncaught ReferenceError: xyz is not defined
-
-Because here xyz is not created in outer scope (that means it is not declared above var b and below function call as well ) as it is created as a local variable so you can use inside in xyz() but it is undefined in outer scope.
-
-### Difference between parameter and argument
-
-Parameters are used in function definition as local variables inside that function and arguments are passed over function while calling.
-
-### First Class Function (First Class Citizens)
-
-A programming language is said to have **First-class functions** **when functions** in that language **are treated like any other variable**. For example, in such a language, a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable.
-
-**// Pass function as parameter**
-
-```js
-var b = function (param1) {
-
-console.log(param1);
-
+const arrow = () => {
+  // console.log(arguments); // ReferenceError in modules — arrow functions have no own `arguments`
 };
 ```
 
-**// Return a function**
+In modern code, prefer **rest parameters** (below) over `arguments`.
+
+### Function parameters
+
+ES2015 added two new kinds of parameters: **default parameters** and **rest parameters**.
+
+#### Default parameters
+
+Without default parameters (before ES2015), you had to check for `undefined` yourself:
 
 ```js
-b(function () {});
-
-var b = function (){
-
-return function xyz(){
-
+function multiply(a, b) {
+  b = typeof b !== 'undefined' ? b : 1;
+  return a * b;
 }
 
-}
-
-console.log(b());
+console.log(multiply(5)); // 5
 ```
 
-### Callback Function
+With default parameters (ES2015+):
 
-A **callback** function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
+```js
+function multiply(a, b = 1) {
+  return a * b;
+}
 
-Here is a quick example:
+console.log(multiply(5));            // 5 — b uses the default 1
+console.log(multiply(5, 2));         // 10
+console.log(multiply(5, undefined)); // 5 — undefined triggers the default
+console.log(multiply(5, null));      // 0 — null does NOT trigger the default (5 * null → 0)
+```
+
+Defaults can use earlier parameters or call functions, and are evaluated on every call:
+
+```js
+function greet(name, message = `Hello ${name}`) {
+  return message;
+}
+console.log(greet('Sam')); // "Hello Sam"
+
+function addItem(item, list = []) {
+  list.push(item);
+  return list;
+}
+console.log(addItem('a')); // ["a"]
+console.log(addItem('b')); // ["b"] — a new [] is created on each call
+```
+
+#### Rest parameters
+
+The rest parameter (`...name`) collects any remaining arguments into a **real array**. It must be the last parameter.
+
+```js
+function multiply(multiplier, ...theArgs) {
+  return theArgs.map(x => multiplier * x);
+}
+
+console.log(multiply(2, 1, 2, 3)); // [2, 4, 6]
+
+function sum(...nums) {
+  return nums.reduce((total, n) => total + n, 0);
+}
+console.log(sum());        // 0
+console.log(sum(1, 2, 3)); // 6
+
+// function wrong(...a, b) {} // SyntaxError: Rest parameter must be last formal parameter
+```
+
+**Rest vs spread** — same `...` syntax, opposite jobs:
+
+```js
+function max(...nums) {          // rest: collects arguments into an array
+  return Math.max(...nums);      // spread: expands an array into arguments
+}
+console.log(max(3, 9, 4)); // 9
+```
+
+### First-class functions
+
+A language has **first-class functions** when functions are treated like any other value. In JavaScript a function can be:
+
+-   assigned to a variable,
+-   passed as an argument to another function,
+-   returned from another function,
+-   stored in objects and arrays.
+
+```js
+// 1. Assign to a variable
+const sayHi = function () { return 'Hi'; };
+
+// 2. Pass as an argument
+function run(fn) {
+  return fn();
+}
+console.log(run(sayHi)); // "Hi"
+
+// 3. Return from a function
+function makeMultiplier(factor) {
+  return function (n) {
+    return n * factor;
+  };
+}
+const double = makeMultiplier(2);
+console.log(double(5)); // 10
+
+// 4. Store in a data structure
+const actions = { greet: sayHi };
+console.log(actions.greet()); // "Hi"
+```
+
+A function that takes or returns another function is called a **higher-order function** (e.g. `map`, `filter`, `makeMultiplier`).
+
+### Callback functions
+
+A **callback** is a function passed into another function as an argument, which the outer function calls later to complete its work.
 
 ```js
 function greeting(name) {
-
-alert('Hello ' + name);
-
+  console.log('Hello ' + name);
 }
 
 function processUserInput(callback) {
-
-var name = prompt('Please enter your name.');
-
-callback(name);
-
+  const name = 'Rishabh'; // e.g. from a form or prompt()
+  callback(name);
 }
 
-processUserInput(greeting);
+processUserInput(greeting); // "Hello Rishabh"
 ```
 
-**Why Async?**
-
-// Callback
+#### Why callbacks matter for async code
 
 ```js
 setTimeout(() => {
-
-console.log("timer");
-
+  console.log("timer");
 }, 5000);
 
-function x(y){
-
-console.log("x");
-
-y();
-
+function x(y) {
+  console.log("x");
+  y();
 }
+
+x(function y() {
+  console.log("y");
+});
+
+// Output:
+// x
+// y
+// timer   (after about 5 seconds)
 ```
-x(function y(){
+
+`setTimeout` registers the callback and returns immediately, so `x` and `y` run first. The timer callback runs only after 5 seconds **and** once the call stack is empty.
+
+JavaScript has one call stack (the main thread). If `x()` did heavy synchronous work taking longer than 5 seconds, it would **block** the main thread — the timer, clicks and rendering would all wait. That is why slow work (network, timers, file I/O) is done asynchronously with callbacks, Promises or `async/await`.
 
 ```js
-console.log("y");
+setTimeout(() => console.log('timer'), 0);
+const start = Date.now();
+while (Date.now() - start < 2000) {} // blocks the thread for 2 seconds
+console.log('loop done');
+// Output:
+// loop done
+// timer — even with 0 ms, it had to wait for the blocking loop
 ```
-})
 
-So the timer will display after 5 sec and x()& y() will run before that. All run in the call stack and the call stack is our main thread. If x() has heavy operation then it may take more than 5 sec then it will block the main thread i.e. call stack and our timer will not run. Everything will be blocked. That is why we should use async.
+### Arrow functions
 
-**
-Arrow functions**
+An arrow function has a shorter syntax than a function expression. It does **not** have its own `this`, `arguments`, `super` or `new.target`, and cannot be used as a constructor. Arrow functions are always anonymous (but get a name when assigned to a variable).
 
-An arrow function expression (previously, and now incorrectly known as fat arrow function) has a shorter syntax compared to function expressions and does not have its own this, arguments, super, or new.target. Arrow functions are always anonymous.
+Two reasons they were introduced: **shorter functions** and **no separate `this`**.
 
-Two factors influenced the introduction of arrow functions: shorter functions and non-binding of this.
-
-### Shorter functions
+#### Shorter functions
 
 ```js
-var a = [
+const elements = ['Hydrogen', 'Helium', 'Lithium', 'Beryllium'];
+
+const a2 = elements.map(function (s) { return s.length; });
+console.log(a2); // [8, 6, 7, 9]
+
+const a3 = elements.map(s => s.length);
+console.log(a3); // [8, 6, 7, 9]
 ```
-'Hydrogen',
 
-'Helium',
-
-'Lithium',
-
-'Beryllium'
+**Syntax variations**
 
 ```js
-];
+const noParams = () => 'hi';
+const oneParam = x => x * 2;           // parentheses optional for one parameter
+const twoParams = (a, b) => a + b;
+const withBody = (a, b) => {           // braces need an explicit return
+  const sum = a + b;
+  return sum;
+};
+const returnObject = () => ({ id: 1 }); // wrap an object in ()
 
-var a2 = a.map(function(s) { return s.length; });
+console.log(noParams(), oneParam(4), twoParams(1, 2), withBody(2, 3), returnObject());
+// "hi" 8 3 5 { id: 1 }
 
-console.log(a2); // logs [8, 6, 7, 9]
-
-var a3 = a.map(s => s.length);
-
-console.log(a3); // logs [8, 6, 7, 9]
+const forgotReturn = (a, b) => { a + b };
+console.log(forgotReturn(1, 2)); // undefined — braces without return
 ```
-### No separate this
 
-Until arrow functions, every new function defines its own this value (a new object in the case of a constructor, undefined in strict mode function calls, the base object if the function is called as an "object method", etc.). This proved to be less than ideal with an object-oriented style of programming.
+#### No separate `this`
+
+Before arrow functions, every regular function got its own `this`, decided by **how it was called**. This caused bugs in callbacks:
 
 ```js
 function Person() {
-```
-// The Person() constructor defines \`this\` as itself.
+  this.age = 0;   // `this` is the new Person object
 
-```js
-this.age = 0;
-```
-setInterval(function growUp() {
-
-// In nonstrict mode, the growUp() function defines \`this\`
-
-// as the global object, which is different from the \`this\`
-
-// defined by the Person() constructor.
-
-```js
-this.age++;
-
-}, 1000);
-
+  setInterval(function growUp() {
+    // A plain function call: `this` is the global object (or undefined in strict mode),
+    // NOT the Person instance
+    this.age++;   // NaN on window.age, or TypeError in strict mode
+  }, 1000);
 }
 
-var p = new Person();
+const p = new Person();
 ```
-In ECMAScript 3/5, this issue was fixed by assigning the value in this to a variable that could be closed over.
+
+In ES3/ES5 this was fixed by saving `this` in a variable the callback could close over:
 
 ```js
 function Person() {
-```
-var self = this; // Some choose \`that\` instead of \`self\`.
+  const self = this; // some use `that` instead of `self`
+  self.age = 0;
 
-// Choose one and be consistent.
-
-```js
-self.age = 0;
-```
-setInterval(function growUp() {
-
-// The callback refers to the \`self\` variable of which
-
-// the value is the expected object.
-
-```js
-self.age++;
-
-}, 1000);
-
+  setInterval(function growUp() {
+    self.age++;      // refers to the Person instance
+  }, 1000);
 }
 ```
-Alternatively, a **bound function** could be created so that the proper this value would be passed to the growUp() function.
 
-### Predefined functions
-
-JavaScript has several top-level, built-in functions:
-
-**eval() :** The eval() method evaluates JavaScript code represented as a string.
-
-**uneval() :** The uneval() method creates a string representation of the source code of an Object.
-
-**isFinite():** The global isFinite() function determines whether the passed value is a finite number. If needed, the parameter is first converted to a number.
-
-**isNaN() :** The isNaN() function determines whether a value is NaN or not. Note: coercion inside the isNaN function has interesting rules; you may alternatively want to use Number.isNaN(), as defined in ECMAScript 2015, or you can use typeof to determine if the value is Not-A-Number.
-
-**parseFloat() :** The parseFloat() function parses a string argument and returns a floating point number.
-
-**parseInt() :** The parseInt() function parses a string argument and returns an integer of the specified radix (the base in mathematical numeral systems).
-
-**decodeURI() :** The decodeURI() function decodes a Uniform Resource Identifier (URI) previously created by encodeURI or by a similar routine.
-
-**decodeURIComponent():** The decodeURIComponent() method decodes a Uniform Resource Identifier (URI) component previously created by encodeURIComponent or by a similar routine.
-
-**encodeURI() :**The encodeURI() method encodes a Uniform Resource Identifier (URI) by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
-
-**encodeURIComponent():** The encodeURIComponent() method encodes a Uniform Resource Identifier (URI) component by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
-
-**
-Operators**
-
-### Assignment operators
-
-The simple assignment operator is equal (=), which assigns the value of its right operand to its left operand. Each assignment is evaluated right-to-left.
-
-**
-Destructuring**
-
-The destructuring assignment syntax is a JavaScript expression that makes it possible to extract data from arrays or objects using a syntax that mirrors the construction of array and object literals.
+Or with a **bound function**:
 
 ```js
-var foo = ['one', 'two', 'three'];
+function Person() {
+  this.age = 0;
+  setInterval(function growUp() {
+    this.age++;
+  }.bind(this), 1000); // lock `this` to the Person instance
+}
 ```
+
+An arrow function uses the `this` of the surrounding code, so no workaround is needed:
+
+```js
+function Person() {
+  this.age = 0;
+  setInterval(() => {
+    this.age++;      // `this` is the Person instance
+  }, 1000);
+}
+```
+
+**When NOT to use an arrow function**
+
+```js
+const counter = {
+  count: 0,
+  incArrow: () => { this.count++; },   // `this` is NOT counter
+  incNormal() { this.count++; }        // `this` is counter
+};
+
+counter.incNormal();
+counter.incArrow();
+console.log(counter.count); // 1 — only incNormal worked
+
+const Car = () => {};
+// new Car(); // TypeError: Car is not a constructor
+```
+
+| | Regular function | Arrow function |
+| --- | --- | --- |
+| Own `this` | Yes — depends on how it is called | No — uses surrounding `this` |
+| `arguments` object | Yes | No |
+| Can be used with `new` | Yes | No |
+| Hoisted (as declaration) | Yes | No (always an expression) |
+| Good for object methods | Yes | No |
+| Good for callbacks | Needs `bind`/`self` for `this` | Yes |
+
+### Predefined (global) functions
+
+JavaScript has several built-in top-level functions:
+
+| Function | What it does | Example |
+| --- | --- | --- |
+| `eval()` | Runs JavaScript code from a string (avoid — slow and a security risk) | `eval('2 + 2')` → `4` |
+| `isFinite()` | `true` if the value (converted to a number) is a finite number | `isFinite('12')` → `true` |
+| `isNaN()` | `true` if the value (converted to a number) is `NaN`. Prefer `Number.isNaN()` | `isNaN('abc')` → `true` |
+| `parseFloat()` | Parses a string and returns a decimal number | `parseFloat('3.5kg')` → `3.5` |
+| `parseInt()` | Parses a string and returns an integer in the given radix (base) | `parseInt('ff', 16)` → `255` |
+| `encodeURI()` | Encodes a full URI, keeping characters like `/ ? & =` | `encodeURI('a b')` → `"a%20b"` |
+| `encodeURIComponent()` | Encodes a URI part, including `/ ? & =` | `encodeURIComponent('a&b')` → `"a%26b"` |
+| `decodeURI()` | Reverses `encodeURI()` | `decodeURI('a%20b')` → `"a b"` |
+| `decodeURIComponent()` | Reverses `encodeURIComponent()` | `decodeURIComponent('a%26b')` → `"a&b"` |
+
+(`uneval()` was a non-standard Firefox-only function and has been removed.)
+
+```js
+console.log(isNaN('abc'), Number.isNaN('abc')); // true false
+console.log(isFinite('12'), Number.isFinite('12')); // true false — Number.* does not convert
+
+const query = 'rock & roll';
+console.log(`/search?q=${encodeURI(query)}`);          // "/search?q=rock%20&%20roll" — & breaks the query
+console.log(`/search?q=${encodeURIComponent(query)}`); // "/search?q=rock%20%26%20roll" — correct
+```
+
+### More operators
+
+The basic arithmetic, assignment, comparison, logical, bitwise and ternary operators are covered in **Syntax, Variables & Operators**. This section covers the rest.
+
+#### Destructuring assignment
+
+Destructuring extracts values from arrays or objects into variables, using a syntax that mirrors array and object literals.
+
+```js
+const foo = ['one', 'two', 'three'];
+
 // without destructuring
+const one1 = foo[0];
+const two1 = foo[1];
 
-```js
-var one = foo[0];
-
-var two = foo[1];
-
-var three = foo[2];
-```
 // with destructuring
+const [one, two, three] = foo;
+console.log(one, two, three); // "one" "two" "three"
+
+// skip items, rest, defaults
+const [first, , third] = foo;          // "one", "three"
+const [head, ...tail] = foo;           // "one", ["two", "three"]
+const [x = 10, y = 20] = [1];          // x = 1, y = 20
+
+// swap without a temp variable
+let m = 1, n = 2;
+[m, n] = [n, m];
+console.log(m, n); // 2 1
+```
 
 ```js
-var [one, two, three] = foo;
+const user = { id: 7, name: 'Asha', address: { city: 'Pune' } };
+
+const { name, id } = user;                     // "Asha", 7
+const { name: userName } = user;               // rename → userName = "Asha"
+const { role = 'guest' } = user;               // default → "guest"
+const { address: { city } } = user;            // nested → "Pune"
+const { id: _, ...rest } = user;               // rest → { name, address }
+
+function printUser({ name, age = 18 }) {       // destructuring in parameters
+  console.log(name, age);
+}
+printUser(user); // "Asha" 18
+
+// const { a } = null; // TypeError: Cannot destructure property 'a' of 'null'
 ```
-### Comparison operators
 
-A comparison operator compares its operands and returns a logical value based on whether the comparison is true.
+#### Comma operator
 
-Equal (==), Not equal (!=), Strict equal (===), Strict not equal (!==), Greater than (>), Greater than or equal (>=), Less than (<) and Less than or equal (<=).
-
-**
-Arithmetic operators**
-
-| Operator | Description | Example |
-| --- | --- | --- |
-| Remainder (%) | Binary operator. Returns the integer remainder of dividing the two operands. | 12 % 5 returns 2. |
-| Increment (++) | Unary operator. Adds one to its operand. If used as a prefix operator (++x), returns the value of its operand after adding one; if used as a postfix operator (x++), returns the value of its operand before adding one. | If x is 3, then ++x sets x to 4 and returns 4, whereas x++ returns 3 and, only then, sets x to 4. |
-| Decrement (--) | Unary operator. Subtracts one from its operand. The return value is analogous to that for the increment operator. | If x is 3, then --x sets x to 2 and returns 2, whereas x-- returns 3 and, only then, sets x to 2. |
-| Unary negation (-) | Unary operator. Returns the negation of its operand. | If x is 3, then -x returns -3. |
-| Unary plus (+) | Unary operator. Attempts to convert the operand to a number, if it is not already. | +"3" returns 3. +true returns 1. |
-| Exponentiation operator (**) | Calculates the base to the exponent power, that is, baseexponent | 2 ** 3 returns 8. 10 ** -1 returns 0.1. |
-
-### Bitwise operators
-
-A bitwise operator treats their operands as a set of 32 bits (zeros and ones), rather than as decimal, hexadecimal, or octal numbers.
-
-| Operator | Usage | Description |
-| --- | --- | --- |
-| Bitwise AND | a & b | Returns a one in each bit position for which the corresponding bits of both operands are ones. |
-| Bitwise OR | a | b | Returns a zero in each bit position for which the corresponding bits of both operands are zeros. |
-| Bitwise XOR | a ^ b | Returns a zero in each bit position for which the corresponding bits are the same. [Returns a one in each bit position for which the corresponding bits are different.] |
-| Bitwise NOT | ~ a | Inverts the bits of its operand. |
-| Left shift | a << b | Shifts a in binary representation b bits to the left, shifting in zeros from the right. |
-| Sign-propagating right shift | a >> b | Shifts a in binary representation b bits to the right, discarding bits shifted off. |
-| Zero-fill right shift | a >>> b | Shifts a in binary representation b bits to the right, discarding bits shifted off, and shifting in zeros from the left. |
-
-### Logical operators
-
-Logical operators are typically used with Boolean (logical) values; when they are, they return a Boolean value.
-
-Logical AND (&&), Logical OR (||) and Logical NOT (!).
-
-### Short-circuit evaluation
-
-As logical expressions are evaluated left to right, they are tested for possible "short-circuit" evaluation using the following rules:
-
-false && anything is short-circuit evaluated to false.
-
-true || anything is short-circuit evaluated to true.
-
-### String operators (concatenate +)
-
-The concatenation operator (+) concatenates two string values together, returning another string that is the union of the two operand strings.
-
-console.log('my' + 'string'); // console logs the string "my string".
-
-### Conditional (ternary) operator
-
-The conditional operator is the only JavaScript operator that takes three operands. The operator can have one of two values based on a condition. The syntax is:
-
-condition ? val1: val2
-
-For example,
+The comma operator evaluates each operand from left to right and returns the **last** one. It is mostly used in `for` loops to update several variables; elsewhere, separate statements are clearer.
 
 ```js
-var status = (age >= 18) ? 'adult' : 'minor';
+for (let i = 0, j = 5; i < j; i++, j--) {
+  console.log(i, j);
+}
+// 0 5
+// 1 4
+// 2 3
+
+const result = (1, 2, 3);
+console.log(result); // 3
 ```
-### Comma operator
 
-The comma operator (,) evaluates both of its operands and returns the value of the last operand. This operator is primarily used inside a for loop, to allow multiple variables to be updated each time through the loop. It is regarded as bad style to use it elsewhere, when it is not necessary. Often two separate statements can and should be used instead.
+#### delete
 
-### Unary operators
-
-A unary operation is an operation with only one operand.
-
-### delete
-
-The delete operator deletes an object's property. The syntax is:
+The `delete` operator removes a property from an object. It returns `true` if the property is gone (or never existed), and `false` if it cannot be deleted.
 
 ```js
 delete object.property;
-
 delete object[propertyKey];
-
-delete objectName[index];
 ```
-delete property; // legal only within a with statement
-
-where object is the name of an object, property is an existing property, and propertyKey is a string or symbol referring to an existing property.
 
 ```js
-x = 42; // implicitly creates window.x
+const myobj = { h: 4 };
+console.log(delete myobj.h);   // true — own, configurable property
+console.log(myobj.h);          // undefined
+
+console.log(delete Math.PI);   // false — non-configurable property
 
 var y = 43;
-
-var myobj = {h: 4}; // create object with property h
+console.log(delete y);         // false — variables declared with var/let/const cannot be deleted
 ```
-delete x; // returns false (cannot delete if created implicitly)
 
-delete y; // returns false (cannot delete if declared with var)
+In non-strict scripts, an implicit global (`x = 42` without a keyword) *can* be deleted. In strict mode, `delete` on a variable is a `SyntaxError`, and deleting a non-configurable property throws a `TypeError`.
 
-delete Math.PI; // returns false (cannot delete non-configurable properties)
+**Deleting array elements**
 
-delete myobj.h; // returns true (can delete user-defined properties)
-
-### Deleting array elements
-
-Since arrays are just objects, it's technically possible to delete elements from them. This is however regarded as a bad practice, try to avoid it. When you delete an array property, the array length is not affected and other elements are not re-indexed. To achieve that behavior, it is much better to just overwrite the element with the value undefined. To actually manipulate the array, use the various array methods such as splice.
-
-### typeof
-
-The typeof operator returns a string indicating the type of the unevaluated operand. operand is the string, variable, keyword, or object for which the type is to be returned.
-
-Suppose you define the following variables:
+Arrays are objects, so `delete` works on them — but it leaves an empty slot. The length does not change and elements are not re-indexed. Use `splice` instead.
 
 ```js
-var myFun = new Function('5 + 2');
+const trees = ['redwood', 'bay', 'cedar'];
+delete trees[1];
+console.log(trees);        // ["redwood", empty, "cedar"]
+console.log(trees.length); // 3
 
-var shape = 'round';
-
-var size = 1;
-
-var foo = ['Apple', 'Mango', 'Orange'];
-
-var today = new Date();
+const trees2 = ['redwood', 'bay', 'cedar'];
+trees2.splice(1, 1);
+console.log(trees2);       // ["redwood", "cedar"]
+console.log(trees2.length);// 2
 ```
-The typeof operator returns the following results for these variables:
 
-typeof myFun; // returns "function"
+#### typeof
 
-typeof shape; // returns "string"
+`typeof` returns a string with the type of its operand. It does not throw for undeclared variables.
 
-typeof size; // returns "number"
+```js
+const myFun = new Function('5 + 2');
+const shape = 'round';
+const size = 1;
+const foo2 = ['Apple', 'Mango', 'Orange'];
+const today = new Date();
 
-typeof foo; // returns "object"
+console.log(typeof myFun);       // "function"
+console.log(typeof shape);       // "string"
+console.log(typeof size);        // "number"
+console.log(typeof foo2);        // "object"
+console.log(typeof today);       // "object"
+console.log(typeof doesntExist); // "undefined" — no ReferenceError
+```
 
-typeof today; // returns "object"
+#### void
 
-typeof doesntExist; // returns "undefined"
+`void` evaluates an expression and always returns `undefined`.
 
-### void
+```js
+console.log(void 0);          // undefined
+console.log(void (2 + 2));    // undefined — expression runs, result discarded
 
-The void operator specifies an expression to be evaluated without returning a value. expression is a JavaScript expression to evaluate.
+// Historical use in links: <a href="javascript:void(0)">Click</a>
 
-### Relational operators
+const logOnly = () => void console.log('side effect'); // arrow that never returns a value
+console.log(logOnly());       // "side effect", then undefined
+```
 
-A relational operator compares its operands and returns a Boolean value based on whether the comparison is true.
+#### Relational operators: in and instanceof
 
-### in
+**`in`** returns `true` if a property (key) exists in an object or its prototype chain.
 
-The in operator returns true if the specified property is in the specified object. The syntax is:
-
+```js
 propNameOrNumber in objectName
-
-// Arrays
+```
 
 ```js
-var trees = ['redwood', 'bay', 'cedar', 'oak', 'maple'];
-```
-0 in trees; // returns true
+// Arrays — checks indexes, not values
+const trees = ['redwood', 'bay', 'cedar', 'oak', 'maple'];
+console.log(0 in trees);        // true
+console.log(3 in trees);        // true
+console.log(6 in trees);        // false
+console.log('bay' in trees);    // false — use trees.includes('bay')
+console.log('length' in trees); // true — length is an array property
 
-3 in trees; // returns true
-
-6 in trees; // returns false
-
-'bay' in trees; // returns false (you must specify the index number,
-
-// not the value at that index)
-
-'length' in trees; // returns true (length is an Array property)
-
-// built-in objects
-
-'PI' in Math; // returns true
-
-```js
-var myString = new String('coral');
-```
-'length' in myString; // returns true
+// Built-in objects
+console.log('PI' in Math);      // true
+const myString = new String('coral');
+console.log('length' in myString); // true
+// console.log('length' in 'coral'); // TypeError — right side must be an object
 
 // Custom objects
+const mycar = { make: 'Honda', model: 'Accord', year: 1998 };
+console.log('make' in mycar);     // true
+console.log('toString' in mycar); // true — inherited
+console.log(Object.hasOwn(mycar, 'toString')); // false — only own properties
+```
+
+**`instanceof`** returns `true` if the constructor's `prototype` is in the object's prototype chain. Use it to check the kind of object at runtime.
 
 ```js
-var mycar = { make: 'Honda', model: 'Accord', year: 1998 };
-```
-'make' in mycar; // returns true
-
-'model' in mycar; // returns true
-
-### instanceof
-
-The instanceof operator returns true if the specified object is of the specified object type. The syntax is: objectName instanceof objectType
-
-Use instanceof when you need to confirm the type of an object at runtime.
-
-```js
-var theDay = new Date(1995, 12, 17);
-```
+const theDay = new Date(1995, 11, 17); // months are 0-based: 11 = December
 if (theDay instanceof Date) {
+  console.log('It is a Date'); // runs
+}
 
-// statements to execute
+console.log([] instanceof Array);  // true
+console.log([] instanceof Object); // true
+console.log('text' instanceof String); // false — primitive, not an object
+```
+
+**typeof vs instanceof**
+
+| | `typeof` | `instanceof` |
+| --- | --- | --- |
+| Returns | a string (`"string"`, `"object"`, …) | `true` / `false` |
+| Works on primitives | Yes | No (always `false`) |
+| Distinguishes arrays/dates | No (all `"object"`) | Yes |
+| Example | `typeof 'a'` → `"string"` | `new Date() instanceof Date` → `true` |
+
+#### Operator precedence
+
+From highest to lowest (operators higher in the table run first):
+
+| Operator type | Operators |
+| --- | --- |
+| grouping | `( )` |
+| member / call / new | `.` `[]` `()` `new` `?.` |
+| postfix | `x++` `x--` |
+| prefix / unary | `!` `~` `+` `-` `++x` `--x` `typeof` `void` `delete` `await` |
+| exponent | `**` |
+| multiply / divide | `*` `/` `%` |
+| add / subtract | `+` `-` |
+| bitwise shift | `<<` `>>` `>>>` |
+| relational | `<` `<=` `>` `>=` `in` `instanceof` |
+| equality | `==` `!=` `===` `!==` |
+| bitwise AND | `&` |
+| bitwise XOR | `^` |
+| bitwise OR | `\|` |
+| logical AND | `&&` |
+| logical OR / nullish | `\|\|` `??` |
+| conditional | `? :` |
+| assignment / arrow | `=` `+=` `-=` `*=` `&&=` `\|\|=` `??=` `=>` … |
+| comma | `,` |
 
 ```js
-}
+console.log(1 + 2 * 3);         // 7
+console.log(typeof 1 + 2);      // "number2" — typeof runs first: "number" + 2
+console.log(typeof (1 + 2));    // "number"
+console.log(!true === false);   // true — ! runs before ===
 ```
-The **typeof** and the **instanceof** operator are quite different. typeof returns a type of entity that it’s operated on (like it operates on string then return “string” not String). instanceof of returns true if an object is created from a given constructor and false otherwise ().
-
-### Operator precedence
-
-The following table describes the precedence of operators, from highest to lowest.
-
-| Operator type | Individual operators |
-| --- | --- |
-| member |. [] |
-| call / create instance | () new |
-| negation/increment | ! ~ - + ++ -- typeof void delete |
-| multiply/divide | * / % |
-| addition/subtraction | + - |
-| bitwise shift | << >> >>> |
-| relational | < <= > >= in instanceof |
-| equality | == != === !== |
-| bitwise-and | & |
-| bitwise-xor | ^ |
-| bitwise-or | | |
-| logical-and | && |
-| logical-or | || |
-| conditional | ?: |
-| assignment | = += -= *= /= %= <<= >>= >>>= &= ^= |= &&= ||= ??= |
-| comma |, |
 
 ### Expressions
 
-An expression is any valid unit of code that resolves to a value.
+An **expression** is any valid piece of code that produces a value (`3 + 4`, `x = 7`, `fn()`, `'a'`). A **statement** performs an action (`if`, `for`, `let x;`).
 
-### Primary Expression
+#### this
 
-### this
+`this` refers to the object that is running the current code. In a method, it is usually the object the method was called on. Use it with dot or bracket notation:
 
-Use this keyword to refer to the current object. In general, this refers to the calling object in a method. Use this either with the dot or the bracket notation:
-
-this\['propertyName'\]
-
+```js
 this.propertyName
-
-### Grouping operator
-
-The grouping operator ( ) controls the precedence of evaluation in expressions. For example, you can override multiplication and division first, then addition and subtraction to evaluate addition first
-
-// addition before multiplication
-
-(a + b) \* c // 9
-
-### Left-hand-side expressions
-
-### new
-
-You can use the new operator to create an instance of a user-defined object type or of one of the built-in object types. Use new as follows:
-
-```js
-var objectName = new objectType([param1, param2, ..., paramN]);
+this['propertyName']
 ```
-### super
-
-The super keyword is used to call functions on an object's parent. It is useful with classes to call the parent constructor, for example.
-
-super(\[arguments\]); // calls the parent constructor.
 
 ```js
-super.functionOnParent([arguments]);
+const user = {
+  name: 'Asha',
+  hello() {
+    return `Hi, ${this.name}`;
+  }
+};
+console.log(user.hello()); // "Hi, Asha" — this = user
+
+const hello = user.hello;
+console.log(hello());      // "Hi, undefined" (or TypeError in strict mode) — this is lost
+```
+
+(`this` is covered in detail in the next chapter.)
+
+#### Grouping operator
+
+The grouping operator `( )` changes the order of evaluation.
+
+```js
+const a = 1, b = 2, c = 3;
+
+console.log(a + b * c);   // 7 — multiplication first
+console.log((a + b) * c); // 9 — addition first because of ()
+```
+
+#### new
+
+`new` creates an instance of a user-defined or built-in object type.
+
+```js
+const objectName = new ObjectType(param1, param2 /* , ..., paramN */);
+```
+
+```js
+function Car(make) {
+  this.make = make;
+}
+const car = new Car('Honda');
+console.log(car.make);             // "Honda"
+console.log(car instanceof Car);   // true
+
+const date = new Date(2026, 0, 1);
+console.log(date.getFullYear());   // 2026
+```
+
+What `new` does:
+
+1.  Creates an empty object.
+2.  Sets its prototype to `Car.prototype`.
+3.  Runs `Car` with `this` pointing to the new object.
+4.  Returns the new object (unless the function returns a different object).
+
+#### super
+
+`super` is used in classes to call the parent class's constructor or methods.
+
+```js
+super(arguments);             // call the parent constructor
+super.functionOnParent(args); // call a parent method
+```
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    return `${this.name} makes a sound`;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name) {
+    super(name);              // must be called before using `this`
+  }
+  speak() {
+    return `${super.speak()} — woof`;
+  }
+}
+
+console.log(new Dog('Rex').speak()); // "Rex makes a sound — woof"
 ```

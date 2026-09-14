@@ -3,658 +3,667 @@ title: "Closure"
 part: "JavaScript Notes"
 track: "javascript"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-14"
 source: "JavaScript Notes.docx"
 draft: false
 order: 5
 description: "JavaScript — Closure."
 ---
-Let's take an example
+### What is a closure?
+
+Let's take an example:
 
 ```js
 function x() {
-
-var a=7;
-
-function y(){
-
-console.log(a);
-
-}
-
-y();
-
+  var a = 7;
+  function y() {
+    console.log(a);
+  }
+  y();
 }
 
 x();
 ```
 
-### Output: 7
+**Output:** `7`
 
-You can see the function scope of y() have \[\[Scopes\]\] which has a in it. So when we return y() and use it later also it will have a with value 7 in it.
+In DevTools you can see that the function `y()` has `[[Scopes]]`, which contains `a`. So even when we return `y()` and use it later, it will still have `a` with the value 7.
 
 ![](/notes-img/javascript-notes/img-013.webp)![](/notes-img/javascript-notes/img-014.webp)
 
-A **closure** is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time. **So function (or expression) along with its lexical Scope bundled together forms a closure.**
+A **closure** is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function's scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time. **So a function along with its lexical scope bundled together forms a closure.**
 
 ```js
 function x() {
-
-var a=7;
-
-function y(){
-
-console.log(a);
-
+  var a = 7;
+  function y() {
+    console.log(a);
+  }
+  a = 100;
+  return y;
 }
 
-a=100;
-
-return y;
-
-}
-
-var z=x();
-
+var z = x();
 console.log(z);
-
 z();
 ```
 
-Output:
+**Output:**
 
-ƒ y(){
-
-```js
-console.log(a);
-
-}
 ```
+ƒ y() {
+  console.log(a);
+}
 100
+```
 
-**Note**: Here comes closure in picture. Returned Function always maintain their lexical scope. (Function along with reference to those variables(e.g. var a) )They remember where they were actually present. So in simple terms the code not just returns a function but a closure returns(function along with its lexical scope).
+**Note:** Here the closure comes into the picture. A returned function always maintains its lexical scope — the function along with a **reference** to those variables (e.g. `var a`). It remembers where it was actually present. So in simple terms, the code does not just return a function; it returns a **closure** (the function along with its lexical scope).
+
+It prints `100`, not `7`, because the closure keeps a **reference** to the variable `a`, not a copy of its value at the time `y` was created.
 
 ### Scope chain
 
 ```js
 function z() {
-
-var b=900;
-
-function x() {
-
-var a=7;
-
-function y(){
-
-console.log(a, b);
-
-}
-
-y();
-
-}
-
-x();
-
+  var b = 900;
+  function x() {
+    var a = 7;
+    function y() {
+      console.log(a, b);
+    }
+    y();
+  }
+  x();
 }
 
 z();
 ```
 
-```js
-Output: 7 900
-```
+**Output:** `7 900`
 
 ![](/notes-img/javascript-notes/img-015.webp)
 
-So now y forms closure with scope of x and z.
+So now `y` forms a closure with the scope of `x` **and** `z`.
 
 **Uses of closures:**
 
--   Module Design Pattern
+-   Module design pattern
 -   Currying
--   Function like once (Only run once)
--   memoize
--   maintaining state in sync world
--   setTimeouts
--   Iterators and many more.
+-   Functions like `once` (run only once)
+-   Memoize
+-   Maintaining state in the async world
+-   `setTimeout`
+-   Iterators, and many more
 
-### Timeout and closure
+### setTimeout and closure
 
 ```js
 function x() {
-
-var a=1;
-
-setTimeout(() => {
-
-console.log(a);
-
-}, 3000);
-
-console.log("Hello Javascript");
-
+  var a = 1;
+  setTimeout(() => {
+    console.log(a);
+  }, 3000);
+  console.log("Hello JavaScript");
 }
 
 x();
 ```
 
-Output:
+**Output:**
 
+```
 Hello JavaScript
+1        (after 3 seconds)
+```
 
+`setTimeout` takes the callback function, attaches it to a timer, and when the timer expires it calls that function. JavaScript doesn't wait for the timer. The callback forms a closure, so it still remembers `a` even though `x()` finished long ago.
+
+**Let's print 1 to 5, where each number `n` is printed after `n` seconds (n = 1…5).**
+
+Normally we try the example below, but it prints a different output:
+
+```js
+function x() {
+  for (var i = 1; i <= 5; i++) {
+    setTimeout(() => {
+      console.log(i);
+    }, i * 1000);
+  }
+  console.log("Hello JavaScript");
+}
+
+x();
+```
+
+**Output:**
+
+```
+Hello JavaScript
+6
+6
+6
+6
+6
+```
+
+The loop does not wait for the timers. All five callbacks form a closure with the **same** `var i` (a reference, not a copy). By the time the timers expire, the loop has already finished and `i` has become 6.
+
+#### Case 1: fix it with let (block scope)
+
+```js
+function x() {
+  for (let i = 1; i <= 5; i++) {
+    setTimeout(() => {
+      console.log(i);
+    }, i * 1000);
+  }
+  console.log("Hello JavaScript");
+}
+
+x();
+```
+
+**Output:**
+
+```
+Hello JavaScript
 1
-
-SetTimeout takes the callback function and attaches it to the timer and when the timer expires, it calls that function. JavaScript doesn’t wait for that function to run.
-
-Let's print 1 to 5 after every nth sec. Where n=1 ...5
-
-Normally we try to follow the example below but it will print different output.
-
-```js
-function x() {
-
-for (var i = 1; i <= 5; i++) {
-
-setTimeout(() => {
-
-console.log(i);
-
-}, i * 1000);
-
-}
-
-console.log("Hello JavaScript");
-
-}
-
-x();
-```
-
-Output:
-
-Hello JavaScript
-
-6
-
-6
-
-6
-
-6
-
-6
-
-Loop will keep running so the value of i becomes 6 till the time out timeout expires.
-
-### Case 1: Fix it with let(block-scope)
-
-```js
-function x() {
-
-for (**let** i = 1; i <= 5; i++) {
-
-setTimeout(() => {
-
-console.log(i);
-
-}, i * 1000);
-
-}
-
-console.log("Hello JavaScript");
-
-}
-
-x();
-```
-
-Output:
-
-Hello JavaScript
-
-1
-
 2
-
 3
-
 4
-
 5
+```
 
-Because **let** has a block-scope so every time when the loop runs that “i” have a new copy altogether.
+Because `let` is block-scoped, every time the loop runs, `i` is a new copy altogether. The function in `setTimeout` forms a closure with a new copy of `i` bound to it.
 
-Function in setTimeout forms a closure with a new copy of the variable “i” bound to it.
-
-### Case 2: fix it with closure and use only var
+#### Case 2: fix it with a closure, using only var
 
 ```js
 function x() {
-
-for (var i = 1; i <= 5; i++) {
-```
-**function closer(i) {**
-
-setTimeout(function () {
-
-```js
-console.log(i);
-
-}, i * 1000);
-```
-**}**
-
-**closer(i);**
-
-```js
-}
-
-console.log("Hello JavaScript");
-
+  for (var i = 1; i <= 5; i++) {
+    function closer(i) {
+      setTimeout(function () {
+        console.log(i);
+      }, i * 1000);
+    }
+    closer(i);
+  }
+  console.log("Hello JavaScript");
 }
 
 x();
 ```
 
-Output:
+**Output:**
 
+```
 Hello JavaScript
-
 1
-
 2
-
 3
-
 4
-
 5
+```
 
-Every time you call closer(i), it will create a new copy of i.
+Every time you call `closer(i)`, it creates a new function scope with its own copy of `i` (the parameter), and the callback closes over that copy.
+
+The same fix is often written with an **IIFE**:
+
+```js
+for (var i = 1; i <= 5; i++) {
+  (function (j) {
+    setTimeout(() => console.log(j), j * 1000);
+  })(i);
+}
+```
 
 ### Some more examples
 
-Consider below as base code
+Consider this as the base code:
 
 ```js
-function outer(){
-
-var a=10;
-
-function inner(){
-
-console.log(a);
-
-}
-
-return inner;
-
+function outer() {
+  var a = 10;
+  function inner() {
+    console.log(a);
+  }
+  return inner;
 }
 
 outer()();
 ```
 
-Output:
+**Output:** `10`
 
-10
+`outer()()` means: call `outer()`, which returns `inner`, then immediately call that returned function.
 
-**Case 1: what if we use let in place of var and use just before the return statement.**
-
-```js
-function outer(){
-
-function inner(){
-
-console.log(a);
-
-}
-```
-**let a=10;**
+#### Case 1: use let instead of var, declared just before the return statement
 
 ```js
-return inner;
-
+function outer() {
+  function inner() {
+    console.log(a);
+  }
+  let a = 10;
+  return inner;
 }
 
 outer()();
 ```
 
-Output:
+**Output:** `10`
 
-10
+The position of `a` doesn't matter, because `inner` runs **after** `let a = 10` has executed.
 
-### Subcase 1: When we call inner function before initialization of a
-
-```js
-function outer(){
-```
-**inner();**
+**Subcase: call the inner function before `a` is initialized**
 
 ```js
-let a=10;
-
-function inner(){
-
-console.log(a);
-
-}
-
+function outer() {
+  inner();
+  let a = 10;
+  function inner() {
+    console.log(a);
+  }
 }
 
 outer();
 ```
 
-Output:
+**Output:**
 
-index.js:5 Uncaught ReferenceError: Cannot access 'a' before initialization
+```
+Uncaught ReferenceError: Cannot access 'a' before initialization
+```
 
-So here it is obvious that we are trying to access **let a before initialization** so as it is let so it will be in a **temporal dead zone** and hence we cannot use it before initialization but if we **used** **var** instead of let then it will run successfully but will give value **undefined**. To understand more, Compare it with an example which we used in variable hoisting.
+Here we are trying to access **`let a` before initialization**. Since it is `let`, it is in the **temporal dead zone**, so we cannot use it before initialization. If we used `var` instead of `let`, it would run successfully but print `undefined`. To understand more, compare it with the example from Variable Hoisting:
 
 ```js
 console.log(a);
-
 console.log(b);
 
-var a=10;
-
-let b=10;
+var a = 10;
+let b = 10;
 ```
 
-Output:
+**Output:**
 
+```
 undefined
+Uncaught ReferenceError: Cannot access 'b' before initialization
+```
 
-index.js:2 Uncaught ReferenceError: Cannot access 'b' before initialization
-
-### Case 2: Pass a parameter from outer scope
+#### Case 2: pass a parameter from the outer scope
 
 ```js
-function outer(b){
-
-function inner(){
-
-console.log(a, b);
-
+function outer(b) {
+  function inner() {
+    console.log(a, b);
+  }
+  let a = 10;
+  return inner;
 }
 
-let a=10;
-
-return inner;
-
-}
-
-var close =outer("Hello");
-
+var close = outer("Hello");
 close();
 ```
 
-Output:
+**Output:** `10 "Hello"`
 
-10 “Hello”
+The inner function forms a closure with its outer function's environment, and the parameter `b` is part of the outer function's environment, so `inner` can access it.
 
-Because inner function forms a closure with its outer function environment and b is a part of outer function environment so
-
-### Case 3: Outer function is a part of another function
+#### Case 3: the outer function is inside another function
 
 ```js
-function outermost(){
-
-var c=20;
-
-function outer(b){
-
-function inner(){
-
-console.log(a, b, c);
-
+function outermost() {
+  var c = 20;
+  function outer(b) {
+    function inner() {
+      console.log(a, b, c);
+    }
+    let a = 10;
+    return inner;
+  }
+  return outer;
 }
 
-let a=10;
-
-return inner;
-
-}
-
-return outer;
-
-}
-
-var close =outermost()("Hello");
-
+var close = outermost()("Hello");
 close();
 ```
 
-Output:
+**Output:** `10 "Hello" 20`
 
-10 “Hello” 20
+Now the inner function forms a closure with both `outer` and `outermost`, and has access to both environments.
 
-So now inner function forms closure with outer and outermost function as well and has access to both environments.
-
-**Case 4: If we have defined a variable outside the closure with conflicted name**
+#### Case 4: a variable with a conflicting name is defined outside
 
 ```js
-function outermost(){
-
-var c=20;
-
-function outer(b){
-
-function inner(){
-
-console.log(a, b, c);
-
+function outermost() {
+  var c = 20;
+  function outer(b) {
+    function inner() {
+      console.log(a, b, c);
+    }
+    let a = 10;
+    return inner;
+  }
+  return outer;
 }
 
-let a=10;
-
-return inner;
-
-}
-
-return outer;
-
-}
-
-let a=100;
-
-var close =outermost()("Hello");
-
+let a = 100;
+var close = outermost()("Hello");
 close();
 ```
 
-Output:
+**Output:** `10 "Hello" 20`
 
-10 “Hello” 20
+Since `inner` forms a closure with `outer` and `outermost`, it finds `a` in its nearest parent scope (`outer`) first. **So defining a global variable with the same name does not have any impact on the closure.**
 
-Since inner function forms closure with outer and outermost so it will have access to variable defined in its parent scope(outer and outermost) **So defining variable with same name does have any impact on closure**
-
-**Case 5: if let a=10 is not present in outer()**
+#### Case 5: `let a = 10` is not present in outer()
 
 ```js
-function outermost(){
-
-var c=20;
-
-function outer(b){
-
-function inner(){
-
-console.log(a, b, c);
-
+function outermost() {
+  var c = 20;
+  function outer(b) {
+    function inner() {
+      console.log(a, b, c);
+    }
+    return inner;
+  }
+  return outer;
 }
 
-return inner;
-
-}
-
-return outer;
-
-}
-
-let a=100;
-
-var close =outermost()("Hello");
-
+let a = 100;
+var close = outermost()("Hello");
 close();
 ```
 
-Output:
+**Output:** `100 "Hello" 20`
 
-### 100** “Hello” **20
+When a function doesn't find `a` in its own lexical environment, it searches its parent, then the parent's parent, all the way up to the global scope. Here it finds `a = 100` in the global scope. If `a` is not present in the global scope either, it throws **ReferenceError: a is not defined**.
 
-Because when a function doesn’t find a in its lexical environment then it will search in its parent and if not find in parent then it will go deeper in its parent hierarchy till global scope. If a is not present in global scope then it will throw **ReferenceError: a is not defined**
-
-## Closure for Data hiding and encapsulation
+### Closures for data hiding and encapsulation
 
 ```js
-var counter =0;
+var counter = 0;
 
 function incrementCounter() {
-
-counter++;
-
+  counter++;
 }
 ```
 
-So in this case anyone(any other function ) can have access to a variable counter and can manipulate the data.
+In this case, anyone (any other function) can access the variable `counter` and change it.
 
-So good way to implement data hiding is
+So a good way to implement data hiding is:
 
 ```js
 function counter() {
-
-var count = 0;
-
-return function incrementCounter() {
-
-count++;
-
-console.log(count);
-
-}
-
+  var count = 0;
+  return function incrementCounter() {
+    count++;
+    console.log(count);
+  };
 }
 
 var counter1 = counter();
-
 counter1();
-
 counter1();
 ```
 
-Output:
+**Output:**
 
+```
 1
-
 2
+```
 
-Now we can increment the counter but can’t change the value of count according except increment the value of count.
+Now we can increment the counter, but we can't change `count` in any other way — there is no direct access to it.
 
-**_Case: what if we have store closure in 2 different variable and then call it_**
+```js
+console.log(counter1.count); // undefined
+// console.log(count);       // ReferenceError: count is not defined
+```
+
+**Case: what if we store the closure in 2 different variables and call them?**
 
 ```js
 function counter() {
-
-var count = 0;
-
-return function incrementCounter() {
-
-count++;
-
-console.log(count);
-
-}
-
+  var count = 0;
+  return function incrementCounter() {
+    count++;
+    console.log(count);
+  };
 }
 
 var counter1 = counter();
-
 counter1();
-
 counter1();
 
 var counter2 = counter();
-
 counter2();
 ```
 
-Output:
+**Output:**
 
+```
 1
-
 2
-
 1
+```
 
-In that case it will create a new copy for the counter2.
+Each call to `counter()` creates a **new** `count`, so `counter2` has its own separate copy.
 
-### Scalability
+#### Scalability
 
-But the above code is not **scalable. To make it** scalable we can add other functions like decrement.
+The above code is not **scalable**. To make it scalable, we can add other functions like decrement. One way is a constructor function:
 
 ```js
 function Counter() {
+  var count = 0;
 
-var count = 0;
+  this.incrementCounter = function () {
+    count++;
+    console.log(count);
+  };
 
-this.incrementCounter= function () {
-
-count++;
-
-console.log(count);
-
-}
-
-this.decrementCounter= function () {
-
-count--;
-
-console.log(count);
-
-}
-
+  this.decrementCounter = function () {
+    count--;
+    console.log(count);
+  };
 }
 
 var counter1 = new Counter();
-
-counter1.incrementCounter();
+counter1.incrementCounter(); // 1
+counter1.incrementCounter(); // 2
+counter1.decrementCounter(); // 1
+console.log(counter1.count); // undefined — still private
 ```
 
-Above is the constructor function and counter1 will give access to both constructors.
+Above is a constructor function, and `counter1` gives access to both **methods**, which share the same private `count`.
+
+The same thing with a plain function returning an object (module pattern):
+
+```js
+function createCounter() {
+  let count = 0;
+  return {
+    increment: () => ++count,
+    decrement: () => --count,
+    get value() { return count; }
+  };
+}
+
+const c = createCounter();
+c.increment();
+c.increment();
+c.decrement();
+console.log(c.value); // 1
+```
+
+### Practical uses of closures
+
+#### once — run a function only once
+
+```js
+function once(fn) {
+  let called = false;
+  let result;
+  return function (...args) {
+    if (!called) {
+      called = true;
+      result = fn.apply(this, args);
+    }
+    return result;
+  };
+}
+
+const init = once(() => {
+  console.log('Initialized');
+  return 42;
+});
+
+console.log(init()); // "Initialized", then 42
+console.log(init()); // 42 — the function body does not run again
+```
+
+#### memoize — cache results
+
+```js
+function memoize(fn) {
+  const cache = {};
+  return function (n) {
+    if (n in cache) {
+      console.log('from cache');
+      return cache[n];
+    }
+    return (cache[n] = fn(n));
+  };
+}
+
+const square = memoize(n => n * n);
+console.log(square(4)); // 16
+console.log(square(4)); // "from cache", then 16
+```
+
+#### Function factory
+
+```js
+function multiplyBy(x) {
+  return function (y) {
+    return x * y;
+  };
+}
+
+const double = multiplyBy(2);
+const triple = multiplyBy(3);
+console.log(double(5), triple(5)); // 10 15
+```
+
+#### Module pattern (IIFE)
+
+```js
+const bank = (function () {
+  let balance = 0;                  // private
+  function log(msg) { console.log(msg); } // private helper
+
+  return {
+    deposit(amount) {
+      balance += amount;
+      log(`Deposited ${amount}`);
+    },
+    getBalance() {
+      return balance;
+    }
+  };
+})();
+
+bank.deposit(500);             // "Deposited 500"
+console.log(bank.getBalance()); // 500
+console.log(bank.balance);      // undefined
+```
 
 ### Disadvantages
 
--   Over consumption of memory because every time a closure forms
--   Those Closed over variables are not garbage collected variables till the program expires.
--   If not handled properly, it can lead to memory leak.
+-   **Over-consumption of memory**, because every time a closure forms, its variables are kept in memory.
+-   **Closed-over variables are not garbage collected** as long as the closure (the inner function) is still reachable.
+-   **If not handled properly, it can lead to memory leaks** (e.g. event listeners or timers holding closures that are never removed).
 
-**garbage collection** (GC) is a form of automatic memory management. The garbage collector, or just collector, attempts to reclaim garbage, or memory occupied by objects that are no longer in use by the program.
+**Garbage collection** (GC) is a form of automatic memory management. The garbage collector attempts to reclaim memory occupied by objects that are no longer in use by the program.
 
-## Relation between garbage collector and closures
+### Relation between garbage collection and closures
 
 ```js
-function a(){
-
-var x=0, z=10;
-
-return function b(){
-
-console.log(x);
-
+function a() {
+  var x = 0, z = 10;
+  return function b() {
+    console.log(x);
+  };
 }
 
-}
-
-var y=a();
-```
+var y = a();
 // .....
-
-```js
 y();
 ```
 
-b() forms closure with a(). x could be garbage collected but due to closure it doesn’t free up. So x memory cannot be free until the program dies.
+`b()` forms a closure with `a()`. Normally `x` could be garbage collected after `a()` finishes, but due to the closure it is not freed. So the memory for `x` cannot be freed **as long as `y` is reachable**.
 
-But modern browser smart garbage collection as it can free memory of z.
+But modern browsers (e.g. V8 in Chrome) have smart garbage collection: since `z` is **not used** by `b`, its memory can be freed.
+
+To release the closure, remove the reference:
+
+```js
+y = null; // now b and x can be garbage collected
+```
+
+**Memory leak example**
+
+```js
+function attach() {
+  const bigData = new Array(1_000_000).fill('*');
+  document.getElementById('btn').addEventListener('click', function handler() {
+    console.log(bigData.length); // closure keeps bigData alive
+  });
+}
+// Fix: remove the listener when it is no longer needed
+// button.removeEventListener('click', handler);
+```
+
+### Closure interview questions
+
+```js
+// Q1: What is the output?
+function makeCounter() {
+  let count = 0;
+  return () => ++count;
+}
+const a1 = makeCounter();
+const b1 = makeCounter();
+console.log(a1(), a1(), b1()); // 1 2 1 — separate closures
+```
+
+```js
+// Q2: What is the output?
+var fns = [];
+for (var i = 0; i < 3; i++) {
+  fns.push(() => i);
+}
+console.log(fns.map(f => f())); // [3, 3, 3] — all share one i (use let to get [0, 1, 2])
+```
+
+```js
+// Q3: What is the output?
+let x = 1;
+const getX = () => x;
+x = 2;
+console.log(getX()); // 2 — closures read the current value, not a snapshot
+```
+
+```js
+// Q4: Implement a function that adds, sum(1)(2)(3)() → 6
+function sum(a) {
+  return function (b) {
+    if (b === undefined) return a;
+    return sum(a + b);
+  };
+}
+console.log(sum(1)(2)(3)()); // 6
+```
