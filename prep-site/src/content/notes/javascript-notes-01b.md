@@ -937,22 +937,12 @@ and so is foo.\`
 
 The most basic statement is a block statement that is used to group statements. The block is delimited by a pair of curly brackets:
 
+```js
 {
-
-```js
-statement_1;
-
-statement_2;
-```
-.
-
-.
-
-.
-
-```js
-statement_n;
-
+  statement_1;
+  statement_2;
+  // ...
+  statement_n;
 }
 ```
 ### Conditional statements
