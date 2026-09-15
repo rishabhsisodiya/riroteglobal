@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 14
+order: 13
 description: "React — prop drilling, createContext, Provider, useContext, contextType and Consumer, updating context, multiple contexts, performance pitfalls, and when to use context."
 ---
 ### What is context?

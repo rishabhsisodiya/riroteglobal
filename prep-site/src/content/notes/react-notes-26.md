@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 26
+order: 25
 description: "React — using Web Components (custom elements) in React, React 19 custom element support, and rendering React inside a Web Component."
 ---
 ### React and Web Components

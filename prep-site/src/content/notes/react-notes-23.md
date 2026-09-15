@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 24
+order: 23
 description: "React — what StrictMode checks, why components and effects run twice in development, and how to fix the bugs it reveals."
 ---
 ### What is StrictMode?

@@ -1,864 +1,579 @@
 ---
-title: "Pure Redux (read for understanding Redux only)"
+title: "Redux (core concepts)"
 part: "React Notes"
 track: "react"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 30
-description: "React — Pure Redux (read for understanding Redux only)."
+order: 26
+description: "Redux — what it is, three core concepts and principles, actions, reducers, store, combineReducers, middleware, redux-thunk, and Redux Toolkit."
 ---
-## Three Core Concept
+### What is Redux?
 
-To understand the concepts let take an example of Cake Shop
+**Redux is a predictable state container for JavaScript apps.** Let's break that definition down:
+
+-   **Redux is for JavaScript applications:** Redux is not tied to React. You can use it with Angular, Vue or even vanilla JavaScript. It's a library for JavaScript applications.
+-   **Redux is a state container:** Redux stores the state of your application.
+-   **Redux is predictable:** all state transitions are explicit and can be tracked, so changes to your application's state become predictable.
+
+**React-Redux is the official Redux UI binding library for React** (see the next chapter).
+
+### Why use Redux?
+
+-   **Predictability of outcome** — one store, one way to change it.
+-   **Maintainability** — a strict structure makes large apps easier to maintain.
+-   **Organization:** Redux is stricter about how code should be organized, which makes code more consistent and easier for a team to work with.
+-   **Server rendering:** useful especially for the initial render, giving a better user experience and SEO. Just pass the store created on the server to the client side.
+-   **Developer tools:** developers can track everything happening in the app in real time, from actions to state changes — including **time-travel debugging**.
+-   **Community and ecosystem:** a big plus when learning or using any library.
+-   **Ease of testing:** Redux code is mostly small, pure, isolated functions, which are easy to test.
+
+**Do you need Redux?** Not always. For local UI state use `useState`/`useReducer`; for data from a server use TanStack Query or RTK Query; for a few shared values use Context. Redux shines when a lot of **client-side state is shared across many components** and changes in complex ways.
+
+<div class="callout callout--important" data-label="Modern Redux">
+
+This chapter explains **"pure" Redux** (`createStore`, hand-written action types and reducers) to show how Redux works underneath. In real projects, use **Redux Toolkit (RTK)** — the official, recommended way to write Redux. `createStore` is deprecated in favour of `configureStore`. The Redux Toolkit version of everything below is at the end of this chapter.
+
+</div>
+
+### Three core concepts
+
+To understand the concepts, let's take the example of a **cake shop**.
 
 ![](/notes-img/react-notes/img-023.webp)
 
-| Cake Shop Scenario | Redux | Purpose |
+| Cake shop scenario | Redux | Purpose |
 | --- | --- | --- |
-| Shop | Store | Hold the state of your application. |
-| Intention to Buy_Cake | Action | Describe what happened |
-| Shopkeeper | Reducer | Ties the store and action together. |
+| Shop | **Store** | Holds the state of your application |
+| Intention to buy a cake | **Action** | Describes what happened |
+| Shopkeeper | **Reducer** | Ties the store and action together |
 
-1.  A **store** is a giant JavaScript object that holds the state of your application.
-2.  An **action** that describes the changes in the state of the application.
-3.  A **reducer** which carries out the state transition depending on the action.
+1.  A **store** is a big JavaScript object that holds the state of your application.
+2.  An **action** describes a change to the state of the application.
+3.  A **reducer** carries out the state transition depending on the action.
 
-## Three Principles
+### Three principles
 
-1.  The state of your whole application is stored in an object tree within a single store.
-2.  The only way to change the state is to emit or dispatch an action, an object describing what happened.
-3.  To specify how the state tree is transformed by actions, you write a pure reducer. Reducer is the function which takes state and action as parameters and on the basis of action.type it returns a state.
+1.  **Single source of truth:** the state of your whole application is stored in an object tree within a **single store**.
+2.  **State is read-only:** the only way to change the state is to **dispatch an action**, an object describing what happened.
+3.  **Changes are made with pure functions:** to specify how the state tree is transformed by actions, you write a **pure reducer** — a function that takes state and action as parameters and, based on `action.type`, returns a **new** state.
 
 ![](/notes-img/react-notes/img-024.webp)
 
+**Data flow is one-way:** `dispatch(action)` → `reducer(state, action)` → new state → UI updates.
+
 ### Action
 
-It is the only way your application can interact with the store. It carries some information from your app to the redux store. It is plain JavaScript objects which have a 'type' property that indicates the type of action being performed and the 'type' property is typically defined as string constants.
+An action is **the only way your application can interact with the store**. It carries information from your app to the Redux store. Actions are plain JavaScript objects with a **`type`** property that describes the action being performed. The `type` is typically defined as a **string constant**.
 
-Function returning object which has ‘type’ property.
+An **action creator** is a function that returns an action object:
 
 ```jsx
-const BUY_CAKE="BUY_CAKE"
+const BUY_CAKE = "BUY_CAKE";
 
-function buyCake(){
-
-return {
-
-type: BUY_CAKE,
-
-info: 'First redux cake'
-
-}
-
+function buyCake() {
+  return {
+    type: BUY_CAKE,
+    info: 'First redux cake'
+  };
 }
 ```
 
-### reducer
+By convention, extra data goes in a **`payload`** property: `{ type: 'BUY_CAKE', payload: { quantity: 2 } }`.
 
-Specify how the app's state changes in response to actions sent to the store Function that accepts state and action and returns the next state of the application.
+### Reducer
+
+A reducer specifies **how the app's state changes in response to actions** sent to the store. It's a function that accepts the state and an action, and returns the **next** state:
 
 ```jsx
 (previousState, action) => newState
 ```
 
 ```jsx
-const BUY_CAKE="BUY_CAKE"
+const BUY_CAKE = "BUY_CAKE";
 
-function buyCake(){
-
-return {
-
-type: BUY_CAKE,
-
-info: 'First redux cake'
-
+function buyCake() {
+  return {
+    type: BUY_CAKE,
+    info: 'First redux cake'
+  };
 }
 
-}
-```
 // reducers
+const initialState = {
+  numOfCakes: 10
+};
 
-**const intialState ={**
-
-### numOfCakes:10
-
-**}**
-
-```jsx
-**const reducer = (state=intialState, action)=>{**
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1
+      };
+    default:
+      return state;
+  }
+};
 ```
-**switch (action.type) {**
 
-**case BUY_CAKE:return {**
+**A reducer must be pure:**
 
-**...state,**
+-   Never **mutate** the state — always return a new object (`...state`).
+-   No side effects (no API calls, no `Math.random()`, no `Date.now()`).
+-   Always return a state for unknown actions (the `default` case), otherwise the state becomes `undefined`.
 
-### numOfCakes:state.numOfCakes-1
+### Redux store
 
-**}**
+There is **one store for the entire application**.
 
-**default: return state;**
-
-**}**
-
-**}**
-
-### Redux Store
-
-One store for the entire application.
-
-Responsibilities:-
+**Responsibilities:**
 
 -   Holds the application state
--   Allows access to state via getState()
--   Allow state to be updated via dispatch(action)
--   Register listeners via subscribe(listener)
--   Handles unregistering of listener via the function returned by subscribe(listener)
+-   Allows access to the state via **`getState()`**
+-   Allows the state to be updated via **`dispatch(action)`**
+-   Registers listeners via **`subscribe(listener)`**
+-   Handles unregistering listeners via the function returned by `subscribe(listener)`
 
-For redux standlone
-
-```jsx
-**const redux = require('redux')**
-```
-**const createStore= redux.createStore;**
+**Standalone Redux (no React):**
 
 ```jsx
-const BUY_CAKE="BUY_CAKE"
+const redux = require('redux');
+const createStore = redux.createStore;
 
-function buyCake(){
+const BUY_CAKE = "BUY_CAKE";
 
-return {
-
-type: BUY_CAKE,
-
-info: 'First redux cake'
-
+function buyCake() {
+  return {
+    type: BUY_CAKE,
+    info: 'First redux cake'
+  };
 }
-
-}
-```
-// reducers
-
-```jsx
-const intialState ={
-```
-numOfCakes:10
-
-```jsx
-}
-
-const reducer = (state=intialState, action)=>{
-
-switch (action.type) {
-```
-case BUY_CAKE:return {
-
-...state,
-
-numOfCakes:state.numOfCakes-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-```
-**// Redux Store**
-
-**const store = createStore(reducer);**
-
-```jsx
-**console.log('Initial State', store.getState());**
-
-**const unsubscribe= store.subscribe( ()=> console.log('Updated state:',store.getState()) )**
-```
-**store.dispatch(buyCake())**
-
-**store.dispatch(buyCake())**
-
-**store.dispatch(buyCake())**
-
-**unsubscribe();**
-
-Output:
-
-Initial State { numOfCakes:10}
-
-Updated State { numOfCakes:9}
-
-Updated State { numOfCakes:8}
-
-Updated State { numOfCakes:7}
-
-### Benefit of using action creator as function (buyCake())
-
-Any changes in action creators will happen in one place. Imagine you want to add new properties or rename properties then you have to change it at every place if you would have used an object in place of function.
-
-## Multiple reducers
-
-### Example: Cakes & ice Creams
-
-### Cake shop
-
-Cakes stored on the shelf
-
-shopkeeper to handle BUY_CAKE from customers.
-
-Sell ice creams!
-
-Ice creams stored in the freezer
-
-New Shopkeeper to handle BUY_ICECREAM from customer
-
-As shopkeeper act as reducer so
-
-### Why do we need multiple reducers?
-
-**Scalability**: One reducer to handle all the action will be difficult so when we split up it will be easier to handle actions.
-
-**Error Handling:** If something goes wrong, It will be easier to catch the error.
-
-Let’s implement the cake and icecream problem
-
-```jsx
-const redux = require('redux')
-
-const createStore= redux.createStore
-
-const BUY_CAKE="BUY_CAKE"
-
-function buyCake(){
-
-return {
-
-type: BUY_CAKE,
-
-info: 'First redux cake'
-
-}
-
-}
-```
-### const BUY_ICECREAM="BUY_ICECREAM"
-
-**function buyIcecream(){**
-
-**return {**
-
-**type: BUY_ICECREAM,**
-
-### info: 'First redux icecream'
-
-**}**
-
-**}**
 
 // reducers
+const initialState = {
+  numOfCakes: 10
+};
 
-```jsx
-const intialState ={
-```
-numOfCakes:10,
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1
+      };
+    default:
+      return state;
+  }
+};
 
-### numOficecreams:20
-
-```jsx
-}
-
-const reducer = (state=intialState, action)=>{
-
-switch (action.type) {
-```
-case BUY_CAKE:return {
-
-...state,
-
-numOfCakes:state.numOfCakes-1
-
-```jsx
-}
-```
-**case BUY_ICECREAM:return {**
-
-**...state,**
-
-### numOficecreams:state.numOficecreams-1
-
-**}**
-
-```jsx
-default: return state;
-
-}
-
-}
-```
 // Redux Store
-
-```jsx
 const store = createStore(reducer);
 
 console.log('Initial State', store.getState());
 
-const unsubscribe= store.subscribe( ()=> console.log('Updated state:',store.getState()) )
-```
-store.dispatch(buyCake())
+const unsubscribe = store.subscribe(() => console.log('Updated state:', store.getState()));
 
-store.dispatch(buyCake())
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyCake());
 
-store.dispatch(buyCake())
-
-**store.dispatch(buyIcecream())**
-
-**store.dispatch(buyIcecream())**
-
-```jsx
 unsubscribe();
 ```
 
-Output:
+**Output:**
 
-Initial State { numOfCakes:10, numOficecreams:20 }
+```
+Initial State { numOfCakes: 10 }
+Updated state: { numOfCakes: 9 }
+Updated state: { numOfCakes: 8 }
+Updated state: { numOfCakes: 7 }
+```
 
-Updated State { numOfCakes:9, numOficecreams:20}
+After `unsubscribe()`, further dispatches still update the store, but the listener no longer logs them.
 
-Updated State { numOfCakes:8, numOficecreams:20}
+#### Benefit of using an action creator function (buyCake())
 
-Updated State { numOfCakes:7, numOficecreams:20}
+Any change to an action happens in **one place**. Imagine you want to add or rename a property — with a function you change it once; if you wrote the action object inline everywhere, you'd have to change every place that dispatches it.
 
-Updated State { numOfCakes:7, numOficecreams:19}
+### Combine reducers
 
-Updated State { numOfCakes:7, numOficecreams:18}
-
-We can use the code like this but to make it more clear and separate the reducers.
-
-## Combine Reducers
+As the app grows, one reducer becomes too big. **`combineReducers`** lets each reducer manage **its own slice** of the state.
 
 ```jsx
-const redux = require('redux')
+const redux = require('redux');
+const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
 
-const createStore= redux.createStore
-```
-### const combineReducers = redux.combineReducers
-
-```jsx
-const BUY_CAKE="BUY_CAKE"
-
-function buyCake(){
-
-return {
-
-type: BUY_CAKE,
-
-info: 'First redux cake'
-
+const BUY_CAKE = "BUY_CAKE";
+function buyCake() {
+  return {
+    type: BUY_CAKE,
+    info: 'First redux cake'
+  };
 }
 
+const BUY_ICECREAM = "BUY_ICECREAM";
+function buyIcecream() {
+  return {
+    type: BUY_ICECREAM,
+    info: 'First redux icecream'
+  };
 }
 
-const BUY_ICECREAM="BUY_ICECREAM"
+const initialCakeState = {
+  numOfCakes: 10
+};
 
-function buyIcecream(){
+const initialIcecreamState = {
+  numOfIcecreams: 20
+};
 
-return {
+const cakeReducer = (state = initialCakeState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1
+      };
+    default:
+      return state;
+  }
+};
 
-type: BUY_ICECREAM,
+const icecreamReducer = (state = initialIcecreamState, action) => {
+  switch (action.type) {
+    case BUY_ICECREAM:
+      return {
+        ...state,
+        numOfIcecreams: state.numOfIcecreams - 1
+      };
+    default:
+      return state;
+  }
+};
 
-info: 'First redux icecream'
-
-}
-
-}
-
-const intialCakeState ={
-```
-numOfCakes:10
-
-```jsx
-}
-
-const intialIcecreamState ={
-```
-numOficecreams:20
-
-```jsx
-}
-
-const cakeReducer = (state=intialCakeState, action)=>{
-
-switch (action.type) {
-```
-case BUY_CAKE:return {
-
-...state,
-
-numOfCakes:state.numOfCakes-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-
-const icecreamReducer = (state=intialIcecreamState, action)=>{
-
-switch (action.type) {
-```
-case BUY_ICECREAM:return {
-
-...state,
-
-numOficecreams:state.numOficecreams-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-```
-**const rootReducer= combineReducers({**
-
-**cake:cakeReducer,**
-
-### icecream:icecreamReducer
-
-**})**
+const rootReducer = combineReducers({
+  cake: cakeReducer,
+  icecream: icecreamReducer
+});
 
 // Redux Store
-
-```jsx
-const store = createStore(**rootReducer**);
+const store = createStore(rootReducer);
 
 console.log('Initial State', store.getState());
 
-const unsubscribe= store.subscribe( ()=> console.log('Updated state:',store.getState()) )
-```
-store.dispatch(buyCake())
+const unsubscribe = store.subscribe(() => console.log('Updated state:', store.getState()));
 
-store.dispatch(buyCake())
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyIcecream());
+store.dispatch(buyIcecream());
 
-store.dispatch(buyCake())
-
-store.dispatch(buyIcecream())
-
-store.dispatch(buyIcecream())
-
-```jsx
 unsubscribe();
 ```
 
-Output:
+**Output:**
 
-Initial State { cake: { numOfCakes: 10 }, icecream: { numOficecreams: 20 } }
+```
+Initial State { cake: { numOfCakes: 10 }, icecream: { numOfIcecreams: 20 } }
+Updated state: { cake: { numOfCakes: 9 }, icecream: { numOfIcecreams: 20 } }
+Updated state: { cake: { numOfCakes: 8 }, icecream: { numOfIcecreams: 20 } }
+Updated state: { cake: { numOfCakes: 7 }, icecream: { numOfIcecreams: 20 } }
+Updated state: { cake: { numOfCakes: 7 }, icecream: { numOfIcecreams: 19 } }
+Updated state: { cake: { numOfCakes: 7 }, icecream: { numOfIcecreams: 18 } }
+```
 
-Updated state: { cake: { numOfCakes: 9 }, icecream: { numOficecreams: 20 } }
+**Note:** every dispatched action is sent to **every** reducer. Each reducer handles the types it knows and returns its state unchanged for the rest — that's why the `default` case matters. (It also means one action can update several slices at once.)
 
-Updated state: { cake: { numOfCakes: 8 }, icecream: { numOficecreams: 20 } }
+### Why do we need multiple reducers?
 
-Updated state: { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 20 } }
+Each reducer stays small and focused on one feature (cakes, ice creams, users, cart). That's easier to read, test and work on as a team.
 
-Updated state: { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 19 } }
+### Middleware
 
-Updated state: { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 18 } }
+-   **Middleware is the suggested way to extend Redux with custom functionality.**
+-   It provides a **third-party extension point between dispatching an action and the moment it reaches the reducer**.
+-   Use middleware for **logging, crash reporting, and performing asynchronous tasks**.
 
-## Middleware
+#### redux-logger
 
--   A suggested way to extend redux with custom functionality.
--   It provides a third-party extension party between dispatching an action and the moment it reaches the reducer.
--   Use middleware for logging, crash reporting and performing asynchronous tasks, etc.
-
-### redux-logger
-
+```bash
 npm install redux-logger
-
-```jsx
-const redux = require('redux')
-
-const reduxLogger= require('redux-logger')
-
-const createStore= redux.createStore
-
-const combineReducers = redux.combineReducers
-```
-### const applyMiddleware= redux.applyMiddleware
-
-**const logger= reduxLogger.createLogger()**
-
-```jsx
-const BUY_CAKE="BUY_CAKE"
-
-function buyCake(){
-
-return {
-
-type: BUY_CAKE,
-
-info: 'First redux cake'
-
-}
-
-}
-
-const BUY_ICECREAM="BUY_ICECREAM"
-
-function buyIcecream(){
-
-return {
-
-type: BUY_ICECREAM,
-
-info: 'First redux icecream'
-
-}
-
-}
-
-const intialCakeState ={
-```
-numOfCakes:10
-
-```jsx
-}
-
-const intialIcecreamState ={
-```
-numOficecreams:20
-
-```jsx
-}
-
-const cakeReducer = (state=intialCakeState, action)=>{
-
-switch (action.type) {
-```
-case BUY_CAKE:return {
-
-...state,
-
-numOfCakes:state.numOfCakes-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-
-const icecreamReducer = (state=intialIcecreamState, action)=>{
-
-switch (action.type) {
-```
-case BUY_ICECREAM:return {
-
-...state,
-
-numOficecreams:state.numOficecreams-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-
-const rootReducer= combineReducers({
-```
-cake:cakeReducer,
-
-icecream:icecreamReducer
-
-})
-
-// Redux Store
-
-```jsx
-const store = createStore(rootReducer,**applyMiddleware(logger)**);
-
-console.log('Initial State', store.getState());
-
-const unsubscribe= store.subscribe( ()=> {})
-```
-store.dispatch(buyCake())
-
-store.dispatch(buyCake())
-
-store.dispatch(buyCake())
-
-store.dispatch(buyIcecream())
-
-store.dispatch(buyIcecream())
-
-```jsx
-unsubscribe();
 ```
 
-Output:
-
-Initial State { cake: { numOfCakes: 10 }, icecream: { numOficecreams: 20 } }
-
 ```jsx
-%c **action** %cBUY_CAKE %c@ 13:05:06.023 color: gray; font-weight: lighter; color: inherit; color: gray; font-weight: lighter;
+const redux = require('redux');
+const reduxLogger = require('redux-logger');
+
+const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
+const applyMiddleware = redux.applyMiddleware;
+const logger = reduxLogger.createLogger();
+
+// ...reducers as above...
+
+const store = createStore(rootReducer, applyMiddleware(logger));
+
+store.dispatch(buyCake());
 ```
-%c **prev state** color: #9E9E9E; font-weight: bold { cake: { numOfCakes: 10 }, icecream: { numOficecreams: 20 } }
 
-%c **action** color: #03A9F4; font-weight: bold { type: 'BUY_CAKE', info: 'First redux cake' }
+**Output (from the logger):**
 
-%c **next state** color: #4CAF50; font-weight: bold { cake: { numOfCakes: 9 }, icecream: { numOficecreams: 20 } }
-
-```jsx
-%c action %cBUY_CAKE %c@ 13:05:06.027 color: gray; font-weight: lighter; color: inherit; color: gray; font-weight: lighter;
 ```
-%c prev state color: #9E9E9E; font-weight: bold { cake: { numOfCakes: 9 }, icecream: { numOficecreams: 20 } }
-
-%c action color: #03A9F4; font-weight: bold { type: 'BUY_CAKE', info: 'First redux cake' }
-
-%c next state color: #4CAF50; font-weight: bold { cake: { numOfCakes: 8 }, icecream: { numOficecreams: 20 } }
-
-```jsx
-%c action %cBUY_CAKE %c@ 13:05:06.028 color: gray; font-weight: lighter; color: inherit; color: gray; font-weight: lighter;
+action BUY_CAKE @ 10:45:12.345
+  prev state { cake: { numOfCakes: 10 }, icecream: { numOfIcecreams: 20 } }
+  action     { type: 'BUY_CAKE', info: 'First redux cake' }
+  next state { cake: { numOfCakes: 9 }, icecream: { numOfIcecreams: 20 } }
 ```
-%c prev state color: #9E9E9E; font-weight: bold { cake: { numOfCakes: 8 }, icecream: { numOficecreams: 20 } }
 
-%c action color: #03A9F4; font-weight: bold { type: 'BUY_CAKE', info: 'First redux cake' }
+Now you can remove the manual `store.subscribe(...)` logging.
 
-%c next state color: #4CAF50; font-weight: bold { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 20 } }
+### Redux-thunk middleware — handling async actions
 
-```jsx
-%c action %cBUY_ICECREAM %c@ 13:05:06.029 color: gray; font-weight: lighter; color: inherit; color: gray; font-weight: lighter;
-```
-%c prev state color: #9E9E9E; font-weight: bold { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 20 } }
+#### Synchronous actions
 
-%c action color: #03A9F4; font-weight: bold { type: 'BUY_ICECREAM', info: 'First redux icecream' }
+-   As soon as an action is dispatched, the state is **immediately** updated.
+-   If you dispatch the `BUY_CAKE` action, `numOfCakes` is decremented by 1 right away.
+-   The same for the `BUY_ICECREAM` action.
 
-%c next state color: #4CAF50; font-weight: bold { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 19 } }
+#### Async actions
 
-```jsx
-%c action %cBUY_ICECREAM %c@ 13:05:06.029 color: gray; font-weight: lighter; color: inherit; color: gray; font-weight: lighter;
-```
-%c prev state color: #9E9E9E; font-weight: bold { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 19 } }
+-   Asynchronous API calls fetch data from an endpoint, and that data is used in your application.
+-   The state can't update immediately — first we show a **loading** state, then either the **data** or an **error**.
 
-%c action color: #03A9F4; font-weight: bold { type: 'BUY_ICECREAM', info: 'First redux icecream' }
+**Redux-thunk:** middleware that lets an **action creator return a function** instead of an action object. That function receives `dispatch` (and `getState`), so it can do async work and dispatch several actions along the way.
 
-%c next state color: #4CAF50; font-weight: bold { cake: { numOfCakes: 7 }, icecream: { numOficecreams: 18 } }
+#### Install axios and redux-thunk
 
-CSS here for the browser you can check it in the browser also by creating html and include index.js script but import require.js also as it will need node or any other runtime environment.
-
-So what redux logger will do is to print following in below order
-
-1.  action type e.g BUY_CAKE
-2.  previous state
-3.  action creator e.g { type: 'BUY_CAKE', info: 'First redux cake' }
-4.  next state
-
-## Redux-thunk middleware- handle Async Actions
-
-### Synchronous Actions
-
--   As soon as an action was dispatched, the state was immediately updated.
--   If you dispatch the BUY_CAKE action, the num0fCakes was right away decremented by 1.
--   Same with BUY_ICECREAM action as well.
-
-### Async Actions
-
--   Asynchronous API calls to fetch data from an endpoint and use that data in your application.
-
-**Redux-thunk:** It is middleware we are applying to redux to define action creators and handle Async actions.
-
-### Install axios, redux-thunk
-
+```bash
 npm install axios redux-thunk
+```
 
-### asyncActions.js
+#### asyncActions.js
 
 ```jsx
 const redux = require("redux");
-
-**const thunkMiddleware = require("redux-thunk").default;**
-
+const thunkMiddleware = require("redux-thunk").default;
 const axios = require("axios");
 
 const createStore = redux.createStore;
-
 const applyMiddleware = redux.applyMiddleware;
 
 const initialState = {
-
-loading: false,
-
-users: [],
-
-error: "",
-
+  loading: false,
+  users: [],
+  error: "",
 };
 
 const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
-
 const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
-
 const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
 
 const fetchUsersRequest = () => {
-
-return {
-
-type: FETCH_USERS_REQUEST,
-
-};
-
+  return {
+    type: FETCH_USERS_REQUEST,
+  };
 };
 
 const fetchUsersSuccess = (users) => {
-
-return {
-
-type: FETCH_USERS_SUCCESS,
-
-payload: users,
-
-};
-
+  return {
+    type: FETCH_USERS_SUCCESS,
+    payload: users,
+  };
 };
 
 const fetchUsersFailure = (error) => {
-
-return {
-
-type: FETCH_USERS_FAILURE,
-
-payload: error,
-
-};
-
+  return {
+    type: FETCH_USERS_FAILURE,
+    payload: error,
+  };
 };
 
 const reducer = (state = initialState, action) => {
-
-switch (action.type) {
-```
-case FETCH_USERS_REQUEST:
-
-```jsx
-return {
-```
-...state,
-
-```jsx
-loading: true,
-
-};
-```
-case FETCH_USERS_SUCCESS:
-
-```jsx
-return {
-```
-...state,
-
-loading:false,
-
-```jsx
-users: action.payload,
-
-error: "",
-
-};
-```
-case FETCH_USERS_REQUEST:
-
-```jsx
-return {
-```
-...state,
-
-loading:false,
-
-```jsx
-users: [],
-
-error: action.payload,
-
+  switch (action.type) {
+    case FETCH_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload,
+        error: "",
+      };
+    case FETCH_USERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        users: [],
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
-}
-
-};
-
+// An action creator that returns a FUNCTION instead of an object — this is a "thunk"
 const fetchUsers = () => {
-
-return function (dispatch) {
-```
-**dispatch(fetchUsersRequest());**
-
-axios
-
-.get("https://jsonplaceholder.typicode.com/users")
-
-```jsx
-.then((response) => {
-```
-// response.data is the array of users
-
-```jsx
-const users = response.data.map((user) => user.id);
-```
-**dispatch(fetchUsersSuccess(users));**
-
-})
-
-```jsx
-.catch((error) => {
-```
-// error.message is the error description
-
-**dispatch(fetchUsersSuccess(error.message));**
-
-```jsx
-});
-
+  return function (dispatch) {
+    dispatch(fetchUsersRequest());
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        // response.data is the array of users
+        const users = response.data.map((user) => user.id);
+        dispatch(fetchUsersSuccess(users));
+      })
+      .catch((error) => {
+        // error.message is the error description
+        dispatch(fetchUsersFailure(error.message));
+      });
+  };
 };
 
-};
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
-const store = **createStore(reducer, applyMiddleware(thunkMiddleware));**
-
-const unsubscribe = store.subscribe(() => {
-
-console.log(store.getState());
-
-});
-
-store.dispatch(**fetchUsers()**);
+store.subscribe(() => console.log(store.getState()));
+store.dispatch(fetchUsers());
 ```
 
-Output:
+**Output:**
 
-{ loading: true, users: \[\], error: '' }
+```
+{ loading: true, users: [], error: '' }
+{ loading: false, users: [1, 2, 3, …, 10], error: '' }
+```
 
-{ loading: false,
+**Note:** the original notes had two `case FETCH_USERS_REQUEST` branches (the second should be `FETCH_USERS_FAILURE`) and no `default` case. Both are fixed above — in a `switch`, the second duplicate case is unreachable, so errors would never update the state, and a missing `default` makes the state `undefined` for unknown actions.
+
+#### Advantages of thunk
+
+-   Keeps components simple — they just `dispatch(fetchUsers())`.
+-   All async logic lives with the Redux code, and can be tested separately.
+-   A thunk can read the current state with `getState()` and decide whether to fetch at all.
+
+### Redux Toolkit (the modern way)
+
+**Redux Toolkit (RTK)** is the official, recommended way to write Redux. It removes most of the boilerplate above: no action type constants, no hand-written action creators, no manual spreads, and no manual middleware setup.
+
+```bash
+npm install @reduxjs/toolkit
+```
+
+**The whole cake example with RTK:**
 
 ```jsx
-users: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
-error: '' }
+const cakeSlice = createSlice({
+  name: 'cake',
+  initialState: { numOfCakes: 10 },
+  reducers: {
+    buyCake: (state) => {
+      state.numOfCakes--;            // "mutating" code — Immer turns it into an immutable update
+    },
+    restock: (state, action) => {
+      state.numOfCakes += action.payload;
+    }
+  }
+});
+
+export const { buyCake, restock } = cakeSlice.actions;   // action creators are generated
+
+const store = configureStore({
+  reducer: {
+    cake: cakeSlice.reducer,
+    // icecream: icecreamSlice.reducer
+  }
+});
+// thunk middleware and Redux DevTools are set up automatically
+
+store.subscribe(() => console.log(store.getState()));
+store.dispatch(buyCake());        // { cake: { numOfCakes: 9 } }
+store.dispatch(restock(5));       // { cake: { numOfCakes: 14 } }
 ```
 
-### Advantages
+**Async with `createAsyncThunk`:**
 
--   **thunk-middleware allows the user to use action creator to return a function instead of action**.
--   Function now perform side effects like async operations
--   now function can dispatch regular actions which will be handle by reducers
+```jsx
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+export const fetchUsers = createAsyncThunk('users/fetch', async () => {
+  const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+  return response.data.map(user => user.id);
+});
+
+const userSlice = createSlice({
+  name: 'users',
+  initialState: { loading: false, users: [], error: '' },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.pending, (state) => { state.loading = true; })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+        state.error = '';
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.users = [];
+        state.error = action.error.message;
+      });
+  }
+});
+```
+
+`createAsyncThunk` generates the three action types (`pending`, `fulfilled`, `rejected`) for you.
+
+| | Pure Redux | Redux Toolkit |
+| --- | --- | --- |
+| Store | `createStore(reducer, applyMiddleware(...))` (deprecated) | `configureStore({ reducer })` |
+| Action types | string constants you write | generated from slice names |
+| Action creators | written by hand | generated (`slice.actions`) |
+| Reducers | `switch` + spread operators | `createSlice` + Immer ("mutating" syntax) |
+| Async | thunk written by hand | `createAsyncThunk` |
+| DevTools | set up manually | on by default |
+| Immutability mistakes | possible | caught by a development check |
+
+### Interview questions
+
+```jsx
+// Q1: Why doesn't the UI update after this reducer runs?
+case ADD_ITEM:
+  state.items.push(action.payload);
+  return state;
+// Answer: the state is mutated and the same object is returned. Redux (and React-Redux)
+// compare by reference, so nothing looks changed. Return { ...state, items: [...state.items, action.payload] }.
+```
+
+```jsx
+// Q2: What happens if a reducer has no default case?
+// Answer: for any action it doesn't handle (including Redux's own init action), it returns
+// undefined, and Redux throws "Reducer returned undefined during initialization".
+```
+
+```jsx
+// Q3: You dispatch BUY_CAKE. Which reducers run?
+// Answer: all of them. combineReducers passes every action to every slice reducer;
+// each one returns its state unchanged unless it handles that type.
+```
+
+```jsx
+// Q4: What does redux-thunk actually allow?
+// Answer: dispatching a function instead of a plain object. The middleware calls that
+// function with (dispatch, getState) so it can run async work and dispatch real actions later.
+```
+
+```jsx
+// Q5: Is this mutation safe in Redux Toolkit?
+reducers: { buyCake: (state) => { state.numOfCakes--; } }
+// Answer: yes. createSlice wraps reducers with Immer, which records the "mutations" on a draft
+// and produces a new immutable state. Mutating like this OUTSIDE createSlice is still wrong.
+```

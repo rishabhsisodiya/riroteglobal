@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 13
+order: 12
 description: "React — refs with createRef and useRef, callback refs, refs to class components, forwarding refs, useImperativeHandle, and React 19 ref as a prop."
 ---
 ### What are refs?

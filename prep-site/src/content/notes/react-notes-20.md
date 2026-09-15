@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 20
+order: 19
 description: "React — fetching and posting data with axios and fetch, loading and error states, race conditions, cancellation, and data-fetching libraries."
 ---
 ### Fetching data in React

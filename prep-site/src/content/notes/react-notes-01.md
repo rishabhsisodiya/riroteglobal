@@ -3,10 +3,10 @@ title: "React 18 updates"
 part: "React Notes"
 track: "react"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 1
+order: 28
 description: "React — React 18 updates."
 ---
 1.  React 18 introduces a new root API which provides better ergonomics for managing roots. The new root API also enables the new concurrent renderer, which allows you to opt-into concurrent features.
@@ -278,7 +278,7 @@ For optimizing the user experience and avoiding the user having to sit on a blan
 
 Server rendering is a technique where you render the HTML output of your React components on the server and send HTML from the server. This lets the user view some UI while JS bundles are loading and before the app becomes interactive.
 
-### ![](/notes-img/react-notes/img-002.webp)
+![](/notes-img/react-notes/img-002.webp)
 
 ### Updates to Server Rendering APIs
 
@@ -297,3 +297,41 @@ Using this API will now warn:
 -   The following APIs will continue working, but with limited support for Suspense:
 -   **renderToString**: Limited ⚠️ and **renderToStaticMarkup**: Limited ⚠️
 -   Finally, this API will continue to work for rendering e-mails: **renderToStaticNodeStream**
+
+### New hooks in React 18
+
+React 18 also added several hooks:
+
+| Hook | Purpose |
+| --- | --- |
+| `useId` | generate IDs that match between the server and the client (for `htmlFor`, `aria-*`) |
+| `useTransition` | mark updates as non-urgent and read `isPending` |
+| `useDeferredValue` | show a slightly stale value while an expensive render catches up |
+| `useSyncExternalStore` | subscribe to an external store safely with concurrent rendering |
+| `useInsertionEffect` | for CSS-in-JS libraries to inject styles before layout effects |
+
+```jsx
+function Search() {
+  const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);   // the heavy list uses the deferred value
+  const id = useId();
+
+  return (
+    <>
+      <label htmlFor={id}>Search</label>
+      <input id={id} value={query} onChange={e => setQuery(e.target.value)} />
+      <SlowResults query={deferredQuery} />
+    </>
+  );
+}
+```
+
+See the **React Hooks** chapter for details, and the **React 19** chapter for what came next.
+
+### Upgrade checklist
+
+1.  Update the packages: `npm install react@18 react-dom@18`.
+2.  Replace `ReactDOM.render` with `createRoot` (and `hydrate` with `hydrateRoot`).
+3.  Update `@types/react` and `@types/react-dom` if you use TypeScript.
+4.  Check effects that assumed a single mount — Strict Mode now mounts, unmounts and remounts components in development.
+5.  Look for code that relied on updates **not** being batched (rare); use `flushSync` where you truly need a synchronous update.

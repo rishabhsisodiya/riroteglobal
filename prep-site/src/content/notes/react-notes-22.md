@@ -6,7 +6,7 @@ kind: "notes"
 updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 25
+order: 24
 description: "React — legacy createReactClass: default props, initial state and autobinding compared with ES6 classes and function components."
 ---
 **This is legacy knowledge.** Before ES6 classes were widely supported, components were created with `React.createClass`, later moved to the separate **`create-react-class`** package. You may see it in very old codebases. New code should use **function components**.

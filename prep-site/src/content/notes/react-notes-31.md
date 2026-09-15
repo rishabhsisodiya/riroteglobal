@@ -3,1342 +3,638 @@ title: "React-Redux"
 part: "React Notes"
 track: "react"
 kind: "notes"
-updated: "2026-09-02"
+updated: "2026-09-15"
 source: "React JS.docx"
 draft: false
-order: 31
-description: "React — React-Redux."
+order: 27
+description: "React-Redux — Provider, connect with mapStateToProps/mapDispatchToProps, useSelector and useDispatch hooks, multiple reducers, middleware, DevTools, and Redux Toolkit."
 ---
-## Setup Basic Redux App
+**React-Redux** is the official binding library that connects Redux to React components. This chapter builds the cake shop example from the **Redux (core concepts)** chapter into a real React app.
 
-Create a new react project using create-react-app.
+<div class="callout callout--important" data-label="Modern Redux">
 
-Install redux and react-redux
+This chapter shows **classic React-Redux** (`createStore`, `connect`). New apps should use **Redux Toolkit** with the **hooks API** (`useSelector`, `useDispatch`) — see the last section. `connect` still works and appears in most existing codebases, which is why it's covered here.
 
+</div>
+
+### Setup a basic Redux app
+
+Create a new React project (with Vite or `create-react-app`), then install Redux and React-Redux:
+
+```bash
 npm install redux react-redux
+```
 
-create components folder under src and under components folder create **CakeContainer.js**
+Create a `components` folder under `src`, and inside it create **CakeContainer.js**.
 
-### CakeContainer.js
+#### CakeContainer.js
 
 ```jsx
-import React from 'react'
-
 const CakeContainer = () => {
+  return (
+    <div>
+      <h1>Number of cakes</h1>
+      <button>Buy Cake</button>
+    </div>
+  );
+};
 
-return (
-```
-<div>
-
-<h1>Number of cakes</h1>
-
-<button>Buy Cake</button>
-
-</div>
-
-```jsx
-)
-
-}
-
-export default CakeContainer
+export default CakeContainer;
 ```
 
-### App.js
+#### App.js
 
 ```jsx
-import React from 'react'
-```
-### import CakeContainer from './components/CakeContainer'
+import CakeContainer from './components/CakeContainer';
 
-```jsx
 const App = () => {
+  return (
+    <div>
+      <CakeContainer />
+    </div>
+  );
+};
 
-return (
-```
-<div>
-
-### <CakeContainer />
-
-</div>
-
-```jsx
-)
-
-}
-
-export default App
+export default App;
 ```
 
 ### Actions
 
-Create a **redux**/cake/cakeActions.js and redux/cake/cakeTypes.js under src folder
+Create `redux/cakes/cakeTypes.js` and `redux/cakes/cakeActions.js` under `src`.
 
-### cakeTypes.js
+#### cakeTypes.js
 
 ```jsx
-export const BUY_CAKE='BUY_CAKE'
+export const BUY_CAKE = 'BUY_CAKE';
 ```
 
-Let's now import action type and replace it in cakeAction.js
+Now import the action type and use it in the action creator.
 
-### cakeActions.js
-
-**import {BUY_CAKE} from './cakeTypes';**
+#### cakeActions.js
 
 ```jsx
+import { BUY_CAKE } from './cakeTypes';
+
 export const buyCake = () => {
-
-return {
+  return {
+    type: BUY_CAKE
+  };
+};
 ```
-type:**BUY_CAKE**
 
-```jsx
-}
-
-}
-```
+**Why a separate types file?** The same constant is used in the action creator and the reducer. Importing it from one place means a typo becomes an import error instead of a silent bug (a misspelled string just falls through to `default`).
 
 ### Reducers
 
-Create store.js under src/redux folder
-
-### cakeReducer.js
+#### cakeReducer.js
 
 ```jsx
 import { BUY_CAKE } from "./cakeTypes";
 
-const initialState={
-```
-numOfCakes:10
+const initialState = {
+  numOfCakes: 10
+};
 
-```jsx
-}
-
-const cakeReducer= (state=initialState, action) =>{
-
-switch (action.type) {
-```
-case BUY_CAKE: return{
-
-...state,
-
-numOfCakes:state.numOfCakes-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
+const cakeReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1
+      };
+    default:
+      return state;
+  }
+};
 
 export default cakeReducer;
 ```
 
 ### Store
 
-### store.js
+Create `store.js` under `src/redux`.
+
+#### store.js
 
 ```jsx
 import { createStore } from "redux";
-```
-**import cakeReducer from "./cakeReducer";**
+import cakeReducer from "./cakes/cakeReducer";
 
-```jsx
-const store = createStore(**cakeReducer**)
+const store = createStore(cakeReducer);
 
 export default store;
 ```
 
-### Connect redux and react
+### Connect Redux and React
 
-### App.js
+Wrap the app in **`<Provider>`** so every component can reach the store.
+
+#### App.js
 
 ```jsx
-import React from "react";
-
 import CakeContainer from "./components/CakeContainer";
-```
-**import { Provider } from "react-redux";**
-
-**import store from "./redux/store";**
-
-```jsx
-const App = () => {
-
-return (
-```
-**<Provider store={store}>**
-
-<div>
-
-<CakeContainer />
-
-</div>
-
-### </Provider>
-
-```jsx
-);
-
-};
-
-export default App;
-```
-
-### CakeContainers.js
-
-```jsx
-import React from "react";
-```
-**import { buyCake } from "../redux/cakes/cakeActions";**
-
-**import { connect } from "react-redux";**
-
-```jsx
-const CakeContainer = (**props**) => {
-
-return (
-```
-<div>
-
-<h1>Number of cakes:**{props.numOfCakes}**</h1>
-
-<button onClick=**{props.buyCake}**\>Buy Cake</button>
-
-</div>
-
-```jsx
-);
-
-};
-
-**const mapStateToProps = (state) => {**
-```
-**return {**
-
-**numOfCakes: state.numOfCakes,**
-
-**};**
-
-**};**
-
-```jsx
-**const mapDispatchToProps = (dispatch) => {**
-```
-**return {**
-
-```jsx
-**buyCake: ()=> dispatch(buyCake()),**
-```
-**};**
-
-**};**
-
-// Connect above two function to react-redux
-
-```jsx
-export default **connect(mapStateToProps, mapDispatchToProps)(**CakeContainer**);**
-```
-
-Got to terminal: **npm start**
-
-#### Let’s dive into above code and understand it
-
-Below code is for selectors. **Selectors** return state information from redux. You can create a separate file if your code becomes more complex. Here it is simple so we are not creating any separate file.
-
-```jsx
-const mapStateToProps = (state) => {
-
-return {
-
-numOfCakes: state.numOfCakes,
-
-};
-
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-return {
-
-buyCake: () => dispatch(buyCake()),
-
-};
-
-};
-```
-
-So we can use any method name but it is recommended but we used it as by React convention. **mapStateToProps** used to get the state of redux and **mapDispatchToProps** used for dispatching action. Both the arrow function is returning objects which have numOfCakes and buyCake method and these two will be available to the whole code using props.
-
-<h1>Number of cakes:**{props.numOfCakes}**</h1>
-
-<button onClick=**{props.buyCake}**\>Buy Cake</button>
-
-buyCake return arrow function in which we called dispatch and passed buyCake action creator which is returning the actions.
-
-All these above things are possible using **connect**(). It is responsible for connecting mapStateToProps and mapDispatchToProps to redux.
-
-```jsx
-export default **connect(mapStateToProps, mapDispatchToProps)(**CakeContainer**);**
-```
-
-## React Redux with Hooks
-
-### useSelector Hook
-
-```jsx
-import React from "react";
-
-import { useSelector } from "react-redux";
-
-const HooksCakeContainer = () => {
-
-const numOfCakes=useSelector(state=> state.numOfCakes)
-
-return (
-```
-<div>
-
-<h1>Number of cakes:{numOfCakes}</h1>
-
-<button >Buy Cake</button>
-
-</div>
-
-```jsx
-);
-
-};
-
-export default HooksCakeContainer;
-```
-
-### App.js
-
-```jsx
-import React from "react";
-
-import CakeContainer from "./components/CakeContainer";
-
 import { Provider } from "react-redux";
-
 import store from "./redux/store";
-```
-**import HooksCakeContainer from "./components/HooksCakeContainer";**
 
-```jsx
 const App = () => {
-
-return (
-```
-<Provider store={store}>
-
-<div>
-
-<CakeContainer />
-
-### <HooksCakeContainer />
-
-</div>
-
-</Provider>
-
-```jsx
-);
-
+  return (
+    <Provider store={store}>
+      <div>
+        <CakeContainer />
+      </div>
+    </Provider>
+  );
 };
 
 export default App;
 ```
 
-### useDispatch hook
+`Provider` uses React context internally to make the store available to all components below it.
+
+#### CakeContainer.js
 
 ```jsx
-import React from "react";
-
-import { **useDispatch**, useSelector } from "react-redux";
-```
-**import { buyCake } from "../redux/cakes/cakeActions";**
-
-```jsx
-const HooksCakeContainer = () => {
-
-const numOfCakes=useSelector(state=> state.numOfCakes)
-```
-**const dispatch = useDispatch();**
-
-```jsx
-return (
-```
-<div>
-
-<h1>Number of cakes:{numOfCakes}</h1>
-
-```jsx
-<button **onClick={()=> dispatch(buyCake())**}>Buy Cake</button>
-```
-</div>
-
-```jsx
-);
-
-};
-
-export default HooksCakeContainer;
-```
-
-### Usage Warning with Hooks
-
-#### Stale Props and "Zombie Children"
-
-Specifically, "**stale props**" means any case where:
-
--   a selector function relies on this component's props to extract data
--   a parent component would re-render and pass down new props as a result of an action
--   but this component's selector function executes before this component has had a chance to re-render with those new props
-
-"**Zombie child**" refers specifically to the case where:
-
--   Multiple nested connected components are mounted in a first pass, causing a child component to subscribe to the store before its parent
--   An action is dispatched that deletes data from the store, such as a todo item
--   The parent component would stop rendering that child as a result
--   However, because the child subscribed first, its subscription runs before the parent stops rendering it. When it reads a value from the store based on props, that data no longer exists, and if the extraction logic is not careful, this may result in an error being thrown.
-
-#### Performance
-
-As mentioned earlier, by default useSelector() will do a reference equality comparison of the selected value when running the selector function after an action is dispatched, and will only cause the component to re-render if the selected value changed. However, unlike connect(), useSelector() does not prevent the component from re-rendering due to its parent re-rendering, even if the component's props did not change. If further performance optimizations are necessary, you may consider wrapping your function component in React.memo()
-
-## Multiple Reducers
-
-Create the same folder and files we did for cake. Create iceCream folder under redux and then create below files
-
-### iceCreamTypes.js
-
-```jsx
-export const BUY_ICECREAM='BUY_ICECREAM'
-```
-
-### iceCreamActions.js
-
-```jsx
-import {BUY_ICECREAM} from './iceCreamTypes';
-
-export const buyIceCream = () => {
-
-return {
-```
-type:BUY_ICECREAM
-
-```jsx
-}
-
-}
-```
-
-### iceCreamReducer.js
-
-```jsx
-import { BUY_ICECREAM } from "./iceCreamTypes";
-
-const initialState={
-```
-numOfIceCreams:10
-
-```jsx
-}
-
-const iceCreamReducer= (state=initialState, action) =>{
-
-switch (action.type) {
-```
-case BUY_ICECREAM: return{
-
-...state,
-
-numOfIceCreams:state.numOfIceCreams-1
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-
-export default iceCreamReducer;
-```
-
-**Combine Both Reducers:** create rootReducer.js under redux
-
-### rootReducer.js
-
-```jsx
-import { **combineReducers** } from "redux";
-```
-**import cakeReducer from "./cakes/cakeReducers";**
-
-**import iceCreamReducer from "./iceCreams/iceCreamReducers";**
-
-**const rootReducer = combineReducers({**
-
-**cake:cakeReducer,**
-
-### iceCream: iceCreamReducer
-
-**})**
-
-```jsx
-export default rootReducer;
-```
-
-### Use new rootReducer in our store
-
-### store.js
-
-```jsx
-import { createStore } from "redux";
-```
-**import rootReducer from "./rootReducer";**
-
-```jsx
-const store = createStore(**rootReducer**)
-
-export default store;
-```
-
-### Create IceCreamContainer.js under components folder
-
-### IceCreamContainer.js
-
-```jsx
-import React from "react";
-
-import { buyIceCream } from "../redux/iceCreams/iceCreamActions";
-
-import { connect } from "react-redux";
-
-const IceCreamContainer = (props) => {
-
-return (
-```
-<div>
-
-<h1>Number of icecreams:{props.numOfIceCreams}</h1>
-
-<button onClick={props.buyIceCream}>Buy Cake</button>
-
-</div>
-
-```jsx
-);
-
-};
-```
-**// Specify the key we use in root reducer**
-
-```jsx
-const mapStateToProps = (state) => {
-
-return {
-
-numOfIceCreams: state.**iceCream**.numOfIceCreams,
-
-};
-
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-return {
-
-buyIceCream: ()=> dispatch(buyIceCream()),
-
-};
-
-};
-```
-// Connect above two function to react-redux
-
-```jsx
-export default connect(mapStateToProps, mapDispatchToProps)(IceCreamContainer);
-```
-
-**To access a particular feature (cake or icecream) state then we have to specify the key we use in the root reducer.**
-
-### CakeContainer.js
-
-```jsx
-import React from "react";
-
 import { buyCake } from "../redux/cakes/cakeActions";
-
 import { connect } from "react-redux";
 
 const CakeContainer = (props) => {
-
-console.log('props : ',props);
-
-return (
-```
-<div>
-
-<h1>Number of cakes:{props.numOfCakes}</h1>
-
-<button onClick={props.buyCake}>Buy Cake</button>
-
-</div>
-
-```jsx
-);
-
+  return (
+    <div>
+      <h1>Number of cakes: {props.numOfCakes}</h1>
+      <button onClick={props.buyCake}>Buy Cake</button>
+    </div>
+  );
 };
-```
-// Specify the key we use in root reducer
 
-```jsx
 const mapStateToProps = (state) => {
-
-return {
-
-numOfCakes: state.**cake**.numOfCakes,
-
-};
-
+  return {
+    numOfCakes: state.numOfCakes,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-
-return {
-
-buyCake: ()=> dispatch(buyCake()),
-
+  return {
+    buyCake: () => dispatch(buyCake()),
+  };
 };
 
+// Connect the two functions above to react-redux
+export default connect(mapStateToProps, mapDispatchToProps)(CakeContainer);
+```
+
+Go to the terminal and run: **`npm start`** (or `npm run dev` with Vite).
+
+**Output:** "Number of cakes: 10" and a button. Each click decreases the number by one.
+
+#### Let's dive into the code above and understand it
+
+The code below is for **selectors**. **Selectors** return state information from Redux. You can create a separate file if your code becomes more complex — here it's simple, so we don't.
+
+```jsx
+const mapStateToProps = (state) => {
+  return {
+    numOfCakes: state.numOfCakes,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buyCake: () => dispatch(buyCake()),
+  };
 };
 ```
-// Connect above two function to react-redux
+
+You can use any names, but these are the React-Redux conventions. **`mapStateToProps`** reads the Redux state, and **`mapDispatchToProps`** dispatches actions. Both arrow functions return objects — containing `numOfCakes` and the `buyCake` method — and those become **props** of the component:
+
+```jsx
+<h1>Number of cakes: {props.numOfCakes}</h1>
+<button onClick={props.buyCake}>Buy Cake</button>
+```
+
+`buyCake` here is an arrow function that calls `dispatch` and passes the `buyCake` **action creator**, which returns the action object.
+
+All of this is made possible by **`connect()`**, which connects `mapStateToProps` and `mapDispatchToProps` to Redux:
 
 ```jsx
 export default connect(mapStateToProps, mapDispatchToProps)(CakeContainer);
 ```
 
-### Add IceCreamContainer.js in App.js
+`connect` is a **higher-order component** — it wraps your component and injects the props (see the **Higher order component** chapter).
 
-### App.js
+**Shorthand for `mapDispatchToProps`:** pass an object of action creators and React-Redux wraps each one in `dispatch` for you:
 
 ```jsx
-import React from "react";
+export default connect(mapStateToProps, { buyCake })(CakeContainer);
+```
 
+### React-Redux with hooks
+
+Hooks replace `connect` with two simple hooks and no wrapper component.
+
+#### useSelector hook
+
+```jsx
+import { useSelector } from "react-redux";
+
+const HooksCakeContainer = () => {
+  const numOfCakes = useSelector(state => state.numOfCakes);
+
+  return (
+    <div>
+      <h1>Number of cakes: {numOfCakes}</h1>
+      <button>Buy Cake</button>
+    </div>
+  );
+};
+
+export default HooksCakeContainer;
+```
+
+#### App.js
+
+```jsx
 import CakeContainer from "./components/CakeContainer";
-
+import HooksCakeContainer from "./components/HooksCakeContainer";
 import { Provider } from "react-redux";
-
 import store from "./redux/store";
 
-import HooksCakeContainer from "./components/HooksCakeContainer";
-```
-i**mport IceCreamContainer from "./components/IceCreamContainer";**
-
-```jsx
 const App = () => {
-
-return (
-```
-<Provider store={store}>
-
-<div>
-
-<CakeContainer />
-
-### <IceCreamContainer />
-
-`{/* <HooksCakeContainer /> */}`
-
-</div>
-
-</Provider>
-
-```jsx
-);
-
+  return (
+    <Provider store={store}>
+      <div>
+        <CakeContainer />
+        <HooksCakeContainer />
+      </div>
+    </Provider>
+  );
 };
 
 export default App;
 ```
 
-## Logger Middleware
-
-Install redux logger
-
-npm install redux-logger
-
-### store.js
+#### useDispatch hook
 
 ```jsx
-import { createStore, **applyMiddleware** } from "redux";
-
-import rootReducer from "./rootReducer";
-```
-**import logger from 'redux-logger';**
-
-```jsx
-const store = createStore(rootReducer, **applyMiddleware(logger))**
-
-export default store;
-```
-
-## Redux Dev tool Extension
-
-Download Redux Dev tool extension for respective browsers and also install its package
-
-npm install redux-devtools-extension
-
-### store.js
-
-```jsx
-import { createStore, applyMiddleware } from "redux";
-```
-**import { composeWithDevTools } from "redux-devtools-extension";**
-
-```jsx
-import rootReducer from "./rootReducer";
-
-import logger from "redux-logger";
-
-const store = createStore(
-```
-rootReducer,
-
-**composeWithDevTools**(applyMiddleware(logger))
-
-```jsx
-);
-
-export default store;
-```
-
-Right click >inspect element >select redux tab (Double tick on >> if not visible)
-
-You can state and action here. On the bottom side you have a dispatcher to dispatch a particular action. Also we have a play button which records all the events. It can help in troubleshooting.
-
-## Action payload
-
-Create a new file NewCakeContainer.js which is copy of CakeContainer.js
-
-### NewCakeContainer.js
-
-```jsx
-import React, { **useState** } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { buyCake } from "../redux/cakes/cakeActions";
 
-import { connect } from "react-redux";
+const HooksCakeContainer = () => {
+  const numOfCakes = useSelector(state => state.numOfCakes);
+  const dispatch = useDispatch();
 
-const NewCakeContainer = (props) => {
-```
-**const \[number, setNumber\] = useState(1)**
-
-```jsx
-return (
-```
-<div>
-
-<h1>Number of cakes:{props.numOfCakes}</h1>
-
-```jsx
-**<input type="text" value={number} onChange={(e)=> setNumber(e.target.value)}/>**
-
-<button onClick={(**)=> props.buyCake(number)**}>Buy {**number**} Cake</button>
-```
-</div>
-
-```jsx
-);
-
-};
-```
-// Specify the key we use in root reducer
-
-```jsx
-const mapStateToProps = (state) => {
-
-return {
-
-numOfCakes: state.cake.numOfCakes,
-
+  return (
+    <div>
+      <h1>Number of cakes: {numOfCakes}</h1>
+      <button onClick={() => dispatch(buyCake())}>Buy Cake</button>
+    </div>
+  );
 };
 
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-return {
-
-buyCake: (**number**)=> dispatch(buyCake(**number**)),
-
-};
-
-};
-```
-// Connect above two function to react-redux
-
-```jsx
-export default connect(mapStateToProps, mapDispatchToProps)(NewCakeContainer);
+export default HooksCakeContainer;
 ```
 
-### cakeActions.js
+Much less code than `connect` — no `mapStateToProps`, no `mapDispatchToProps`, no HOC.
+
+**Select the smallest value you need.** `useSelector` re-renders the component whenever the **selected value** changes (compared with `===`):
 
 ```jsx
-import {BUY_CAKE} from './cakeTypes';
+// ❌ A new object every time → re-renders on every dispatch
+const { numOfCakes, numOfIceCreams } = useSelector(state => ({
+  numOfCakes: state.cake.numOfCakes,
+  numOfIceCreams: state.iceCream.numOfIceCreams
+}));
 
-export const buyCake = (**number=1**) => {
+// ✅ Separate primitive selections
+const numOfCakes = useSelector(state => state.cake.numOfCakes);
+const numOfIceCreams = useSelector(state => state.iceCream.numOfIceCreams);
 
-return {
-```
-type:BUY_CAKE,
-
-### payload**:**number
-
-```jsx
-}
-
-}
-```
-
-### cakeReducer.js
-
-```jsx
-import { BUY_CAKE } from "./cakeTypes";
-
-const initialState={
-```
-numOfCakes:10
-
-```jsx
-}
-
-const cakeReducer= (state=initialState, action) =>{
-
-switch (action.type) {
-```
-case BUY_CAKE: return{
-
-...state,
-
-numOfCakes:state.numOfCakes-**action.payload**
-
-```jsx
-}
-
-default: return state;
-
-}
-
-}
-
-export default cakeReducer;
+// ✅ Or use the shallowEqual comparison function
+import { shallowEqual } from 'react-redux';
+const values = useSelector(selectBoth, shallowEqual);
 ```
 
-### App.js
+### Usage warnings with hooks
+
+#### Stale props and "zombie children"
+
+Specifically, **"stale props"** means any case where:
+
+-   a selector function relies on this component's props to extract data,
+-   a parent component would re-render and pass down new props as a result of an action,
+-   but this component's selector function executes **before** this component has re-rendered with those new props.
+
+**"Zombie child"** refers specifically to the case where:
+
+-   Multiple nested connected components are mounted in a first pass, causing a **child** component to subscribe to the store **before its parent**.
+-   An action is dispatched that **deletes data** from the store, such as a todo item.
+-   The parent component would stop rendering that child as a result.
+-   However, because the child subscribed first, **its subscription runs before the parent stops rendering it**. When it reads a value from the store based on props, that data no longer exists — and if the extraction logic isn't careful, this may throw an error.
+
+**Defensive selector:**
 
 ```jsx
-import React from "react";
-
-import CakeContainer from "./components/CakeContainer";
-
-import { Provider } from "react-redux";
-
-import store from "./redux/store";
-
-import HooksCakeContainer from "./components/HooksCakeContainer";
-
-import IceCreamContainer from "./components/IceCreamContainer";
-```
-**import NewCakeContainer from "./components/NewCakeContainer";**
-
-```jsx
-const App = () => {
-
-return (
-```
-<Provider store={store}>
-
-<div>
-
-<CakeContainer />
-
-<IceCreamContainer />
-
-{/\* <HooksCakeContainer /> \*/}
-
-### <NewCakeContainer />
-
-</div>
-
-</Provider>
-
-```jsx
-);
-
-};
-
-export default App;
+const todo = useSelector(state => state.todos.find(t => t.id === props.id));
+if (!todo) return null;                  // the item may already be deleted
 ```
 
-## pass **second parameter** in mapStateToProps
+#### Performance
 
-So Suppose we want to assign state on basis o
+By default, `useSelector()` does a **reference equality (`===`) comparison** of the selected value after an action is dispatched, and only re-renders the component if the selected value changed. However, unlike `connect()`, **`useSelector()` does not prevent the component from re-rendering when its parent re-renders**, even if its props didn't change. If further performance optimization is needed, wrap the component in **`React.memo()`**.
 
-Create a **ListContainer**.js under components.
+### Multiple reducers
 
-```jsx
-import React from "react";
+Create the same structure we did for cake. Create an `iceCreams` folder under `redux` with these files:
 
-import { connect } from "react-redux";
-
-const ListContainer = (props) => {
-
-return (
-```
-<div>
-
-<h2>Item: {props.item}</h2>
-
-</div>
+#### iceCreamTypes.js
 
 ```jsx
-);
-
-};
-
-const mapStateToProps = (state, ownProps) => {
-
-const itemState = **ownProps.cake**
-```
-### ? state.cake.numOfCakes
-
-**: state.iceCream.numOfIceCreams;**
-
-```jsx
-return {
-
-item: itemState,
-
-};
-
-};
-
-export default connect(mapStateToProps)(ListContainer);
+export const BUY_ICECREAM = 'BUY_ICECREAM';
 ```
 
-So we are **passing cake as props** in one component and in another we keep it blank.
-
-App.js
+#### iceCreamActions.js
 
 ```jsx
-import React from "react";
-
-import CakeContainer from "./components/CakeContainer";
-
-import { Provider } from "react-redux";
-
-import store from "./redux/store";
-
-import HooksCakeContainer from "./components/HooksCakeContainer";
-
-import IceCreamContainer from "./components/IceCreamContainer";
-
-import NewCakeContainer from "./components/NewCakeContainer";
-
-import ListContainer from "./components/ListContainer";
-
-const App = () => {
-
-return (
-```
-<Provider store={store}>
-
-<div>
-
-### <ListContainer cake/>
-
-### <ListContainer />
-
-<CakeContainer />
-
-<IceCreamContainer />
-
-<HooksCakeContainer />
-
-<NewCakeContainer />
-
-</div>
-
-</Provider>
-
-```jsx
-);
-
-};
-
-export default App;
-```
-
-Try to change the default value either cake or ice cream Here default value for both is 10. It's difficult to notice the changes.
-
-## pass **second parameter** in map**Dispatch**ToProps
-
-### ListContainer.js
-
-```jsx
-import React from "react";
-
-import { connect } from "react-redux";
-```
-**import { buyCake } from "../redux/cakes/cakeActions";**
-
-**import { buyIceCream } from "../redux/iceCreams/iceCreamActions";**
-
-```jsx
-const ListContainer = (props) => {
-
-return (
-```
-<div>
-
-<h2>Item: {props.item}</h2>
-
-**<button onClick={props.buyItem}>Buy Item</button>**
-
-</div>
-
-```jsx
-);
-
-};
-
-const mapStateToProps = (state, ownProps) => {
-
-const itemState = ownProps.cake
-```
-? state.cake.numOfCakes
-
-```jsx
-: state.iceCream.numOfIceCreams;
-
-return {
-
-item: itemState,
-
-};
-
-};
-
-**const mapDispatchToProps = (dispatch, ownProps) => {**
-
-**const dispatchFunction = ownProps.cake ? ()=> dispatch(buyCake()) :()=> dispatch(buyIceCream())**
-```
-**return {**
-
-### buyItem: dispatchFunction
-
-**}**
-
-**}**
-
-```jsx
-export default connect(mapStateToProps, **mapDispatchToProps**)(ListContainer);
-```
-
-**If YOU WANT TO JUST USE mapDispatchToProps then pass null in place of mapStateToProps**
-
-```jsx
-export default connect(**null**, mapDispatchToProps)(ListContainer);
-```
-## Redux thunk
-
-Install axios **Install axios, redux-thunk**
-
-npm install axios redux-thunk
-
-Create a new folder **user** under redux then create files userTypes.js, userActions.js and userReducers.js.
-
-### userTypes.js
-
-```jsx
-export const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
-
-export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
-
-export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
-```
-
-### userActions.js
-
-```jsx
-import {FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS} from './userTypes'
-
-import axios from 'axios'
-
-export const fetchUsersRequest = () => {
-
-return {
-
-type: FETCH_USERS_REQUEST,
-
-};
-
-};
-
-export const fetchUsersSuccess = (users) => {
-
-return {
-
-type: FETCH_USERS_SUCCESS,
-
-payload: users,
-
-};
-
-};
-
-export const fetchUsersFailure = (error) => {
-
-return {
-
-type: FETCH_USERS_FAILURE,
-
-payload: error,
-
-};
-
-};
-
-export const fetchUsers = () => {
-
-return function(dispatch) {
-
-dispatch(fetchUsersRequest());
-```
-axios
-
-.get("https://jsonplaceholder.typicode.com/users")
-
-```jsx
-.then((response) => {
-```
-// response.data is the array of users
-
-```jsx
-const users = response.data;
-
-dispatch(fetchUsersSuccess(users));
-```
-})
-
-```jsx
-.catch((error) => {
-```
-// error.message is the error description
-
-```jsx
-dispatch(fetchUsersSuccess(error.message));
-
-});
-
-};
-
+import { BUY_ICECREAM } from './iceCreamTypes';
+
+export const buyIceCream = () => {
+  return {
+    type: BUY_ICECREAM
+  };
 };
 ```
 
-### userReducers.js
+#### iceCreamReducer.js
 
 ```jsx
-import {FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS} from './userTypes'
+import { BUY_ICECREAM } from "./iceCreamTypes";
 
 const initialState = {
-
-loading: false,
-
-users: [],
-
-error: "",
-
+  numOfIceCreams: 20
 };
 
-const reducer = (state = initialState, action) => {
-
-switch (action.type) {
-```
-case FETCH_USERS_REQUEST:
-
-```jsx
-return {
-```
-...state,
-
-```jsx
-loading: true,
-
-};
-```
-case FETCH_USERS_SUCCESS:
-
-```jsx
-return {
-```
-...state,
-
-loading:false,
-
-```jsx
-users: action.payload,
-
-error: "",
-
-};
-```
-case FETCH_USERS_FAILURE:
-
-```jsx
-return {
-```
-...state,
-
-loading:false,
-
-```jsx
-users: [],
-
-error: action.payload,
-
+const iceCreamReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BUY_ICECREAM:
+      return {
+        ...state,
+        numOfIceCreams: state.numOfIceCreams - 1
+      };
+    default:
+      return state;
+  }
 };
 
-default:return state;
-
-}
-
-};
-
-export default reducer;
+export default iceCreamReducer;
 ```
 
-### rootReducer.js
+#### rootReducer.js
 
 ```jsx
 import { combineReducers } from "redux";
+import cakeReducer from "./cakes/cakeReducer";
+import iceCreamReducer from "./iceCreams/iceCreamReducer";
 
-import cakeReducer from "./cakes/cakeReducers";
-
-import iceCreamReducer from "./iceCreams/iceCreamReducers";
-```
-i**mport userReducer from './user/userReducers'**
-
-```jsx
 const rootReducer = combineReducers({
-```
-cake:cakeReducer,
+  cake: cakeReducer,
+  iceCream: iceCreamReducer
+});
 
-```jsx
-iceCream: iceCreamReducer,
-```
-### user:userReducer
-
-})
-
-```jsx
 export default rootReducer;
 ```
 
-### store.js
+#### Use the new rootReducer in our store
+
+**store.js**
+
+```jsx
+import { createStore } from "redux";
+import rootReducer from "./rootReducer";
+
+const store = createStore(rootReducer);
+
+export default store;
+```
+
+#### IceCreamContainer.js
+
+```jsx
+import { useDispatch, useSelector } from "react-redux";
+import { buyIceCream } from "../redux/iceCreams/iceCreamActions";
+
+const IceCreamContainer = () => {
+  const numOfIceCreams = useSelector(state => state.iceCream.numOfIceCreams);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Number of ice creams: {numOfIceCreams}</h1>
+      <button onClick={() => dispatch(buyIceCream())}>Buy Ice Cream</button>
+    </div>
+  );
+};
+
+export default IceCreamContainer;
+```
+
+**Important:** now that reducers are combined, the state is **nested**. Every selector must be updated:
+
+```jsx
+// Before combineReducers
+const numOfCakes = useSelector(state => state.numOfCakes);
+
+// After combineReducers
+const numOfCakes = useSelector(state => state.cake.numOfCakes);
+```
+
+The same applies to `mapStateToProps` in `CakeContainer.js`:
+
+```jsx
+const mapStateToProps = (state) => {
+  return {
+    numOfCakes: state.cake.numOfCakes,
+  };
+};
+```
+
+#### App.js
+
+```jsx
+import CakeContainer from "./components/CakeContainer";
+import IceCreamContainer from "./components/IceCreamContainer";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <div>
+        <CakeContainer />
+        <IceCreamContainer />
+      </div>
+    </Provider>
+  );
+};
+
+export default App;
+```
+
+### Logger middleware
+
+Install redux-logger:
+
+```bash
+npm install redux-logger
+```
+
+#### store.js
 
 ```jsx
 import { createStore, applyMiddleware } from "redux";
-
-import { composeWithDevTools } from "redux-devtools-extension";
-
 import rootReducer from "./rootReducer";
+import logger from 'redux-logger';
 
+const store = createStore(rootReducer, applyMiddleware(logger));
+
+export default store;
+```
+
+Every dispatched action now logs the previous state, the action and the next state in the console.
+
+**Tip:** only add the logger in development:
+
+```jsx
+const middleware = process.env.NODE_ENV === 'development' ? [logger] : [];
+const store = createStore(rootReducer, applyMiddleware(...middleware));
+```
+
+### Redux DevTools extension
+
+Install the Redux DevTools extension for your browser, and the package:
+
+```bash
+npm install redux-devtools-extension
+```
+
+#### store.js
+
+```jsx
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./rootReducer";
 import logger from "redux-logger";
-```
-**import thunk from 'redux-thunk';**
 
-```jsx
 const store = createStore(
-```
-rootReducer,
-
-composeWithDevTools(applyMiddleware(logger, **thunk**))
-
-```jsx
+  rootReducer,
+  composeWithDevTools(applyMiddleware(logger))
 );
 
 export default store;
 ```
 
-Create a new file **UserContainer**.js under component
+With DevTools you can inspect the state tree, see every dispatched action, and **time travel** — jump back to any earlier state.
 
-```jsx
-import React, { useEffect } from 'react'
+**With Redux Toolkit, DevTools are enabled automatically** — no extra package or setup.
 
-import { connect } from "react-redux";
+### connect vs hooks
 
-import { fetchUsers } from '../redux/user/userActions';
+| | `connect` (HOC) | `useSelector` / `useDispatch` |
+| --- | --- | --- |
+| Code needed | `mapStateToProps` + `mapDispatchToProps` + HOC | two hook calls |
+| Component tree | adds a wrapper component | no wrapper |
+| Works with class components | Yes | No (hooks only) |
+| Blocks re-renders from the parent | Yes (it's memoized) | No — add `React.memo` yourself |
+| TypeScript | more types to write | simpler |
+| Status | still supported, used in older code | recommended |
 
-const UserContainer = ({userData, fetchUsers}) => {
+### The same app with Redux Toolkit
 
-console.log(userData);
-
-useEffect(() => {
+```bash
+npm install @reduxjs/toolkit react-redux
 ```
-fetchUsers()
 
-}, \[\])
+**redux/cakeSlice.js** — types, action creators and reducer in one file:
 
 ```jsx
-return userData?.loading ? (<h2>Loading</h2>) : userData.error ? (
+import { createSlice } from '@reduxjs/toolkit';
+
+const cakeSlice = createSlice({
+  name: 'cake',
+  initialState: { numOfCakes: 10 },
+  reducers: {
+    buyCake: (state) => { state.numOfCakes--; },
+    restock: (state, action) => { state.numOfCakes += action.payload; }
+  }
+});
+
+export const { buyCake, restock } = cakeSlice.actions;
+export default cakeSlice.reducer;
 ```
-<h2>{userData.error}</h2>
 
-):(<div>
-
-<h2>User List</h2>
-
-{
+**redux/store.js**
 
 ```jsx
-userData && userData.users && userData.users.map(user=> <p key={user.id}>{user.name}</p>)
+import { configureStore } from '@reduxjs/toolkit';
+import cakeReducer from './cakeSlice';
+import iceCreamReducer from './iceCreamSlice';
 
+export const store = configureStore({
+  reducer: {
+    cake: cakeReducer,
+    iceCream: iceCreamReducer
+  }
+});
+// combineReducers, thunk middleware and DevTools are all set up automatically
+```
+
+**CakeContainer.js**
+
+```jsx
+import { useSelector, useDispatch } from 'react-redux';
+import { buyCake } from '../redux/cakeSlice';
+
+export default function CakeContainer() {
+  const numOfCakes = useSelector(state => state.cake.numOfCakes);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Number of cakes: {numOfCakes}</h1>
+      <button onClick={() => dispatch(buyCake())}>Buy Cake</button>
+    </div>
+  );
 }
 ```
-</div>)
+
+That replaces `cakeTypes.js`, `cakeActions.js`, `cakeReducer.js`, `rootReducer.js` and the middleware setup.
+
+### Interview questions
 
 ```jsx
-}
+// Q1: Why does this component re-render on every dispatch?
+const { a, b } = useSelector(state => ({ a: state.a, b: state.b }));
+// Answer: the selector returns a NEW object each time, so the === check always fails.
+// Select values separately, or pass shallowEqual as the second argument.
+```
 
-const mapStateToProps = (state) => {
+```jsx
+// Q2: What error appears without <Provider>?
+// Answer: "could not find react-redux context value; please ensure the component is wrapped
+// in a <Provider>".
+```
 
-return {
+```jsx
+// Q3: After adding combineReducers, state.numOfCakes is undefined. Why?
+// Answer: the state is now nested under the slice name — use state.cake.numOfCakes.
+```
 
-userData: state.user,
+```jsx
+// Q4: Does useSelector stop a re-render caused by the parent?
+// Answer: No. Unlike connect, it only controls re-renders caused by store changes.
+// Wrap the component in React.memo if needed.
+```
 
-};
-
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-return {
-
-fetchUsers: ()=> dispatch(fetchUsers()),
-
-};
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)
+```jsx
+// Q5: Where should async API calls live in Redux?
+// Answer: not in reducers (they must be pure) and preferably not in components —
+// in a thunk (redux-thunk / createAsyncThunk) or in RTK Query.
 ```
