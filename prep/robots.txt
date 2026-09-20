@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://riroteglobal.com/prep/sitemap-index.xml
