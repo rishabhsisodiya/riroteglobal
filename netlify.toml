@@ -1,6 +1,0 @@
-# The repo root is deployed as-is (hand-authored static pages).
-[build]
-  publish = "."
-
-[build.environment]
-  NODE_VERSION = "22"
