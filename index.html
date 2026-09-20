@@ -687,6 +687,52 @@
   @keyframes spinR { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
   /* ── RESPONSIVE ── */
+  /* ── OPEN SOURCE / LABS ── */
+  .labs-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: rgba(0,180,216,0.1);
+    margin-top: 3.5rem;
+    border: 1px solid rgba(0,180,216,0.1);
+  }
+  .labs-card {
+    display: flex; flex-direction: column;
+    padding: 2.4rem 2rem;
+    background: var(--navy);
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  .labs-card:hover { background: rgba(0,119,182,0.12); }
+  .labs-kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    color: var(--cyan); text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .labs-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.06em;
+    color: var(--white); margin-bottom: 0.7rem;
+  }
+  .labs-desc {
+    color: var(--muted); font-size: 0.92rem;
+    line-height: 1.7; margin-bottom: 1.6rem;
+  }
+  .labs-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+  .labs-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.08em;
+    color: var(--blue-light);
+    border: 1px solid rgba(0,180,216,0.25);
+    padding: 0.3rem 0.6rem;
+  }
+  .labs-go {
+    margin-top: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    color: var(--white); text-transform: uppercase;
+  }
+  .labs-card:hover .labs-go { color: var(--accent); }
+
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; flex-wrap: wrap; }
     .nav-links {
@@ -733,6 +779,7 @@
     .stat-divider { display: none; }
     .stat-num { font-size: 2.5rem; }
     .reach-grid { grid-template-columns: repeat(2, 1fr); }
+    .labs-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .name-letter { font-size: 2rem; min-width: 48px; }
     .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -942,6 +989,7 @@
     <li><a href="#clients">Clients</a></li>
     <li><a href="projects.html">Projects</a></li>
     <li><a href="#reach">Global Reach</a></li>
+    <li><a href="#opensource">Open Source</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
     <li class="mobile-cta-li"><a href="#contact" class="nav-cta" style="display:inline-block; margin:0.5rem 0;">Get in Touch</a></li>
@@ -1292,6 +1340,39 @@
   </div>
 </section>
 
+<!-- OPEN SOURCE -->
+<section class="section" id="opensource">
+  <div class="section-label">Open Source</div>
+  <h2 class="section-title">Built in the Open,<br><span>Free to Use.</span></h2>
+  <p class="section-sub">Not client work — tools and teaching material we build for the wider engineering community and give away. The same standards we hold on paid engagements, in public.</p>
+  <div class="labs-grid">
+    <a class="labs-card" href="https://rishabhsisodiya.github.io/crack-the-prep/" target="_blank" rel="noopener">
+      <div class="labs-kicker">Free Learning Hub</div>
+      <div class="labs-name">CrackThePrep</div>
+      <p class="labs-desc">Practitioner-grade interview preparation for full-stack engineers — notes, questions and worked examples across JavaScript, React, Node.js, system design, DSA and behavioural rounds.</p>
+      <div class="labs-tags">
+        <span class="labs-tag">JavaScript</span>
+        <span class="labs-tag">React</span>
+        <span class="labs-tag">Node.js</span>
+        <span class="labs-tag">System Design</span>
+        <span class="labs-tag">DSA</span>
+      </div>
+      <div class="labs-go">Explore the hub &#8599;</div>
+    </a>
+    <a class="labs-card" href="https://github.com/rishabhsisodiya/stop-guessing" target="_blank" rel="noopener">
+      <div class="labs-kicker">Open Source &#183; MIT</div>
+      <div class="labs-name">stop-guessing</div>
+      <p class="labs-desc">Agent Skills that stop a coding agent from inventing decisions nobody made, and from calling a job done when it is not. Decisions get written down first, and the work survives a new session or a new machine.</p>
+      <div class="labs-tags">
+        <span class="labs-tag">Agent Skills</span>
+        <span class="labs-tag">AI Tooling</span>
+        <span class="labs-tag">Developer Experience</span>
+      </div>
+      <div class="labs-go">View on GitHub &#8599;</div>
+    </a>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="section-label">Our Story</div>
@@ -1429,7 +1510,7 @@ window.addEventListener('load', () => {
     ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
     requestAnimationFrame(loop);
   })();
-  document.querySelectorAll('a, button, .service-card, .pillar, .reach-card, .role-card').forEach(el => {
+  document.querySelectorAll('a, button, .service-card, .pillar, .reach-card, .role-card, .labs-card').forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
   });
@@ -1480,7 +1561,7 @@ window.addEventListener('load', () => {
     '.contact-grid > div'];
   const left = ['.client-info', '.partner-info'];
   const right = ['.client-stats', '.partner-stat-panel'];
-  const staggered = ['.services-grid', '.pillars', '.reach-grid', '.outsource-roles', '.about-nums'];
+  const staggered = ['.services-grid', '.pillars', '.reach-grid', '.labs-grid', '.outsource-roles', '.about-nums'];
 
   simple.forEach(s => document.querySelectorAll(s).forEach(el => el.classList.add('sr')));
   left.forEach(s  => document.querySelectorAll(s).forEach(el => el.classList.add('sr','sr-left')));
