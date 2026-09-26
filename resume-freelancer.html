@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishabh Sisodiya | Freelance Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --ink: #111827; --mid: #374151; --soft: #6B7280; --line: #D1D5DB; --accent: #1D4ED8; }
+  html { font-size: 12px; }
+  body { background: #e5e7eb; font-family: 'Inter', sans-serif; color: var(--ink); line-height: 1.4; }
+  .page { background: #fff; width: 210mm; min-height: 297mm; margin: 1.5rem auto; padding: 12mm 14mm; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
+
+  header { text-align: center; margin-bottom: .7rem; }
+  h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -.01em; }
+  .role { font-size: .95rem; font-weight: 600; color: var(--accent); margin: .1rem 0 .3rem; }
+  .contact { font-size: .85rem; color: var(--mid); }
+  .contact span + span::before { content: "|"; margin: 0 .5rem; color: var(--line); }
+
+  h2 { font-size: .78rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--accent);
+       border-bottom: 1px solid var(--line); padding-bottom: .2rem; margin: .75rem 0 .4rem; }
+  p, li { font-size: .9rem; color: var(--mid); }
+
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .job-head strong { font-size: .98rem; color: var(--ink); }
+  .date { font-size: .82rem; color: var(--soft); white-space: nowrap; }
+  .job-sub { font-size: .86rem; font-style: italic; color: var(--soft); margin-bottom: .2rem; }
+  .job + .job { margin-top: .65rem; }
+  ul { padding-left: 1.1rem; }
+  li { margin-bottom: .1rem; }
+  .stack { font-size: .8rem; color: var(--soft); margin-top: .2rem; }
+
+  .skills { display: grid; grid-template-columns: 7.5rem 1fr; gap: .1rem .6rem; }
+  .skills dt { font-size: .88rem; font-weight: 600; color: var(--ink); }
+  .skills dd { font-size: .88rem; color: var(--mid); }
+
+  .row { display: flex; justify-content: space-between; gap: 1rem; font-size: .88rem; color: var(--mid); margin-bottom: .1rem; }
+  .row b { color: var(--ink); font-weight: 600; }
+  .row .date { font-size: .85rem; }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; width: auto; min-height: 0; padding: 0; }
+    @page { size: A4; margin: 10mm 12mm; }
+    li, .row, .job-head { break-inside: avoid; }
+    h2, .job-head, .job-sub { break-after: avoid; }
+  }
+  @media screen and (max-width: 800px) {
+    .page { width: auto; min-height: 0; margin: 0; padding: 1.2rem 16px; }
+    .skills { grid-template-columns: 1fr; }
+    .job-head, .row { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Rishabh Sisodiya</h1>
+    <p class="role">Full Stack Engineer · Freelance &amp; Contract</p>
+    <p class="contact">
+      <span>rishabh.sisodiya4@gmail.com</span><span>+91 82332 35504</span><span>Jaipur, India</span>
+    </p>
+  </header>
+
+  <h2>Professional Summary</h2>
+  <p>Full Stack Engineer with 8.5+ years delivering scalable software across enterprise ERP, e-commerce, logistics, SaaS, and government projects. Experienced in microservices architecture, domain-driven ERP platforms and third-party integrations, cloud infrastructure, and end-to-end project ownership, from system design and API development through to server hardening, deployment, and production support. Background includes years on large engineering teams building and supporting business-critical systems for global SaaS and US financial-services clients.</p>
+
+  <h2>Core Skills</h2>
+  <dl class="skills">
+    <dt>Backend</dt><dd>Node.js, NestJS, Express, FastAPI, Prisma, REST APIs, Microservices</dd>
+    <dt>Frontend</dt><dd>React, Next.js, JavaScript, TypeScript, HTML/CSS, Shopify Liquid</dd>
+    <dt>Databases</dt><dd>PostgreSQL, MongoDB, Redis, MariaDB</dd>
+    <dt>Infrastructure</dt><dd>AWS EC2, Digital Ocean, Nginx, Cloudflare, PM2, systemd, Linux</dd>
+    <dt>Integrations</dt><dd>ERPNext / Frappe, Shopify API, Google Apps Script</dd>
+    <dt>Leadership</dt><dd>Team Management, Product Roadmap, Architecture, Consulting, Agile / Scrum</dd>
+  </dl>
+
+  <h2>Project Experience</h2>
+
+  <div class="job">
+    <div class="job-head"><strong>Proman Edge | Unified ERP Platform</strong><span class="date">Enterprise · Infrastructure</span></div>
+    <p class="job-sub">Proman Infrastructure Services Group (9 entities, 5 ERPNext sites) · Full Stack Developer via TCB Infotech</p>
+    <ul>
+      <li>Architected and solo-delivered a unified platform merging an ACE after-sales service ticketing system and 11 role-based executive dashboards onto one PostgreSQL database, one JWT auth/role system, and one Next.js 14 (App Router) / React 19 / TypeScript frontend, replacing two separate codebases and servers.</li>
+      <li>Built the ticketing engine on NestJS + Prisma: 8 creation sources funnel into a single CreateTicketService driving a 9-state workflow, with a responsive/PWA Field Service Visit flow and 15 email + SMS notification triggers across the SLA golden path.</li>
+      <li>Integrated ERPNext both ways: a read-only nightly MariaDB pull for masters (Customer, Item, Serial No, Warehouse, Bin) and REST-API-only writes for Stock Entry and draft Sales Invoice plus an inbound webhook, respecting the Frappe permission engine with no direct DB writes.</li>
+      <li>Delivered a Node.js middleware layer with ERPNext role sync, Promise.all multi-site fan-out across up to 5 Frappe Cloud sites, and Redis per-widget caching, achieving sub-500ms dashboard loads vs. 5s+ sequential; mock/live data toggle via a single env flag for safe pre-launch development.</li>
+    </ul>
+    <p class="stack">Next.js 14 · React 19 · TypeScript · Tailwind CSS · NestJS · Node.js · Prisma · PostgreSQL · Redis · MariaDB · ERPNext v15 · JWT · PWA</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><strong>ProFound | Foundry ERP</strong><span class="date">Enterprise · Manufacturing</span></div>
+    <p class="job-sub">GTC Foundry Operations · Full Stack Developer via TCB Infotech</p>
+    <ul>
+      <li>Building a domain-specific ERP that owns all foundry-operational data end to end (sales-order-to-dispatch, production planning, melting &amp; metallurgy, quality, inventory, maintenance, and costing) across a 17-module map with heat-number genealogy as the golden traceability key.</li>
+      <li>Translated a 100+ doctype functional/solution spec into a NestJS + Prisma + PostgreSQL backend and a Next.js 16 / React 19 App Router frontend; delivered the RBAC foundation (admin-configurable roles, segregation-of-duties rules), audit logging, and 12+ master-data modules with full CRUD.</li>
+      <li>Implemented short-lived JWT access tokens backed by rotating, hash-only-stored refresh tokens (rotation-on-use replay protection) with a de-duped client-side silent-refresh interceptor.</li>
+      <li>Designed the ERPNext integration boundary (REST/JSON only, no DB-to-DB), keeping GL, statutory invoicing, and payroll in ERPNext while ProFound stays authoritative for operations, with idempotent correlation-ID calls, retry/backoff queues, and a nightly reconciliation run for one-sided records.</li>
+    </ul>
+    <p class="stack">Next.js 16 · React 19 · TypeScript · NestJS · Prisma · PostgreSQL · JWT · ERPNext · SWR · Tailwind CSS</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><strong>NimNim Laundry | Laundry Management Platform</strong><span class="date">SaaS · Boston, USA</span></div>
+    <p class="job-sub">Full Stack Developer &amp; Infrastructure Engineer (Freelance)</p>
+    <ul>
+      <li>Consolidated infrastructure from 2 EC2 instances to 1 and hardened the server setup: secured exposed ports, configured Nginx as reverse proxy, enforced Cloudflare SSL/DDoS protection, and set up systemd for process management and auto-restart.</li>
+      <li>Hardened the API layer with authentication and access controls; upgraded Node.js to current LTS and optimized long-running MongoDB queries to significantly reduce response times.</li>
+      <li>Resolved critical production bugs and delivered a full platform revamp.</li>
+      <li>Built and maintained full-stack features across the platform, developing new functionality, refactoring legacy code, and ensuring stability for end users.</li>
+    </ul>
+    <p class="stack">React · Node.js · Express · MongoDB · AWS EC2 · Nginx · Cloudflare</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><strong>MyRider | Multi-Service Platform</strong><span class="date">Logistics · Ride Booking · Food Delivery</span></div>
+    <p class="job-sub">Technical Lead &amp; Product Manager</p>
+    <ul>
+      <li>Led the engineering team across food delivery, parcel logistics, and ride-booking verticals, driving roadmap planning, Agile/Scrum sprint cycles, and stakeholder communication.</li>
+      <li>Architected the platform on a microservices model enabling independent scaling per service vertical.</li>
+      <li>Designed the database schema, developed REST APIs, and managed production deployments using PM2 for process management and zero-downtime restarts.</li>
+    </ul>
+    <p class="stack">React · Node.js · Express · FastAPI · PostgreSQL · Redis · Digital Ocean · Microservices</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><strong>Indiazona | E-Commerce Platform</strong><span class="date">E-Commerce · indiazona.in</span></div>
+    <p class="job-sub">Senior Engineer &amp; Architect</p>
+    <ul>
+      <li>Led redesign and modernization of a high-traffic Indian e-commerce platform, improving UX and performance at scale.</li>
+      <li>Architected the migration from a monolithic application to microservices; set up and managed cloud infrastructure on Digital Ocean.</li>
+      <li>Collaborated directly with business stakeholders on technical strategy and delivery planning.</li>
+    </ul>
+    <p class="stack">React · Node.js · Express · PostgreSQL · Digital Ocean · Microservices</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><strong>Enterprise Platform Engineering | Global SaaS &amp; Fintech</strong><span class="date">Enterprise · Long-Term Engagements</span></div>
+    <p class="job-sub">Lead Engineer / Senior Software Engineer on large distributed engineering teams</p>
+
+    <ul>
+      <li>Shipped features and production fixes across Node.js backend services and React frontends for a platform with a global user base, working in an Agile team with code-reviewed pull requests.</li>
+      <li>Developed enterprise React.js + Redux applications for fintech merchant onboarding, handling complex multi-step form orchestration and approval flows at scale.</li>
+      <li>Built REST APIs and backend services using Spring Boot and Node.js, integrated with IBM MQ for reliable event-driven messaging across distributed financial systems.</li>
+      <li>Replaced manual, script-based business workflows with production-grade Node.js automation services, cutting processing overhead by ~60%.</li>
+      <li>Acted as technical point of contact for a major enterprise client: advised their engineers on API integration and automation design, and resolved their issues hands-on with data-fix scripts and interim workarounds.</li>
+      <li>Owned ETL data pipelines (scheduled Java jobs on AWS EC2) moving data from DynamoDB and Informix into Redshift for BI, covering monitoring, failure recovery, and reliability.</li>
+      <li>Built reporting APIs in NestJS that consolidate data from multiple sources, plus Looker/LookML dashboards tracking SLAs, team performance, and operational health.</li>
+      <li>Built custom Zendesk apps (bulk email with auto ticket creation, bulk record updates, auto-routing, in-ticket customer data panels) that removed repetitive manual work for the support team.</li>
+      <li>Automated operational and monitoring processes, reducing manual reporting effort and improving incident response time in a regulated environment (AppDynamics, ServiceNow).</li>
+      <li>Mentored a junior engineer through delegated work, design feedback, and pair programming.</li>
+    </ul>
+    <p class="stack">React.js · Redux · Node.js · NestJS · Spring Boot · Java · IBM MQ · AWS EC2 · Lambda · ECS · DynamoDB · Informix · PostgreSQL · Redshift · Docker · CircleCI · Jenkins · Looker · Zendesk · AppDynamics · ServiceNow</p>
+  </div>
+
+  <h2>Education</h2>
+  <div class="row"><span><b>B.Tech, Electronics &amp; Communication</b>, Amity University Rajasthan</span><span class="date">2017</span></div>
+
+  <h2>Certifications</h2>
+  <div class="row"><span>Oracle Certified Associate Java Programmer (OCAJP8)</span><span></span></div>
+
+  <h2>Availability</h2>
+  <p>Open to freelance, consulting, and technical leadership engagements. India &amp; international clients welcome.</p>
+
+</div>
+</body>
+</html>
