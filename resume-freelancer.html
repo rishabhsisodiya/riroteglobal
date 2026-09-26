@@ -9,7 +9,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --ink: #111827; --mid: #374151; --soft: #6B7280; --line: #D1D5DB; --accent: #1D4ED8; }
   html { font-size: 12px; }
-  body { background: #e5e7eb; font-family: 'Inter', sans-serif; color: var(--ink); line-height: 1.4; }
+  body { background: #e5e7eb; font-family: 'Inter', sans-serif; color: var(--ink); line-height: 1.36; }
   .page { background: #fff; width: 210mm; min-height: 297mm; margin: 1.5rem auto; padding: 12mm 14mm; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
 
   header { text-align: center; margin-bottom: .7rem; }
@@ -26,12 +26,12 @@
   .job-head strong { font-size: .98rem; color: var(--ink); }
   .date { font-size: .82rem; color: var(--soft); white-space: nowrap; }
   .job-sub { font-size: .86rem; font-style: italic; color: var(--soft); margin-bottom: .2rem; }
-  .job + .job { margin-top: .65rem; }
+  .job + .job { margin-top: .55rem; }
   ul { padding-left: 1.1rem; }
-  li { margin-bottom: .1rem; }
+  li { margin-bottom: .05rem; }
   .stack { font-size: .8rem; color: var(--soft); margin-top: .2rem; }
 
-  .skills { display: grid; grid-template-columns: 7.5rem 1fr; gap: .1rem .6rem; }
+  .skills { display: grid; grid-template-columns: 9.5rem 1fr; gap: .1rem .6rem; }
   .skills dt { font-size: .88rem; font-weight: 600; color: var(--ink); }
   .skills dd { font-size: .88rem; color: var(--mid); }
 
@@ -65,16 +65,14 @@
   </header>
 
   <h2>Professional Summary</h2>
-  <p>Full Stack Engineer with 8.5+ years delivering scalable software across enterprise ERP, e-commerce, logistics, SaaS, and government projects. Experienced in microservices architecture, domain-driven ERP platforms and third-party integrations, cloud infrastructure, and end-to-end project ownership, from system design and API development through to server hardening, deployment, and production support. Background includes years on large engineering teams building and supporting business-critical systems for global SaaS and US financial-services clients.</p>
+  <p>Full Stack Engineer with 8.5+ years delivering software across enterprise ERP, e-commerce, logistics, SaaS, and government projects. I own delivery end to end, from system design and APIs through deployment, server hardening, and production support, working directly with clients to turn business requirements into measurable results.</p>
 
   <h2>Core Skills</h2>
   <dl class="skills">
-    <dt>Backend</dt><dd>Node.js, NestJS, Express, FastAPI, Prisma, REST APIs, Microservices</dd>
-    <dt>Frontend</dt><dd>React, Next.js, JavaScript, TypeScript, HTML/CSS, Shopify Liquid</dd>
-    <dt>Databases</dt><dd>PostgreSQL, MongoDB, Redis, MariaDB</dd>
-    <dt>Infrastructure</dt><dd>AWS EC2, Digital Ocean, Nginx, Cloudflare, PM2, systemd, Linux</dd>
-    <dt>Integrations</dt><dd>ERPNext / Frappe, Shopify API, Google Apps Script</dd>
-    <dt>Leadership</dt><dd>Team Management, Product Roadmap, Architecture, Consulting, Agile / Scrum</dd>
+    <dt>Backend</dt><dd>Node.js, NestJS, Express, FastAPI, Spring Boot, Prisma, REST APIs, Microservices</dd>
+    <dt>Frontend</dt><dd>React, Next.js, TypeScript, JavaScript, Redux, Tailwind CSS, PWA</dd>
+    <dt>Data</dt><dd>PostgreSQL, MongoDB, Redis, MariaDB, DynamoDB, Redshift</dd>
+    <dt>Cloud &amp; Integrations</dt><dd>AWS (EC2, Lambda, ECS), Digital Ocean, Docker, Nginx, Cloudflare, CI/CD, ERPNext, Zendesk, Looker</dd>
   </dl>
 
   <h2>Project Experience</h2>
@@ -83,34 +81,31 @@
     <div class="job-head"><strong>Proman Edge | Unified ERP Platform</strong><span class="date">Enterprise · Infrastructure</span></div>
     <p class="job-sub">Proman Infrastructure Services Group (9 entities, 5 ERPNext sites) · Full Stack Developer via TCB Infotech</p>
     <ul>
-      <li>Architected and solo-delivered a unified platform merging an ACE after-sales service ticketing system and 11 role-based executive dashboards onto one PostgreSQL database, one JWT auth/role system, and one Next.js 14 (App Router) / React 19 / TypeScript frontend, replacing two separate codebases and servers.</li>
-      <li>Built the ticketing engine on NestJS + Prisma: 8 creation sources funnel into a single CreateTicketService driving a 9-state workflow, with a responsive/PWA Field Service Visit flow and 15 email + SMS notification triggers across the SLA golden path.</li>
-      <li>Integrated ERPNext both ways: a read-only nightly MariaDB pull for masters (Customer, Item, Serial No, Warehouse, Bin) and REST-API-only writes for Stock Entry and draft Sales Invoice plus an inbound webhook, respecting the Frappe permission engine with no direct DB writes.</li>
-      <li>Delivered a Node.js middleware layer with ERPNext role sync, Promise.all multi-site fan-out across up to 5 Frappe Cloud sites, and Redis per-widget caching, achieving sub-500ms dashboard loads vs. 5s+ sequential; mock/live data toggle via a single env flag for safe pre-launch development.</li>
+      <li>Ticketing and executive reporting ran as two apps on two servers; architected and solo-delivered one platform (single PostgreSQL DB, JWT auth, Next.js frontend) with 11 role-based dashboards, halving the codebases and servers to maintain.</li>
+      <li>Dashboards took 5s+ to load by querying 5 ERPNext sites one after another; built a Node.js middleware with parallel multi-site fan-out and Redis per-widget caching, cutting load times to under 500ms.</li>
+      <li>Built the NestJS ticketing engine: 8 intake sources, 9-state SLA workflow, PWA field-service flow, 15 email/SMS alerts, two-way ERPNext sync.</li>
     </ul>
-    <p class="stack">Next.js 14 · React 19 · TypeScript · Tailwind CSS · NestJS · Node.js · Prisma · PostgreSQL · Redis · MariaDB · ERPNext v15 · JWT · PWA</p>
+    <p class="stack">Next.js · React · TypeScript · NestJS · Prisma · PostgreSQL · Redis · MariaDB · ERPNext · PWA</p>
   </div>
 
   <div class="job">
     <div class="job-head"><strong>ProFound | Foundry ERP</strong><span class="date">Enterprise · Manufacturing</span></div>
     <p class="job-sub">GTC Foundry Operations · Full Stack Developer via TCB Infotech</p>
     <ul>
-      <li>Building a domain-specific ERP that owns all foundry-operational data end to end (sales-order-to-dispatch, production planning, melting &amp; metallurgy, quality, inventory, maintenance, and costing) across a 17-module map with heat-number genealogy as the golden traceability key.</li>
-      <li>Translated a 100+ doctype functional/solution spec into a NestJS + Prisma + PostgreSQL backend and a Next.js 16 / React 19 App Router frontend; delivered the RBAC foundation (admin-configurable roles, segregation-of-duties rules), audit logging, and 12+ master-data modules with full CRUD.</li>
-      <li>Implemented short-lived JWT access tokens backed by rotating, hash-only-stored refresh tokens (rotation-on-use replay protection) with a de-duped client-side silent-refresh interceptor.</li>
-      <li>Designed the ERPNext integration boundary (REST/JSON only, no DB-to-DB), keeping GL, statutory invoicing, and payroll in ERPNext while ProFound stays authoritative for operations, with idempotent correlation-ID calls, retry/backoff queues, and a nightly reconciliation run for one-sided records.</li>
+      <li>Building a 17-module foundry ERP (sales to dispatch, production, melting, quality, inventory, costing) with full heat-number traceability.</li>
+      <li>Turned a 100+ doctype functional spec into a NestJS + PostgreSQL backend and Next.js 16 frontend; delivered RBAC with segregation-of-duties rules, audit logging, and 12+ master-data modules.</li>
+      <li>Designed a fail-safe ERPNext integration (idempotent REST calls, retry queues, nightly reconciliation) and rotating refresh-token auth.</li>
     </ul>
-    <p class="stack">Next.js 16 · React 19 · TypeScript · NestJS · Prisma · PostgreSQL · JWT · ERPNext · SWR · Tailwind CSS</p>
+    <p class="stack">Next.js · React · TypeScript · NestJS · Prisma · PostgreSQL · JWT · ERPNext</p>
   </div>
 
   <div class="job">
-    <div class="job-head"><strong>NimNim Laundry | Laundry Management Platform</strong><span class="date">SaaS · Boston, USA</span></div>
+    <div class="job-head"><strong>NimNim Laundry | Laundry Management SaaS</strong><span class="date">SaaS · Boston, USA</span></div>
     <p class="job-sub">Full Stack Developer &amp; Infrastructure Engineer (Freelance)</p>
     <ul>
-      <li>Consolidated infrastructure from 2 EC2 instances to 1 and hardened the server setup: secured exposed ports, configured Nginx as reverse proxy, enforced Cloudflare SSL/DDoS protection, and set up systemd for process management and auto-restart.</li>
-      <li>Hardened the API layer with authentication and access controls; upgraded Node.js to current LTS and optimized long-running MongoDB queries to significantly reduce response times.</li>
-      <li>Resolved critical production bugs and delivered a full platform revamp.</li>
-      <li>Built and maintained full-stack features across the platform, developing new functionality, refactoring legacy code, and ensuring stability for end users.</li>
+      <li>The platform ran on multiple loosely secured EC2 instances; consolidated them onto one hardened server (Nginx reverse proxy, closed ports, Cloudflare SSL/DDoS protection, systemd auto-restart), cutting the AWS bill by ~50%.</li>
+      <li>Optimized long-running MongoDB queries and upgraded Node.js to current LTS, cutting API response times by ~50%.</li>
+      <li>Fixed critical production bugs, secured the API with auth and access controls, and delivered a full platform revamp.</li>
     </ul>
     <p class="stack">React · Node.js · Express · MongoDB · AWS EC2 · Nginx · Cloudflare</p>
   </div>
@@ -119,51 +114,40 @@
     <div class="job-head"><strong>MyRider | Multi-Service Platform</strong><span class="date">Logistics · Ride Booking · Food Delivery</span></div>
     <p class="job-sub">Technical Lead &amp; Product Manager</p>
     <ul>
-      <li>Led the engineering team across food delivery, parcel logistics, and ride-booking verticals, driving roadmap planning, Agile/Scrum sprint cycles, and stakeholder communication.</li>
-      <li>Architected the platform on a microservices model enabling independent scaling per service vertical.</li>
-      <li>Designed the database schema, developed REST APIs, and managed production deployments using PM2 for process management and zero-downtime restarts.</li>
+      <li>Led a 4-person team building food delivery, parcel logistics, and ride booking on one platform; owned roadmap and sprints.</li>
+      <li>Architected microservices so each vertical scales independently; designed schema and APIs, with zero-downtime PM2 deploys.</li>
     </ul>
-    <p class="stack">React · Node.js · Express · FastAPI · PostgreSQL · Redis · Digital Ocean · Microservices</p>
+    <p class="stack">React · Node.js · Express · FastAPI · PostgreSQL · Redis · Digital Ocean</p>
   </div>
 
   <div class="job">
     <div class="job-head"><strong>Indiazona | E-Commerce Platform</strong><span class="date">E-Commerce · indiazona.in</span></div>
     <p class="job-sub">Senior Engineer &amp; Architect</p>
     <ul>
-      <li>Led redesign and modernization of a high-traffic Indian e-commerce platform, improving UX and performance at scale.</li>
-      <li>Architected the migration from a monolithic application to microservices; set up and managed cloud infrastructure on Digital Ocean.</li>
-      <li>Collaborated directly with business stakeholders on technical strategy and delivery planning.</li>
+      <li>Led the redesign of a startup e-commerce platform and its monolith-to-microservices migration, improving page speed and UX.</li>
     </ul>
-    <p class="stack">React · Node.js · Express · PostgreSQL · Digital Ocean · Microservices</p>
+    <p class="stack">React · Node.js · Express · PostgreSQL · Digital Ocean</p>
   </div>
 
   <div class="job">
     <div class="job-head"><strong>Enterprise Platform Engineering | Global SaaS &amp; Fintech</strong><span class="date">Enterprise · Long-Term Engagements</span></div>
     <p class="job-sub">Lead Engineer / Senior Software Engineer on large distributed engineering teams</p>
-
     <ul>
-      <li>Shipped features and production fixes across Node.js backend services and React frontends for a platform with a global user base, working in an Agile team with code-reviewed pull requests.</li>
-      <li>Developed enterprise React.js + Redux applications for fintech merchant onboarding, handling complex multi-step form orchestration and approval flows at scale.</li>
-      <li>Built REST APIs and backend services using Spring Boot and Node.js, integrated with IBM MQ for reliable event-driven messaging across distributed financial systems.</li>
-      <li>Replaced manual, script-based business workflows with production-grade Node.js automation services, cutting processing overhead by ~60%.</li>
-      <li>Acted as technical point of contact for a major enterprise client: advised their engineers on API integration and automation design, and resolved their issues hands-on with data-fix scripts and interim workarounds.</li>
-      <li>Owned ETL data pipelines (scheduled Java jobs on AWS EC2) moving data from DynamoDB and Informix into Redshift for BI, covering monitoring, failure recovery, and reliability.</li>
-      <li>Built reporting APIs in NestJS that consolidate data from multiple sources, plus Looker/LookML dashboards tracking SLAs, team performance, and operational health.</li>
-      <li>Built custom Zendesk apps (bulk email with auto ticket creation, bulk record updates, auto-routing, in-ticket customer data panels) that removed repetitive manual work for the support team.</li>
-      <li>Automated operational and monitoring processes, reducing manual reporting effort and improving incident response time in a regulated environment (AppDynamics, ServiceNow).</li>
-      <li>Mentored a junior engineer through delegated work, design feedback, and pair programming.</li>
+      <li>Replaced manual script-based workflows with production-grade Node.js services, cutting processing overhead by ~60%.</li>
+      <li>Built 5 custom Zendesk apps (bulk email, bulk updates, auto-routing, in-ticket customer data) that removed repetitive support work.</li>
+      <li>Owned ETL pipelines from DynamoDB and Informix into Redshift, plus NestJS reporting APIs and Looker SLA dashboards.</li>
+      <li>Technical point of contact for a major enterprise client, advising on API integration and fixing their issues hands-on.</li>
+      <li>Built fintech merchant-onboarding apps in React + Redux with Spring Boot / Node.js services and IBM MQ messaging.</li>
     </ul>
-    <p class="stack">React.js · Redux · Node.js · NestJS · Spring Boot · Java · IBM MQ · AWS EC2 · Lambda · ECS · DynamoDB · Informix · PostgreSQL · Redshift · Docker · CircleCI · Jenkins · Looker · Zendesk · AppDynamics · ServiceNow</p>
+    <p class="stack">React · Redux · Node.js · NestJS · Spring Boot · Java · IBM MQ · AWS · DynamoDB · Redshift · Looker · Zendesk</p>
   </div>
 
-  <h2>Education</h2>
-  <div class="row"><span><b>B.Tech, Electronics &amp; Communication</b>, Amity University Rajasthan</span><span class="date">2017</span></div>
+  <h2>Open Source</h2>
+  <div class="row"><span><b>stop-guessing</b>: Claude Code plugin that has AI agents spec before building, then verify.</span><span class="date">github.com/rishabhsisodiya/stop-guessing</span></div>
+  <div class="row"><span><b>CrackThePrep</b>: interview-prep site, ~135 notes; Astro, full-text search, CI-tested code samples.</span><span class="date">rishabhsisodiya.github.io/crack-the-prep</span></div>
 
-  <h2>Certifications</h2>
-  <div class="row"><span>Oracle Certified Associate Java Programmer (OCAJP8)</span><span></span></div>
-
-  <h2>Availability</h2>
-  <p>Open to freelance, consulting, and technical leadership engagements. India &amp; international clients welcome.</p>
+  <h2>Education &amp; Certification</h2>
+  <div class="row"><span><b>B.Tech, Electronics &amp; Communication</b>, Amity University Rajasthan (2017) · Oracle Certified Java Programmer (OCAJP8)</span></div>
 
 </div>
 </body>
