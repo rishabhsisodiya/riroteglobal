@@ -313,6 +313,62 @@
   }
   .service-card p { font-size: 0.9rem; color: rgba(240,244,255,0.6); line-height: 1.65; }
 
+  /* ── PRODUCT TEASER ── */
+  .teaser-section { padding: 0 4rem 7rem; }
+  .teaser-card {
+    --sb: #34d399;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    border: 1px solid rgba(52,211,153,0.3); border-radius: 10px; overflow: hidden;
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(13,31,60,0.9) 55%);
+  }
+  .teaser-info { padding: 3.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .teaser-badge {
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--sb);
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(52,211,153,0.35);
+    padding: 0.3rem 0.8rem; border-radius: 3px;
+  }
+  .teaser-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--sb); }
+  .teaser-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 4vw, 3.6rem);
+    letter-spacing: 0.04em; line-height: 1;
+  }
+  .teaser-name span { color: var(--sb); }
+  .teaser-info p { color: rgba(240,244,255,0.72); font-size: 1rem; line-height: 1.75; max-width: 52ch; }
+  .teaser-points { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .teaser-points li {
+    position: relative; padding-left: 1.5rem;
+    color: rgba(240,244,255,0.85); font-size: 0.95rem; line-height: 1.5;
+  }
+  .teaser-points li::before {
+    content: ''; position: absolute; left: 0; top: 0.35rem;
+    width: 0.75rem; height: 0.4rem;
+    border-left: 2px solid var(--sb); border-bottom: 2px solid var(--sb); transform: rotate(-45deg);
+  }
+  .teaser-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.6rem; }
+  .teaser-actions .btn-primary { background: linear-gradient(135deg, #059669, #34d399); color: #04120d; }
+  .teaser-actions .btn-ghost { border-color: rgba(52,211,153,0.4); }
+  .teaser-shot {
+    display: block; position: relative;
+    border-left: 1px solid rgba(52,211,153,0.2);
+    background: #0b1a30;
+  }
+  .teaser-shot img {
+    width: 100%; height: 100%; min-height: 100%;
+    object-fit: cover; object-position: top left; display: block;
+  }
+  .teaser-play {
+    position: absolute; right: 1.25rem; bottom: 1.25rem;
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: rgba(10,22,40,0.88); color: var(--white);
+    border: 1px solid rgba(52,211,153,0.4); border-radius: 999px;
+    padding: 0.6rem 1.1rem;
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .teaser-play svg { width: 12px; height: 12px; color: var(--sb); }
+
   /* ── CLIENT SHOWCASE ── */
   .clients-section {
     padding: 7rem 4rem;
@@ -781,6 +837,10 @@
     .hero { padding: 6rem 1.5rem 3rem; }
     .hero-visual { display: none; }
     .pillars { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+    .teaser-section { padding: 0 1.5rem 4rem; }
+    .teaser-card { grid-template-columns: 1fr; }
+    .teaser-info { padding: 2rem 1.5rem; }
+    .teaser-shot { border-left: none; border-top: 1px solid rgba(52,211,153,0.2); aspect-ratio: 16 / 10; }
     .section, .clients-section, .reach-section, .about-section, .contact-section, .outsourcing-section { padding: 4rem 1.5rem; }
     .tagline-band { padding: 1.2rem 1.5rem; }
     .services-grid { grid-template-columns: 1fr; }
@@ -1115,6 +1175,32 @@
       <div class="service-name">Resource Outsourcing</div>
       <p>Senior engineers embedded in your team on a dedicated or part-time basis. Whether you need a full-stack developer, an AI engineer, or an ERP integration specialist — we supply vetted, experienced talent that plugs in fast and delivers from day one.</p>
     </div>
+  </div>
+</section>
+
+<!-- PRODUCT TEASER -->
+<section class="teaser-section" id="products" aria-labelledby="teaser-title">
+  <div class="section-label">Our Products</div>
+  <div class="teaser-card">
+    <div class="teaser-info">
+      <span class="teaser-badge">New · Early access</span>
+      <h2 class="teaser-name" id="teaser-title">Service<span>Bridge</span></h2>
+      <p>The service desk for equipment makers, connected to ERPNext. Tickets, field visits, AMC contracts and quotations for your service team — with customers, machines and stock read straight from your ERP.</p>
+      <ul class="teaser-points">
+        <li>Tickets with SLA clocks, routing and field visits</li>
+        <li>AMC contracts, quotations and a customer portal</li>
+        <li>Draft invoices and stock entries written back to ERPNext</li>
+      </ul>
+      <div class="teaser-actions">
+        <a href="products/servicebridge.html" class="btn-primary">Explore ServiceBridge</a>
+        <a href="products/servicebridge.html#early-access" class="btn-ghost">Join Early Access</a>
+      </div>
+    </div>
+    <a class="teaser-shot" href="products/servicebridge.html#tour" aria-label="Watch the ServiceBridge product tour">
+      <img src="assets/products/servicebridge/posters/01-tickets.jpg" width="1280" height="800" loading="lazy"
+           alt="ServiceBridge ticket screen with stage progress, SLA status and AMC coverage.">
+      <span class="teaser-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>Watch the tour</span>
+    </a>
   </div>
 </section>
 
@@ -1490,7 +1576,7 @@ window.addEventListener('load', () => {
 (function () {
   const simple = ['.section-label', '.section-title', '.section-sub',
     '.about-content', '.about-nums', '.outsource-intro', '.outsource-why',
-    '.contact-grid > div'];
+    '.contact-grid > div', '.teaser-card'];
   const left = ['.client-info', '.partner-info'];
   const right = ['.client-stats', '.partner-stat-panel'];
   const staggered = ['.services-grid', '.pillars', '.reach-grid', '.labs-grid', '.outsource-roles', '.about-nums'];
