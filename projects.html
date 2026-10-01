@@ -174,8 +174,16 @@
   }
   .section-header {
     display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .nda-note {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    color: var(--muted); text-transform: uppercase;
     margin-bottom: 3rem;
   }
+  .nda-note svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--cyan); }
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.4rem; letter-spacing: 0.06em; color: var(--white);
@@ -405,19 +413,6 @@
   .project-card:nth-child(6) { animation-delay: 0.40s; }
   .project-card:nth-child(7) { animation-delay: 0.47s; }
 
-  /* ── SHOPIFY CLIENT LINKS ── */
-  .client-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .client-link-pill {
-    display: inline-flex; align-items: center; gap: 0.35rem;
-    color: var(--muted); text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.58rem; letter-spacing: 0.08em;
-    border: 1px solid rgba(136,153,187,0.2);
-    padding: 0.2rem 0.6rem; border-radius: 3px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .client-link-pill:hover { color: var(--cyan); border-color: rgba(0,180,216,0.35); }
-  .client-link-pill svg { width: 10px; height: 10px; flex-shrink: 0; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -464,6 +459,7 @@
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#services">Services</a></li>
     <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="products.html">Products</a></li>
     <li><a href="index.html#opensource">Open Source</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
@@ -523,20 +519,23 @@
     <h2 class="section-title">Selected Work</h2>
     <div class="section-line"></div>
   </div>
+  <p class="nda-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Client names and identifying details are withheld under NDA.
+  </p>
 
   <div class="projects-grid">
 
-    <!-- ── 1. PROMAN EDGE ── -->
+    <!-- ── 1. UNIFIED ERP & SERVICE PLATFORM ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
           <span class="industry-tag">Enterprise ERP / Infrastructure</span>
-          <h3 class="card-name">Proman Edge</h3>
-          <p class="card-location">&#x1F4CD; India · Proman Infrastructure Services Group</p>
+          <h3 class="card-name">Unified ERP &amp; Service Platform</h3>
+          <p class="card-location">&#x1F4CD; India · Infrastructure Services Group</p>
         </div>
         <div class="card-tags">
           <span class="role-tag">Solo Delivery</span>
-          <span class="role-tag">TCB Infotech</span>
         </div>
       </div>
       <div class="card-body">
@@ -546,7 +545,7 @@
           <li>Two-way ERPNext integration: read-only nightly MariaDB master pull + REST-API-only writes (Stock Entry, draft Sales Invoice) and an inbound webhook — no direct DB writes, Frappe permission engine respected</li>
           <li>11 role-specific dashboards (Sales Head, Finance Head, MD, Manufacturing Head &amp; more) on Next.js 14 App Router + React 19</li>
           <li>Node.js middleware: ERPNext role sync, Promise.all multi-site fan-out across up to 5 sites, Redis per-widget caching — sub-500ms loads vs 5s+ sequential; mock/live toggle via single env flag</li>
-          <li>Sales Head dashboard: Decision Band (pace-to-target), pipeline funnel with bottleneck detection, BizBot AI assistant, deal drawer with activity timeline</li>
+          <li>Sales Head dashboard: Decision Band (pace-to-target), pipeline funnel with bottleneck detection, deal drawer with activity timeline</li>
         </ul>
         <div class="tech-pills">
           <span class="tech-pill">Next.js 14</span>
@@ -566,17 +565,16 @@
       </div>
     </div>
 
-    <!-- ── 2. PROFOUND ── -->
+    <!-- ── 2. FOUNDRY OPERATIONS ERP ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
           <span class="industry-tag">Enterprise ERP / Manufacturing</span>
-          <h3 class="card-name">ProFound</h3>
-          <p class="card-location">&#x1F4CD; India · GTC Foundry Operations</p>
+          <h3 class="card-name">Foundry Operations ERP</h3>
+          <p class="card-location">&#x1F4CD; India · Manufacturing</p>
         </div>
         <div class="card-tags">
           <span class="role-tag">Full Stack</span>
-          <span class="role-tag">TCB Infotech</span>
         </div>
       </div>
       <div class="card-body">
@@ -602,13 +600,13 @@
       </div>
     </div>
 
-    <!-- ── 3. NIMNIM ── -->
+    <!-- ── 3. LAUNDRY SAAS ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
           <span class="industry-tag">Laundry Management / SaaS</span>
-          <h3 class="card-name">NimNim Laundry</h3>
-          <p class="card-location">&#x1F4CD; Boston, USA</p>
+          <h3 class="card-name">On-Demand Laundry SaaS</h3>
+          <p class="card-location">&#x1F4CD; USA</p>
         </div>
       </div>
       <div class="card-body">
@@ -651,12 +649,12 @@
       </div>
     </div>
 
-    <!-- ── 4. MYRIDER ── -->
+    <!-- ── 4. MULTI-SERVICE DELIVERY PLATFORM ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
           <span class="industry-tag">Logistics / Ride Booking / Food Delivery</span>
-          <h3 class="card-name">MyRider</h3>
+          <h3 class="card-name">Multi-Service Delivery Platform</h3>
         </div>
       </div>
       <div class="card-body">
@@ -702,19 +700,13 @@
       </div>
     </div>
 
-    <!-- ── 5. INDIAZONA ── -->
+    <!-- ── 5. E-COMMERCE PLATFORM ── -->
     <div class="project-card">
       <div class="card-top">
         <div class="card-meta">
           <span class="industry-tag">E-Commerce</span>
-          <h3 class="card-name">Indiazona</h3>
+          <h3 class="card-name">High-Traffic E-Commerce Platform</h3>
         </div>
-        <a href="https://indiazona.in/" target="_blank" rel="noopener" class="card-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-          indiazona.in
-        </a>
       </div>
       <div class="card-body">
         <p class="overview-text">
@@ -760,7 +752,7 @@
       <div class="card-top">
         <div class="card-meta">
           <span class="industry-tag">E-Commerce / Shopify</span>
-          <h3 class="card-name">Shopify Client Projects</h3>
+          <h3 class="card-name">Shopify Store Projects</h3>
           <p class="card-location">Multiple Clients — Fashion, Lifestyle &amp; Homeware</p>
         </div>
       </div>
@@ -781,50 +773,6 @@
           </div>
         </div>
 
-        <div>
-          <p class="card-section-label">Client Work <span style="color:var(--muted);font-size:0.55rem;letter-spacing:0.1em;font-weight:400;margin-left:0.5rem;">— Projects delivered; now maintained by respective teams</span></p>
-          <div class="client-links">
-            <a href="https://homekaara.com/" target="_blank" rel="noopener" class="client-link-pill" title="Custom App + HTML/JS development">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Homekaara ✦
-            </a>
-            <a href="https://chakkipeesing.com/" target="_blank" rel="noopener" class="client-link-pill" title="Custom 'Make Your Own Mix' feature — App + JS development">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Chakki Peesing ✦
-            </a>
-            <a href="https://www.gkhair.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              GKhair
-            </a>
-            <a href="https://gypsieblu.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Gypsie Blu
-            </a>
-            <a href="https://houseofsoi.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              House of Soi
-            </a>
-            <a href="https://taractara.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Tara c Tara
-            </a>
-            <a href="https://trendytokari.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Trendy Tokari
-            </a>
-            <a href="https://labeladitihundia.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Label Aditi Hundia
-            </a>
-            <a href="https://shivangikasliwal.com/" target="_blank" rel="noopener" class="client-link-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Shivangi Kasliwal
-            </a>
-            <span class="client-link-pill">Pelican House</span>
-          </div>
-          <p style="font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--muted);margin-top:0.6rem;">✦ Custom app &amp; JS development</p>
-        </div>
-
         <div class="card-cols">
           <div>
             <p class="card-section-label">Responsibilities</p>
@@ -841,8 +789,8 @@
           <div>
             <p class="card-section-label">Key Achievements</p>
             <ul class="achievements-list">
-              <li>Built custom Shopify app for Homekaara with bespoke JS/HTML features</li>
-              <li>Developed "Make Your Own Mix" custom configurator for Chakki Peesing using Shopify App + JS</li>
+              <li>Built a custom Shopify app with bespoke JS/HTML storefront features for a homeware brand</li>
+              <li>Developed a "Make Your Own Mix" product configurator for a food brand using Shopify App + JS</li>
               <li>Significantly improved store loading speed &amp; Core Web Vitals</li>
               <li>Automated bulk product listing via Google Sheets App Script, saving hours of manual work</li>
               <li>Launched multiple fashion brand stores with custom Liquid templates</li>
@@ -879,7 +827,7 @@
 ══════════════════════════════════════════════ -->
 <footer>
   <span class="footer-brand">Rirote Global</span>
-  <span class="footer-copy">&copy; 2025 Rirote Global. All rights reserved.</span>
+  <span class="footer-copy">&copy; 2026 Rirote Global. All rights reserved.</span>
 </footer>
 
 

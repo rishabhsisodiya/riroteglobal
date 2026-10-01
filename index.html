@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rirote Global — Rise with Robust Tech</title>
-<meta name="description" content="Rirote Global delivers robust software engineering, ERP solutions, Shopify development, automation, Flutter apps, and outsourced tech talent for global businesses.">
-<meta name="keywords" content="ERPNext, Shopify Development, Flutter Development, Web Development, Automation, Resource Outsourcing, India Tech Agency">
+<meta name="description" content="Rirote Global builds full-stack products, AI agents and LLM integrations, ERP integrations, and cloud infrastructure for businesses worldwide — plus senior engineers on contract.">
+<meta name="keywords" content="Full-Stack Development, AI Agents, LLM Integration, Next.js, NestJS, Node.js, ERPNext Integration, AWS, Software Architecture, Contract Engineers, India">
 <meta name="author" content="Rirote Global">
 <meta name="robots" content="index, follow">
 
 <meta property="og:title" content="Rirote Global — Rise with Robust Tech">
-<meta property="og:description" content="Global engineering, ERP, Shopify, Flutter, and automation solutions built for modern businesses.">
+<meta property="og:description" content="Full-stack products, AI integration, ERP systems, and cloud infrastructure — engineered end to end.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://riroteglobal.com">
 <meta property="og:image" content="https://riroteglobal.com/og-image.jpg">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Rirote Global — Rise with Robust Tech">
-<meta name="twitter:description" content="Enterprise-ready software, ERP, automation, and outsourcing solutions.">
+<meta name="twitter:description" content="Full-stack engineering, AI integration, and enterprise systems built to scale.">
 <meta name="twitter:image" content="https://riroteglobal.com/og-image.jpg">
 
 <link rel="icon" href="assets/favicon.png" type="image/png">
@@ -397,6 +397,23 @@
     height: 1px;
     background: linear-gradient(90deg, rgba(0,180,216,0.3), transparent);
   }
+  .worked-with {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2.5rem;
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid rgba(0,180,216,0.15);
+  }
+  .worked-with-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .worked-with-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.08em;
+    color: rgba(240,244,255,0.55); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .worked-with-name:hover { color: var(--cyan); }
 
   /* ── PARTNER BADGE VARIANT ── */
   .partner-badge {
@@ -919,6 +936,16 @@
     width: 0; height: 1px; background: var(--cyan);
     transition: width .3s ease;
   }
+  @media (min-width: 901px) and (max-width: 1300px) {
+    nav { padding: 1rem 1.5rem; gap: 1rem; }
+    .nav-links { gap: 1.1rem; }
+    .nav-links a { font-size: 0.64rem; letter-spacing: 0.06em; }
+    .nav-cta { padding: 0.55rem 1rem; }
+  }
+  /* "Contact" link already covers it; the button doesn't fit here */
+  @media (min-width: 901px) and (max-width: 1080px) {
+    .nav-cta-wrap { display: none; }
+  }
   .nav-links a:hover::after,
   .nav-links a[style*="cyan"]::after { width: 100%; }
 
@@ -986,11 +1013,11 @@
   <ul class="nav-links" id="mobileMenu">
     <li><a href="#services">Services</a></li>
     <li><a href="#outsourcing">Outsourcing</a></li>
-    <li><a href="#clients">Clients</a></li>
+    <li><a href="#clients">Case Studies</a></li>
     <li><a href="projects.html">Projects</a></li>
+    <li><a href="products.html">Products</a></li>
     <li><a href="#reach">Global Reach</a></li>
     <li><a href="#opensource">Open Source</a></li>
-    <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
     <li class="mobile-cta-li"><a href="#contact" class="nav-cta" style="display:inline-block; margin:0.5rem 0;">Get in Touch</a></li>
   </ul>
@@ -1011,7 +1038,7 @@
     <p class="hero-sub">At Rirote Global, we provide strategy that rises and systems that are robust. We empower global enterprises through disciplined engineering and visionary consulting.</p>
     <div class="hero-btns">
       <a href="#services" class="btn-primary">Explore Services</a>
-      <a href="#clients" class="btn-ghost">Our Clients</a>
+      <a href="#clients" class="btn-ghost">Case Studies</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -1051,91 +1078,134 @@
 <section class="section" id="services">
   <div class="section-label">What We Do</div>
   <h2 class="section-title">Our Services</h2>
-  <p class="section-sub">From e-commerce stores to enterprise platforms, we build, automate, and scale digital products that drive real business results.</p>
+  <p class="section-sub">Full-stack products, AI integration, and enterprise systems — owned end to end, from system design and APIs through deployment and production support.</p>
   <div class="services-grid">
     <div class="service-card">
-      <div class="service-icon">🛒</div>
-      <div class="service-name">Shopify Development</div>
-      <p>Custom Shopify stores, themes, and app integrations. We design high-converting storefronts and seamless checkout experiences tailored to your brand.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🌐</div>
-      <div class="service-name">WordPress Development</div>
-      <p>Bespoke WordPress websites — from blogs to business portals. Performance-optimised, SEO-ready, and easy to manage after handover.</p>
-    </div>
-    <div class="service-card">
       <div class="service-icon">💻</div>
-      <div class="service-name">Website Development</div>
-      <p>Full-stack web development using modern technologies. Clean code, responsive design, and pixel-perfect execution for every screen size.</p>
+      <div class="service-name">Full-Stack Product Development</div>
+      <p>Web platforms and SaaS products built on Next.js, React, NestJS, and Node.js — typed end to end, PWA-ready, and designed to grow from MVP to production scale.</p>
     </div>
     <div class="service-card">
-      <div class="service-icon">📱</div>
-      <div class="service-name">App Development</div>
-      <p>Cross-platform mobile apps built with Flutter. One codebase, two platforms — iOS and Android — with native-quality performance and beautiful UI.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">⚙️</div>
-      <div class="service-name">Automation</div>
-      <p>Workflow automation, API integrations, and process streamlining that eliminate repetitive tasks, reduce errors, and free your team to focus on growth.</p>
+      <div class="service-icon">🤖</div>
+      <div class="service-name">AI Agents &amp; LLM Integration</div>
+      <p>AI assistants, agent workflows, and LLM features wired into your product and data — with clear specs, guardrails, and verification so the output can be trusted in production.</p>
     </div>
     <div class="service-card">
       <div class="service-icon">🏢</div>
-      <div class="service-name">ERP</div>
-      <p>End-to-end ERPNext implementation, customisation, and support. We streamline finance, inventory, HR, and operations into one unified platform.</p>
+      <div class="service-name">ERP &amp; Enterprise Integrations</div>
+      <p>Custom ERP modules, ERPNext integrations, and role-based executive dashboards. Idempotent APIs, retry queues, and reconciliation so data stays consistent across systems.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">☁️</div>
+      <div class="service-name">Cloud, DevOps &amp; Performance</div>
+      <p>AWS and Digital Ocean infrastructure, Docker, CI/CD, and server hardening. We cut cloud bills, fix slow queries, and bring load times down from seconds to milliseconds.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧭</div>
+      <div class="service-name">Architecture &amp; Technical Leadership</div>
+      <p>System design, microservices, and monolith-to-microservices migrations — plus hands-on technical leadership for teams that need a senior engineer owning delivery.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <div class="service-name">Data Pipelines &amp; Reporting</div>
+      <p>ETL pipelines into Redshift and PostgreSQL, reporting APIs, and SLA dashboards that turn operational data into decisions your leadership can act on.</p>
     </div>
     <div class="service-card" style="grid-column: 1 / -1;">
       <div class="service-icon">🤝</div>
       <div class="service-name">Resource Outsourcing</div>
-      <p>We provide skilled developers, designers, and tech professionals to clients and agencies on a dedicated or part-time basis. Whether you need a Flutter developer, a WordPress specialist, or an ERPNext consultant embedded in your team — we supply vetted, experienced talent that plugs in fast and delivers from day one.</p>
+      <p>Senior engineers embedded in your team on a dedicated or part-time basis. Whether you need a full-stack developer, an AI engineer, or an ERP integration specialist — we supply vetted, experienced talent that plugs in fast and delivers from day one.</p>
     </div>
   </div>
 </section>
 
-<!-- CLIENT SHOWCASE -->
+<!-- CASE STUDIES -->
 <section class="clients-section" id="clients">
-  <div class="section-label">Client Spotlight</div>
+  <div class="section-label">Case Studies</div>
   <h2 class="section-title">Powering Real Businesses</h2>
-  <p class="section-sub">We're proud to work with companies redefining their industries. Here's a closer look at one of our featured clients.</p>
+  <p class="section-sub">Measured outcomes from real engagements — what changed for the business after we shipped.</p>
 
   <!-- NimNim -->
   <div class="client-card">
     <div class="client-info">
-      <span class="client-badge">Featured Client</span>
+      <span class="client-badge">Case Study · SaaS · USA</span>
       <div class="client-name">NimNim</div>
       <div class="client-tagline">24/7 Laundry & Dry-Cleaning · Boston · NYC · Miami</div>
-      <p>NimNim is the on-demand laundry and dry-cleaning concierge transforming how busy professionals and families handle their garment care. Founded in Boston by brothers Akshay and Nimish Sahani, NimNim offers door-to-door pickup and delivery seven days a week.</p>
-      <p>Their platform covers everything from everyday wash-and-fold and professional dry cleaning to shoe repair, alterations, rug cleaning, and household items — all bookable through a seamless mobile app with real-time order tracking.</p>
+      <p>NimNim is an on-demand laundry and dry-cleaning concierge offering door-to-door pickup and delivery seven days a week, all booked through its mobile app.</p>
+      <p>We took over a production platform running on multiple loosely secured EC2 instances, consolidated it onto one hardened server behind Nginx and Cloudflare, optimized slow MongoDB queries, secured the API, and delivered a full platform revamp while customers kept ordering.</p>
       <div class="client-services">
-        <span class="client-service-tag">Wash & Fold</span>
-        <span class="client-service-tag">Dry Cleaning</span>
-        <span class="client-service-tag">Shoe Repair</span>
-        <span class="client-service-tag">Alterations</span>
-        <span class="client-service-tag">Rug Cleaning</span>
-        <span class="client-service-tag">On-Demand App</span>
+        <span class="client-service-tag">React</span>
+        <span class="client-service-tag">Node.js</span>
+        <span class="client-service-tag">MongoDB</span>
+        <span class="client-service-tag">AWS EC2</span>
+        <span class="client-service-tag">Nginx</span>
+        <span class="client-service-tag">Cloudflare</span>
       </div>
-      <a href="https://www.getnimnim.com" target="_blank" class="client-link">Visit getnimnim.com →</a>
+      <a href="https://www.getnimnim.com" target="_blank" rel="noopener" class="client-link">Visit getnimnim.com →</a>
     </div>
     <div class="client-stats">
       <div class="stat-item">
-        <div class="stat-num">3+</div>
-        <div class="stat-label">Cities — Boston, NYC & Miami</div>
+        <div class="stat-num">50%</div>
+        <div class="stat-label">Lower AWS Bill</div>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">Pickup & Delivery Availability</div>
+        <div class="stat-num">50%</div>
+        <div class="stat-label">Faster API Responses</div>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
-        <div class="stat-num">2010</div>
-        <div class="stat-label">Founded — 15+ Years of Service</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Satisfaction Guarantee</div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Hardened Server Replacing Many</div>
       </div>
     </div>
+  </div>
+
+  <!-- Enterprise ERP (via TCB Infotech) -->
+  <div class="client-card">
+    <div class="client-info">
+      <span class="client-badge">Case Study · Enterprise ERP · India</span>
+      <div class="client-name">Enterprise ERP Platform</div>
+      <div class="client-tagline">Infrastructure Services Group · Delivered with TCB Infotech</div>
+      <p>An infrastructure group with 9 business entities ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another.</p>
+      <p>We architected and solo-delivered one unified platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based executive dashboards backed by a parallel multi-site middleware with Redis caching.</p>
+      <div class="client-services">
+        <span class="client-service-tag">Next.js</span>
+        <span class="client-service-tag">NestJS</span>
+        <span class="client-service-tag">PostgreSQL</span>
+        <span class="client-service-tag">Redis</span>
+        <span class="client-service-tag">ERPNext</span>
+        <span class="client-service-tag">PWA</span>
+      </div>
+      <a href="https://tcbinfotech.com" target="_blank" rel="noopener" class="client-link">Visit tcbinfotech.com →</a>
+    </div>
+    <div class="client-stats">
+      <div class="stat-item">
+        <div class="stat-num">&lt;500ms</div>
+        <div class="stat-label">Dashboard Loads, Down from 5s+</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">2 → 1</div>
+        <div class="stat-label">Apps &amp; Servers Merged</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">11</div>
+        <div class="stat-label">Role-Based Executive Dashboards</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Business Entities on One Platform</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="worked-with">
+    <span class="worked-with-label">Worked with</span>
+    <a href="https://www.getnimnim.com" target="_blank" rel="noopener" class="worked-with-name">NimNim</a>
+    <a href="https://tcbinfotech.com" target="_blank" rel="noopener" class="worked-with-name">TCB Infotech</a>
+    <a href="https://www.majesteamarketing.com" target="_blank" rel="noopener" class="worked-with-name">MajesTEA Marketing</a>
   </div>
 
 </section>
@@ -1155,34 +1225,34 @@
       </div>
       <div class="outsource-roles">
         <div class="role-card">
-          <div class="role-icon">📱</div>
-          <div class="role-name">Flutter Developer</div>
-          <div class="role-desc">Cross-platform iOS & Android</div>
+          <div class="role-icon">💻</div>
+          <div class="role-name">Full-Stack Developer</div>
+          <div class="role-desc">React, Next.js, Node.js, TypeScript</div>
         </div>
         <div class="role-card">
-          <div class="role-icon">🌐</div>
-          <div class="role-name">Web Developer</div>
-          <div class="role-desc">React, Next.js, WordPress, Shopify</div>
-        </div>
-        <div class="role-card">
-          <div class="role-icon">🏢</div>
-          <div class="role-name">ERP Consultant</div>
-          <div class="role-desc">ERPNext & Odoo implementation</div>
-        </div>
-        <div class="role-card">
-          <div class="role-icon">⚙️</div>
-          <div class="role-name">Automation Engineer</div>
-          <div class="role-desc">API integrations & workflows</div>
-        </div>
-        <div class="role-card">
-          <div class="role-icon">🎨</div>
-          <div class="role-name">UI/UX Designer</div>
-          <div class="role-desc">Figma, wireframes, prototyping</div>
+          <div class="role-icon">🤖</div>
+          <div class="role-name">AI Engineer</div>
+          <div class="role-desc">LLM integration &amp; agent workflows</div>
         </div>
         <div class="role-card">
           <div class="role-icon">🔧</div>
           <div class="role-name">Backend Developer</div>
-          <div class="role-desc">Node.js, Python, REST APIs</div>
+          <div class="role-desc">NestJS, FastAPI, REST APIs</div>
+        </div>
+        <div class="role-card">
+          <div class="role-icon">🏢</div>
+          <div class="role-name">ERP Integration Developer</div>
+          <div class="role-desc">ERPNext modules &amp; integrations</div>
+        </div>
+        <div class="role-card">
+          <div class="role-icon">☁️</div>
+          <div class="role-name">Cloud / DevOps Engineer</div>
+          <div class="role-desc">AWS, Docker, CI/CD, Nginx</div>
+        </div>
+        <div class="role-card">
+          <div class="role-icon">🧭</div>
+          <div class="role-name">Technical Lead</div>
+          <div class="role-desc">Architecture &amp; team leadership</div>
         </div>
       </div>
     </div>
@@ -1219,91 +1289,6 @@
     </div>
   </div>
 
-  <!-- TCB Infotech Partner -->
-  <div style="margin-top:5rem;">
-    <div class="section-label" style="margin-bottom:1rem;">Agency Partners</div>
-    <p style="color:rgba(240,244,255,0.6);font-size:1rem;max-width:560px;line-height:1.7;margin-bottom:0;">We proudly supply resources to specialist agencies, including these featured technology and marketing partners.</p>
-  </div>
-
-  <div class="partner-card">
-    <div class="partner-info">
-      <span class="partner-badge">Agency Partner · India</span>
-      <div class="partner-name">TCB Infotech</div>
-      <div class="partner-tagline">Odoo & ERPNext Implementation Partner · Jaipur & Hisar</div>
-      <p>TCB Infotech is one of India's most trusted ERP implementation firms — specialists in Odoo and ERPNext with 50+ successful projects across 40+ industries and zero project failures since 2021.</p>
-      <p>Rirote Global supplies dedicated ERP consultants, developers, and technical resources to TCB Infotech, enabling them to scale delivery across healthcare, manufacturing, education, NBFC, and distribution sectors in India, UAE, UK, and the USA.</p>
-      <div class="client-services">
-        <span class="client-service-tag" style="border-color:rgba(255,209,102,0.35);color:#e8c96a;">Odoo Implementation</span>
-        <span class="client-service-tag" style="border-color:rgba(255,209,102,0.35);color:#e8c96a;">ERPNext Solutions</span>
-        <span class="client-service-tag" style="border-color:rgba(255,209,102,0.35);color:#e8c96a;">AI-Powered ERP</span>
-        <span class="client-service-tag" style="border-color:rgba(255,209,102,0.35);color:#e8c96a;">ERP Rescue Projects</span>
-        <span class="client-service-tag" style="border-color:rgba(255,209,102,0.35);color:#e8c96a;">Resource Supply</span>
-      </div>
-      <a href="https://tcbinfotech.com" target="_blank" class="partner-link">Visit tcbinfotech.com →</a>
-    </div>
-    <div class="partner-stat-panel">
-      <div class="stat-item">
-        <div class="partner-stat-num">50+</div>
-        <div class="partner-stat-label">Successful ERP Projects</div>
-      </div>
-      <div class="partner-stat-div"></div>
-      <div class="stat-item">
-        <div class="partner-stat-num">40+</div>
-        <div class="partner-stat-label">Industries Served</div>
-      </div>
-      <div class="partner-stat-div"></div>
-      <div class="stat-item">
-        <div class="partner-stat-num">35+</div>
-        <div class="partner-stat-label">Expert Team Members</div>
-      </div>
-      <div class="partner-stat-div"></div>
-      <div class="stat-item">
-        <div class="partner-stat-num">0</div>
-        <div class="partner-stat-label">Project Failures Since 2021</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MajesTEA Marketing Partner Card -->
-  <div class="partner-card" style="margin-top:2rem; border-color:rgba(72,202,228,0.2);">
-    <div class="partner-info" style="background:rgba(0,180,216,0.04); border-right-color:rgba(72,202,228,0.12);">
-      <span class="client-badge">Agency Partner · India</span>
-      <div class="client-name" style="font-size:2.8rem;">MajesTEA Marketing</div>
-      <div class="client-tagline" style="color:var(--cyan);">Brand Promotion · Web Dev · Social Media · SEO · Shopify · Jaipur, India</div>
-      <p>MajesTEA Marketing is a full-spectrum digital marketing agency with a personality as bold as their tagline — <em>"NamasTEA! We Got Your Back."</em> They serve 100+ brands across brand promotion, video marketing, SEO, social media, paid ads, content creation, Shopify stores, and ERP solutions.</p>
-      <p>Rirote Global supplies web developers, Shopify specialists, and technical resources to MajesTEA — enabling their creative team to deliver robust, scalable digital products alongside their sharp marketing strategies.</p>
-      <div class="client-services">
-        <span class="client-service-tag">Brand Promotion</span>
-        <span class="client-service-tag">Web Development</span>
-        <span class="client-service-tag">Shopify Solutions</span>
-        <span class="client-service-tag">Social Media</span>
-        <span class="client-service-tag">SEO</span>
-        <span class="client-service-tag">Resource Supply</span>
-      </div>
-      <a href="https://www.majesteamarketing.com" target="_blank" class="client-link">Visit majesteamarketing.com →</a>
-    </div>
-    <div class="client-stats">
-      <div class="stat-item">
-        <div class="stat-num">100+</div>
-        <div class="stat-label">Brands Served</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-num">9</div>
-        <div class="stat-label">Core Services Offered</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-num">5×</div>
-        <div class="stat-label">Average Business Growth</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">Cups of Tea Consumed</div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- TAGLINE BAND -->
@@ -1373,72 +1358,18 @@
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="about-section" id="about">
-  <div class="section-label">Our Story</div>
-  <div class="about-grid">
-    <div class="about-content">
-      <h2 class="section-title" style="margin-bottom:1.5rem;">A Legacy<br>in a Name.</h2>
-      <p>Rirote Global is more than a company — it's a family story encoded into every letter. The name is a heartfelt blend of <strong>Rishabh</strong> and <strong>Rohini</strong>, the founders, and their newborn daughter <strong>Tejaswini</strong> — a name that carries their hopes, drive, and shared vision for the future.</p>
-      <p>Built from India, reaching the world. From our headquarters in India, we partner with businesses globally — delivering strategy that rises and engineering that endures.</p>
-      <p>Rich, Robust, and Rapid development. That is our brand essence — and the standard we hold ourselves to, on every engagement, in every timezone.</p>
-      <div class="about-name-breakdown">
-        <div class="name-row">
-          <span class="name-letter">Ri</span>
-          <span class="name-meaning"><strong>Rise</strong> — Strategic consulting that elevates client businesses.</span>
-        </div>
-        <div class="name-row">
-          <span class="name-letter">Ro</span>
-          <span class="name-meaning"><strong>Robust</strong> — Dependable engineering and high-quality infrastructure.</span>
-        </div>
-        <div class="name-row">
-          <span class="name-letter">Te</span>
-          <span class="name-meaning"><strong>Technology</strong> — Cutting-edge innovation and modern digital solutions.</span>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="about-nums">
-        <div class="about-num-card">
-          <div class="about-num">🇮🇳</div>
-          <div class="about-num-label">Headquartered in India</div>
-        </div>
-        <div class="about-num-card">
-          <div class="about-num">∞</div>
-          <div class="about-num-label">Global reach with no borders</div>
-        </div>
-        <div class="about-num-card">
-          <div class="about-num">3</div>
-          <div class="about-num-label">Core pillars in every engagement</div>
-        </div>
-        <div class="about-num-card">
-          <div class="about-num">1st</div>
-          <div class="about-num-label">Class delivery, every single time</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div class="section-label">Get in Touch</div>
   <div class="contact-grid">
     <div>
       <h2 class="section-title" style="margin-bottom:1rem;">Let's Build<br>Something Global.</h2>
-      <p class="section-sub" style="margin-bottom:2.5rem;">Ready to rise? Tell us about your project and we'll connect you with the right team within 24 hours.</p>
-      <div class="contact-info-item">
-        <span class="contact-icon">🌐</span>
-        <div>
-          <h4>Website</h4>
-          <p>riroteglobal.com</p>
-        </div>
-      </div>
+      <p class="section-sub" style="margin-bottom:2.5rem;">Ready to rise? Tell us about your project and we'll get back to you within 24 hours.</p>
       <div class="contact-info-item">
         <span class="contact-icon">✉️</span>
         <div>
           <h4>Email</h4>
-          <p>hello@riroteglobal.com</p>
+          <p><a href="mailto:info@riroteglobal.com" style="color:inherit;text-decoration:none;">info@riroteglobal.com</a></p>
         </div>
       </div>
       <div class="contact-info-item">
@@ -1466,13 +1397,14 @@
         <label>Service Interest</label>
         <select>
           <option value="">Select a service...</option>
-          <option>Shopify Development</option>
-          <option>WordPress Development</option>
-          <option>Website Development</option>
-          <option>App Development</option>
-          <option>Automation</option>
-          <option>ERP</option>
+          <option>Full-Stack Product Development</option>
+          <option>AI Agents &amp; LLM Integration</option>
+          <option>ERP &amp; Enterprise Integrations</option>
+          <option>Cloud, DevOps &amp; Performance</option>
+          <option>Architecture &amp; Technical Leadership</option>
+          <option>Data Pipelines &amp; Reporting</option>
           <option>Resource Outsourcing</option>
+          <option>Something Else</option>
         </select>
       </div>
       <div class="contact-form-group">
@@ -1585,7 +1517,7 @@ window.addEventListener('load', () => {
   function run(el) {
     const raw = el.textContent.trim();
     const m = raw.match(/^(\d+)(.*)/);
-    if (!m || raw === '1st') return;
+    if (!m || raw.includes('→')) return;
     const end = parseInt(m[1]), suf = m[2];
     const dur = end > 200 ? 2000 : 1400, t0 = performance.now();
     (function tick(now) {
