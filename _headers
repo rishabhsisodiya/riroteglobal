@@ -1,0 +1,17 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Internal tool: never index
+/invoice
+  X-Robots-Tag: noindex, nofollow
+/invoice.html
+  X-Robots-Tag: noindex, nofollow
+
+# Media and brand files change rarely
+/assets/products/*
+  Cache-Control: public, max-age=604800
+/assets/brand/*
+  Cache-Control: public, max-age=604800
