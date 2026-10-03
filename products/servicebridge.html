@@ -10,7 +10,7 @@
 <meta property="og:description" content="Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://riroteglobal.com/products/servicebridge.html">
-<meta property="og:image" content="https://riroteglobal.com/assets/products/servicebridge/posters/01-tickets.jpg">
+<meta property="og:image" content="https://riroteglobal.com/assets/products/servicebridge/posters/promo.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,12 +71,7 @@
     background: var(--navy-card);
     box-shadow: 0 40px 120px rgba(0,0,0,0.45), 0 0 60px rgba(16,185,129,0.08);
   }
-  .app-frame-bar {
-    display: flex; align-items: center; gap: 6px;
-    padding: 0.6rem 0.9rem; background: #0b1a30; border-bottom: 1px solid var(--line);
-  }
-  .app-frame-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(240,244,255,0.15); }
-  .app-frame img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .app-frame video { width: 100%; aspect-ratio: 16 / 9; background: #f6f8fb; scroll-margin-top: 6rem; }
 
   /* ── WHO IT'S FOR ── */
   .roles {
@@ -261,14 +256,15 @@
       <p class="page-sub fade-up d3">Tickets, field visits, AMC contracts and quotations for your service team — with customers, machines, spares and stock read straight from ERPNext. No double entry, no spreadsheets on the side.</p>
       <div class="hero-actions fade-up d4">
         <a href="#early-access" class="btn-primary">Join Early Access</a>
-        <a href="#tour" class="btn-outline">Watch the 6-min tour</a>
+        <a href="#promo" class="btn-outline" id="playPromo">Watch the 90-sec overview</a>
       </div>
       <p class="hero-note fade-up d4">Runs on a demo company until you connect your ERP</p>
     </div>
     <div class="app-frame fade-up d4">
-      <div class="app-frame-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-      <img src="../assets/products/servicebridge/posters/01-tickets.jpg" width="1280" height="800"
-           alt="A ServiceBridge ticket for a crusher breakdown: stage progress from New to Closed, response SLA met, resolution due date, AMC coverage, field visits, machine and customer details.">
+      <video id="promo" controls preload="none" playsinline width="1920" height="1080"
+             poster="../assets/products/servicebridge/posters/promo.jpg"
+             src="../assets/products/servicebridge/promo.mp4"
+             aria-label="ServiceBridge overview video, 90 seconds, with captions"></video>
     </div>
   </section>
 
@@ -310,7 +306,7 @@
       <h2 class="section-title" id="tour-title">See It Work</h2>
       <div class="section-line"></div>
     </div>
-    <p class="section-sub">Eight short walkthroughs of the real product on demo data. Pick a module — each video has narration.</p>
+    <p class="section-sub">Want the detail? Eight short walkthroughs of the real product on demo data. Pick a module — each video has narration.</p>
 
     <div class="tour">
       <div class="tour-tabs" role="tablist" aria-label="ServiceBridge modules" aria-orientation="vertical">
@@ -646,11 +642,20 @@
     });
   });
 
-  // Only one video plays at a time.
-  document.querySelectorAll('.tour-video').forEach(function (v) {
+})();
+
+// ── VIDEOS: only one plays at a time; hero button starts the overview ──
+(function () {
+  var videos = document.querySelectorAll('video');
+  videos.forEach(function (v) {
     v.addEventListener('play', function () {
-      document.querySelectorAll('.tour-video').forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
+      videos.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
     });
+  });
+  var btn = document.getElementById('playPromo'), promo = document.getElementById('promo');
+  if (btn && promo) btn.addEventListener('click', function () {
+    var p = promo.play();
+    if (p && p.catch) p.catch(function () {}); // falls back to the native controls
   });
 })();
 </script>
