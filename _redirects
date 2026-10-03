@@ -1,0 +1,5 @@
+# Old product page name (renamed to ERPTick)
+/products/servicebridge       /products/erptick   301
+/products/servicebridge.html  /products/erptick   301
+# Share image moved into /assets
+/og-image.jpg                 /assets/og-image.jpg 301

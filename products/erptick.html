@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ServiceBridge — Service Desk for Equipment Makers, Connected to ERPNext</title>
-<meta name="description" content="ServiceBridge is the field service desk for equipment makers running ERPNext: tickets with SLAs, field visits, AMC contracts, quotations, a customer portal and reports — with customers, machines and stock read from your ERP.">
+<title>ERPTick Service Desk — for Equipment Makers, Connected to ERPNext</title>
+<meta name="description" content="ERPTick is the field service desk for equipment makers running ERPNext: tickets with SLAs, field visits, AMC contracts, quotations, a customer portal and reports — with customers, machines and stock read from your ERP.">
 <meta name="author" content="Rirote Global">
-<meta property="og:title" content="ServiceBridge — Service Desk for Equipment Makers">
+<meta property="og:title" content="ERPTick Service Desk — for Equipment Makers">
 <meta property="og:description" content="Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://riroteglobal.com/products/servicebridge.html">
-<meta property="og:image" content="https://riroteglobal.com/assets/products/servicebridge/posters/promo.jpg">
+<meta property="og:url" content="https://riroteglobal.com/products/erptick.html">
+<meta property="og:image" content="https://riroteglobal.com/assets/products/erptick/posters/promo.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://riroteglobal.com/products/servicebridge.html">
+<link rel="canonical" href="https://riroteglobal.com/products/erptick.html">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="../assets/favicon-192.png" type="image/png" sizes="192x192">
@@ -25,7 +25,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "ServiceBridge",
+  "name": "ERPTick Service Desk",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
   "description": "Field service desk for equipment makers, connected to ERPNext: tickets, field visits, AMC contracts, quotations, customer portal and reports.",
@@ -33,7 +33,7 @@
 }
 </script>
 <style>
-  /* ServiceBridge accent — emerald, tuned for contrast on navy */
+  /* ERPTick accent — emerald, tuned for contrast on navy */
   body {
     --accent: #10b981;
     --accent-text: #34d399;
@@ -75,7 +75,7 @@
     background: var(--navy-card);
     box-shadow: 0 40px 120px rgba(0,0,0,0.45), 0 0 60px rgba(16,185,129,0.08);
   }
-  .app-frame video { width: 100%; aspect-ratio: 16 / 9; background: #f6f8fb; scroll-margin-top: 6rem; }
+  .app-frame video { width: 100%; aspect-ratio: 16 / 9; background: #f5f7fb; scroll-margin-top: 6rem; }
 
   /* ── WHO IT'S FOR ── */
   .roles {
@@ -255,7 +255,7 @@
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1"><a href="../products.html" style="text-decoration:none;">Products</a> / ServiceBridge</p>
+      <p class="eyebrow fade-up d1"><a href="../products.html" style="text-decoration:none;">Products</a> / ERPTick Service Desk</p>
       <span class="hero-status fade-up d1">Now in early access</span>
       <h1 class="page-title fade-up d2">The Service Desk<br>for Equipment Makers.<br><span>Connected to ERPNext.</span></h1>
       <p class="page-sub fade-up d3">Tickets, field visits, AMC contracts and quotations for your service team — with customers, machines, spares and stock read straight from ERPNext. No double entry, no spreadsheets on the side.</p>
@@ -267,9 +267,9 @@
     </div>
     <div class="app-frame fade-up d4">
       <video id="promo" controls preload="none" playsinline width="1920" height="1080"
-             poster="../assets/products/servicebridge/posters/promo.jpg"
-             src="../assets/products/servicebridge/promo.mp4"
-             aria-label="ServiceBridge overview video, 90 seconds, with captions"></video>
+             poster="../assets/products/erptick/posters/promo.jpg"
+             src="../assets/products/erptick/promo.mp4"
+             aria-label="ERPTick Service Desk overview video, 90 seconds, with narration and captions"></video>
     </div>
   </section>
 
@@ -311,176 +311,228 @@
       <h2 class="section-title" id="tour-title">See It Work</h2>
       <div class="section-line"></div>
     </div>
-    <p class="section-sub">Want the detail? Eight short walkthroughs of the real product on demo data. Pick a module — each video has narration.</p>
+    <p class="section-sub">Want the detail? Ten short walkthroughs of the real product on demo data. Pick a module — each video has narration and captions.</p>
 
     <div class="tour">
-      <div class="tour-tabs" role="tablist" aria-label="ServiceBridge modules" aria-orientation="vertical">
-        <button class="tour-tab" role="tab" id="tab-tickets" aria-controls="panel-tickets" aria-selected="true"><span><span class="num">01</span>Tickets &amp; SLAs</span><span class="dur">1:06</span></button>
-        <button class="tour-tab" role="tab" id="tab-quotations" aria-controls="panel-quotations" aria-selected="false" tabindex="-1"><span><span class="num">02</span>Quotations</span><span class="dur">0:49</span></button>
-        <button class="tour-tab" role="tab" id="tab-amc" aria-controls="panel-amc" aria-selected="false" tabindex="-1"><span><span class="num">03</span>AMC Contracts</span><span class="dur">0:33</span></button>
-        <button class="tour-tab" role="tab" id="tab-erp" aria-controls="panel-erp" aria-selected="false" tabindex="-1"><span><span class="num">04</span>ERPNext Connection</span><span class="dur">0:46</span></button>
-        <button class="tour-tab" role="tab" id="tab-customers" aria-controls="panel-customers" aria-selected="false" tabindex="-1"><span><span class="num">05</span>Customers &amp; Machines</span><span class="dur">0:49</span></button>
-        <button class="tour-tab" role="tab" id="tab-portal" aria-controls="panel-portal" aria-selected="false" tabindex="-1"><span><span class="num">06</span>Customer Portal</span><span class="dur">0:42</span></button>
-        <button class="tour-tab" role="tab" id="tab-reports" aria-controls="panel-reports" aria-selected="false" tabindex="-1"><span><span class="num">07</span>Reports &amp; KPIs</span><span class="dur">0:42</span></button>
-        <button class="tour-tab" role="tab" id="tab-admin" aria-controls="panel-admin" aria-selected="false" tabindex="-1"><span><span class="num">08</span>Admin &amp; Notifications</span><span class="dur">0:45</span></button>
+      <div class="tour-tabs" role="tablist" aria-label="ERPTick Service Desk modules" aria-orientation="vertical">
+        <button class="tour-tab" role="tab" id="tab-tickets" aria-controls="panel-tickets" aria-selected="true"><span><span class="num">01</span>Tickets &amp; SLAs</span><span class="dur">0:56</span></button>
+        <button class="tour-tab" role="tab" id="tab-visits" aria-controls="panel-visits" aria-selected="false" tabindex="-1"><span><span class="num">02</span>Field Visits</span><span class="dur">0:54</span></button>
+        <button class="tour-tab" role="tab" id="tab-quotations" aria-controls="panel-quotations" aria-selected="false" tabindex="-1"><span><span class="num">03</span>Quotations</span><span class="dur">0:44</span></button>
+        <button class="tour-tab" role="tab" id="tab-amc" aria-controls="panel-amc" aria-selected="false" tabindex="-1"><span><span class="num">04</span>AMC Contracts</span><span class="dur">0:45</span></button>
+        <button class="tour-tab" role="tab" id="tab-customers" aria-controls="panel-customers" aria-selected="false" tabindex="-1"><span><span class="num">05</span>Customers &amp; Machines</span><span class="dur">0:46</span></button>
+        <button class="tour-tab" role="tab" id="tab-dispatch" aria-controls="panel-dispatch" aria-selected="false" tabindex="-1"><span><span class="num">06</span>Dispatch &amp; Service Rules</span><span class="dur">0:44</span></button>
+        <button class="tour-tab" role="tab" id="tab-portal" aria-controls="panel-portal" aria-selected="false" tabindex="-1"><span><span class="num">07</span>Customer Portal &amp; Updates</span><span class="dur">0:40</span></button>
+        <button class="tour-tab" role="tab" id="tab-reports" aria-controls="panel-reports" aria-selected="false" tabindex="-1"><span><span class="num">08</span>Reports &amp; KPIs</span><span class="dur">0:36</span></button>
+        <button class="tour-tab" role="tab" id="tab-erp" aria-controls="panel-erp" aria-selected="false" tabindex="-1"><span><span class="num">09</span>ERPNext Connection</span><span class="dur">0:36</span></button>
+        <button class="tour-tab" role="tab" id="tab-admin" aria-controls="panel-admin" aria-selected="false" tabindex="-1"><span><span class="num">10</span>Admin &amp; Security</span><span class="dur">0:48</span></button>
       </div>
 
       <div>
         <div class="tour-panel" role="tabpanel" id="panel-tickets" aria-labelledby="tab-tickets">
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/01-tickets.jpg"
-                 src="../assets/products/servicebridge/01-tickets.mp4"
-                 aria-label="Video walkthrough: tickets and SLAs"></video>
+                 poster="../assets/products/erptick/posters/01-tickets.jpg"
+                 src="../assets/products/erptick/01-tickets.mp4"
+                 aria-label="Video walkthrough with narration and captions: tickets and SLA clocks"></video>
           <div class="tour-copy">
             <div>
               <span class="kicker">01 · Tickets &amp; SLAs</span>
               <h3>Every Breakdown, Tracked to Closure</h3>
-              <p>Log a ticket against the exact machine and ServiceBridge knows whether it's under AMC, under warranty or chargeable. Response and resolution clocks run on your business calendar and warn the team before a breach — not after.</p>
+              <p>Log a ticket against the exact machine and ERPTick knows whether it's under AMC, under warranty or chargeable. Response and resolution clocks run on your business calendar and warn the team before a breach — not after.</p>
             </div>
             <ul class="ticks">
               <li>Clear stages from New to Closed, with hold, send-back and reopen</li>
               <li>Coverage detected from the machine: AMC, warranty or chargeable</li>
               <li>SLA targets by coverage and priority, with at-risk alerts</li>
-              <li>Region-based routing and engineer assignment</li>
-              <li>Field visits with spares, photos and customer signature</li>
+              <li>Duplicate check when a machine already has an open ticket</li>
+              <li>Engineers suggested by duty status, skill, region and workload</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tour-panel" role="tabpanel" id="panel-visits" aria-labelledby="tab-visits" hidden>
+          <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
+                 poster="../assets/products/erptick/posters/02-visits.jpg"
+                 src="../assets/products/erptick/02-visits.mp4"
+                 aria-label="Video walkthrough with narration and captions: field visits"></video>
+          <div class="tour-copy">
+            <div>
+              <span class="kicker">02 · Field Visits</span>
+              <h3>The Whole Job, Recorded on Site</h3>
+              <p>Engineers accept the job, mark when they reach the site and log the visit from a phone or laptop: what was done, the spares fitted, photos and the customer's signature.</p>
+            </div>
+            <ul class="ticks">
+              <li>Accept, reached site and resolved, each time-stamped</li>
+              <li>Spares picked from your ERP item list</li>
+              <li>Up to ten photos per visit</li>
+              <li>Customer signature, or a recorded refusal</li>
+              <li>A checklist before the visit is submitted</li>
             </ul>
           </div>
         </div>
 
         <div class="tour-panel" role="tabpanel" id="panel-quotations" aria-labelledby="tab-quotations" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/02-quotations.jpg"
-                 src="../assets/products/servicebridge/02-quotations.mp4"
-                 aria-label="Video walkthrough: quotations"></video>
+                 poster="../assets/products/erptick/posters/03-quotations.jpg"
+                 src="../assets/products/erptick/03-quotations.mp4"
+                 aria-label="Video walkthrough with narration and captions: quotations and purchase orders"></video>
           <div class="tour-copy">
             <div>
-              <span class="kicker">02 · Quotations</span>
-              <h3>Quote Chargeable Work Fast</h3>
-              <p>When a job isn't covered, build the quotation right from the ticket — spares and labour from your ERP's items and price list, with GST worked out for you. Send it, let the customer approve online, and record their PO.</p>
+              <span class="kicker">03 · Quotations</span>
+              <h3>Quote Chargeable Work Before It Starts</h3>
+              <p>When a machine is out of warranty and AMC, the ticket asks for a quotation. Build it from your ERP items, send it, and record the customer's purchase order against it.</p>
             </div>
             <ul class="ticks">
-              <li>Line items from your item master and price list</li>
-              <li>Discounts, GST totals and a validity date</li>
-              <li>Draft → sent → approved, with the customer's PO recorded</li>
-              <li>Print-ready view to share with the customer</li>
+              <li>Lines from your ERP items, with discount and GST worked out live</li>
+              <li>Sending locks the quote and starts its validity</li>
+              <li>Revisions are kept; expired quotes are marked for you</li>
+              <li>Optional PO gate: chargeable work waits for the PO</li>
+              <li>Print-ready quotation with your company details</li>
             </ul>
           </div>
         </div>
 
         <div class="tour-panel" role="tabpanel" id="panel-amc" aria-labelledby="tab-amc" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/03-amc.jpg"
-                 src="../assets/products/servicebridge/03-amc.mp4"
-                 aria-label="Video walkthrough: AMC contracts"></video>
+                 poster="../assets/products/erptick/posters/04-amc.jpg"
+                 src="../assets/products/erptick/04-amc.mp4"
+                 aria-label="Video walkthrough with narration and captions: AMC contracts"></video>
           <div class="tour-copy">
             <div>
-              <span class="kicker">03 · AMC Contracts</span>
-              <h3>Contracts That Run Themselves</h3>
-              <p>Set up an annual maintenance contract once — cover period, value, the machines it covers and the planned preventive visits. ServiceBridge raises the visit tickets ahead of time and reminds you before the contract ends.</p>
+              <span class="kicker">04 · AMC Contracts</span>
+              <h3>Contracts That Plan Their Own Visits</h3>
+              <p>Set up an annual maintenance contract once — cover period, value, the machines it covers and the planned preventive visits. ERPTick raises the visit tickets ahead of time and reminds you before the contract ends.</p>
             </div>
             <ul class="ticks">
-              <li>Covered machines feed ticket coverage automatically</li>
-              <li>Planned preventive visits turn into tickets on schedule</li>
-              <li>Renewal reminders before the contract ends</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tour-panel" role="tabpanel" id="panel-erp" aria-labelledby="tab-erp" hidden>
-          <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/04-erp.jpg"
-                 src="../assets/products/servicebridge/04-erp.mp4"
-                 aria-label="Video walkthrough: ERPNext connection and write-backs"></video>
-          <div class="tour-copy">
-            <div>
-              <span class="kicker">04 · ERPNext Connection</span>
-              <h3>Your ERP Stays the Source of Truth</h3>
-              <p>An administrator connects ERPNext from the settings screen — no config files. Customers, machines, items and stock flow in; draft sales invoices and stock entries flow back, each behind its own switch.</p>
-            </div>
-            <ul class="ticks">
-              <li>Connect with an API key; credentials are stored encrypted</li>
-              <li>Draft invoices on ticket closure — never auto-submitted</li>
-              <li>Stock entries for spares used on a visit</li>
-              <li>Readiness checks, retry and a history of every write-back</li>
+              <li>Named machines, cover period and contract value</li>
+              <li>Planned preventive visits become tickets when due</li>
+              <li>Renewal reminders at 60, 30 and 7 days</li>
+              <li>Covered machines pick up AMC terms and faster SLAs</li>
+              <li>See what ends within 60 days, machine by machine</li>
             </ul>
           </div>
         </div>
 
         <div class="tour-panel" role="tabpanel" id="panel-customers" aria-labelledby="tab-customers" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/05-customers.jpg"
-                 src="../assets/products/servicebridge/05-customers.mp4"
-                 aria-label="Video walkthrough: customers and machines"></video>
+                 poster="../assets/products/erptick/posters/05-customers.jpg"
+                 src="../assets/products/erptick/05-customers.mp4"
+                 aria-label="Video walkthrough with narration and captions: customers, machines and spares"></video>
           <div class="tour-copy">
             <div>
               <span class="kicker">05 · Customers &amp; Machines</span>
-              <h3>The Installed Base at a Glance</h3>
-              <p>Every customer with their sites, contacts and machines by serial number — and each machine's coverage right next to it. Log a ticket or send a portal login from the same screen.</p>
+              <h3>Know the Machine Before You Answer</h3>
+              <p>Customers, sites, contacts, machines by serial number, spares, prices and stock are read from your ERP. Each machine shows its cover, so the desk knows who pays before logging the call.</p>
             </div>
             <ul class="ticks">
-              <li>Sites, contacts and machines in one view</li>
-              <li>AMC, warranty or chargeable shown per machine</li>
-              <li>Search by name, GSTIN, phone or email</li>
-              <li>One-click portal sign-in link for customer contacts</li>
+              <li>Customers, sites and contacts from your ERP</li>
+              <li>Machines by serial number with warranty and AMC dates</li>
+              <li>Coverage filters: under AMC, in warranty, chargeable</li>
+              <li>Spares with stock by warehouse and both price lists</li>
+              <li>Read-only here: your ERP stays the master</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tour-panel" role="tabpanel" id="panel-dispatch" aria-labelledby="tab-dispatch" hidden>
+          <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
+                 poster="../assets/products/erptick/posters/06-dispatch.jpg"
+                 src="../assets/products/erptick/06-dispatch.mp4"
+                 aria-label="Video walkthrough with narration and captions: dispatch and service rules"></video>
+          <div class="tour-copy">
+            <div>
+              <span class="kicker">06 · Dispatch &amp; Service Rules</span>
+              <h3>Your Rules, Without a Developer</h3>
+              <p>Decide how tickets are routed, timed and billed from the settings screens: regions by pincode, skill tags, SLA targets, business calendars and service charges.</p>
+            </div>
+            <ul class="ticks">
+              <li>Engineer availability: on duty, on visit, on leave</li>
+              <li>Regions by pincode, each with an area manager</li>
+              <li>Skill tags that match machine models to engineers</li>
+              <li>SLA targets for every cover and priority</li>
+              <li>Auto-assign and three escalation levels, each with a switch</li>
             </ul>
           </div>
         </div>
 
         <div class="tour-panel" role="tabpanel" id="panel-portal" aria-labelledby="tab-portal" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/06-portal.jpg"
-                 src="../assets/products/servicebridge/06-portal.mp4"
-                 aria-label="Video walkthrough: customer portal"></video>
+                 poster="../assets/products/erptick/posters/07-portal.jpg"
+                 src="../assets/products/erptick/07-portal.mp4"
+                 aria-label="Video walkthrough with narration and captions: customer portal and updates"></video>
           <div class="tour-copy">
             <div>
-              <span class="kicker">06 · Customer Portal</span>
-              <h3>Fewer "Any Update?" Calls</h3>
-              <p>Your customers get their own portal to raise tickets, follow the timeline, and approve or reject quotations — so your desk spends time fixing machines, not answering status calls.</p>
+              <span class="kicker">07 · Customer Portal &amp; Updates</span>
+              <h3>Customers Help Themselves</h3>
+              <p>Customers sign in with an emailed link, raise tickets, follow progress and approve quotations with their PO number. After closure they rate the job, and updates go out by email or WhatsApp.</p>
             </div>
             <ul class="ticks">
-              <li>Customers raise and track their own tickets</li>
+              <li>Sign-in by emailed link, no password</li>
+              <li>Raise tickets and follow live status</li>
               <li>Approve or reject quotations online</li>
-              <li>See their AMC contracts</li>
-              <li>Feedback link after every closed ticket</li>
+              <li>Feedback rating once a ticket is closed</li>
+              <li>Email and WhatsApp updates in your own wording</li>
             </ul>
           </div>
         </div>
 
         <div class="tour-panel" role="tabpanel" id="panel-reports" aria-labelledby="tab-reports" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/07-reports.jpg"
-                 src="../assets/products/servicebridge/07-reports.mp4"
-                 aria-label="Video walkthrough: reports and KPIs"></video>
+                 poster="../assets/products/erptick/posters/08-reports.jpg"
+                 src="../assets/products/erptick/08-reports.mp4"
+                 aria-label="Video walkthrough with narration and captions: reports and KPIs"></video>
           <div class="tour-copy">
             <div>
-              <span class="kicker">07 · Reports &amp; KPIs</span>
-              <h3>Know Where Service Stands</h3>
-              <p>A KPI matrix compares every region against its targets. Run any report on screen or download it as CSV, and schedule the ones your managers need to land in their inbox every week.</p>
+              <span class="kicker">08 · Reports &amp; KPIs</span>
+              <h3>Numbers You Can Act On</h3>
+              <p>Run service reports on demand, compare every region with its targets in the KPI matrix, and schedule any report to arrive by email as a CSV.</p>
             </div>
             <ul class="ticks">
-              <li>SLA compliance, resolution time, reopen rate, CSAT and backlog</li>
-              <li>Ticket ageing, engineer performance and quotation pipeline</li>
-              <li>Scheduled reports emailed as CSV</li>
+              <li>Ticket ageing, SLA compliance, engineer performance, quotations and CSAT</li>
+              <li>Filter by date, region and priority, then preview or download</li>
+              <li>KPI matrix by region against your targets</li>
+              <li>Scheduled reports: daily, weekly, monthly or your own timing</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tour-panel" role="tabpanel" id="panel-erp" aria-labelledby="tab-erp" hidden>
+          <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
+                 poster="../assets/products/erptick/posters/09-erp.jpg"
+                 src="../assets/products/erptick/09-erp.mp4"
+                 aria-label="Video walkthrough with narration and captions: the ERPNext connection"></video>
+          <div class="tour-copy">
+            <div>
+              <span class="kicker">09 · ERPNext Connection</span>
+              <h3>Connected to ERPNext, on Your Terms</h3>
+              <p>An administrator adds the ERPNext connection on screen and tests it before saving. Master data flows in; draft invoices and stock entries go back only when you switch them on.</p>
+            </div>
+            <ul class="ticks">
+              <li>Add and test the connection from the screen</li>
+              <li>Keys stored encrypted and never shown again</li>
+              <li>Choose what each connection is used for</li>
+              <li>Sales invoices are always drafts, never submitted for you</li>
+              <li>Every write-back tracked, with reasons and retries</li>
             </ul>
           </div>
         </div>
 
         <div class="tour-panel" role="tabpanel" id="panel-admin" aria-labelledby="tab-admin" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/servicebridge/posters/08-admin.jpg"
-                 src="../assets/products/servicebridge/08-admin.mp4"
-                 aria-label="Video walkthrough: admin and notifications"></video>
+                 poster="../assets/products/erptick/posters/10-admin.jpg"
+                 src="../assets/products/erptick/10-admin.mp4"
+                 aria-label="Video walkthrough with narration and captions: administration and security"></video>
           <div class="tour-copy">
             <div>
-              <span class="kicker">08 · Admin &amp; Notifications</span>
-              <h3>Set Up Your Way</h3>
-              <p>Load a fictional demo company to try everything safely, then switch on email and WhatsApp Business notifications per event, with templates and a delivery log.</p>
+              <span class="kicker">10 · Admin &amp; Security</span>
+              <h3>Control Who Sees and Does What</h3>
+              <p>Invite your team, shape roles with a permission grid, give partners a scoped API key and load customers in bulk — with every change recorded in an audit log.</p>
             </div>
             <ul class="ticks">
-              <li>Email and WhatsApp channels, chosen per notification</li>
-              <li>Custom roles with a permission grid</li>
-              <li>Automations, system monitor and audit log</li>
-              <li>Demo company you can load and clear in one step</li>
+              <li>Custom roles with a permission grid and ticket scope</li>
+              <li>Partner API keys with limited scopes</li>
+              <li>Bulk import with a row-by-row preview</li>
+              <li>Audit log that cannot be edited</li>
+              <li>System monitor, search across screens, light and dark themes</li>
             </ul>
           </div>
         </div>
@@ -495,7 +547,7 @@
       <h2 class="section-title" id="erp-flow">How It Works with ERPNext</h2>
       <div class="section-line"></div>
     </div>
-    <p class="section-sub">ServiceBridge sits next to ERPNext, not on top of it. Your ERP keeps owning customers, items and accounts — ServiceBridge owns the service work.</p>
+    <p class="section-sub">ERPTick sits next to ERPNext, not on top of it. Your ERP keeps owning customers, items and accounts — ERPTick owns the service work.</p>
     <div class="flow">
       <div class="flow-step">
         <div class="step" aria-hidden="true">01</div>
@@ -509,7 +561,7 @@
       <div class="flow-step">
         <div class="step" aria-hidden="true">02</div>
         <h3>Sync</h3>
-        <p>Customers, contacts, sites, machines by serial number, items, prices, warehouses and stock come into ServiceBridge.</p>
+        <p>Customers, contacts, sites, machines by serial number, items, prices, warehouses and stock come into ERPTick.</p>
         <ul class="ticks">
           <li>Signed webhooks keep it current</li>
           <li>A nightly catch-up as a safety net</li>
@@ -578,7 +630,7 @@
       <div class="deploy-card">
         <span class="kicker">Your install</span>
         <h3>One Company, One System</h3>
-        <p>Every ServiceBridge install belongs to a single company — your data isn't shared with anyone else's.</p>
+        <p>Every ERPTick install belongs to a single company — your data isn't shared with anyone else's.</p>
       </div>
       <div class="deploy-card">
         <span class="kicker">Try first</span>
@@ -589,7 +641,7 @@
         <span class="kicker">Pricing</span>
         <h3>Contact for Pricing</h3>
         <p>Pricing depends on your setup. Tell us about your service team and we'll share the details.</p>
-        <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=ServiceBridge%20pricing">Ask about pricing</a>
+        <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=ERPTick%20pricing">Ask about pricing</a>
       </div>
     </div>
   </section>
@@ -598,10 +650,10 @@
   <section class="cta-section" id="early-access" aria-labelledby="ea-title">
     <div class="cta-glow"></div>
     <p class="cta-eyebrow">// Early Access</p>
-    <h2 class="cta-title" id="ea-title">Bring ServiceBridge to Your Service Team</h2>
+    <h2 class="cta-title" id="ea-title">Bring ERPTick to Your Service Team</h2>
     <p class="cta-body">We're onboarding a small group of equipment makers running ERPNext. Tell us about your company, your ERPNext setup and the size of your service team, and we'll get back to you.</p>
     <div class="cta-actions">
-      <a class="btn-primary" href="mailto:info@riroteglobal.com?subject=ServiceBridge%20early%20access&amp;body=Company%3A%0D%0AERPNext%20version%20%2F%20hosting%3A%0D%0ANumber%20of%20service%20engineers%3A%0D%0AWhat%20you%20want%20to%20improve%3A%0D%0A">Join Early Access</a>
+      <a class="btn-primary" href="mailto:info@riroteglobal.com?subject=ERPTick%20early%20access&amp;body=Company%3A%0D%0AERPNext%20version%20%2F%20hosting%3A%0D%0ANumber%20of%20service%20engineers%3A%0D%0AWhat%20you%20want%20to%20improve%3A%0D%0A">Join Early Access</a>
       <a class="btn-outline" href="#tour">Watch the tour</a>
     </div>
     <p class="hero-note" style="position:relative;">Or write to info@riroteglobal.com</p>
@@ -610,7 +662,7 @@
 
 <footer>
   <a href="../index.html" class="footer-brand" aria-label="Rirote Global, home"><img src="../assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
-  <span class="footer-copy">ServiceBridge is a Rirote Global product · &copy; 2026</span>
+  <span class="footer-copy">ERPTick Service Desk is a Rirote Global product · &copy; 2026</span>
 </footer>
 
 <script src="../assets/site.js"></script>
