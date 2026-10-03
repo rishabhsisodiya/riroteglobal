@@ -67,17 +67,18 @@ nav.scrolled, nav.menu-open {
   border-bottom: 1px solid rgba(0,180,216,0.15);
 }
 .nav-logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark { width: 36px; height: 36px; flex-shrink: 0; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
 .nav-logo-brand {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.55rem; letter-spacing: 0.1em;
-  background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  font-size: 1.55rem; letter-spacing: 0.1em; line-height: 1;
+  color: var(--white);
 }
+.nav-logo-brand span { color: var(--cyan); }
 .nav-logo-sub {
   font-family: 'Space Mono', monospace;
   font-size: 0.5rem; letter-spacing: 0.32em;
   color: var(--muted); text-transform: uppercase;
-  display: block;
 }
 .nav-links {
   display: flex; gap: 2rem; list-style: none;
@@ -249,14 +250,8 @@ footer {
   display: flex; justify-content: space-between; align-items: center;
   gap: 1rem;
 }
-.footer-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.1rem; letter-spacing: 0.1em;
-  background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-decoration: none;
-}
+.footer-brand { display: block; line-height: 0; }
+.footer-brand img { height: 38px; width: auto; }
 .footer-copy {
   font-family: 'Space Mono', monospace;
   font-size: 0.62rem; letter-spacing: 0.12em;

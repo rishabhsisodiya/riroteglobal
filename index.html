@@ -21,6 +21,7 @@
 <meta name="twitter:image" content="https://riroteglobal.com/assets/og-image.jpg">
 
 <link rel="canonical" href="https://riroteglobal.com/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="assets/favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
@@ -87,15 +88,14 @@
   }
   .nav-logo { flex-shrink: 0; }
   .nav-logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-logo-mark .ring-o { transform-box: fill-box; transform-origin: center; animation: spin 20s linear infinite; }
-  .nav-logo-mark .ring-m { transform-box: fill-box; transform-origin: center; animation: spinR 15s linear infinite; }
+  .nav-logo-mark { width: 38px; height: 38px; flex-shrink: 0; }
   .nav-logo-text { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
   .nav-logo-brand {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.55rem; letter-spacing: 0.1em; line-height: 1;
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--white);
   }
+  .nav-logo-brand span { color: var(--cyan); }
   .nav-logo-sub {
     font-family: 'Space Mono', monospace;
     font-size: 0.44rem; letter-spacing: 0.32em;
@@ -734,9 +734,11 @@
     background: var(--navy);
     border-top: 1px solid rgba(0,180,216,0.1);
     padding: 3rem 4rem;
-    display: flex; justify-content: center; align-items: center;
-    flex-wrap: wrap; gap: 1rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 1.4rem;
   }
+  .footer-logo { display: block; line-height: 0; }
+  .footer-logo img { height: 46px; width: auto; }
   footer img { height: 36px; opacity: 0.8; }
   .footer-links { display: flex; gap: 2rem; }
   .footer-links a {
@@ -1065,34 +1067,10 @@
 <!-- NAV -->
 <nav aria-label="Main">
   <div class="nav-logo">
-    <a href="#" class="nav-logo-link" aria-label="Rirote Global">
-      <svg class="nav-logo-mark" width="44" height="44" viewBox="0 0 46 46" fill="none" aria-hidden="true">
-        <defs>
-          <radialGradient id="nLg" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#00b4d8" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <!-- Outer partial arc — rotates -->
-        <circle class="ring-o" cx="23" cy="23" r="21"
-          stroke="rgba(0,180,216,0.28)" stroke-width="1"
-          stroke-dasharray="95 37"/>
-        <!-- Mid partial arc — counter-rotates -->
-        <circle class="ring-m" cx="23" cy="23" r="14"
-          stroke="rgba(0,180,216,0.55)" stroke-width="1"
-          stroke-dasharray="58 30"/>
-        <!-- Inner ring -->
-        <circle cx="23" cy="23" r="7.5"
-          stroke="#48cae4" stroke-width="1.3" opacity="0.65"/>
-        <!-- Center glow halo -->
-        <circle cx="23" cy="23" r="9" fill="url(#nLg)"/>
-        <!-- Orbit dot on outer ring -->
-        <circle cx="23" cy="2" r="2.5" fill="#00d4ff"/>
-        <!-- Center core -->
-        <circle cx="23" cy="23" r="3.5" fill="#00b4d8"/>
-      </svg>
+    <a href="#" class="nav-logo-link" aria-label="Rirote Global, home">
+      <img class="nav-logo-mark" src="assets/brand/mark.svg" width="38" height="38" alt="">
       <div class="nav-logo-text">
-        <span class="nav-logo-brand">RIROTE</span>
+        <span class="nav-logo-brand">RI<span>RO</span>TE</span>
         <span class="nav-logo-sub">GLOBAL</span>
       </div>
     </a>
@@ -1540,6 +1518,7 @@
 
 <!-- FOOTER -->
 <footer>
+  <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
   <div class="footer-copy">© 2026 Rirote Global · riroteglobal.com</div>
 </footer>
 
