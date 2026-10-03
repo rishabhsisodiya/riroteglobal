@@ -6,138 +6,21 @@
 <title>Projects — Rirote Global</title>
 <meta name="description" content="A portfolio of real-world projects across enterprise ERP, e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.">
 <meta name="author" content="Rirote Global">
-<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="canonical" href="https://riroteglobal.com/projects.html">
+<meta property="og:title" content="Projects — Rirote Global">
+<meta property="og:description" content="Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://riroteglobal.com/projects.html">
+<meta property="og:image" content="https://riroteglobal.com/assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="assets/favicon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-  :root {
-    --navy: #0a1628;
-    --navy-mid: #0d1f3c;
-    --navy-card: #0f2340;
-    --cyan: #00b4d8;
-    --electric: #0077b6;
-    --blue-light: #48cae4;
-    --white: #f0f4ff;
-    --muted: #8899bb;
-    --accent: #00d4ff;
-    --gold: #ffd166;
-    --green: #06d6a0;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 2rem;
-    padding: 1rem 4rem;
-    background: transparent;
-    border-bottom: 1px solid transparent;
-    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-  }
-  nav.scrolled {
-    background: rgba(10,22,40,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,180,216,0.15);
-  }
-  .nav-logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-logo-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.55rem; letter-spacing: 0.1em;
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .nav-logo-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.44rem; letter-spacing: 0.32em;
-    color: var(--muted); text-transform: uppercase;
-    display: block;
-  }
-  .nav-links {
-    display: flex; gap: 2rem; list-style: none;
-    flex: 1; justify-content: center;
-  }
-  .nav-links a {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--muted);
-    text-decoration: none; transition: color 0.3s;
-  }
-  .nav-links a:hover,
-  .nav-links a.active { color: var(--cyan); }
-  .nav-cta {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    color: var(--navy) !important;
-    padding: 0.55rem 1.4rem; border-radius: 4px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; font-weight: 700;
-    text-decoration: none; white-space: nowrap;
-  }
-  .menu-toggle {
-    display: none; background: none; border: none;
-    cursor: pointer; padding: 0.25rem;
-  }
-  .menu-toggle span {
-    display: block; width: 24px; height: 2px;
-    background: var(--cyan); margin: 5px 0;
-    transition: transform 0.3s, opacity 0.3s;
-  }
-
-  /* ── HERO ── */
-  .page-hero {
-    padding: 10rem 4rem 6rem;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(0,119,182,0.16) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,180,216,0.07) 0%, transparent 60%);
-  }
-  .hero-grid {
-    position: absolute; inset: 0; opacity: 0.035;
-    background-image:
-      linear-gradient(var(--cyan) 1px, transparent 1px),
-      linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-  .hero-content { position: relative; z-index: 2; max-width: 780px; }
-  .eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.28em;
-    color: var(--cyan); text-transform: uppercase;
-    margin-bottom: 1.2rem;
-    opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
-  }
-  .page-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 7vw, 6.5rem);
-    line-height: 0.95; letter-spacing: 0.03em;
-    margin-bottom: 1.6rem;
-    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
-  }
-  .page-title span {
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .page-sub {
-    font-size: 1.1rem; line-height: 1.75;
-    color: rgba(240,244,255,0.68); max-width: 580px;
-    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
-  }
-
   /* ── METRICS STRIP ── */
   .metrics {
     display: grid; grid-template-columns: repeat(4, 1fr);
@@ -172,10 +55,6 @@
     padding: 5rem 4rem 6rem;
     max-width: 1400px; margin: 0 auto;
   }
-  .section-header {
-    display: flex; align-items: baseline; gap: 1.5rem;
-    margin-bottom: 1rem;
-  }
   .nda-note {
     display: flex; align-items: center; gap: 0.6rem;
     font-family: 'Space Mono', monospace;
@@ -184,14 +63,6 @@
     margin-bottom: 3rem;
   }
   .nda-note svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--cyan); }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.4rem; letter-spacing: 0.06em; color: var(--white);
-  }
-  .section-line {
-    flex: 1; height: 1px;
-    background: linear-gradient(90deg, rgba(0,180,216,0.4), transparent);
-  }
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
@@ -310,101 +181,6 @@
 
   .card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
 
-  /* ── CTA ── */
-  .cta-section {
-    padding: 5rem 4rem;
-    text-align: center;
-    position: relative; overflow: hidden;
-    background: var(--navy-mid);
-    border-top: 1px solid rgba(0,180,216,0.1);
-  }
-  .cta-glow {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    width: 600px; height: 300px; border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(0,119,182,0.18) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .cta-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.28em;
-    text-transform: uppercase; color: var(--cyan);
-    margin-bottom: 1.2rem;
-    position: relative;
-  }
-  .cta-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.2rem, 4vw, 3.8rem);
-    letter-spacing: 0.05em; line-height: 1.05;
-    margin-bottom: 1.2rem;
-    position: relative;
-  }
-  .cta-title span {
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .cta-body {
-    font-size: 1.05rem; color: rgba(240,244,255,0.65);
-    max-width: 540px; margin: 0 auto 2.4rem; line-height: 1.75;
-    position: relative;
-  }
-  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    color: var(--navy); padding: 0.95rem 2rem;
-    border: none; border-radius: 5px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem; letter-spacing: 0.12em;
-    text-transform: uppercase; font-weight: 700;
-    cursor: pointer; text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-    display: inline-block;
-  }
-  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
-  .btn-outline {
-    border: 1px solid rgba(0,180,216,0.4);
-    color: var(--cyan); background: transparent;
-    padding: 0.95rem 2rem; border-radius: 5px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem; letter-spacing: 0.12em;
-    text-transform: uppercase; font-weight: 700;
-    cursor: pointer; text-decoration: none;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    display: inline-block;
-  }
-  .btn-outline:hover {
-    background: rgba(0,180,216,0.08);
-    border-color: rgba(0,180,216,0.7);
-    transform: translateY(-2px);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 1.8rem 4rem;
-    border-top: 1px solid rgba(0,180,216,0.08);
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 1rem;
-  }
-  .footer-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem; letter-spacing: 0.1em;
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .footer-copy {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 0.12em;
-    color: var(--muted); text-transform: uppercase;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
   .project-card:nth-child(1) { animation-delay: 0.05s; }
   .project-card:nth-child(2) { animation-delay: 0.12s; }
   .project-card:nth-child(3) { animation-delay: 0.19s; }
@@ -413,33 +189,17 @@
   .project-card:nth-child(6) { animation-delay: 0.40s; }
   .project-card:nth-child(7) { animation-delay: 0.47s; }
 
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 1rem 1.8rem; }
-    .nav-links, .nav-cta { display: none; }
-    .menu-toggle { display: block; }
-    nav.menu-open .nav-links {
-      display: flex; flex-direction: column;
-      position: absolute; top: 100%; left: 0; right: 0;
-      background: rgba(10,22,40,0.97);
-      padding: 1.5rem 2rem; gap: 1.2rem;
-      border-bottom: 1px solid rgba(0,180,216,0.15);
-    }
-    nav.menu-open .nav-cta { display: block; margin: 0.5rem 2rem 1.5rem; }
-    .page-hero { padding: 8rem 1.8rem 4rem; }
     .metrics { grid-template-columns: repeat(2, 1fr); }
-    .projects-section { padding: 3.5rem 1.8rem 4rem; }
+    .projects-section { padding: 3.5rem 1.25rem 4rem; }
     .projects-grid { grid-template-columns: 1fr; }
     .card-cols { grid-template-columns: 1fr; gap: 1rem; }
-    .cta-section { padding: 4rem 1.8rem; }
-    footer { padding: 1.5rem 1.8rem; flex-direction: column; text-align: center; }
   }
   @media (max-width: 480px) {
-    .metrics { grid-template-columns: 1fr 1fr; }
     .metric-value { font-size: 2.4rem; }
     .card-top { flex-direction: column; gap: 0.8rem; }
   }
+  @media (prefers-reduced-motion: reduce) { .project-card { opacity: 1; } }
 </style>
 </head>
 <body>
@@ -447,31 +207,32 @@
 <!-- ══════════════════════════════════════════════
      NAV
 ══════════════════════════════════════════════ -->
-<nav id="navbar">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav id="navbar" aria-label="Main">
   <a href="index.html" class="nav-logo-link">
     <div>
       <span class="nav-logo-brand">Rirote Global</span>
       <span class="nav-logo-sub">Rise with Robust Tech</span>
     </div>
   </a>
-
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#services">Services</a></li>
-    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="projects.html" aria-current="page">Projects</a></li>
     <li><a href="products.html">Products</a></li>
-    <li><a href="index.html#opensource">Open Source</a></li>
     <li><a href="index.html#contact">Contact</a></li>
+    <li class="mobile-only"><a href="index.html#contact" class="nav-cta">Get in Touch</a></li>
   </ul>
-
   <div class="nav-cta-wrap">
-    <a href="index.html#contact" class="nav-cta">Hire Us</a>
+    <a href="index.html#contact" class="nav-cta">Get in Touch</a>
   </div>
-
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<main id="main">
 
 
 <!-- ══════════════════════════════════════════════
@@ -481,9 +242,9 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <p class="eyebrow">// Client Work &amp; Case Studies</p>
-    <h1 class="page-title">Projects That<br><span>Moved the Needle</span></h1>
-    <p class="page-sub">Real-world engineering across enterprise ERP, e-commerce, logistics, SaaS, and government — delivered end-to-end with measurable impact.</p>
+    <p class="eyebrow fade-up d1">// Client Work &amp; Case Studies</p>
+    <h1 class="page-title fade-up d2">Projects That<br><span>Moved the Needle</span></h1>
+    <p class="page-sub fade-up d3">Real-world engineering across enterprise ERP, e-commerce, logistics, SaaS, and government — delivered end-to-end with measurable impact.</p>
   </div>
 </section>
 
@@ -514,9 +275,9 @@
 <!-- ══════════════════════════════════════════════
      PROJECTS GRID
 ══════════════════════════════════════════════ -->
-<section class="projects-section">
+<section class="projects-section" aria-labelledby="work-title">
   <div class="section-header">
-    <h2 class="section-title">Selected Work</h2>
+    <h2 class="section-title" id="work-title">Selected Work</h2>
     <div class="section-line"></div>
   </div>
   <p class="nda-note">
@@ -817,48 +578,37 @@
   </p>
   <div class="cta-actions">
     <a href="index.html#contact" class="btn-primary">Start a Conversation</a>
-    <a href="index.html#services" class="btn-outline">View Services</a>
+    <a href="products.html" class="btn-outline">See Our Products</a>
   </div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════════ -->
+</main>
+
 <footer>
-  <span class="footer-brand">Rirote Global</span>
+  <a href="index.html" class="footer-brand">Rirote Global</a>
   <span class="footer-copy">&copy; 2026 Rirote Global. All rights reserved.</span>
 </footer>
 
-
+<script src="assets/site.js"></script>
 <script>
-  // Sticky nav
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  // Mobile menu
-  const menuToggle = document.getElementById('menuToggle');
-  menuToggle.addEventListener('click', () => {
-    navbar.classList.toggle('menu-open');
-  });
-
-  // Intersection observer for card animations
-  const cards = document.querySelectorAll('.project-card');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationPlayState = 'running';
-        observer.unobserve(entry.target);
-      }
+  // Reveal project cards as they scroll into view
+  (function () {
+    var cards = document.querySelectorAll('.project-card');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    cards.forEach(function (card) {
+      card.style.animationPlayState = 'paused';
+      observer.observe(card);
     });
-  }, { threshold: 0.08 });
-
-  cards.forEach(card => {
-    card.style.animationPlayState = 'paused';
-    observer.observe(card);
-  });
+  })();
 </script>
 
 </body>

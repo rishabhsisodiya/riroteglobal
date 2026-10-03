@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /invoice.html
+Disallow: /ats-optimizer-prompt.md
+
+Sitemap: https://riroteglobal.com/sitemap.xml

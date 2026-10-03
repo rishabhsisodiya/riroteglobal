@@ -12,15 +12,31 @@
 <meta property="og:title" content="Rirote Global — Rise with Robust Tech">
 <meta property="og:description" content="Full-stack products, AI integration, ERP systems, and cloud infrastructure — engineered end to end.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://riroteglobal.com">
-<meta property="og:image" content="https://riroteglobal.com/og-image.jpg">
+<meta property="og:url" content="https://riroteglobal.com/">
+<meta property="og:image" content="https://riroteglobal.com/assets/og-image.jpg">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Rirote Global — Rise with Robust Tech">
 <meta name="twitter:description" content="Full-stack engineering, AI integration, and enterprise systems built to scale.">
-<meta name="twitter:image" content="https://riroteglobal.com/og-image.jpg">
+<meta name="twitter:image" content="https://riroteglobal.com/assets/og-image.jpg">
 
-<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="canonical" href="https://riroteglobal.com/">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="assets/favicon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Rirote Global",
+  "url": "https://riroteglobal.com/",
+  "logo": "https://riroteglobal.com/assets/favicon-192.png",
+  "email": "info@riroteglobal.com",
+  "description": "Full-stack product development, AI agents and LLM integration, ERP integrations, and cloud infrastructure.",
+  "address": { "@type": "PostalAddress", "addressCountry": "IN" }
+}
+</script>
+<noscript><style>.page-loader { display: none; } .hero-eyebrow, .hero-title, .hero-sub, .hero-btns, .hero-visual { opacity: 1 !important; }</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -916,7 +932,7 @@
     position: fixed; inset: 0; background: var(--navy);
     z-index: 10000; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 1.4rem;
-    transition: opacity .8s ease, visibility .8s ease;
+    transition: opacity .4s ease, visibility .4s ease;
   }
   .page-loader.out { opacity: 0; visibility: hidden; pointer-events: none; }
   .loader-brand {
@@ -1015,23 +1031,39 @@
     .mobile-cta-li { display: block; border-bottom: none !important; padding-top: 0.8rem !important; }
     .mobile-cta-li a { width: 100%; text-align: center; }
   }
+
+  /* ── A11Y ── */
+  .skip-link {
+    position: absolute; left: 1rem; top: -100px; z-index: 10001;
+    background: var(--white); color: var(--navy);
+    padding: 0.6rem 1rem; border-radius: 4px; font-weight: 700; text-decoration: none;
+  }
+  .skip-link:focus { top: 1rem; }
+  :focus-visible { outline: 2px solid var(--blue-light); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .page-loader, #hero-canvas, .cursor-dot, .cursor-ring { display: none !important; }
+    .sr { opacity: 1 !important; transform: none !important; }
+  }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- PAGE LOADER -->
-<div class="page-loader" id="pageLoader">
+<div class="page-loader" id="pageLoader" aria-hidden="true">
   <div class="loader-brand">RIROTE</div>
   <div class="loader-sub">Rise · Robust · Tech</div>
   <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
 <!-- CURSOR -->
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Main">
   <div class="nav-logo">
     <a href="#" class="nav-logo-link" aria-label="Rirote Global">
       <svg class="nav-logo-mark" width="44" height="44" viewBox="0 0 46 46" fill="none" aria-hidden="true">
@@ -1066,8 +1098,8 @@
     </a>
   </div>
 
-  <button class="menu-toggle" id="menuToggle">
-    ☰
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span aria-hidden="true">☰</span>
   </button>
 
   <ul class="nav-links" id="mobileMenu">
@@ -1087,9 +1119,11 @@
   </div>
 </nav>
 
+<main id="main">
+
 <!-- HERO -->
 <section class="hero">
-  <canvas id="hero-canvas"></canvas>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
@@ -1468,20 +1502,20 @@
     </div>
     <div>
       <div class="contact-form-group">
-        <label>Full Name</label>
-        <input type="text" placeholder="Your name">
+        <label for="cf-name">Full Name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Your name">
       </div>
       <div class="contact-form-group">
-        <label>Company</label>
-        <input type="text" placeholder="Your company">
+        <label for="cf-company">Company</label>
+        <input id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Your company">
       </div>
       <div class="contact-form-group">
-        <label>Email</label>
-        <input type="email" placeholder="you@company.com">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="you@company.com">
       </div>
       <div class="contact-form-group">
-        <label>Service Interest</label>
-        <select>
+        <label for="cf-service">Service Interest</label>
+        <select id="cf-service" name="service">
           <option value="">Select a service...</option>
           <option>Full-Stack Product Development</option>
           <option>AI Agents &amp; LLM Integration</option>
@@ -1494,13 +1528,15 @@
         </select>
       </div>
       <div class="contact-form-group">
-        <label>Message</label>
-        <textarea placeholder="Tell us about your project..."></textarea>
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" placeholder="Tell us about your project..."></textarea>
       </div>
-      <button class="btn-primary" style="width:100%; padding:1.1rem; font-size:1rem; border-radius:4px; cursor:pointer;">Send Message →</button>
+      <button type="button" class="btn-primary" style="width:100%; padding:1.1rem; font-size:1rem; border-radius:4px; cursor:pointer;">Send Message →</button>
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -1509,9 +1545,11 @@
 
 <script>
 // ── PAGE LOADER ──
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('pageLoader').classList.add('out'), 1500);
+// Hide as soon as the page is parsed (was: full load + 1.5s).
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => document.getElementById('pageLoader').classList.add('out'), 350);
 });
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ── CUSTOM CURSOR ──
 (function () {
@@ -1537,7 +1575,7 @@ window.addEventListener('load', () => {
 // ── HERO PARTICLES ──
 (function () {
   const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
+  if (!canvas || reduceMotion) return;
   const ctx = canvas.getContext('2d');
   const hero = canvas.parentElement;
   let W, H, pts = [];
@@ -1549,8 +1587,10 @@ window.addEventListener('load', () => {
     vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28,
     r: Math.random() * 1.3 + .3, a: Math.random() * .45 + .08
   });
+  let visible = true;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(hero);
   (function draw() {
-    if (W) {
+    if (W && visible) {
       ctx.clearRect(0, 0, W, H);
       pts.forEach((p, i) => {
         p.x += p.vx; p.y += p.vy;
@@ -1655,22 +1695,30 @@ window.addEventListener('load', () => {
 const navEl = document.querySelector('nav');
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
+let navTick = false;
 window.addEventListener('scroll', () => {
-  navEl.classList.toggle('scrolled', window.scrollY > 60);
-  let cur = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
-  navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--cyan)' : ''; });
+  if (navTick) return;
+  navTick = true;
+  requestAnimationFrame(() => {
+    navTick = false;
+    navEl.classList.toggle('scrolled', window.scrollY > 60);
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--cyan)' : ''; });
+  });
 }, { passive: true });
 
 // ── MOBILE MENU ──
 document.getElementById('menuToggle').addEventListener('click', () => {
   const isOpen = document.getElementById('mobileMenu').classList.toggle('open');
   navEl.classList.toggle('menu-open', isOpen);
+  document.getElementById('menuToggle').setAttribute('aria-expanded', String(isOpen));
 });
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
     document.getElementById('mobileMenu').classList.remove('open');
     navEl.classList.remove('menu-open');
+    document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
   });
 });
 
