@@ -317,7 +317,8 @@
   }
   .service-card:hover { background: rgba(0,119,182,0.15); }
   .service-card:hover::before { transform: scaleX(1); }
-  .service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .service-icon { margin-bottom: 1.1rem; color: var(--cyan); line-height: 0; }
+  .service-icon svg { width: 36px; height: 36px; }
   .service-name {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.6rem; letter-spacing: 0.05em;
@@ -526,7 +527,8 @@
     transition: background 0.3s;
   }
   .role-card:hover { background: rgba(0,119,182,0.12); }
-  .role-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .role-icon { margin-bottom: 0.6rem; color: var(--cyan); line-height: 0; }
+  .role-icon svg { width: 24px; height: 24px; }
   .role-name { font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--white); margin-bottom: 0.3rem; }
   .role-desc { font-size: 0.8rem; color: var(--muted); }
   .outsource-why {
@@ -717,7 +719,8 @@
   .contact-form-group select option { background: var(--navy); }
   .contact-form-group textarea { resize: vertical; min-height: 120px; }
   .contact-info-item { display: flex; gap: 1rem; margin-bottom: 2rem; }
-  .contact-icon { font-size: 1.3rem; margin-top: 0.1rem; }
+  .contact-icon { margin-top: 0.15rem; color: var(--cyan); line-height: 0; }
+  .contact-icon svg { width: 22px; height: 22px; }
   .contact-info-item h4 {
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem; letter-spacing: 0.15em;
@@ -1011,15 +1014,11 @@
     width: 0; height: 1px; background: var(--cyan);
     transition: width .3s ease;
   }
-  @media (min-width: 901px) and (max-width: 1300px) {
+  @media (min-width: 901px) and (max-width: 1080px) {
     nav { padding: 1rem 1.5rem; gap: 1rem; }
     .nav-links { gap: 1.1rem; }
     .nav-links a { font-size: 0.64rem; letter-spacing: 0.06em; }
     .nav-cta { padding: 0.55rem 1rem; }
-  }
-  /* "Contact" link already covers it; the button doesn't fit here */
-  @media (min-width: 901px) and (max-width: 1080px) {
-    .nav-cta-wrap { display: none; }
   }
   .nav-links a:hover::after,
   .nav-links a[style*="cyan"]::after { width: 100%; }
@@ -1079,11 +1078,9 @@
 
   <ul class="nav-links" id="mobileMenu">
     <li><a href="#services">Services</a></li>
-    <li><a href="#outsourcing">Outsourcing</a></li>
     <li><a href="#clients">Case Studies</a></li>
     <li><a href="projects.html">Projects</a></li>
     <li><a href="products.html">Products</a></li>
-    <li><a href="#reach">Global Reach</a></li>
     <li><a href="#opensource">Open Source</a></li>
     <li><a href="#contact">Contact</a></li>
     <li class="mobile-cta-li"><a href="#contact" class="nav-cta" style="display:inline-block; margin:0.5rem 0;">Get in Touch</a></li>
@@ -1150,37 +1147,37 @@
   <p class="section-sub">Full-stack products, AI integration, and enterprise systems — owned end to end, from system design and APIs through deployment and production support.</p>
   <div class="services-grid">
     <div class="service-card">
-      <div class="service-icon">💻</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M13.5 5l-3 14"/></svg></div>
       <div class="service-name">Full-Stack Product Development</div>
       <p>Web platforms and SaaS products built on Next.js, React, NestJS, and Node.js — typed end to end, PWA-ready, and designed to grow from MVP to production scale.</p>
     </div>
     <div class="service-card">
-      <div class="service-icon">🤖</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></div>
       <div class="service-name">AI Agents &amp; LLM Integration</div>
       <p>AI assistants, agent workflows, and LLM features wired into your product and data — with clear specs, guardrails, and verification so the output can be trusted in production.</p>
     </div>
     <div class="service-card">
-      <div class="service-icon">🏢</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.2"/><path d="M13.5 17.25h7.5M17.25 13.5V21"/></svg></div>
       <div class="service-name">ERP &amp; Enterprise Integrations</div>
       <p>Custom ERP modules, ERPNext integrations, and role-based executive dashboards. Idempotent APIs, retry queues, and reconciliation so data stays consistent across systems.</p>
     </div>
     <div class="service-card">
-      <div class="service-icon">☁️</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.6a4 4 0 0 1 .2 7.9z"/></svg></div>
       <div class="service-name">Cloud, DevOps &amp; Performance</div>
       <p>AWS and Digital Ocean infrastructure, Docker, CI/CD, and server hardening. We cut cloud bills, fix slow queries, and bring load times down from seconds to milliseconds.</p>
     </div>
     <div class="service-card">
-      <div class="service-icon">🧭</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z"/></svg></div>
       <div class="service-name">Architecture &amp; Technical Leadership</div>
       <p>System design, microservices, and monolith-to-microservices migrations — plus hands-on technical leadership for teams that need a senior engineer owning delivery.</p>
     </div>
     <div class="service-card">
-      <div class="service-icon">📊</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20.5h18M6.5 20.5V11M12 20.5V4.5M17.5 20.5v-7"/></svg></div>
       <div class="service-name">Data Pipelines &amp; Reporting</div>
       <p>ETL pipelines into Redshift and PostgreSQL, reporting APIs, and SLA dashboards that turn operational data into decisions your leadership can act on.</p>
     </div>
     <div class="service-card" style="grid-column: 1 / -1;">
-      <div class="service-icon">🤝</div>
+      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.7a3.5 3.5 0 0 1 0 6.6M18.2 14.4A6.5 6.5 0 0 1 21.5 20"/></svg></div>
       <div class="service-name">Resource Outsourcing</div>
       <p>Senior engineers embedded in your team on a dedicated or part-time basis. Whether you need a full-stack developer, an AI engineer, or an ERP integration specialist — we supply vetted, experienced talent that plugs in fast and delivers from day one.</p>
     </div>
@@ -1320,32 +1317,32 @@
       </div>
       <div class="outsource-roles">
         <div class="role-card">
-          <div class="role-icon">💻</div>
+          <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M13.5 5l-3 14"/></svg></div>
           <div class="role-name">Full-Stack Developer</div>
           <div class="role-desc">React, Next.js, Node.js, TypeScript</div>
         </div>
         <div class="role-card">
-          <div class="role-icon">🤖</div>
+          <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></div>
           <div class="role-name">AI Engineer</div>
           <div class="role-desc">LLM integration &amp; agent workflows</div>
         </div>
         <div class="role-card">
-          <div class="role-icon">🔧</div>
+          <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
           <div class="role-name">Backend Developer</div>
           <div class="role-desc">NestJS, FastAPI, REST APIs</div>
         </div>
         <div class="role-card">
-          <div class="role-icon">🏢</div>
+          <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.2"/><path d="M13.5 17.25h7.5M17.25 13.5V21"/></svg></div>
           <div class="role-name">ERP Integration Developer</div>
           <div class="role-desc">ERPNext modules &amp; integrations</div>
         </div>
         <div class="role-card">
-          <div class="role-icon">☁️</div>
+          <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.6a4 4 0 0 1 .2 7.9z"/></svg></div>
           <div class="role-name">Cloud / DevOps Engineer</div>
           <div class="role-desc">AWS, Docker, CI/CD, Nginx</div>
         </div>
         <div class="role-card">
-          <div class="role-icon">🧭</div>
+          <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z"/></svg></div>
           <div class="role-name">Technical Lead</div>
           <div class="role-desc">Architecture &amp; team leadership</div>
         </div>
@@ -1461,14 +1458,14 @@
       <h2 class="section-title" style="margin-bottom:1rem;">Let's Build<br>Something Global.</h2>
       <p class="section-sub" style="margin-bottom:2.5rem;">Ready to rise? Tell us about your project and we'll get back to you within 24 hours.</p>
       <div class="contact-info-item">
-        <span class="contact-icon">✉️</span>
+        <span class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg></span>
         <div>
           <h4>Email</h4>
           <p><a href="mailto:info@riroteglobal.com" style="color:inherit;text-decoration:none;">info@riroteglobal.com</a></p>
         </div>
       </div>
       <div class="contact-info-item">
-        <span class="contact-icon">📍</span>
+        <span class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
         <div>
           <h4>Headquarters</h4>
           <p>India (Headquarters)</p>
