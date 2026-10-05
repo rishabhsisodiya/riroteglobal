@@ -38,10 +38,14 @@
 }
 </script>
 <noscript><style>.page-loader { display: none; } .hero-eyebrow, .hero-title, .hero-sub, .hero-btns, .hero-visual { opacity: 1 !important; }</style></noscript>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/bebas-neue-v16-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/dm-sans-v17-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Self-hosted fonts (latin subset). DM Sans is a variable font covering 300–700. */
+  @font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/fonts/bebas-neue-v16-latin.woff2) format('woff2'); }
+  @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 700; font-display: swap; src: url(assets/fonts/dm-sans-v17-latin.woff2) format('woff2'); }
+  @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/fonts/space-mono-v17-latin-400.woff2) format('woff2'); }
+  @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(assets/fonts/space-mono-v17-latin-700.woff2) format('woff2'); }
   :root {
     --navy: #0a1628;
     --navy-mid: #0d1f3c;
@@ -721,7 +725,7 @@
   .contact-info-item { display: flex; gap: 1rem; margin-bottom: 2rem; }
   .contact-icon { margin-top: 0.15rem; color: var(--cyan); line-height: 0; }
   .contact-icon svg { width: 22px; height: 22px; }
-  .contact-info-item h4 {
+  .contact-info-item h3 {
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem; letter-spacing: 0.15em;
     color: var(--cyan); text-transform: uppercase;
@@ -1202,7 +1206,9 @@
       </div>
     </div>
     <a class="teaser-shot" href="products/erptick.html#promo" aria-label="Watch the 90-second ERPTick overview">
-      <img src="assets/products/erptick/posters/01-tickets.jpg" width="1280" height="800" loading="lazy"
+      <img src="assets/products/erptick/posters/01-tickets.webp"
+           srcset="assets/products/erptick/posters/01-tickets-720.webp 720w, assets/products/erptick/posters/01-tickets.webp 1280w"
+           sizes="(max-width: 900px) 100vw, 54vw" width="1280" height="800" loading="lazy" decoding="async"
            alt="ERPTick ticket screen with stage progress, SLA status and AMC coverage.">
       <span class="teaser-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>Watch the 90-sec overview</span>
     </a>
@@ -1459,14 +1465,14 @@
       <div class="contact-info-item">
         <span class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg></span>
         <div>
-          <h4>Email</h4>
+          <h3>Email</h3>
           <p><a href="mailto:info@riroteglobal.com" style="color:inherit;text-decoration:none;">info@riroteglobal.com</a></p>
         </div>
       </div>
       <div class="contact-info-item">
         <span class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
         <div>
-          <h4>Headquarters</h4>
+          <h3>Headquarters</h3>
           <p>India (Headquarters)</p>
         </div>
       </div>
