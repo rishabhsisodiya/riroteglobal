@@ -722,6 +722,13 @@
   }
   .contact-form-group select option { background: var(--navy); }
   .contact-form-group textarea { resize: vertical; min-height: 120px; }
+  .contact-form-group [aria-invalid="true"] { border-color: #ff8a8a; }
+  .contact-honeypot { display: none; }
+  .contact-status { min-height: 1.5em; margin-top: 1rem; font-size: 0.95rem; line-height: 1.5; }
+  .contact-status.is-error { color: #ff8a8a; }
+  .contact-status.is-success { color: #3ddc97; }
+  .contact-status a { color: var(--cyan); }
+  #contactForm button[disabled] { opacity: 0.6; cursor: wait; }
   .contact-info-item { display: flex; gap: 1rem; margin-bottom: 2rem; }
   .contact-icon { margin-top: 0.15rem; color: var(--cyan); line-height: 0; }
   .contact-icon svg { width: 22px; height: 22px; }
@@ -1477,18 +1484,18 @@
         </div>
       </div>
     </div>
-    <div>
+    <form id="contactForm" novalidate>
       <div class="contact-form-group">
         <label for="cf-name">Full Name</label>
-        <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Your name">
+        <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Your name" maxlength="100" required>
       </div>
       <div class="contact-form-group">
         <label for="cf-company">Company</label>
-        <input id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Your company">
+        <input id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Your company" maxlength="120">
       </div>
       <div class="contact-form-group">
         <label for="cf-email">Email</label>
-        <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="you@company.com">
+        <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" maxlength="254" required>
       </div>
       <div class="contact-form-group">
         <label for="cf-service">Service Interest</label>
@@ -1506,10 +1513,13 @@
       </div>
       <div class="contact-form-group">
         <label for="cf-message">Message</label>
-        <textarea id="cf-message" name="message" placeholder="Tell us about your project..."></textarea>
+        <textarea id="cf-message" name="message" placeholder="Tell us about your project..." maxlength="4000" required></textarea>
       </div>
-      <button type="button" class="btn-primary" style="width:100%; padding:1.1rem; font-size:1rem; border-radius:4px; cursor:pointer;">Send Message →</button>
-    </div>
+      <!-- Honeypot: hidden from people, filled by bots. Web3Forms drops any submission that ticks it. -->
+      <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="btn-primary" style="width:100%; padding:1.1rem; font-size:1rem; border-radius:4px; cursor:pointer;">Send Message →</button>
+      <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -1701,12 +1711,71 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 });
 
 // ── CONTACT FORM ──
-const sendBtn = document.querySelector('.contact-section .btn-primary');
-if (sendBtn) {
-  sendBtn.addEventListener('click', () => {
-    sendBtn.textContent = '✓ Message Sent!';
-    sendBtn.style.background = 'linear-gradient(135deg, #0a7c5c, #00d4a0)';
-    setTimeout(() => { sendBtn.textContent = 'Send Message →'; sendBtn.style.background = ''; }, 3000);
+// Submissions go to Web3Forms, which emails them to the address the access key was issued for.
+// The key is public by design; get one at web3forms.com and paste it here.
+const WEB3FORMS_KEY = 'd27d0242-b616-4b13-aa21-70fca7079ef7';
+const WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+const CONTACT_FALLBACK = 'Please email us at <a href="mailto:info@riroteglobal.com">info@riroteglobal.com</a>.';
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  const sendBtn = contactForm.querySelector('button[type="submit"]');
+  const statusEl = document.getElementById('contactStatus');
+  const sendLabel = sendBtn.textContent;
+  const required = [
+    ['name', 'Please enter your name.'],
+    ['email', 'Please enter a valid email address.'],
+    ['message', 'Please tell us a little about your project.'],
+  ];
+  const setStatus = (html, kind) => {
+    statusEl.innerHTML = html;
+    statusEl.className = 'contact-status' + (kind ? ' is-' + kind : '');
+  };
+  /** Marks invalid fields, focuses the first one and returns its message (or '' when the form is valid). */
+  const validate = () => {
+    let firstError = '';
+    required.forEach(([name, message]) => {
+      const field = contactForm.elements[name];
+      field.value = field.value.trim();
+      const ok = field.checkValidity();
+      field.setAttribute('aria-invalid', String(!ok));
+      if (!ok && !firstError) { firstError = message; field.focus(); }
+    });
+    return firstError;
+  };
+  contactForm.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (sendBtn.disabled) return;
+    const error = validate();
+    if (error) return setStatus(error, 'error');
+    if (!WEB3FORMS_KEY) return setStatus('The form is not connected yet. ' + CONTACT_FALLBACK, 'error');
+
+    const data = Object.fromEntries(new FormData(contactForm));
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending…';
+    setStatus('', '');
+    try {
+      const res = await fetch(WEB3FORMS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          access_key: WEB3FORMS_KEY,
+          subject: 'New enquiry from ' + data.name + ' · riroteglobal.com',
+          from_name: 'Rirote Global website',
+        }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || !body.success) throw new Error(body.message || 'Request failed');
+      contactForm.reset();
+      setStatus('Thanks, your message has been sent. We will get back to you within 24 hours.', 'success');
+    } catch (err) {
+      // What the visitor typed stays in the form so they can retry.
+      setStatus('Sorry, your message could not be sent. ' + CONTACT_FALLBACK, 'error');
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = sendLabel;
+    }
   });
 }
 </script>
