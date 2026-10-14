@@ -1,6 +1,7 @@
 # riroteglobal.com
 
-Company site for Rirote Global, built with [Astro](https://astro.build) as a fully static site and hosted on Cloudflare Pages.
+Company site for Rirote Global, built with [Astro](https://astro.build) as a fully static site and served by a
+Cloudflare Worker (`riroteglobal`) as static assets.
 
 ## Commands
 
@@ -13,6 +14,7 @@ Requires Node 24 (see `.nvmrc`).
 | `npm run build` | Type-check, then build the site into `dist/` |
 | `npm run preview` | Serve the built `dist/` locally |
 | `npm run check` | Type-check only |
+| `npx wrangler dev` | Serve `dist/` in the real Workers runtime (run `npm run build` first) to test redirects, headers and the 404 page |
 
 ## Layout
 
@@ -28,7 +30,7 @@ src/pages/              One file per URL; sitemap.xml.ts builds /sitemap.xml
 ```
 
 URLs have no `.html` and no trailing slash (`/products`, `/products/erptick`). `astro.config.mjs` builds
-`products.html` rather than `products/index.html`, which Cloudflare Pages serves at `/products`. Keep it that way:
+`products.html` rather than `products/index.html`, which the Worker serves at `/products`. Keep it that way:
 changing the URL format would break existing links and search rankings.
 
 ## Adding a page
@@ -46,14 +48,19 @@ The homepage (`src/pages/index.astro`) keeps its own nav, footer and stylesheet 
 Inline `<script>` and `<style>` tags use `is:inline` so Astro ships them exactly as written. Without it, Astro bundles
 scripts and scopes styles, which changes how they behave.
 
-## Deploying (Cloudflare Pages)
+## Deploying (Cloudflare Workers)
 
-Pushing a branch triggers a build. Production deploys from `main`; other branches get a preview URL.
+`wrangler.jsonc` tells the `riroteglobal` Worker to serve `dist/`, to answer unknown URLs with `404.html`, and how to
+map URLs to `.html` files. Workers Builds (connected to this GitHub repo) builds on every push: `main` deploys to
+production, other branches upload a preview version with its own URL.
 
-| Setting | Value |
+| Setting (Worker → Settings → Build) | Value |
 |---|---|
+| Production branch | `main` |
+| Root directory | *(empty: repo root)* |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Environment variable | `NODE_VERSION` = `24` |
+| Deploy command | `npx wrangler deploy` |
+| Non-production branch deploy command | `npx wrangler versions upload` |
+| Build variable | `NODE_VERSION` = `24` |
 
-`public/_headers` and `public/_redirects` are Cloudflare Pages config and end up at the root of `dist/`.
+`public/_headers` and `public/_redirects` end up at the root of `dist/`, where the Worker applies them.
