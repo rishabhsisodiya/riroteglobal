@@ -1,79 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rirote Global — Rise with Robust Tech</title>
-<meta name="description" content="Rirote Global builds full-stack products, AI agents and LLM integrations, ERP integrations, and cloud infrastructure for businesses worldwide — plus senior engineers on contract.">
-<meta name="keywords" content="Full-Stack Development, AI Agents, LLM Integration, Next.js, NestJS, Node.js, ERPNext Integration, AWS, Software Architecture, Contract Engineers, India">
-<meta name="author" content="Rirote Global">
-<meta name="robots" content="index, follow">
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { organization, website } from '../lib/schema';
 
-<meta property="og:title" content="Rirote Global — Rise with Robust Tech">
-<meta property="og:description" content="Full-stack products, AI integration, ERP systems, and cloud infrastructure — engineered end to end.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://riroteglobal.com/">
-<meta property="og:image" content="https://riroteglobal.com/assets/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rirote Global — Rise · Robust · Tech">
-<meta property="og:site_name" content="Rirote Global">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rirote Global — Rise with Robust Tech">
-<meta name="twitter:description" content="Full-stack engineering, AI integration, and enterprise systems built to scale.">
-<meta name="twitter:image" content="https://riroteglobal.com/assets/og-image.jpg">
-
-<link rel="canonical" href="https://riroteglobal.com/">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="icon" href="assets/favicon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="assets/favicon-180.png">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://riroteglobal.com/#organization",
-      "name": "Rirote Global",
-      "url": "https://riroteglobal.com/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://riroteglobal.com/assets/brand/logo-light-1200.png",
-        "width": 1200,
-        "height": 388
-      },
-      "image": "https://riroteglobal.com/assets/og-image.jpg",
-      "email": "info@riroteglobal.com",
-      "description": "Full-stack product development, AI agents and LLM integration, ERP integrations, and cloud infrastructure.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "IN"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://riroteglobal.com/#website",
-      "name": "Rirote Global",
-      "url": "https://riroteglobal.com/",
-      "publisher": {
-        "@id": "https://riroteglobal.com/#organization"
-      },
-      "inLanguage": "en"
-    }
-  ]
-}
-</script>
+const seo = {
+  title: 'Rirote Global — Rise with Robust Tech',
+  path: '/',
+  description: 'Rirote Global builds full-stack products, AI agents and LLM integrations, ERP integrations, and cloud infrastructure for businesses worldwide — plus senior engineers on contract.',
+  ogDescription: 'Full-stack products, AI integration, ERP systems, and cloud infrastructure — engineered end to end.',
+  twitterDescription: 'Full-stack engineering, AI integration, and enterprise systems built to scale.',
+  schema: [organization(), website()],
+};
+---
+<BaseLayout seo={seo} nav={false} siteCss={false}>
+<Fragment slot="head">
 <noscript><style>.page-loader { display: none; } .hero-eyebrow, .hero-title, .hero-sub, .hero-btns, .hero-visual { opacity: 1 !important; }</style></noscript>
-<link rel="preload" href="assets/fonts/bebas-neue-v16-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/dm-sans-v17-latin.woff2" as="font" type="font/woff2" crossorigin>
-<style>
+<style is:inline>
   /* Self-hosted fonts (latin subset). DM Sans is a variable font covering 300–700. */
-  @font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/fonts/bebas-neue-v16-latin.woff2) format('woff2'); }
-  @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 700; font-display: swap; src: url(assets/fonts/dm-sans-v17-latin.woff2) format('woff2'); }
-  @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/fonts/space-mono-v17-latin-400.woff2) format('woff2'); }
-  @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(assets/fonts/space-mono-v17-latin-700.woff2) format('woff2'); }
+  @font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/bebas-neue-v16-latin.woff2) format('woff2'); }
+  @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 700; font-display: swap; src: url(/assets/fonts/dm-sans-v17-latin.woff2) format('woff2'); }
+  @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/space-mono-v17-latin-400.woff2) format('woff2'); }
+  @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(/assets/fonts/space-mono-v17-latin-700.woff2) format('woff2'); }
   :root {
     --navy: #0a1628;
     --navy-mid: #0d1f3c;
@@ -1084,8 +1030,8 @@
     .sr { opacity: 1 !important; transform: none !important; }
   }
 </style>
-</head>
-<body>
+</Fragment>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- PAGE LOADER -->
@@ -1103,7 +1049,7 @@
 <nav aria-label="Main">
   <div class="nav-logo">
     <a href="#" class="nav-logo-link" aria-label="Rirote Global, home">
-      <img class="nav-logo-mark" src="assets/brand/mark.svg" width="38" height="38" alt="">
+      <img class="nav-logo-mark" src="/assets/brand/mark.svg" width="38" height="38" alt="">
       <div class="nav-logo-text">
         <span class="nav-logo-brand">RI<span>RO</span>TE</span>
         <span class="nav-logo-sub">GLOBAL</span>
@@ -1152,7 +1098,7 @@
     <div class="orbit-dot" style="top:5%; left:45%;"></div>
     <div class="orbit-dot" style="bottom:12%; right:20%; width:5px; height:5px; opacity:0.6;"></div>
     <div class="orbit-dot" style="top:40%; left:2%; width:6px; height:6px; opacity:0.5;"></div>
-    <img class="center-r" src="assets/brand/mark.svg" width="132" height="132" alt="">
+    <img class="center-r" src="/assets/brand/mark.svg" width="132" height="132" alt="">
   </div>
 </section>
 
@@ -1241,8 +1187,8 @@
       </div>
     </div>
     <a class="teaser-shot" href="/products/erptick#promo" aria-label="Watch the 90-second ERPTick overview">
-      <img src="assets/products/erptick/posters/01-tickets.webp"
-           srcset="assets/products/erptick/posters/01-tickets-720.webp 720w, assets/products/erptick/posters/01-tickets.webp 1280w"
+      <img src="/assets/products/erptick/posters/01-tickets.webp"
+           srcset="/assets/products/erptick/posters/01-tickets-720.webp 720w, /assets/products/erptick/posters/01-tickets.webp 1280w"
            sizes="(max-width: 900px) 100vw, 54vw" width="1280" height="800" loading="lazy" decoding="async"
            alt="ERPTick ticket screen with stage progress, SLA status and AMC coverage.">
       <span class="teaser-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>Watch the 90-sec overview</span>
@@ -1555,11 +1501,11 @@
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
+  <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
   <div class="footer-copy">© 2026 Rirote Global · riroteglobal.com</div>
 </footer>
 
-<script>
+<script is:inline slot="scripts">
 // ── PAGE LOADER ──
 // Hide as soon as the page is parsed (was: full load + 1.5s).
 document.addEventListener('DOMContentLoaded', () => {
@@ -1807,5 +1753,4 @@ if (contactForm) {
   });
 }
 </script>
-</body>
-</html>
+</BaseLayout>

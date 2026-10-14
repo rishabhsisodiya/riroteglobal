@@ -1,6 +1,6 @@
 // ERPTick product facts used by the product page, the products list and their schema.
 import { SITE, absoluteUrl, type ShareImage } from './site';
-import type { SchemaNode } from '../lib/schema';
+import { ORGANIZATION_ID, type SchemaNode } from '../lib/schema';
 
 const MEDIA = '/assets/products/erptick';
 export const ERPTICK_PATH = '/products/erptick';
@@ -47,7 +47,7 @@ export const erptickSoftwareApp = (): SchemaNode => ({
   url: absoluteUrl(ERPTICK_PATH),
   image: absoluteUrl(ERPTICK_SHARE_IMAGE.path),
   description: 'Field service desk for equipment makers, connected to ERPNext: tickets, field visits, AMC contracts, quotations, customer portal and reports.',
-  publisher: { '@type': 'Organization', '@id': absoluteUrl('/#organization'), name: SITE.name, url: absoluteUrl('/') },
+  publisher: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE.name, url: absoluteUrl('/') },
 });
 
 export const erptickVideoObjects = (): SchemaNode[] =>
