@@ -58,7 +58,7 @@ production, other branches upload a preview version with its own URL.
 |---|---|
 | Production branch | `main` |
 | Root directory | *(empty: repo root)* |
-| Build command | `npm run build` |
+| Build command | *(empty: `wrangler.jsonc` runs `npm run build` before every deploy and preview)* |
 | Deploy command | `npx wrangler deploy` |
 | Non-production branch deploy command | `npx wrangler preview` (needs the `previews` block in `wrangler.jsonc`) |
 | Build variable | `NODE_VERSION` = `24` |
