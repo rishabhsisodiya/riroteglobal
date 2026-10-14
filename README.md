@@ -60,7 +60,7 @@ production, other branches upload a preview version with its own URL.
 | Root directory | *(empty: repo root)* |
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
-| Non-production branch deploy command | `npx wrangler versions upload` |
+| Non-production branch deploy command | `npx wrangler preview` (needs the `previews` block in `wrangler.jsonc`) |
 | Build variable | `NODE_VERSION` = `24` |
 
 `public/_headers` and `public/_redirects` end up at the root of `dist/`, where the Worker applies them.

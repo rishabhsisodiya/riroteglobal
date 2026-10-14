@@ -9,5 +9,7 @@
     "not_found_handling": "404-page",
     // /products serves products.html; /products.html redirects to /products.
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  // Lets Workers Builds publish a preview URL for non-production branches (`wrangler preview`).
+  "previews": {}
 }
