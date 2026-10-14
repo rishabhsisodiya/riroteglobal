@@ -14,6 +14,10 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://riroteglobal.com/">
 <meta property="og:image" content="https://riroteglobal.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rirote Global — Rise · Robust · Tech">
+<meta property="og:site_name" content="Rirote Global">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Rirote Global — Rise with Robust Tech">
@@ -28,13 +32,37 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Rirote Global",
-  "url": "https://riroteglobal.com/",
-  "logo": "https://riroteglobal.com/assets/favicon-192.png",
-  "email": "info@riroteglobal.com",
-  "description": "Full-stack product development, AI agents and LLM integration, ERP integrations, and cloud infrastructure.",
-  "address": { "@type": "PostalAddress", "addressCountry": "IN" }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://riroteglobal.com/#organization",
+      "name": "Rirote Global",
+      "url": "https://riroteglobal.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://riroteglobal.com/assets/brand/logo-light-1200.png",
+        "width": 1200,
+        "height": 388
+      },
+      "image": "https://riroteglobal.com/assets/og-image.jpg",
+      "email": "info@riroteglobal.com",
+      "description": "Full-stack product development, AI agents and LLM integration, ERP integrations, and cloud infrastructure.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://riroteglobal.com/#website",
+      "name": "Rirote Global",
+      "url": "https://riroteglobal.com/",
+      "publisher": {
+        "@id": "https://riroteglobal.com/#organization"
+      },
+      "inLanguage": "en"
+    }
+  ]
 }
 </script>
 <noscript><style>.page-loader { display: none; } .hero-eyebrow, .hero-title, .hero-sub, .hero-btns, .hero-visual { opacity: 1 !important; }</style></noscript>
@@ -1090,8 +1118,8 @@
   <ul class="nav-links" id="mobileMenu">
     <li><a href="#services">Services</a></li>
     <li><a href="#clients">Case Studies</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="products.html">Products</a></li>
+    <li><a href="/projects">Projects</a></li>
+    <li><a href="/products">Products</a></li>
     <li><a href="#contact">Contact</a></li>
     <li class="mobile-cta-li"><a href="#contact" class="nav-cta" style="display:inline-block; margin:0.5rem 0;">Get in Touch</a></li>
   </ul>
@@ -1208,11 +1236,11 @@
         <li>Draft invoices and stock entries written back to ERPNext</li>
       </ul>
       <div class="teaser-actions">
-        <a href="products/erptick.html" class="btn-primary">Explore ERPTick</a>
-        <a href="products/erptick.html#early-access" class="btn-ghost">Join Early Access</a>
+        <a href="/products/erptick" class="btn-primary">Explore ERPTick</a>
+        <a href="/products/erptick#early-access" class="btn-ghost">Join Early Access</a>
       </div>
     </div>
-    <a class="teaser-shot" href="products/erptick.html#promo" aria-label="Watch the 90-second ERPTick overview">
+    <a class="teaser-shot" href="/products/erptick#promo" aria-label="Watch the 90-second ERPTick overview">
       <img src="assets/products/erptick/posters/01-tickets.webp"
            srcset="assets/products/erptick/posters/01-tickets-720.webp 720w, assets/products/erptick/posters/01-tickets.webp 1280w"
            sizes="(max-width: 900px) 100vw, 54vw" width="1280" height="800" loading="lazy" decoding="async"
