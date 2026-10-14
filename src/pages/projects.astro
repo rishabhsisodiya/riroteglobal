@@ -1,57 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects — Rirote Global</title>
-<meta name="description" content="A portfolio of real-world projects across enterprise ERP, e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.">
-<meta name="author" content="Rirote Global">
-<link rel="canonical" href="https://riroteglobal.com/projects">
-<meta property="og:title" content="Projects — Rirote Global">
-<meta property="og:description" content="Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://riroteglobal.com/projects">
-<meta property="og:image" content="https://riroteglobal.com/assets/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rirote Global — Rise · Robust · Tech">
-<meta property="og:site_name" content="Rirote Global">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Projects — Rirote Global">
-<meta name="twitter:description" content="Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.">
-<meta name="twitter:image" content="https://riroteglobal.com/assets/og-image.jpg">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="icon" href="assets/favicon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="assets/favicon-180.png">
-<link rel="preload" href="assets/fonts/bebas-neue-v16-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/dm-sans-v17-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/site.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://riroteglobal.com/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Projects",
-          "item": "https://riroteglobal.com/projects"
-        }
-      ]
-    }
-  ]
-}
-</script>
-<style>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { breadcrumbs } from '../lib/schema';
+
+const seo = {
+  title: 'Projects — Rirote Global',
+  path: '/projects',
+  description: 'A portfolio of real-world projects across enterprise ERP, e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.',
+  ogDescription: 'Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.',
+  schema: [breadcrumbs(['Home', '/'], ['Projects', '/projects'])],
+};
+---
+<BaseLayout seo={seo} nav={{ current: 'projects' }}>
+<Fragment slot="head">
+<style is:inline>
   /* ── METRICS STRIP ── */
   .metrics {
     display: grid; grid-template-columns: repeat(4, 1fr);
@@ -232,37 +193,7 @@
   }
   @media (prefers-reduced-motion: reduce) { .project-card { opacity: 1; } }
 </style>
-</head>
-<body>
-
-<!-- ══════════════════════════════════════════════
-     NAV
-══════════════════════════════════════════════ -->
-<a class="skip-link" href="#main">Skip to content</a>
-
-<nav id="navbar" aria-label="Main">
-  <a href="/" class="nav-logo-link" aria-label="Rirote Global, home">
-    <img class="nav-logo-mark" src="assets/brand/mark.svg" width="36" height="36" alt="">
-    <span class="nav-logo-text">
-      <span class="nav-logo-brand">RI<span>RO</span>TE</span>
-      <span class="nav-logo-sub">Global</span>
-    </span>
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/projects" aria-current="page">Projects</a></li>
-    <li><a href="/products">Products</a></li>
-    <li><a href="/#contact">Contact</a></li>
-    <li class="mobile-only"><a href="/#contact" class="nav-cta">Get in Touch</a></li>
-  </ul>
-  <div class="nav-cta-wrap">
-    <a href="/#contact" class="nav-cta">Get in Touch</a>
-  </div>
-  <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+</Fragment>
 
 <main id="main">
 
@@ -617,13 +548,7 @@
 
 </main>
 
-<footer>
-  <a href="/" class="footer-brand" aria-label="Rirote Global, home"><img src="assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
-  <span class="footer-copy">&copy; 2026 Rirote Global. All rights reserved.</span>
-</footer>
-
-<script src="assets/site.js"></script>
-<script>
+<script is:inline slot="scripts">
   // Reveal project cards as they scroll into view
   (function () {
     var cards = document.querySelectorAll('.project-card');
@@ -642,6 +567,4 @@
     });
   })();
 </script>
-
-</body>
-</html>
+</BaseLayout>

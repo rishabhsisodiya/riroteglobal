@@ -1,0 +1,36 @@
+---
+// Shell for every sub-page: shared head, nav, footer and site.js.
+// Slots: "head" for page CSS, default for <main>, "footer" to replace the copyright line,
+// "scripts" for page JS. Set nav={false} for bare pages like the 404.
+import Seo, { type Props as SeoProps } from '../components/Seo.astro';
+import Nav, { type Props as NavProps } from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  seo: SeoProps;
+  nav?: NavProps | false;
+}
+
+const { seo, nav = {} } = Astro.props;
+const hasFooterText = Astro.slots.has('footer');
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<Seo {...seo} />
+<link rel="stylesheet" href="/assets/site.css">
+<slot name="head" />
+</head>
+<body>
+{nav && (
+  <>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav {...nav} />
+  </>
+)}
+<slot />
+{nav && (hasFooterText ? <Footer><slot name="footer" /></Footer> : <Footer />)}
+{nav && <script is:inline src="/assets/site.js"></script>}
+<slot name="scripts" />
+</body>
+</html>
