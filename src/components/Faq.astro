@@ -1,0 +1,19 @@
+---
+// Accessible FAQ list: native <details> needs no JavaScript and keeps every answer in the HTML
+// for search engines. Pair it with an FAQPage schema built from the same items.
+import type { FaqItem } from '../lib/schema';
+
+export interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+<div class="faq">
+  {items.map((item) => (
+    <details class="faq-item">
+      <summary>{item.question}</summary>
+      <p>{item.answer}</p>
+    </details>
+  ))}
+</div>

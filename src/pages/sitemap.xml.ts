@@ -7,7 +7,7 @@ import { absoluteUrl } from '../data/site';
 const EXCLUDE = new Set(['/404']);
 
 const toPath = (file: string): string =>
-  file.replace(/^\.\//, '/').replace(/\.astro$/, '').replace(/\/index$/, '') || '/';
+  file.replace(/^\.\//, '/').replace(/\.(astro|md)$/, '').replace(/\/index$/, '') || '/';
 
 function lastModified(file: string): string {
   try {
@@ -22,7 +22,7 @@ function lastModified(file: string): string {
 }
 
 export const GET: APIRoute = () => {
-  const urls = Object.keys(import.meta.glob('./**/*.astro'))
+  const urls = Object.keys(import.meta.glob('./**/*.{astro,md}'))
     .filter((file) => !file.includes('['))
     .map((file) => ({ path: toPath(file), lastmod: lastModified(file) }))
     .filter(({ path }) => !EXCLUDE.has(path))

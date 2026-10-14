@@ -262,6 +262,59 @@ footer {
   font-size: 0.62rem; letter-spacing: 0.12em;
   color: var(--muted); text-transform: uppercase;
 }
+.footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+.footer-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  text-decoration: none; transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--cyan); }
+
+/* ── FAQ ── */
+.faq { max-width: 860px; margin-top: 2rem; border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
+  padding: 1.25rem 0;
+  font-size: 1.05rem; font-weight: 600; color: var(--white);
+  cursor: pointer; list-style: none;
+  transition: color 0.2s;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+'; flex-shrink: 0;
+  font-family: 'Space Mono', monospace; font-size: 1.2rem; line-height: 1;
+  color: var(--accent-text); transition: transform 0.2s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item summary:hover { color: var(--accent-text); }
+.faq-item p { padding: 0 2.5rem 1.4rem 0; color: var(--text-soft); line-height: 1.75; max-width: 72ch; }
+
+/* ── PROSE (long-form legal pages) ── */
+.prose { max-width: 72ch; color: var(--text-soft); font-size: 1rem; line-height: 1.8; }
+.prose > * + * { margin-top: 1.1rem; }
+.prose h2 {
+  font-family: 'Bebas Neue', sans-serif; font-weight: 400;
+  font-size: 2rem; letter-spacing: 0.05em; line-height: 1.1;
+  color: var(--white); margin-top: 3rem; scroll-margin-top: 6rem;
+}
+.prose h2:first-child { margin-top: 0; }
+.prose h3 { font-size: 1.1rem; font-weight: 600; color: var(--white); margin-top: 2rem; }
+.prose strong { color: var(--white); font-weight: 600; }
+.prose a { color: var(--blue-light); text-underline-offset: 3px; }
+.prose a:hover { color: var(--cyan); }
+.prose ul { padding-left: 1.3rem; }
+.prose li + li { margin-top: 0.45rem; }
+.prose li::marker { color: var(--cyan); }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.92rem; line-height: 1.6; }
+.prose th, .prose td { text-align: left; vertical-align: top; padding: 0.75rem 1rem; border: 1px solid var(--line); }
+.prose th {
+  font-family: 'Space Mono', monospace; font-weight: 400;
+  font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); background: var(--navy-card);
+}
+.prose td:first-child { color: var(--white); font-weight: 600; white-space: nowrap; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
@@ -285,6 +338,12 @@ footer {
   .section { padding: 3.5rem 1.25rem; }
   .cta-section { padding: 4rem 1.25rem; }
   footer { padding: 1.5rem 1.25rem; flex-direction: column; text-align: center; }
+  .faq-item p { padding-right: 0; }
+  .prose table, .prose thead, .prose tbody, .prose tr, .prose td { display: block; }
+  .prose thead { display: none; }
+  .prose tr { border: 1px solid var(--line); padding: 0.4rem 0; }
+  .prose tr + tr { margin-top: 0.75rem; }
+  .prose td { border: none; padding: 0.35rem 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

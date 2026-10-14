@@ -30,6 +30,23 @@ export function website(): SchemaNode {
   };
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+/** FAQPage from the same items the page shows, so the two never drift apart. */
+export function faqPage(items: FaqItem[]): SchemaNode {
+  return {
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  };
+}
+
 /** BreadcrumbList from [name, path] pairs, starting at Home. */
 export function breadcrumbs(...items: Array<[name: string, path: string]>): SchemaNode {
   return {

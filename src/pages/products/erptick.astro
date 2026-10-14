@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { breadcrumbs } from '../../lib/schema';
-import { ERPTICK_PATH, ERPTICK_SHARE_IMAGE, erptickSoftwareApp, erptickVideoObjects } from '../../data/erptick';
+import Faq from '../../components/Faq.astro';
+import { breadcrumbs, faqPage } from '../../lib/schema';
+import { ERPTICK_FAQ, ERPTICK_PATH, ERPTICK_SHARE_IMAGE, erptickSoftwareApp, erptickVideoObjects } from '../../data/erptick';
 
 const year = new Date().getFullYear();
 const seo = {
@@ -14,6 +15,7 @@ const seo = {
   schema: [
     erptickSoftwareApp(),
     breadcrumbs(['Home', '/'], ['Products', '/products'], ['ERPTick Service Desk', ERPTICK_PATH]),
+    faqPage(ERPTICK_FAQ),
     ...erptickVideoObjects(),
   ],
 };
@@ -606,6 +608,15 @@ const seo = {
         <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=ERPTick%20pricing">Ask about pricing</a>
       </div>
     </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="section" id="faq" aria-labelledby="faq-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="faq-title">Frequently Asked Questions</h2>
+      <div class="section-line"></div>
+    </div>
+    <Faq items={ERPTICK_FAQ} />
   </section>
 
   <!-- ══ EARLY ACCESS ══ -->

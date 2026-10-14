@@ -1,0 +1,50 @@
+---
+// Layout for long-form legal pages written in Markdown (privacy policy, terms).
+// Frontmatter: title, description, updated (YYYY-MM-DD).
+import BaseLayout from './BaseLayout.astro';
+import { breadcrumbs } from '../lib/schema';
+
+interface Frontmatter {
+  title: string;
+  description: string;
+  /** Written as YYYY-MM-DD; Astro may hand it over as a Date or an ISO timestamp string. */
+  updated: Date | string;
+}
+
+const { title, description, updated } = Astro.props.frontmatter as Frontmatter;
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const updatedIso = (updated instanceof Date ? updated.toISOString() : String(updated)).slice(0, 10);
+const updatedDate = new Date(`${updatedIso}T00:00:00Z`);
+if (!/^\d{4}-\d{2}-\d{2}$/.test(updatedIso) || Number.isNaN(updatedDate.getTime())) {
+  throw new Error(`${path}: "updated" must be a YYYY-MM-DD date`);
+}
+const updatedLabel = updatedDate.toLocaleDateString('en-GB', {
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
+});
+
+const seo = {
+  title: `${title} — Rirote Global`,
+  path,
+  description,
+  schema: [breadcrumbs(['Home', '/'], [title, path])],
+};
+---
+<BaseLayout seo={seo}>
+<main id="main">
+  <section class="page-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="eyebrow fade-up d1">// Legal</p>
+      <h1 class="page-title fade-up d2">{title}</h1>
+      <p class="page-sub fade-up d3">Last updated <time datetime={updatedIso}>{updatedLabel}</time></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <article class="prose">
+      <slot />
+    </article>
+  </section>
+</main>
+</BaseLayout>

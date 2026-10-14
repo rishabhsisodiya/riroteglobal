@@ -698,6 +698,8 @@ const seo = {
   .contact-form-group textarea { resize: vertical; min-height: 120px; }
   .contact-form-group [aria-invalid="true"] { border-color: #ff8a8a; }
   .contact-honeypot { display: none; }
+  .contact-note { margin-top: 0.9rem; font-size: 0.82rem; line-height: 1.5; color: var(--muted); text-align: center; }
+  .contact-note a { color: var(--cyan); }
   .contact-status { min-height: 1.5em; margin-top: 1rem; font-size: 0.95rem; line-height: 1.5; }
   .contact-status.is-error { color: #ff8a8a; }
   .contact-status.is-success { color: #3ddc97; }
@@ -1492,6 +1494,7 @@ const seo = {
       <!-- Honeypot: hidden from people, filled by bots. Web3Forms drops any submission that ticks it. -->
       <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button type="submit" class="btn-primary" style="width:100%; padding:1.1rem; font-size:1rem; border-radius:4px; cursor:pointer;">Send Message →</button>
+      <p class="contact-note">By sending this form you agree to our <a href="/privacy-policy">Privacy Policy</a>.</p>
       <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
     </form>
   </div>
@@ -1502,6 +1505,7 @@ const seo = {
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
+  <div class="footer-links"><a href="/privacy-policy">Privacy Policy</a></div>
   <div class="footer-copy">© 2026 Rirote Global · riroteglobal.com</div>
 </footer>
 
