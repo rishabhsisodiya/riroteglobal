@@ -1,0 +1,17 @@
+// Cloudflare Worker that serves the built site (dist/) as static assets. No Worker code runs.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "riroteglobal",
+  "compatibility_date": "2026-10-01",
+  // Build the site before every deploy/preview, so it never depends on the dashboard's build command.
+  "build": { "command": "npm run build" },
+  "assets": {
+    "directory": "./dist",
+    // Unknown URLs get dist/404.html with a 404 status (the default sends an empty body).
+    "not_found_handling": "404-page",
+    // /products serves products.html; /products.html redirects to /products.
+    "html_handling": "auto-trailing-slash"
+  },
+  // Lets Workers Builds publish a preview URL for non-production branches (`wrangler preview`).
+  "previews": {}
+}

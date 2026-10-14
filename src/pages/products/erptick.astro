@@ -1,189 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERPTick Service Desk — for Equipment Makers, Connected to ERPNext</title>
-<meta name="description" content="ERPTick is the field service desk for equipment makers running ERPNext: tickets with SLAs, field visits, AMC contracts, quotations, a customer portal and reports — with customers, machines and stock read from your ERP.">
-<meta name="author" content="Rirote Global">
-<meta property="og:title" content="ERPTick Service Desk — for Equipment Makers">
-<meta property="og:description" content="Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://riroteglobal.com/products/erptick">
-<meta property="og:image" content="https://riroteglobal.com/assets/products/erptick/posters/promo.jpg">
-<meta property="og:image:width" content="1280">
-<meta property="og:image:height" content="720">
-<meta property="og:image:alt" content="ERPTick Service Desk dashboard">
-<meta property="og:site_name" content="Rirote Global">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ERPTick Service Desk — for Equipment Makers">
-<meta name="twitter:description" content="Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.">
-<meta name="twitter:image" content="https://riroteglobal.com/assets/products/erptick/posters/promo.jpg">
-<link rel="canonical" href="https://riroteglobal.com/products/erptick">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="../assets/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="icon" href="../assets/favicon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="../assets/favicon-180.png">
-<link rel="preload" href="../assets/fonts/bebas-neue-v16-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/dm-sans-v17-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/site.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://riroteglobal.com/products/erptick#app",
-      "name": "ERPTick Service Desk",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "url": "https://riroteglobal.com/products/erptick",
-      "image": "https://riroteglobal.com/assets/products/erptick/posters/promo.jpg",
-      "description": "Field service desk for equipment makers, connected to ERPNext: tickets, field visits, AMC contracts, quotations, customer portal and reports.",
-      "publisher": {
-        "@type": "Organization",
-        "@id": "https://riroteglobal.com/#organization",
-        "name": "Rirote Global",
-        "url": "https://riroteglobal.com/"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://riroteglobal.com/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Products",
-          "item": "https://riroteglobal.com/products"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "ERPTick Service Desk",
-          "item": "https://riroteglobal.com/products/erptick"
-        }
-      ]
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick Service Desk — 90-second overview",
-      "description": "An overview of ERPTick, the field service desk for equipment makers running ERPNext: tickets with SLAs, field visits, AMC contracts, quotations, a customer portal and reports.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/promo.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/promo.mp4",
-      "uploadDate": "2026-10-05T00:00:00+05:30",
-      "duration": "PT1M28S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#promo"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Every Breakdown, Tracked to Closure",
-      "description": "Log a ticket against the exact machine and ERPTick knows whether it's under AMC, under warranty or chargeable. Response and resolution clocks run on your business calendar and warn the team before a breach — not after.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/01-tickets.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/01-tickets.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT56S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: The Whole Job, Recorded on Site",
-      "description": "Engineers accept the job, mark when they reach the site and log the visit from a phone or laptop: what was done, the spares fitted, photos and the customer's signature.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/02-visits.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/02-visits.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT54S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Quote Chargeable Work Before It Starts",
-      "description": "When a machine is out of warranty and AMC, the ticket asks for a quotation. Build it from your ERP items, send it, and record the customer's purchase order against it.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/03-quotations.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/03-quotations.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT44S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Contracts That Plan Their Own Visits",
-      "description": "Set up an annual maintenance contract once — cover period, value, the machines it covers and the planned preventive visits. ERPTick raises the visit tickets ahead of time and reminds you before the contract ends.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/04-amc.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/04-amc.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT45S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Know the Machine Before You Answer",
-      "description": "Customers, sites, contacts, machines by serial number, spares, prices and stock are read from your ERP. Each machine shows its cover, so the desk knows who pays before logging the call.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/05-customers.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/05-customers.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT47S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Your Rules, Without a Developer",
-      "description": "Decide how tickets are routed, timed and billed from the settings screens: regions by pincode, skill tags, SLA targets, business calendars and service charges.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/06-dispatch.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/06-dispatch.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT44S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Customers Help Themselves",
-      "description": "Customers sign in with an emailed link, raise tickets, follow progress and approve quotations with their PO number. After closure they rate the job, and updates go out by email or WhatsApp.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/07-portal.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/07-portal.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT40S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Numbers You Can Act On",
-      "description": "Run service reports on demand, compare every region with its targets in the KPI matrix, and schedule any report to arrive by email as a CSV.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/08-reports.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/08-reports.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT36S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Connected to ERPNext, on Your Terms",
-      "description": "An administrator adds the ERPNext connection on screen and tests it before saving. Master data flows in; draft invoices and stock entries go back only when you switch them on.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/09-erp.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/09-erp.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT37S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    },
-    {
-      "@type": "VideoObject",
-      "name": "ERPTick: Control Who Sees and Does What",
-      "description": "Invite your team, shape roles with a permission grid, give partners a scoped API key and load customers in bulk — with every change recorded in an audit log.",
-      "thumbnailUrl": "https://riroteglobal.com/assets/products/erptick/posters/10-admin.jpg",
-      "contentUrl": "https://riroteglobal.com/assets/products/erptick/10-admin.mp4",
-      "uploadDate": "2026-10-03T00:00:00+05:30",
-      "duration": "PT49S",
-      "embedUrl": "https://riroteglobal.com/products/erptick#tour"
-    }
-  ]
-}
-</script>
-<style>
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { breadcrumbs } from '../../lib/schema';
+import { ERPTICK_PATH, ERPTICK_SHARE_IMAGE, erptickSoftwareApp, erptickVideoObjects } from '../../data/erptick';
+
+const year = new Date().getFullYear();
+const seo = {
+  title: 'ERPTick Service Desk — for Equipment Makers, Connected to ERPNext',
+  path: ERPTICK_PATH,
+  description: 'ERPTick is the field service desk for equipment makers running ERPNext: tickets with SLAs, field visits, AMC contracts, quotations, a customer portal and reports — with customers, machines and stock read from your ERP.',
+  ogTitle: 'ERPTick Service Desk — for Equipment Makers',
+  ogDescription: 'Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.',
+  image: ERPTICK_SHARE_IMAGE,
+  schema: [
+    erptickSoftwareApp(),
+    breadcrumbs(['Home', '/'], ['Products', '/products'], ['ERPTick Service Desk', ERPTICK_PATH]),
+    ...erptickVideoObjects(),
+  ],
+};
+---
+<BaseLayout seo={seo} nav={{ current: 'products', cta: { href: '#early-access', label: 'Join Early Access' } }}>
+<Fragment slot="head">
+<style is:inline>
   /* ERPTick accent — emerald, tuned for contrast on navy */
   body {
     --accent: #10b981;
@@ -371,33 +208,7 @@
     .hero-actions .btn-primary, .hero-actions .btn-outline { width: 100%; }
   }
 </style>
-</head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-
-<nav id="navbar" aria-label="Main">
-  <a href="/" class="nav-logo-link" aria-label="Rirote Global, home">
-    <img class="nav-logo-mark" src="../assets/brand/mark.svg" width="36" height="36" alt="">
-    <span class="nav-logo-text">
-      <span class="nav-logo-brand">RI<span>RO</span>TE</span>
-      <span class="nav-logo-sub">Global</span>
-    </span>
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/projects">Projects</a></li>
-    <li><a href="/products" aria-current="page">Products</a></li>
-    <li><a href="/#contact">Contact</a></li>
-    <li class="mobile-only"><a href="#early-access" class="nav-cta">Join Early Access</a></li>
-  </ul>
-  <div class="nav-cta-wrap">
-    <a href="#early-access" class="nav-cta">Join Early Access</a>
-  </div>
-  <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+</Fragment>
 
 <main id="main">
 
@@ -418,8 +229,8 @@
     </div>
     <div class="app-frame fade-up d4">
       <video id="promo" controls preload="none" playsinline width="1920" height="1080"
-             poster="../assets/products/erptick/posters/promo.jpg"
-             src="../assets/products/erptick/promo.mp4"
+             poster="/assets/products/erptick/posters/promo.jpg"
+             src="/assets/products/erptick/promo.mp4"
              aria-label="ERPTick Service Desk overview video, 90 seconds, with narration and captions"></video>
     </div>
   </section>
@@ -481,8 +292,8 @@
       <div>
         <div class="tour-panel" role="tabpanel" id="panel-tickets" aria-labelledby="tab-tickets">
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/01-tickets.jpg"
-                 src="../assets/products/erptick/01-tickets.mp4"
+                 poster="/assets/products/erptick/posters/01-tickets.jpg"
+                 src="/assets/products/erptick/01-tickets.mp4"
                  aria-label="Video walkthrough with narration and captions: tickets and SLA clocks"></video>
           <div class="tour-copy">
             <div>
@@ -502,8 +313,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-visits" aria-labelledby="tab-visits" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/02-visits.jpg"
-                 src="../assets/products/erptick/02-visits.mp4"
+                 poster="/assets/products/erptick/posters/02-visits.jpg"
+                 src="/assets/products/erptick/02-visits.mp4"
                  aria-label="Video walkthrough with narration and captions: field visits"></video>
           <div class="tour-copy">
             <div>
@@ -523,8 +334,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-quotations" aria-labelledby="tab-quotations" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/03-quotations.jpg"
-                 src="../assets/products/erptick/03-quotations.mp4"
+                 poster="/assets/products/erptick/posters/03-quotations.jpg"
+                 src="/assets/products/erptick/03-quotations.mp4"
                  aria-label="Video walkthrough with narration and captions: quotations and purchase orders"></video>
           <div class="tour-copy">
             <div>
@@ -544,8 +355,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-amc" aria-labelledby="tab-amc" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/04-amc.jpg"
-                 src="../assets/products/erptick/04-amc.mp4"
+                 poster="/assets/products/erptick/posters/04-amc.jpg"
+                 src="/assets/products/erptick/04-amc.mp4"
                  aria-label="Video walkthrough with narration and captions: AMC contracts"></video>
           <div class="tour-copy">
             <div>
@@ -565,8 +376,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-customers" aria-labelledby="tab-customers" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/05-customers.jpg"
-                 src="../assets/products/erptick/05-customers.mp4"
+                 poster="/assets/products/erptick/posters/05-customers.jpg"
+                 src="/assets/products/erptick/05-customers.mp4"
                  aria-label="Video walkthrough with narration and captions: customers, machines and spares"></video>
           <div class="tour-copy">
             <div>
@@ -586,8 +397,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-dispatch" aria-labelledby="tab-dispatch" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/06-dispatch.jpg"
-                 src="../assets/products/erptick/06-dispatch.mp4"
+                 poster="/assets/products/erptick/posters/06-dispatch.jpg"
+                 src="/assets/products/erptick/06-dispatch.mp4"
                  aria-label="Video walkthrough with narration and captions: dispatch and service rules"></video>
           <div class="tour-copy">
             <div>
@@ -607,8 +418,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-portal" aria-labelledby="tab-portal" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/07-portal.jpg"
-                 src="../assets/products/erptick/07-portal.mp4"
+                 poster="/assets/products/erptick/posters/07-portal.jpg"
+                 src="/assets/products/erptick/07-portal.mp4"
                  aria-label="Video walkthrough with narration and captions: customer portal and updates"></video>
           <div class="tour-copy">
             <div>
@@ -628,8 +439,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-reports" aria-labelledby="tab-reports" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/08-reports.jpg"
-                 src="../assets/products/erptick/08-reports.mp4"
+                 poster="/assets/products/erptick/posters/08-reports.jpg"
+                 src="/assets/products/erptick/08-reports.mp4"
                  aria-label="Video walkthrough with narration and captions: reports and KPIs"></video>
           <div class="tour-copy">
             <div>
@@ -648,8 +459,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-erp" aria-labelledby="tab-erp" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/09-erp.jpg"
-                 src="../assets/products/erptick/09-erp.mp4"
+                 poster="/assets/products/erptick/posters/09-erp.jpg"
+                 src="/assets/products/erptick/09-erp.mp4"
                  aria-label="Video walkthrough with narration and captions: the ERPNext connection"></video>
           <div class="tour-copy">
             <div>
@@ -669,8 +480,8 @@
 
         <div class="tour-panel" role="tabpanel" id="panel-admin" aria-labelledby="tab-admin" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="../assets/products/erptick/posters/10-admin.jpg"
-                 src="../assets/products/erptick/10-admin.mp4"
+                 poster="/assets/products/erptick/posters/10-admin.jpg"
+                 src="/assets/products/erptick/10-admin.mp4"
                  aria-label="Video walkthrough with narration and captions: administration and security"></video>
           <div class="tour-copy">
             <div>
@@ -811,13 +622,9 @@
   </section>
 </main>
 
-<footer>
-  <a href="/" class="footer-brand" aria-label="Rirote Global, home"><img src="../assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
-  <span class="footer-copy">ERPTick Service Desk is a Rirote Global product · &copy; 2026</span>
-</footer>
+<Fragment slot="footer">ERPTick Service Desk is a Rirote Global product · &copy; {year}</Fragment>
 
-<script src="../assets/site.js"></script>
-<script>
+<script is:inline slot="scripts">
 // ── MODULE TOUR TABS (WAI-ARIA tabs pattern, manual activation) ──
 (function () {
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tour-tab'));
@@ -867,5 +674,4 @@
   });
 })();
 </script>
-</body>
-</html>
+</BaseLayout>

@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Not Found — Rirote Global</title>
-<meta name="robots" content="noindex">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="preload" href="/assets/fonts/bebas-neue-v16-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/dm-sans-v17-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css">
-<style>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const seo = { title: 'Page Not Found — Rirote Global', noindex: true };
+---
+<BaseLayout seo={seo} nav={false}>
+<Fragment slot="head">
+<style is:inline>
   main { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 2rem 1.25rem; text-align: center; position: relative; }
   .nf-code { font-family: 'Bebas Neue', sans-serif; font-size: clamp(6rem, 22vw, 12rem); line-height: 0.9;
     background: linear-gradient(135deg, var(--blue-light), var(--cyan));
@@ -18,8 +13,8 @@
   .nf p { color: var(--text-soft); max-width: 420px; margin: 1rem auto 2rem; }
   .nf .cta-actions { justify-content: center; }
 </style>
-</head>
-<body>
+</Fragment>
+
 <main>
   <div class="hero-bg"></div>
   <div class="nf" style="position:relative;">
@@ -32,5 +27,4 @@
     </div>
   </div>
 </main>
-</body>
-</html>
+</BaseLayout>
