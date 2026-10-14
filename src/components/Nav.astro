@@ -2,7 +2,7 @@
 // Sub-page navigation bar. The homepage has its own nav with a different design.
 export interface Props {
   /** Highlights the matching link. */
-  current?: 'projects' | 'products';
+  current?: 'projects' | 'products' | 'about';
   /** The call-to-action button; defaults to the contact form. */
   cta?: { href: string; label: string };
 }
@@ -13,6 +13,7 @@ const links = [
   { href: '/#services', label: 'Services' },
   { href: '/projects', label: 'Projects', key: 'projects' },
   { href: '/products', label: 'Products', key: 'products' },
+  { href: '/about', label: 'About', key: 'about' },
   { href: '/#contact', label: 'Contact' },
 ];
 ---

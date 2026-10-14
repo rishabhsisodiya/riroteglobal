@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { breadcrumbs } from '../lib/schema';
+import { COMPANY_STATS } from '../data/site';
 
 const seo = {
   title: 'Projects — Rirote Global',
@@ -13,35 +14,6 @@ const seo = {
 <BaseLayout seo={seo} nav={{ current: 'projects' }}>
 <Fragment slot="head">
 <style is:inline>
-  /* ── METRICS STRIP ── */
-  .metrics {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 1px; background: rgba(0,180,216,0.12);
-    border-top: 1px solid rgba(0,180,216,0.12);
-    border-bottom: 1px solid rgba(0,180,216,0.12);
-  }
-  .metric-item {
-    background: var(--navy);
-    padding: 2.5rem 2rem;
-    text-align: center;
-    transition: background 0.3s;
-  }
-  .metric-item:hover { background: var(--navy-mid); }
-  .metric-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.2rem; letter-spacing: 0.04em;
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1;
-  }
-  .metric-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--muted);
-    margin-top: 0.5rem;
-  }
-
   /* ── PROJECTS GRID ── */
   .projects-section {
     padding: 5rem 4rem 6rem;
@@ -182,13 +154,11 @@ const seo = {
   .project-card:nth-child(7) { animation-delay: 0.47s; }
 
   @media (max-width: 900px) {
-    .metrics { grid-template-columns: repeat(2, 1fr); }
     .projects-section { padding: 3.5rem 1.25rem 4rem; }
     .projects-grid { grid-template-columns: 1fr; }
     .card-cols { grid-template-columns: 1fr; gap: 1rem; }
   }
   @media (max-width: 480px) {
-    .metric-value { font-size: 2.4rem; }
     .card-top { flex-direction: column; gap: 0.8rem; }
   }
   @media (prefers-reduced-motion: reduce) { .project-card { opacity: 1; } }
@@ -221,12 +191,12 @@ const seo = {
     <div class="metric-label">Years Experience</div>
   </div>
   <div class="metric-item">
-    <div class="metric-value">11+</div>
-    <div class="metric-label">Projects Delivered</div>
+    <div class="metric-value">{COMPANY_STATS.projects.value}</div>
+    <div class="metric-label">{COMPANY_STATS.projects.label}</div>
   </div>
   <div class="metric-item">
-    <div class="metric-value">5+</div>
-    <div class="metric-label">Industries Served</div>
+    <div class="metric-value">{COMPANY_STATS.industries.value}</div>
+    <div class="metric-label">{COMPANY_STATS.industries.label}</div>
   </div>
   <div class="metric-item">
     <div class="metric-value">2</div>

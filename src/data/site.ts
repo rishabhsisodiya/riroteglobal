@@ -26,5 +26,11 @@ export const SITE = {
   } satisfies ShareImage,
 } as const;
 
+/** Company track record, shown on the About and Projects pages. */
+export const COMPANY_STATS = {
+  projects: { value: '11+', label: 'Projects Delivered' },
+  industries: { value: '5+', label: 'Industries Served' },
+} as const;
+
 /** Absolute URL on the live domain, e.g. absoluteUrl('/products') → https://riroteglobal.com/products */
 export const absoluteUrl = (path: string): string => new URL(path, SITE.url).href;

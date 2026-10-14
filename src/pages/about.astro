@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { aboutPage, breadcrumbs } from '../lib/schema';
+import { COMPANY_STATS, SITE } from '../data/site';
+
+const path = '/about';
+const seo = {
+  title: 'About Rirote Global — Full-Stack, AI & ERPNext Engineering from Jaipur',
+  path,
+  description: 'Rirote Global is a full-stack, AI and ERP engineering company in Jaipur, India. We build software for businesses in India, the US and the Middle East, and products of our own.',
+  ogTitle: 'About Rirote Global',
+  schema: [aboutPage(path), breadcrumbs(['Home', '/'], ['About', path])],
+};
+
+const name = [
+  { letters: 'RI', word: 'Rise', text: 'Strategy that moves a business forward. Every build starts from what has to change for the business, not from the tech stack.' },
+  { letters: 'RO', word: 'Robust', text: 'Systems that hold up in production: secure, monitored, and built to keep working as usage grows.' },
+  { letters: 'TE', word: 'Tech', text: 'Modern, proven tools such as Next.js, NestJS, Node.js, ERPNext, cloud and AI, used where they earn their place.' },
+];
+
+const pillars = [
+  {
+    kicker: 'Client engineering',
+    title: 'Software Built for You',
+    text: 'Full-stack products, AI agents and LLM features, ERP integrations and cloud infrastructure, owned from design through production support.',
+    links: [{ href: '/#services', label: 'Our services' }, { href: '/projects', label: 'Selected projects' }],
+  },
+  {
+    kicker: 'Our products',
+    title: 'Software We Ship',
+    text: 'Products we build and run ourselves, starting with ERPTick: the ERPNext-connected service desk for equipment makers.',
+    links: [{ href: '/products/erptick', label: 'Explore ERPTick' }],
+  },
+  {
+    kicker: 'Open source',
+    title: 'Built in the Open',
+    text: 'Free tools and learning material for engineers: the CrackThePrep interview hub, and stop-guessing, agent skills that stop AI coding tools from inventing decisions.',
+    links: [{ href: '/#opensource', label: 'See our open source' }],
+  },
+];
+
+const principles = [
+  { title: 'Owned End to End', text: 'One team from system design and APIs through deployment and production support, with no hand-offs where context gets lost.' },
+  { title: 'Decisions Before Code', text: 'Requirements, data models and trade-offs are written down and agreed before building, then checked against what was asked for.' },
+  { title: 'Production Is the Standard', text: 'Security, monitoring and performance are part of the build, not a later phase.' },
+  { title: 'Confidential by Default', text: 'We work under NDA when asked, and we never name a client without permission.' },
+];
+
+const engagements = [
+  { title: 'Fixed-Scope Projects', text: 'A defined outcome, scope and timeline, from a first MVP to a full platform.' },
+  { title: 'Dedicated Engineers', text: 'Vetted full-stack, AI and backend engineers who join your team on a dedicated or flexible basis.', href: '/#outsourcing' },
+  { title: 'Ready-Built Products', text: 'Software like ERPTick, set up and adapted to the way your team works.', href: '/products' },
+];
+---
+<BaseLayout seo={seo} nav={{ current: 'about' }}>
+<Fragment slot="head">
+<style is:inline>
+  .name-grid, .card-grid { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+  .name-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.four { grid-template-columns: repeat(4, 1fr); }
+
+  .name-item { border-top: 1px solid var(--line-strong); padding-top: 1.5rem; }
+  .name-letters {
+    font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 0.9; letter-spacing: 0.06em;
+    color: var(--white);
+  }
+  .name-item:nth-child(2) .name-letters { color: var(--cyan); }
+  .name-word {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--accent-text); margin: 0.6rem 0 0.9rem;
+  }
+  .name-item p, .about-card p { color: var(--text-soft); line-height: 1.75; }
+
+  .about-card {
+    display: flex; flex-direction: column; gap: 0.9rem;
+    background: var(--navy-card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.8rem 1.8rem 2rem;
+    transition: border-color 0.3s;
+  }
+  .about-card:hover { border-color: var(--line-strong); }
+  .about-card h3 {
+    font-family: 'Bebas Neue', sans-serif; font-weight: 400;
+    font-size: 1.8rem; letter-spacing: 0.04em; line-height: 1.05;
+  }
+  .about-card .card-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin-top: auto; padding-top: 0.4rem; }
+  .about-card .card-links a, .about-card .card-more {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 700; color: var(--accent-text); text-decoration: none;
+  }
+  .about-card .card-links a:hover, .about-card .card-more:hover { color: var(--white); }
+  .card-index {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--muted);
+  }
+
+  .team-text { max-width: 720px; color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin: 1rem 0 2.5rem; }
+  .metrics.two { grid-template-columns: repeat(2, 1fr); }
+  .company-line {
+    margin-top: 1.6rem; position: relative;
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  @media (max-width: 1100px) {
+    .card-grid.four { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .name-grid, .card-grid, .card-grid.four { grid-template-columns: 1fr; }
+    .name-letters { font-size: 3.2rem; }
+  }
+</style>
+</Fragment>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="eyebrow fade-up d1">// About Rirote Global</p>
+      <h1 class="page-title fade-up d2">Engineering That Rises.<br><span>Systems That Hold.</span></h1>
+      <p class="page-sub fade-up d3">Rirote Global is a full-stack, AI and ERP engineering company based in Jaipur, India. We design, build and run software for businesses in India, the United States and the Middle East, and we build products of our own.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="name-title">
+    <div class="section-header">
+      <h2 class="section-title" id="name-title">The Name Is the Promise</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="section-sub">Rirote comes from three words we hold every project to.</p>
+    <div class="name-grid">
+      {name.map((n) => (
+        <div class="name-item">
+          <div class="name-letters" aria-hidden="true">{n.letters}</div>
+          <h3 class="name-word">{n.word}</h3>
+          <p>{n.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="do-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="do-title">What We Do</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      {pillars.map((p) => (
+        <article class="about-card">
+          <span class="kicker">{p.kicker}</span>
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+          <div class="card-links">
+            {p.links.map((l) => <a href={l.href}>{l.label} →</a>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="how-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="how-title">How We Work</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid four">
+      {principles.map((p, i) => (
+        <article class="about-card">
+          <span class="card-index">0{i + 1}</span>
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ways-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="ways-title">Ways to Work With Us</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      {engagements.map((e) => (
+        <article class="about-card">
+          <h3>{e.title}</h3>
+          <p>{e.text}</p>
+          {e.href && <a class="card-more" href={e.href}>Learn more →</a>}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="team-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="team-title">A Small Team, Close to the Work</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="team-text">We are a team of up to ten people, extended with vetted engineers when a project needs more hands. Staying small means you work directly with the people designing and building your software.</p>
+  </section>
+
+  <div class="metrics two">
+    <div class="metric-item">
+      <div class="metric-value">{COMPANY_STATS.projects.value}</div>
+      <div class="metric-label">{COMPANY_STATS.projects.label}</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-value">{COMPANY_STATS.industries.value}</div>
+      <div class="metric-label">{COMPANY_STATS.industries.label}</div>
+    </div>
+  </div>
+
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <p class="cta-eyebrow">// Let's Talk</p>
+    <h2 class="cta-title">Have Something to Build?</h2>
+    <p class="cta-body">Tell us what you're working on. We reply within 24 hours.</p>
+    <div class="cta-actions">
+      <a href="/#contact" class="btn-primary">Start a Conversation</a>
+      <a href={`mailto:${SITE.email}`} class="btn-outline">Email Us</a>
+    </div>
+    <p class="company-line">{SITE.legal.name} · {SITE.legal.city}, {SITE.legal.state}, {SITE.legal.country}</p>
+  </section>
+</main>
+</BaseLayout>

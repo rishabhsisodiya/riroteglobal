@@ -15,7 +15,21 @@ export function organization(): SchemaNode {
     image: absoluteUrl(SITE.defaultImage.path),
     email: SITE.email,
     description: 'Full-stack product development, AI agents and LLM integration, ERP integrations, and cloud infrastructure.',
-    address: { '@type': 'PostalAddress', addressCountry: 'IN' },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: SITE.legal.city,
+      addressRegion: SITE.legal.state,
+      addressCountry: 'IN',
+    },
+  };
+}
+
+export function aboutPage(path: string): SchemaNode {
+  return {
+    '@type': 'AboutPage',
+    url: absoluteUrl(path),
+    name: `About ${SITE.name}`,
+    about: { '@id': ORGANIZATION_ID },
   };
 }
 
