@@ -26,6 +26,14 @@ export const SITE = {
   } satisfies ShareImage,
 } as const;
 
+/** Official company profiles, used as schema.org sameAs. */
+export const SOCIAL_PROFILES = [
+  'https://www.youtube.com/channel/UCl11RgCfdXUcOZxbbplZIXA',
+  'https://www.instagram.com/riroteglobal/',
+  'https://x.com/riroteglobal',
+  'https://github.com/rirote-global',
+] as const;
+
 /** Company track record, shown on the About and Projects pages. */
 export const COMPANY_STATS = {
   projects: { value: '11+', label: 'Projects Delivered' },

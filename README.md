@@ -20,11 +20,12 @@ Requires Node 24 (see `.nvmrc`).
 
 ```
 public/                 Copied to the site as-is: assets/ (CSS, JS, fonts, images, videos),
-                        invoice.html, _headers, _redirects, robots.txt, .well-known/
-src/data/site.ts        Site name, URL, email, legal details, default share image
+                        invoice.html, _headers, _redirects, robots.txt, llms.txt, .well-known/
+src/data/site.ts        Site name, URL, email, legal details, default share image, social profiles (sameAs)
+src/data/services.ts    The 7 services: copy for each /services/<slug> page, shared steps and engagement models
 src/data/erptick.ts     ERPTick share image, tour videos and product schema
-src/lib/schema.ts       schema.org builders (Organization, WebSite, breadcrumbs)
-src/components/         Seo (all <head> tags), Nav and Footer for sub-pages
+src/lib/schema.ts       schema.org builders (Organization, WebSite, Service, breadcrumbs)
+src/components/         Seo (all <head> tags), Nav and Footer for sub-pages, Faq, ServiceStyles
 src/layouts/BaseLayout.astro   Page shell used by every page
 src/pages/              One file per URL; sitemap.xml.ts builds /sitemap.xml
 ```
@@ -39,7 +40,8 @@ changing the URL format would break existing links and search rankings.
    optionally image and schema). Copy `src/pages/products.astro` as a starting point.
 2. Shared styles live in `public/assets/site.css`. Page-only CSS goes in a `<style is:inline>` inside
    `<Fragment slot="head">`.
-3. The page appears in `/sitemap.xml` automatically. Add its path to `EXCLUDE` in `src/pages/sitemap.xml.ts`
+3. The page appears in `/sitemap.xml` automatically. Dynamic routes such as `services/[slug].astro` are not
+   picked up by the glob, so `sitemap.xml.ts` lists the service pages from `src/data/services.ts`. Add its path to `EXCLUDE` in `src/pages/sitemap.xml.ts`
    only if it must stay out of search.
 
 The homepage (`src/pages/index.astro`) keeps its own nav, footer and stylesheet by design. Do not move it onto
@@ -47,6 +49,13 @@ The homepage (`src/pages/index.astro`) keeps its own nav, footer and stylesheet 
 
 Inline `<script>` and `<style>` tags use `is:inline` so Astro ships them exactly as written. Without it, Astro bundles
 scripts and scopes styles, which changes how they behave.
+
+## Service pages
+
+`/services` and the seven `/services/<slug>` pages are built from `src/data/services.ts` by
+`src/pages/services.astro` and `src/pages/services/[slug].astro`. To change a service, edit its entry there.
+Every claim must already be backed by a case study on the site: never add a client name, figure or result that
+the site doesn't state elsewhere.
 
 ## Deploying (Cloudflare Workers)
 

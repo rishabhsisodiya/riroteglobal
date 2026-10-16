@@ -2,16 +2,19 @@
 import type { APIRoute } from 'astro';
 import { execFileSync } from 'node:child_process';
 import { absoluteUrl } from '../data/site';
+import { SERVICES, serviceUrl } from '../data/services';
 
-// Pages that must stay out of search (they carry noindex).
-const EXCLUDE = new Set(['/404']);
+// Pages that must stay out of search (they carry noindex). /invoice lives in public/, so the glob
+// never sees it today; listing it guards against it moving into src/pages.
+const EXCLUDE = new Set(['/404', '/invoice']);
 
 const toPath = (file: string): string =>
   file.replace(/^\.\//, '/').replace(/\.(astro|md)$/, '').replace(/\/index$/, '') || '/';
 
-function lastModified(file: string): string {
+/** Last git commit date of a repo file, falling back to the build date outside a git checkout. */
+function lastModified(repoFile: string): string {
   try {
-    const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', `src/pages/${file.slice(2)}`], {
+    const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', repoFile], {
       encoding: 'utf8',
     }).trim();
     if (date) return date;
@@ -24,7 +27,9 @@ function lastModified(file: string): string {
 export const GET: APIRoute = () => {
   const urls = Object.keys(import.meta.glob('./**/*.{astro,md}'))
     .filter((file) => !file.includes('['))
-    .map((file) => ({ path: toPath(file), lastmod: lastModified(file) }))
+    .map((file) => ({ path: toPath(file), lastmod: lastModified(`src/pages/${file.slice(2)}`) }))
+    // Dynamic routes are skipped by the glob above, so list the service pages from their data.
+    .concat(SERVICES.map((s) => ({ path: serviceUrl(s.slug), lastmod: lastModified('src/data/services.ts') })))
     .filter(({ path }) => !EXCLUDE.has(path))
     .sort((a, b) => a.path.localeCompare(b.path));
 

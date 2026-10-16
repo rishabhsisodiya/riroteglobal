@@ -1,0 +1,28 @@
+# Rirote Global
+
+> Rirote Global is a full-stack, AI and ERPNext engineering company in Jaipur, Rajasthan, India. It builds web platforms and SaaS products, AI agents and LLM features, ERPNext integrations and cloud infrastructure for businesses in India, the United States and the Middle East, and makes ERPTick, a service desk for equipment makers connected to ERPNext. Contact: info@riroteglobal.com.
+
+## Company
+
+- [Home](https://riroteglobal.com/): services, case studies and contact form
+- [About](https://riroteglobal.com/about): who we are, how we work and ways to work with us
+- [Projects](https://riroteglobal.com/projects): case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce
+
+## Services
+
+- [All services](https://riroteglobal.com/services)
+- [Full-Stack Product Development](https://riroteglobal.com/services/full-stack-development): Next.js, React, NestJS and Node.js web platforms and SaaS
+- [AI Agents & LLM Integration](https://riroteglobal.com/services/ai-integration): assistants, agent workflows and LLM features with guardrails
+- [ERPNext & ERP Integration](https://riroteglobal.com/services/erpnext-integration): ERPNext integrations, custom ERP modules and executive dashboards
+- [Cloud, DevOps & Performance](https://riroteglobal.com/services/cloud-devops): AWS and DigitalOcean, hardening, cost and speed
+- [Architecture & Technical Leadership](https://riroteglobal.com/services/technical-leadership): system design, migrations and team leadership
+- [Data Pipelines & Reporting](https://riroteglobal.com/services/data-pipelines): ETL, reporting APIs and SLA dashboards
+- [Dedicated Engineers](https://riroteglobal.com/services/dedicated-engineers): vetted engineers who join your team
+
+## Products
+
+- [ERPTick Service Desk](https://riroteglobal.com/products/erptick): field service desk for equipment makers on ERPNext: tickets, SLAs, field visits, AMC contracts, quotations and a customer portal (early access)
+
+## Optional
+
+- [Privacy Policy](https://riroteglobal.com/privacy-policy)

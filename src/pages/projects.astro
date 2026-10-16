@@ -4,9 +4,9 @@ import { breadcrumbs } from '../lib/schema';
 import { COMPANY_STATS } from '../data/site';
 
 const seo = {
-  title: 'Projects — Rirote Global',
+  title: 'ERPNext, SaaS & E-commerce Case Studies — Rirote Global',
   path: '/projects',
-  description: 'A portfolio of real-world projects across enterprise ERP, e-commerce, logistics, SaaS, government, and Shopify — delivered by Rirote Global.',
+  description: 'Case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce: what we built, the stack, and the measured results.',
   ogDescription: 'Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.',
   schema: [breadcrumbs(['Home', '/'], ['Projects', '/projects'])],
 };
@@ -153,7 +153,11 @@ const seo = {
   .project-card:nth-child(6) { animation-delay: 0.40s; }
   .project-card:nth-child(7) { animation-delay: 0.47s; }
 
+  .metrics.three { grid-template-columns: repeat(3, 1fr); }
+
   @media (max-width: 900px) {
+    .metrics.three { grid-template-columns: repeat(2, 1fr); }
+    .metrics.three .metric-item:last-child { grid-column: 1 / -1; }
     .projects-section { padding: 3.5rem 1.25rem 4rem; }
     .projects-grid { grid-template-columns: 1fr; }
     .card-cols { grid-template-columns: 1fr; gap: 1rem; }
@@ -162,6 +166,12 @@ const seo = {
     .card-top { flex-direction: column; gap: 0.8rem; }
   }
   @media (prefers-reduced-motion: reduce) { .project-card { opacity: 1; } }
+
+  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
+  @media (max-width: 900px) {
+    .overview-text, .bullet-list li, .achievements-list li { font-size: 1rem; }
+    .tech-pill, .industry-tag, .card-location, .card-section-label, .nda-note { font-size: 0.75rem; }
+  }
 </style>
 </Fragment>
 
@@ -177,7 +187,7 @@ const seo = {
   <div class="hero-content">
     <p class="eyebrow fade-up d1">// Client Work &amp; Case Studies</p>
     <h1 class="page-title fade-up d2">Projects That<br><span>Moved the Needle</span></h1>
-    <p class="page-sub fade-up d3">Real-world engineering across enterprise ERP, e-commerce, logistics, SaaS, and government — delivered end-to-end with measurable impact.</p>
+    <p class="page-sub fade-up d3">Real-world engineering across enterprise ERP, manufacturing, e-commerce, logistics and SaaS — delivered end to end with measurable impact.</p>
   </div>
 </section>
 
@@ -185,11 +195,7 @@ const seo = {
 <!-- ══════════════════════════════════════════════
      METRICS STRIP
 ══════════════════════════════════════════════ -->
-<div class="metrics">
-  <div class="metric-item">
-    <div class="metric-value">8.5+</div>
-    <div class="metric-label">Years Experience</div>
-  </div>
+<div class="metrics three">
   <div class="metric-item">
     <div class="metric-value">{COMPANY_STATS.projects.value}</div>
     <div class="metric-label">{COMPANY_STATS.projects.label}</div>
@@ -229,11 +235,11 @@ const seo = {
           <p class="card-location">&#x1F4CD; India · Infrastructure Services Group</p>
         </div>
         <div class="card-tags">
-          <span class="role-tag">Solo Delivery</span>
+          <span class="role-tag">End-to-End Delivery</span>
         </div>
       </div>
       <div class="card-body">
-        <p class="card-overview">Unified ERP platform merging an ACE after-sales service ticketing system with 11 role-based executive dashboards — one PostgreSQL database, one auth/role system, one Next.js frontend, replacing two separate codebases and servers. Solo full-stack delivery for 9 business entities across 5 ERPNext v15 Frappe Cloud sites.</p>
+        <p class="card-overview">Unified ERP platform merging an ACE after-sales service ticketing system with 11 role-based executive dashboards — one PostgreSQL database, one auth/role system, one Next.js frontend, replacing two separate codebases and servers. Delivered end to end — architecture, backend, frontend and deployment — for 9 business entities across 5 ERPNext v15 Frappe Cloud sites.</p>
         <ul class="achievements-list">
           <li>Ticketing engine on NestJS + Prisma: 8 creation sources → a single CreateTicketService → 9-state workflow, with a responsive/PWA Field Service Visit flow and 15 email + SMS notification triggers</li>
           <li>Two-way ERPNext integration: read-only nightly MariaDB master pull + REST-API-only writes (Stock Entry, draft Sales Invoice) and an inbound webhook — no direct DB writes, Frappe permission engine respected</li>
@@ -505,9 +511,9 @@ const seo = {
 <section class="cta-section">
   <div class="cta-glow"></div>
   <p class="cta-eyebrow">// Let's Build Something</p>
-  <h2 class="cta-title">Open for <span>New Opportunities</span></h2>
+  <h2 class="cta-title">Have a Project <span>in Mind?</span></h2>
   <p class="cta-body">
-    Available for consulting, freelance development, and technical leadership opportunities. Whether you need an architect, a senior developer, or a hands-on technical partner — let's talk.
+    Platforms, AI integrations, ERPNext work, or senior engineers on contract for your team — tell us what you're building and we'll reply within 24 hours.
   </p>
   <div class="cta-actions">
     <a href="/#contact" class="btn-primary">Start a Conversation</a>

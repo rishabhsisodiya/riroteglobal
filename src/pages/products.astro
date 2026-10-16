@@ -4,9 +4,9 @@ import { breadcrumbs } from '../lib/schema';
 import { ERPTICK_SHARE_IMAGE } from '../data/erptick';
 
 const seo = {
-  title: 'Products — Rirote Global',
+  title: 'ERPNext Software Products — ERPTick & More | Rirote Global',
   path: '/products',
-  description: 'Software products built by Rirote Global — starting with ERPTick, the ERPNext-connected service desk for equipment makers.',
+  description: 'Software products we build and run, starting with ERPTick: the ERPNext-connected service desk for equipment makers. Now in early access.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [breadcrumbs(['Home', '/'], ['Products', '/products'])],
 };
@@ -96,6 +96,12 @@ const seo = {
     .product-body { padding: 1.5rem 1.25rem 1.75rem; }
     .product-points { grid-template-columns: 1fr; }
   }
+
+  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
+  @media (max-width: 900px) {
+    .product-points li, .soon-card p { font-size: 1rem; }
+    .status-badge { font-size: 0.75rem; }
+  }
 </style>
 </Fragment>
 
@@ -118,7 +124,7 @@ const seo = {
 
     <div class="products-grid">
       <article class="product-card">
-        <img class="product-shot" src="/assets/products/erptick/posters/01-tickets.jpg" width="1280" height="800" alt="ERPTick ticket screen showing stage progress, SLA status and AMC coverage for a crusher breakdown.">
+        <img class="product-shot" src="/assets/products/erptick/posters/01-tickets.webp" srcset="/assets/products/erptick/posters/01-tickets-720.webp 720w, /assets/products/erptick/posters/01-tickets.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" width="1280" height="800" alt="ERPTick ticket screen showing stage progress, SLA status and AMC coverage for a crusher breakdown.">
         <div class="product-body">
           <div class="product-meta">
             <span class="status-badge">Early access</span>
@@ -152,7 +158,7 @@ const seo = {
     <p class="cta-body">If a product doesn't fit your workflow exactly, we build full-stack and AI solutions around how your business actually runs.</p>
     <div class="cta-actions">
       <a href="/#contact" class="btn-primary">Start a Conversation</a>
-      <a href="/#services" class="btn-outline">View Services</a>
+      <a href="/services" class="btn-outline">View Services</a>
     </div>
   </section>
 </main>

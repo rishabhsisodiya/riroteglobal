@@ -2,7 +2,7 @@
 // Sub-page navigation bar. The homepage has its own nav with a different design.
 export interface Props {
   /** Highlights the matching link. */
-  current?: 'projects' | 'products' | 'about';
+  current?: 'services' | 'projects' | 'products' | 'about';
   /** The call-to-action button; defaults to the contact form. */
   cta?: { href: string; label: string };
 }
@@ -10,7 +10,7 @@ export interface Props {
 const { current, cta = { href: '/#contact', label: 'Get in Touch' } } = Astro.props;
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/#services', label: 'Services' },
+  { href: '/services', label: 'Services', key: 'services' },
   { href: '/projects', label: 'Projects', key: 'projects' },
   { href: '/products', label: 'Products', key: 'products' },
   { href: '/about', label: 'About', key: 'about' },

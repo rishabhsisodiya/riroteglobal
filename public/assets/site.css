@@ -247,6 +247,7 @@ nav.scrolled, nav.menu-open {
   position: relative;
 }
 .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.2rem; }
 
 /* ── FOOTER ── */
 footer {
@@ -374,6 +375,13 @@ footer {
   .prose tr { border: 1px solid var(--line); padding: 0.4rem 0; }
   .prose tr + tr { margin-top: 0.75rem; }
   .prose td { border: none; padding: 0.35rem 1rem; }
+  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
+  main p:not([class]), main li:not([class]), main td:not([class]) { font-size: 1rem; }
+  .eyebrow, .kicker, .cta-eyebrow, .metric-label, .prose th, .footer-links a, .footer-copy { font-size: 0.75rem; }
+  .menu-toggle { min-width: 44px; min-height: 44px; }
+  .footer-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  /* Breadcrumb links in eyebrows: a taller hit area without moving the line. */
+  .eyebrow a { display: inline-block; padding-block: 0.85rem; margin-block: -0.85rem; }
 }
 
 @media (max-width: 480px) {

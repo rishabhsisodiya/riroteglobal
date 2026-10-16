@@ -3,9 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { organization, website } from '../lib/schema';
 
 const seo = {
-  title: 'Rirote Global — Rise with Robust Tech',
+  title: 'Rirote Global — Full-Stack, AI & ERPNext Development, Jaipur',
   path: '/',
-  description: 'Rirote Global builds full-stack products, AI agents and LLM integrations, ERP integrations, and cloud infrastructure for businesses worldwide — plus senior engineers on contract.',
+  description: 'Rirote Global builds full-stack products, AI agents and ERPNext integrations for businesses in India and worldwide. Based in Jaipur. Makers of ERPTick.',
   ogDescription: 'Full-stack products, AI integration, ERP systems, and cloud infrastructure — engineered end to end.',
   twitterDescription: 'Full-stack engineering, AI integration, and enterprise systems built to scale.',
   schema: [organization(), website()],
@@ -304,6 +304,12 @@ const seo = {
     color: var(--white);
   }
   .service-card p { font-size: 0.9rem; color: rgba(240,244,255,0.6); line-height: 1.65; }
+  .service-more {
+    display: inline-block; margin-top: 1rem; position: relative;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cyan); text-decoration: none;
+  }
+  .service-more:hover { color: var(--white); }
 
   /* ── PRODUCT TEASER ── */
   .teaser-section { padding: 0 4rem 7rem; }
@@ -1025,6 +1031,17 @@ const seo = {
   }
   .skip-link:focus { top: 1rem; }
   :focus-visible { outline: 2px solid var(--blue-light); outline-offset: 3px; }
+
+  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
+  @media (max-width: 900px) {
+    main p:not([class]), main li, .teaser-points li, .labs-desc, .role-desc, .reach-desc { font-size: 1rem; }
+    .contact-note { font-size: 0.875rem; }
+    .hero-eyebrow, .pillar-tag, .section-label, .teaser-badge, .teaser-play, .client-badge, .partner-badge, .stat-label,
+    .worked-with-label, .labs-kicker, .labs-tag, .labs-go, .contact-form-group label, .contact-info-item h3,
+    .footer-links a, .footer-copy, .service-more { font-size: 0.75rem; }
+    .menu-toggle { min-width: 44px; min-height: 44px; }
+    .client-link, .worked-with-name, .footer-links a, .contact-info-item a, .service-more { display: inline-flex; align-items: center; min-height: 44px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -1086,9 +1103,9 @@ const seo = {
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Technology · Strategy · Innovation</div>
+    <div class="hero-eyebrow">Full-Stack · AI · ERPNext — Jaipur, India</div>
     <h1 class="hero-title">Rise with<br><span>Robust Tech.</span></h1>
-    <p class="hero-sub">At Rirote Global, we provide strategy that rises and systems that are robust. We empower global enterprises through disciplined engineering and visionary consulting.</p>
+    <p class="hero-sub">Rirote Global is a full-stack, AI and ERPNext engineering company in Jaipur, India. We build web platforms, connect AI agents to real business data, and integrate ERPNext — and we make ERPTick, a service desk for equipment makers.</p>
     <div class="hero-btns">
       <a href="#services" class="btn-primary">Explore Services</a>
       <a href="#clients" class="btn-ghost">Case Studies</a>
@@ -1110,8 +1127,8 @@ const seo = {
   <div class="pillar">
     <div class="pillar-num">01</div>
     <div class="pillar-tag">Ri · Rise</div>
-    <div class="pillar-title">Strategic Consulting</div>
-    <p>Elevating client businesses through sharp strategy and market intelligence that drives real, measurable growth on a global stage.</p>
+    <div class="pillar-title">Technical Consulting</div>
+    <p>Architecture reviews, build-vs-buy decisions and ERP roadmaps — so the system is planned right before a line of code is written.</p>
   </div>
   <div class="pillar">
     <div class="pillar-num">02</div>
@@ -1137,36 +1154,43 @@ const seo = {
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M13.5 5l-3 14"/></svg></div>
       <div class="service-name">Full-Stack Product Development</div>
       <p>Web platforms and SaaS products built on Next.js, React, NestJS, and Node.js — typed end to end, PWA-ready, and designed to grow from MVP to production scale.</p>
+      <a class="service-more" href="/services/full-stack-development">Learn more →</a>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></div>
       <div class="service-name">AI Agents &amp; LLM Integration</div>
       <p>AI assistants, agent workflows, and LLM features wired into your product and data — with clear specs, guardrails, and verification so the output can be trusted in production.</p>
+      <a class="service-more" href="/services/ai-integration">Learn more →</a>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.2"/><path d="M13.5 17.25h7.5M17.25 13.5V21"/></svg></div>
       <div class="service-name">ERP &amp; Enterprise Integrations</div>
       <p>Custom ERP modules, ERPNext integrations, and role-based executive dashboards. Idempotent APIs, retry queues, and reconciliation so data stays consistent across systems.</p>
+      <a class="service-more" href="/services/erpnext-integration">Learn more →</a>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.6a4 4 0 0 1 .2 7.9z"/></svg></div>
       <div class="service-name">Cloud, DevOps &amp; Performance</div>
       <p>AWS and Digital Ocean infrastructure, Docker, CI/CD, and server hardening. We cut cloud bills, fix slow queries, and bring load times down from seconds to milliseconds.</p>
+      <a class="service-more" href="/services/cloud-devops">Learn more →</a>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z"/></svg></div>
       <div class="service-name">Architecture &amp; Technical Leadership</div>
       <p>System design, microservices, and monolith-to-microservices migrations — plus hands-on technical leadership for teams that need a senior engineer owning delivery.</p>
+      <a class="service-more" href="/services/technical-leadership">Learn more →</a>
     </div>
     <div class="service-card">
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20.5h18M6.5 20.5V11M12 20.5V4.5M17.5 20.5v-7"/></svg></div>
       <div class="service-name">Data Pipelines &amp; Reporting</div>
       <p>ETL pipelines into Redshift and PostgreSQL, reporting APIs, and SLA dashboards that turn operational data into decisions your leadership can act on.</p>
+      <a class="service-more" href="/services/data-pipelines">Learn more →</a>
     </div>
     <div class="service-card" style="grid-column: 1 / -1;">
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.7a3.5 3.5 0 0 1 0 6.6M18.2 14.4A6.5 6.5 0 0 1 21.5 20"/></svg></div>
       <div class="service-name">Resource Outsourcing</div>
       <p>Senior engineers embedded in your team on a dedicated or part-time basis. Whether you need a full-stack developer, an AI engineer, or an ERP integration specialist — we supply vetted, experienced talent that plugs in fast and delivers from day one.</p>
+      <a class="service-more" href="/services/dedicated-engineers">Learn more →</a>
     </div>
   </div>
 </section>
@@ -1248,7 +1272,7 @@ const seo = {
       <div class="client-name">Enterprise ERP Platform</div>
       <div class="client-tagline">Infrastructure Services Group · Delivered with TCB Infotech</div>
       <p>An infrastructure group with 9 business entities ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another.</p>
-      <p>We architected and solo-delivered one unified platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based executive dashboards backed by a parallel multi-site middleware with Redis caching.</p>
+      <p>We architected and delivered, end to end, one unified platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based executive dashboards backed by a parallel multi-site middleware with Redis caching.</p>
       <div class="client-services">
         <span class="client-service-tag">Next.js</span>
         <span class="client-service-tag">NestJS</span>
@@ -1457,7 +1481,7 @@ const seo = {
         <span class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
         <div>
           <h3>Headquarters</h3>
-          <p>India (Headquarters)</p>
+          <p>Jaipur, Rajasthan, India</p>
         </div>
       </div>
     </div>
@@ -1506,7 +1530,7 @@ const seo = {
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
-  <div class="footer-links"><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a></div>
+  <div class="footer-links"><a href="/services">Services</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a></div>
   <div class="footer-copy">© 2026 Rirote Global · riroteglobal.com</div>
 </footer>
 

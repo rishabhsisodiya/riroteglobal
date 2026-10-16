@@ -8,7 +8,7 @@ const year = new Date().getFullYear();
 const seo = {
   title: 'ERPTick Service Desk — for Equipment Makers, Connected to ERPNext',
   path: ERPTICK_PATH,
-  description: 'ERPTick is the field service desk for equipment makers running ERPNext: tickets with SLAs, field visits, AMC contracts, quotations, a customer portal and reports — with customers, machines and stock read from your ERP.',
+  description: 'Field service desk for equipment makers on ERPNext: tickets with SLAs, field visits, AMC contracts, quotations and a customer portal, synced with your ERP.',
   ogTitle: 'ERPTick Service Desk — for Equipment Makers',
   ogDescription: 'Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.',
   image: ERPTICK_SHARE_IMAGE,
@@ -49,7 +49,6 @@ const seo = {
     padding: 0.3rem 0.8rem; border-radius: 3px; margin-bottom: 1.4rem;
   }
   .hero-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-text); }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.2rem; }
   .hero-note {
     margin-top: 1rem;
     font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em;
@@ -209,6 +208,24 @@ const seo = {
     .roles, .caps { grid-template-columns: 1fr; }
     .hero-actions .btn-primary, .hero-actions .btn-outline { width: 100%; }
   }
+
+  .compare { max-width: 100%; }
+  .compare table { margin-top: 1.5rem; }
+  .compare td:first-child { white-space: normal; }
+  .compare-source { font-size: 0.875rem; color: var(--muted); }
+  @media (max-width: 900px) {
+    .compare td[data-label]::before {
+      content: attr(data-label); display: block; margin-bottom: 0.2rem;
+      font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+  }
+
+  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
+  @media (max-width: 900px) {
+    .role p, .tour-copy p, .ticks li, .flow-step p, .flow-step .ticks li, .flow-foot, .cap p, .deploy-card p { font-size: 1rem; }
+    .hero-status, .hero-note, .tour-tab .num { font-size: 0.75rem; }
+  }
 </style>
 </Fragment>
 
@@ -231,7 +248,7 @@ const seo = {
     </div>
     <div class="app-frame fade-up d4">
       <video id="promo" controls preload="none" playsinline width="1920" height="1080"
-             poster="/assets/products/erptick/posters/promo.jpg"
+             poster="/assets/products/erptick/posters/promo.webp"
              src="/assets/products/erptick/promo.mp4"
              aria-label="ERPTick Service Desk overview video, 90 seconds, with narration and captions"></video>
     </div>
@@ -294,7 +311,7 @@ const seo = {
       <div>
         <div class="tour-panel" role="tabpanel" id="panel-tickets" aria-labelledby="tab-tickets">
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/01-tickets.jpg"
+                 poster="/assets/products/erptick/posters/01-tickets.webp"
                  src="/assets/products/erptick/01-tickets.mp4"
                  aria-label="Video walkthrough with narration and captions: tickets and SLA clocks"></video>
           <div class="tour-copy">
@@ -315,7 +332,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-visits" aria-labelledby="tab-visits" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/02-visits.jpg"
+                 data-poster="/assets/products/erptick/posters/02-visits.webp"
                  src="/assets/products/erptick/02-visits.mp4"
                  aria-label="Video walkthrough with narration and captions: field visits"></video>
           <div class="tour-copy">
@@ -336,7 +353,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-quotations" aria-labelledby="tab-quotations" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/03-quotations.jpg"
+                 data-poster="/assets/products/erptick/posters/03-quotations.webp"
                  src="/assets/products/erptick/03-quotations.mp4"
                  aria-label="Video walkthrough with narration and captions: quotations and purchase orders"></video>
           <div class="tour-copy">
@@ -357,7 +374,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-amc" aria-labelledby="tab-amc" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/04-amc.jpg"
+                 data-poster="/assets/products/erptick/posters/04-amc.webp"
                  src="/assets/products/erptick/04-amc.mp4"
                  aria-label="Video walkthrough with narration and captions: AMC contracts"></video>
           <div class="tour-copy">
@@ -378,7 +395,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-customers" aria-labelledby="tab-customers" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/05-customers.jpg"
+                 data-poster="/assets/products/erptick/posters/05-customers.webp"
                  src="/assets/products/erptick/05-customers.mp4"
                  aria-label="Video walkthrough with narration and captions: customers, machines and spares"></video>
           <div class="tour-copy">
@@ -399,7 +416,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-dispatch" aria-labelledby="tab-dispatch" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/06-dispatch.jpg"
+                 data-poster="/assets/products/erptick/posters/06-dispatch.webp"
                  src="/assets/products/erptick/06-dispatch.mp4"
                  aria-label="Video walkthrough with narration and captions: dispatch and service rules"></video>
           <div class="tour-copy">
@@ -420,7 +437,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-portal" aria-labelledby="tab-portal" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/07-portal.jpg"
+                 data-poster="/assets/products/erptick/posters/07-portal.webp"
                  src="/assets/products/erptick/07-portal.mp4"
                  aria-label="Video walkthrough with narration and captions: customer portal and updates"></video>
           <div class="tour-copy">
@@ -441,7 +458,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-reports" aria-labelledby="tab-reports" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/08-reports.jpg"
+                 data-poster="/assets/products/erptick/posters/08-reports.webp"
                  src="/assets/products/erptick/08-reports.mp4"
                  aria-label="Video walkthrough with narration and captions: reports and KPIs"></video>
           <div class="tour-copy">
@@ -461,7 +478,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-erp" aria-labelledby="tab-erp" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/09-erp.jpg"
+                 data-poster="/assets/products/erptick/posters/09-erp.webp"
                  src="/assets/products/erptick/09-erp.mp4"
                  aria-label="Video walkthrough with narration and captions: the ERPNext connection"></video>
           <div class="tour-copy">
@@ -482,7 +499,7 @@ const seo = {
 
         <div class="tour-panel" role="tabpanel" id="panel-admin" aria-labelledby="tab-admin" hidden>
           <video class="tour-video" controls preload="none" playsinline width="1600" height="1000"
-                 poster="/assets/products/erptick/posters/10-admin.jpg"
+                 data-poster="/assets/products/erptick/posters/10-admin.webp"
                  src="/assets/products/erptick/10-admin.mp4"
                  aria-label="Video walkthrough with narration and captions: administration and security"></video>
           <div class="tour-copy">
@@ -584,6 +601,35 @@ const seo = {
     </div>
   </section>
 
+  <!-- ══ COMPARISON ══ -->
+  <section class="section" aria-labelledby="compare-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="compare-title">ERPTick or Frappe Helpdesk?</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="prose compare" style="margin-top:2rem;">
+      <p>Frappe Helpdesk is a good open-source support desk for teams that answer customer questions by email and through a portal. ERPTick does a different job: service work that happens at the customer's site, on machines you sold. Here is how they compare, based on Frappe's own product page and README.</p>
+      <table>
+        <thead>
+          <tr><th scope="col">What you need</th><th scope="col">ERPTick</th><th scope="col">Frappe Helpdesk</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tickets with SLA timers</td><td data-label="ERPTick">Yes. Response and resolution clocks run on your business calendar.</td><td data-label="Frappe Helpdesk">Yes. SLAs with response and resolution timers.</td></tr>
+          <tr><td>Customer portal</td><td data-label="ERPTick">Yes. Customers raise and track tickets and approve quotations with their PO number.</td><td data-label="Frappe Helpdesk">Yes. Customers raise and track tickets and search a knowledge base.</td></tr>
+          <tr><td>Field visits</td><td data-label="ERPTick">Engineers accept jobs, mark arrival, log spares, add photos and take the customer's signature.</td><td data-label="Frappe Helpdesk">Not listed.</td></tr>
+          <tr><td>AMC contracts</td><td data-label="ERPTick">Cover period, machines covered and planned preventive visits, raised ahead of time.</td><td data-label="Frappe Helpdesk">Not listed.</td></tr>
+          <tr><td>Machines and coverage</td><td data-label="ERPTick">Each machine by serial number, with AMC, warranty or chargeable cover.</td><td data-label="Frappe Helpdesk">Not listed.</td></tr>
+          <tr><td>Quotations</td><td data-label="ERPTick">Built from your ERP items for chargeable work, with the customer's PO recorded.</td><td data-label="Frappe Helpdesk">Not listed.</td></tr>
+          <tr><td>ERPNext connection</td><td data-label="ERPTick">Reads customers, machines, items and stock. Can write draft invoices and stock entries back when you switch it on.</td><td data-label="Frappe Helpdesk">Syncs customers with ERPNext.</td></tr>
+          <tr><td>Licence and price</td><td data-label="ERPTick">Your own install. Contact us for pricing.</td><td data-label="Frappe Helpdesk">Open source (AGPL-3.0). Hosted from $5 a month on Frappe Cloud, unlimited agents.</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Choose Frappe Helpdesk</strong> if your support happens mostly over email, you want a public knowledge base, or you need a free, open-source desk you can host yourself.</p>
+      <p><strong>Choose ERPTick</strong> if your engineers visit customer sites, you sell AMC contracts, and you want tickets, visits, spares and quotations tied to the machines and stock in your ERPNext.</p>
+      <p class="compare-source">"Not listed" means the feature isn't described on <a href="https://frappe.io/helpdesk" target="_blank" rel="noopener">frappe.io/helpdesk</a> or in its <a href="https://github.com/frappe/helpdesk" target="_blank" rel="noopener">GitHub README</a> as of October 2026, not that it can't be built.</p>
+    </div>
+  </section>
+
   <!-- ══ DEPLOYMENT & PRICING ══ -->
   <section class="section" aria-labelledby="deploy-title" style="padding-top:0;">
     <div class="section-header">
@@ -652,6 +698,9 @@ const seo = {
         if (v && !v.paused) v.pause();
       }
       panel.hidden = !on;
+      // Hidden panels carry data-poster so their images load only when the tab opens.
+      var lazy = on && panel.querySelector('video[data-poster]');
+      if (lazy) { lazy.poster = lazy.dataset.poster; lazy.removeAttribute('data-poster'); }
     });
     if (focus) tab.focus();
   }

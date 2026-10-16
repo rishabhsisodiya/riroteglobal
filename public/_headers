@@ -15,6 +15,13 @@
   Cache-Control: public, max-age=604800
 /assets/brand/*
   Cache-Control: public, max-age=604800
+# Shared CSS/JS keep their names across deploys, so cache briefly and revalidate
+/assets/site.css
+  Cache-Control: public, max-age=3600, must-revalidate
+/assets/site.js
+  Cache-Control: public, max-age=3600, must-revalidate
+/assets/og-image.jpg
+  Cache-Control: public, max-age=604800
 # Font files are versioned by filename
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable

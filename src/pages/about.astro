@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { aboutPage, breadcrumbs } from '../lib/schema';
 import { COMPANY_STATS, SITE } from '../data/site';
+import { ENGAGEMENTS, SERVICES_PATH } from '../data/services';
 
 const path = '/about';
 const seo = {
   title: 'About Rirote Global — Full-Stack, AI & ERPNext Engineering from Jaipur',
   path,
-  description: 'Rirote Global is a full-stack, AI and ERP engineering company in Jaipur, India. We build software for businesses in India, the US and the Middle East, and products of our own.',
+  description: 'Full-stack, AI and ERP engineering company in Jaipur, India, building software for businesses in India, the US and the Middle East.',
   ogTitle: 'About Rirote Global',
   schema: [aboutPage(path), breadcrumbs(['Home', '/'], ['About', path])],
 };
@@ -23,7 +24,7 @@ const pillars = [
     kicker: 'Client engineering',
     title: 'Software Built for You',
     text: 'Full-stack products, AI agents and LLM features, ERP integrations and cloud infrastructure, owned from design through production support.',
-    links: [{ href: '/#services', label: 'Our services' }, { href: '/projects', label: 'Selected projects' }],
+    links: [{ href: SERVICES_PATH, label: 'Our services' }, { href: '/projects', label: 'Selected projects' }],
   },
   {
     kicker: 'Our products',
@@ -46,11 +47,6 @@ const principles = [
   { title: 'Confidential by Default', text: 'We work under NDA when asked, and we never name a client without permission.' },
 ];
 
-const engagements = [
-  { title: 'Fixed-Scope Projects', text: 'A defined outcome, scope and timeline, from a first MVP to a full platform.' },
-  { title: 'Dedicated Engineers', text: 'Vetted full-stack, AI and backend engineers who join your team on a dedicated or flexible basis.', href: '/#outsourcing' },
-  { title: 'Ready-Built Products', text: 'Software like ERPTick, set up and adapted to the way your team works.', href: '/products' },
-];
 ---
 <BaseLayout seo={seo} nav={{ current: 'about' }}>
 <Fragment slot="head">
@@ -108,6 +104,12 @@ const engagements = [
     .name-grid, .card-grid, .card-grid.four { grid-template-columns: 1fr; }
     .name-letters { font-size: 3.2rem; }
   }
+
+  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
+  @media (max-width: 900px) {
+    .company-line, .name-word, .card-index, .about-card .card-links a, .about-card .card-more { font-size: 0.75rem; }
+    .about-card .card-links a, .about-card .card-more { display: inline-flex; align-items: center; min-height: 44px; }
+  }
 </style>
 </Fragment>
 
@@ -119,6 +121,10 @@ const engagements = [
       <p class="eyebrow fade-up d1">// About Rirote Global</p>
       <h1 class="page-title fade-up d2">Engineering That Rises.<br><span>Systems That Hold.</span></h1>
       <p class="page-sub fade-up d3">Rirote Global is a full-stack, AI and ERP engineering company based in Jaipur, India. We design, build and run software for businesses in India, the United States and the Middle East, and we build products of our own.</p>
+      <div class="hero-actions fade-up d4">
+        <a href="/#contact" class="btn-primary">Talk to Us</a>
+        <a href="/projects" class="btn-outline">See Our Work</a>
+      </div>
     </div>
   </section>
 
@@ -180,7 +186,7 @@ const engagements = [
       <div class="section-line"></div>
     </div>
     <div class="card-grid">
-      {engagements.map((e) => (
+      {ENGAGEMENTS.map((e) => (
         <article class="about-card">
           <h3>{e.title}</h3>
           <p>{e.text}</p>
