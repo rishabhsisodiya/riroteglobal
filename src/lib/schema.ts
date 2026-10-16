@@ -47,11 +47,10 @@ export function organization(): SchemaNode {
   };
 }
 
-/** The page itself, so search engines and AI tools can see when its content last changed. */
+/** The page itself, typed and tied to the WebSite node. */
 export function webPage(input: {
   path: string;
   name: string;
-  dateModified: string;
   type?: 'WebPage' | 'CollectionPage' | 'AboutPage';
   about?: SchemaNode;
 }): SchemaNode {
@@ -62,12 +61,11 @@ export function webPage(input: {
     name: input.name,
     isPartOf: { '@id': WEBSITE_ID },
     ...(input.about && { about: input.about }),
-    dateModified: input.dateModified,
   };
 }
 
-export function aboutPage(path: string, dateModified: string): SchemaNode {
-  return webPage({ path, name: `About ${SITE.name}`, dateModified, type: 'AboutPage', about: organizationRef() });
+export function aboutPage(path: string): SchemaNode {
+  return webPage({ path, name: `About ${SITE.name}`, type: 'AboutPage', about: organizationRef() });
 }
 
 export function website(): SchemaNode {

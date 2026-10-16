@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { breadcrumbs, webPage } from '../lib/schema';
-import { lastModified } from '../lib/lastModified';
 import { ERPTICK_SHARE_IMAGE } from '../data/erptick';
 
 const seo = {
@@ -10,7 +9,7 @@ const seo = {
   description: 'Software products we build and run, starting with ERPTick: the ERPNext-connected service desk for equipment makers. Now in early access.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [
-    webPage({ path: '/products', name: 'Products', dateModified: lastModified('src/pages/products.astro'), type: 'CollectionPage' }),
+    webPage({ path: '/products', name: 'Products', type: 'CollectionPage' }),
     breadcrumbs(['Home', '/'], ['Products', '/products']),
   ],
 };

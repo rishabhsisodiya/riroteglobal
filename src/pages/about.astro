@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { aboutPage, breadcrumbs } from '../lib/schema';
-import { lastModified } from '../lib/lastModified';
 import { COMPANY_STATS, SITE } from '../data/site';
 import { ENGAGEMENTS, SERVICES_PATH } from '../data/services';
 
@@ -11,7 +10,7 @@ const seo = {
   path,
   description: 'Full-stack, AI and ERP engineering company in Jaipur, India, building software for businesses in India, the US and the Middle East.',
   ogTitle: 'About Rirote Global',
-  schema: [aboutPage(path, lastModified('src/pages/about.astro', 'src/data/services.ts')), breadcrumbs(['Home', '/'], ['About', path])],
+  schema: [aboutPage(path), breadcrumbs(['Home', '/'], ['About', path])],
 };
 
 const name = [

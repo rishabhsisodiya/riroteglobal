@@ -1,13 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Faq from '../../components/Faq.astro';
-import Updated from '../../components/Updated.astro';
 import { breadcrumbs, faqPage, webPage } from '../../lib/schema';
-import { lastModified } from '../../lib/lastModified';
 import { ERPTICK_FAQ, ERPTICK_PATH, ERPTICK_SHARE_IMAGE, erptickSoftwareApp, erptickVideoObjects } from '../../data/erptick';
 
 const year = new Date().getFullYear();
-const updated = lastModified('src/pages/products/erptick.astro', 'src/data/erptick.ts');
 const seo = {
   title: 'ERPTick Service Desk — for Equipment Makers, Connected to ERPNext',
   path: ERPTICK_PATH,
@@ -16,7 +13,7 @@ const seo = {
   ogDescription: 'Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [
-    webPage({ path: ERPTICK_PATH, name: 'ERPTick Service Desk', dateModified: updated }),
+    webPage({ path: ERPTICK_PATH, name: 'ERPTick Service Desk' }),
     erptickSoftwareApp(),
     breadcrumbs(['Home', '/'], ['Products', '/products'], ['ERPTick Service Desk', ERPTICK_PATH]),
     faqPage(ERPTICK_FAQ),
@@ -252,7 +249,6 @@ const seo = {
         <a href="#promo" class="btn-outline" id="playPromo">Watch the 90-sec overview</a>
       </div>
       <p class="hero-note fade-up d4">Runs on a demo company until you connect your ERP</p>
-      <Updated date={updated} class="fade-up d4" />
     </div>
     <div class="app-frame fade-up d4">
       <video id="promo" controls preload="none" playsinline width="1920" height="1080"

@@ -1,10 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { breadcrumbs, webPage } from '../lib/schema';
-import { lastModified } from '../lib/lastModified';
-import Updated from '../components/Updated.astro';
 
-const updated = lastModified('src/pages/projects.astro');
 import { COMPANY_STATS } from '../data/site';
 
 const seo = {
@@ -13,7 +10,7 @@ const seo = {
   description: 'Case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce: what we built, the stack, and the measured results.',
   ogDescription: 'Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.',
   schema: [
-    webPage({ path: '/projects', name: 'Case Studies', dateModified: updated, type: 'CollectionPage' }),
+    webPage({ path: '/projects', name: 'Case Studies', type: 'CollectionPage' }),
     breadcrumbs(['Home', '/'], ['Projects', '/projects']),
   ],
 };
@@ -199,7 +196,6 @@ const seo = {
     <p class="eyebrow fade-up d1">// Client Work &amp; Case Studies</p>
     <h1 class="page-title fade-up d2">Projects That<br><span>Moved the Needle</span></h1>
     <p class="page-sub fade-up d3">Real-world engineering across enterprise ERP, manufacturing, e-commerce, logistics and SaaS — delivered end to end with measurable impact.</p>
-    <Updated date={updated} class="fade-up d4" />
   </div>
 </section>
 

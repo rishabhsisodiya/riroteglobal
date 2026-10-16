@@ -3,7 +3,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceStyles from '../components/ServiceStyles.astro';
 import { breadcrumbs, itemList, webPage } from '../lib/schema';
-import { lastModified } from '../lib/lastModified';
 import { ENGAGEMENTS, SERVICES, SERVICES_PATH, serviceUrl } from '../data/services';
 
 const seo = {
@@ -12,7 +11,7 @@ const seo = {
   description: 'Full-stack development, AI integration, ERPNext integration, cloud and DevOps, data and dedicated engineers, from a Jaipur engineering team.',
   ogTitle: 'Services — Rirote Global',
   schema: [
-    webPage({ path: SERVICES_PATH, name: 'Services', dateModified: lastModified('src/pages/services.astro', 'src/data/services.ts'), type: 'CollectionPage' }),
+    webPage({ path: SERVICES_PATH, name: 'Services', type: 'CollectionPage' }),
     breadcrumbs(['Home', '/'], ['Services', SERVICES_PATH]),
     itemList(SERVICES.map((s) => ({ name: s.name, path: serviceUrl(s.slug) }))),
   ],
