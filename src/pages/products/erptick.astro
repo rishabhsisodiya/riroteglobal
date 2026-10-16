@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Faq from '../../components/Faq.astro';
-import { breadcrumbs, faqPage } from '../../lib/schema';
+import Updated from '../../components/Updated.astro';
+import { breadcrumbs, faqPage, webPage } from '../../lib/schema';
+import { lastModified } from '../../lib/lastModified';
 import { ERPTICK_FAQ, ERPTICK_PATH, ERPTICK_SHARE_IMAGE, erptickSoftwareApp, erptickVideoObjects } from '../../data/erptick';
 
 const year = new Date().getFullYear();
+const updated = lastModified('src/pages/products/erptick.astro', 'src/data/erptick.ts');
 const seo = {
   title: 'ERPTick Service Desk — for Equipment Makers, Connected to ERPNext',
   path: ERPTICK_PATH,
@@ -13,6 +16,7 @@ const seo = {
   ogDescription: 'Tickets, field visits, AMC contracts and quotations for your service team — connected to ERPNext. Now in early access.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [
+    webPage({ path: ERPTICK_PATH, name: 'ERPTick Service Desk', dateModified: updated }),
     erptickSoftwareApp(),
     breadcrumbs(['Home', '/'], ['Products', '/products'], ['ERPTick Service Desk', ERPTICK_PATH]),
     faqPage(ERPTICK_FAQ),
@@ -159,6 +163,9 @@ const seo = {
     color: rgba(240,244,255,0.85); font-size: 0.93rem; line-height: 1.65; border-radius: 0 6px 6px 0;
   }
 
+  .flow-more { margin-top: 1rem; color: var(--text-soft); font-size: 0.95rem; }
+  .flow-more a { color: var(--accent-text); text-underline-offset: 3px; }
+
   /* ── CAPABILITIES ── */
   .caps {
     display: grid; grid-template-columns: repeat(3, 1fr);
@@ -223,7 +230,7 @@ const seo = {
 
   /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
   @media (max-width: 900px) {
-    .role p, .tour-copy p, .ticks li, .flow-step p, .flow-step .ticks li, .flow-foot, .cap p, .deploy-card p { font-size: 1rem; }
+    .role p, .tour-copy p, .ticks li, .flow-step p, .flow-step .ticks li, .flow-foot, .flow-more, .cap p, .deploy-card p { font-size: 1rem; }
     .hero-status, .hero-note, .tour-tab .num { font-size: 0.75rem; }
   }
 </style>
@@ -245,6 +252,7 @@ const seo = {
         <a href="#promo" class="btn-outline" id="playPromo">Watch the 90-sec overview</a>
       </div>
       <p class="hero-note fade-up d4">Runs on a demo company until you connect your ERP</p>
+      <Updated date={updated} class="fade-up d4" />
     </div>
     <div class="app-frame fade-up d4">
       <video id="promo" controls preload="none" playsinline width="1920" height="1080"
@@ -559,6 +567,7 @@ const seo = {
       </div>
     </div>
     <p class="flow-foot"><strong>Safe by default:</strong> every write-back is off until you turn it on, invoices are always created as drafts, and each one is protected against duplicates and retried if your ERP is unreachable.</p>
+    <p class="flow-more">Built by the team behind our <a href="/services/erpnext-integration">ERPNext integration work</a>. See the <a href="/projects">case studies</a>.</p>
   </section>
 
   <!-- ══ CAPABILITIES ══ -->

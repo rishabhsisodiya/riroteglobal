@@ -3,7 +3,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Faq from '../../components/Faq.astro';
 import ServiceStyles from '../../components/ServiceStyles.astro';
-import { breadcrumbs, service as serviceNode } from '../../lib/schema';
+import Updated from '../../components/Updated.astro';
+import { breadcrumbs, service as serviceNode, webPage } from '../../lib/schema';
+import { lastModified } from '../../lib/lastModified';
 import { SERVICES, SERVICES_PATH, SERVICE_STEPS, serviceBySlug, serviceUrl, type Service } from '../../data/services';
 
 export function getStaticPaths() {
@@ -12,6 +14,7 @@ export function getStaticPaths() {
 
 const { service } = Astro.props as { service: Service };
 const path = serviceUrl(service.slug);
+const updated = lastModified('src/data/services.ts', 'src/pages/services/[slug].astro');
 const related = service.related.map(serviceBySlug).filter((s): s is Service => Boolean(s));
 
 const seo = {
@@ -20,6 +23,7 @@ const seo = {
   description: service.description,
   ogTitle: `${service.name} — Rirote Global`,
   schema: [
+    webPage({ path, name: service.name, dateModified: updated }),
     serviceNode({ name: service.name, description: service.summary, path }),
     breadcrumbs(['Home', '/'], ['Services', SERVICES_PATH], [service.name, path]),
   ],
@@ -40,6 +44,7 @@ const seo = {
         <a href="/#contact" class="btn-primary">Talk to Us</a>
         <a href="/projects" class="btn-outline">See Our Work</a>
       </div>
+      <Updated date={updated} class="fade-up d4" />
     </div>
   </section>
 

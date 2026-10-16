@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { breadcrumbs } from '../lib/schema';
+import { breadcrumbs, webPage } from '../lib/schema';
+import { lastModified } from '../lib/lastModified';
+import Updated from '../components/Updated.astro';
+
+const updated = lastModified('src/pages/projects.astro');
 import { COMPANY_STATS } from '../data/site';
 
 const seo = {
@@ -8,7 +12,10 @@ const seo = {
   path: '/projects',
   description: 'Case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce: what we built, the stack, and the measured results.',
   ogDescription: 'Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.',
-  schema: [breadcrumbs(['Home', '/'], ['Projects', '/projects'])],
+  schema: [
+    webPage({ path: '/projects', name: 'Case Studies', dateModified: updated, type: 'CollectionPage' }),
+    breadcrumbs(['Home', '/'], ['Projects', '/projects']),
+  ],
 };
 ---
 <BaseLayout seo={seo} nav={{ current: 'projects' }}>
@@ -153,6 +160,10 @@ const seo = {
   .project-card:nth-child(6) { animation-delay: 0.40s; }
   .project-card:nth-child(7) { animation-delay: 0.47s; }
 
+  .card-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin-top: auto; padding-top: 0.4rem; border-top: 1px solid var(--line); }
+  .card-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue-light); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+  .card-links a:hover { color: var(--cyan); }
+
   .metrics.three { grid-template-columns: repeat(3, 1fr); }
 
   @media (max-width: 900px) {
@@ -188,6 +199,7 @@ const seo = {
     <p class="eyebrow fade-up d1">// Client Work &amp; Case Studies</p>
     <h1 class="page-title fade-up d2">Projects That<br><span>Moved the Needle</span></h1>
     <p class="page-sub fade-up d3">Real-world engineering across enterprise ERP, manufacturing, e-commerce, logistics and SaaS — delivered end to end with measurable impact.</p>
+    <Updated date={updated} class="fade-up d4" />
   </div>
 </section>
 
@@ -262,6 +274,7 @@ const seo = {
           <span class="tech-pill">JWT</span>
           <span class="tech-pill">PWA</span>
         </div>
+        <p class="card-links"><a href="/services/erpnext-integration">ERPNext integration →</a> <a href="/services/data-pipelines">Dashboards &amp; reporting →</a> <a href="/products/erptick">ERPTick, our own service desk →</a></p>
       </div>
     </div>
 
@@ -297,6 +310,7 @@ const seo = {
           <span class="tech-pill">JWT</span>
           <span class="tech-pill">ERPNext</span>
         </div>
+        <p class="card-links"><a href="/services/erpnext-integration">ERPNext integration →</a> <a href="/services/technical-leadership">Architecture →</a></p>
       </div>
     </div>
 
@@ -346,6 +360,7 @@ const seo = {
             </ul>
           </div>
         </div>
+        <p class="card-links"><a href="/services/cloud-devops">Cloud &amp; DevOps →</a> <a href="/services/full-stack-development">Full-stack development →</a></p>
       </div>
     </div>
 
@@ -397,6 +412,7 @@ const seo = {
             </ul>
           </div>
         </div>
+        <p class="card-links"><a href="/services/full-stack-development">Full-stack development →</a> <a href="/services/technical-leadership">Technical leadership →</a></p>
       </div>
     </div>
 
@@ -444,6 +460,7 @@ const seo = {
             </ul>
           </div>
         </div>
+        <p class="card-links"><a href="/services/technical-leadership">Architecture →</a> <a href="/services/cloud-devops">Performance →</a></p>
       </div>
     </div>
 

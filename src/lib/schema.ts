@@ -47,15 +47,27 @@ export function organization(): SchemaNode {
   };
 }
 
-export function aboutPage(path: string): SchemaNode {
+/** The page itself, so search engines and AI tools can see when its content last changed. */
+export function webPage(input: {
+  path: string;
+  name: string;
+  dateModified: string;
+  type?: 'WebPage' | 'CollectionPage' | 'AboutPage';
+  about?: SchemaNode;
+}): SchemaNode {
   return {
-    '@type': 'AboutPage',
-    '@id': `${absoluteUrl(path)}#webpage`,
-    url: absoluteUrl(path),
-    name: `About ${SITE.name}`,
-    about: organizationRef(),
+    '@type': input.type ?? 'WebPage',
+    '@id': `${absoluteUrl(input.path)}#webpage`,
+    url: absoluteUrl(input.path),
+    name: input.name,
     isPartOf: { '@id': WEBSITE_ID },
+    ...(input.about && { about: input.about }),
+    dateModified: input.dateModified,
   };
+}
+
+export function aboutPage(path: string, dateModified: string): SchemaNode {
+  return webPage({ path, name: `About ${SITE.name}`, dateModified, type: 'AboutPage', about: organizationRef() });
 }
 
 export function website(): SchemaNode {

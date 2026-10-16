@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { breadcrumbs } from '../lib/schema';
+import { breadcrumbs, webPage } from '../lib/schema';
+import { lastModified } from '../lib/lastModified';
 import { ERPTICK_SHARE_IMAGE } from '../data/erptick';
 
 const seo = {
@@ -8,7 +9,10 @@ const seo = {
   path: '/products',
   description: 'Software products we build and run, starting with ERPTick: the ERPNext-connected service desk for equipment makers. Now in early access.',
   image: ERPTICK_SHARE_IMAGE,
-  schema: [breadcrumbs(['Home', '/'], ['Products', '/products'])],
+  schema: [
+    webPage({ path: '/products', name: 'Products', dateModified: lastModified('src/pages/products.astro'), type: 'CollectionPage' }),
+    breadcrumbs(['Home', '/'], ['Products', '/products']),
+  ],
 };
 ---
 <BaseLayout seo={seo} nav={{ current: 'products' }}>
@@ -97,9 +101,16 @@ const seo = {
     .product-points { grid-template-columns: 1fr; }
   }
 
+  .approach-intro { max-width: 72ch; color: var(--text-soft); line-height: 1.8; margin-top: 2rem; }
+  .approach { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+  .approach-item { background: var(--navy-card); border: 1px solid var(--line); border-radius: 8px; padding: 2rem 1.8rem; }
+  .approach-item h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.6rem; letter-spacing: 0.05em; margin: 0.5rem 0 0.6rem; }
+  .approach-item p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.7; }
+
   /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
   @media (max-width: 900px) {
-    .product-points li, .soon-card p { font-size: 1rem; }
+    .product-points li, .soon-card p, .approach-item p { font-size: 1rem; }
+    .approach { grid-template-columns: 1fr; }
     .status-badge { font-size: 0.75rem; }
   }
 </style>
@@ -148,6 +159,31 @@ const seo = {
         <p>We're building more products for teams that run on ERP and field operations. Want to hear when the next one is ready?</p>
         <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=Notify%20me%20about%20new%20Rirote%20products">Get notified</a>
       </aside>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="approach-title" style="padding-top:0;">
+    <div class="section-header">
+      <h2 class="section-title" id="approach-title">How Our Products Work</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="approach-intro">Our products come from the same engineering we do for clients: ticketing, dashboards and integrations built on ERPNext for manufacturers and service businesses. We build them for operations-heavy teams that already run their business on an ERP and need software that fits around it, not another system to keep in sync by hand. Here is how that works in ERPTick.</p>
+    <div class="approach">
+      <div class="approach-item">
+        <span class="kicker">01 · Connected</span>
+        <h3>Your ERP Stays the Source</h3>
+        <p>Customers, machines, items and stock are read from ERPNext. Nothing is written back until you switch it on, and invoices are always created as drafts.</p>
+      </div>
+      <div class="approach-item">
+        <span class="kicker">02 · Separate</span>
+        <h3>One Company, One Install</h3>
+        <p>Every customer gets their own install and database, so your data is never mixed with anyone else's. Host it with us or on a server you control.</p>
+      </div>
+      <div class="approach-item">
+        <span class="kicker">03 · Try First</span>
+        <h3>Start on Demo Data</h3>
+        <p>ERPTick runs on a fictional demo company until you connect your ERP, so your team can try every flow before anything touches live data.</p>
+      </div>
     </div>
   </section>
 

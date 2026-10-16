@@ -1,0 +1,12 @@
+---
+// Visible "Updated <month year>" line. Pass the same date the page gives schema.org dateModified.
+import { monthYear } from '../lib/lastModified';
+
+export interface Props {
+  date: string;
+  class?: string;
+}
+
+const { date, class: className } = Astro.props;
+---
+<p class:list={['page-updated', className]}>Updated <time datetime={date}>{monthYear(date)}</time></p>
