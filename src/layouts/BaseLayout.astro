@@ -6,6 +6,8 @@
 import Seo, { type Props as SeoProps } from '../components/Seo.astro';
 import Nav, { type Props as NavProps } from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '../components/Analytics.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 
 export interface Props {
   seo: SeoProps;
@@ -19,6 +21,7 @@ const hasFooterText = Astro.slots.has('footer');
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<Analytics />
 <Seo {...seo} />
 {siteCss && <link rel="stylesheet" href="/assets/site.css">}
 <slot name="head" />
@@ -34,5 +37,6 @@ const hasFooterText = Astro.slots.has('footer');
 {nav && (hasFooterText ? <Footer><slot name="footer" /></Footer> : <Footer />)}
 {nav && <script is:inline src="/assets/site.js"></script>}
 <slot name="scripts" />
+<ConsentBanner />
 </body>
 </html>

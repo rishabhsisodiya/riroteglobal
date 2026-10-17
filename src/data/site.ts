@@ -26,8 +26,13 @@ export const SITE = {
   } satisfies ShareImage,
 } as const;
 
+/** Google Analytics 4 measurement ID. Loads only after the visitor accepts cookies (ConsentBanner).
+ *  Leave empty to remove analytics and the consent banner. */
+export const GA_ID = 'G-W050S5NEBB';
+
 /** Official company profiles, used as schema.org sameAs. */
 export const SOCIAL_PROFILES = [
+  'https://www.linkedin.com/company/rirote-global/',
   'https://www.youtube.com/channel/UCl11RgCfdXUcOZxbbplZIXA',
   'https://www.instagram.com/riroteglobal/',
   'https://x.com/riroteglobal',

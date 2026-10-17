@@ -903,10 +903,10 @@ const seo = {
 
   /* Custom cursor */
   .cursor-dot, .cursor-ring {
-    position: fixed; border-radius: 50%;
+    position: fixed; left: 0; top: 0; border-radius: 50%;
     pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    will-change: left, top;
+    transform: translate(-200px, -200px) translate(-50%,-50%);
+    will-change: transform;
   }
   .cursor-dot {
     width: 6px; height: 6px;
@@ -1530,7 +1530,7 @@ const seo = {
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
-  <div class="footer-links"><a href="/services">Services</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a></div>
+  <div class="footer-links"><a href="/services">Services</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/privacy-policy#analytics-cookies" data-consent-open>Cookie settings</a></div>
   <div class="footer-copy">© 2026 Rirote Global · riroteglobal.com</div>
 </footer>
 
@@ -1550,11 +1550,12 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
   let mx = -200, my = -200, rx = -200, ry = -200;
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    // transform, not left/top: moving the cursor never invalidates page layout.
+    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
   });
   (function loop() {
     rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
     requestAnimationFrame(loop);
   })();
   document.querySelectorAll('a, button, .service-card, .pillar, .reach-card, .role-card, .labs-card').forEach(el => {
@@ -1570,9 +1571,12 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
   const ctx = canvas.getContext('2d');
   const hero = canvas.parentElement;
   let W, H, pts = [];
-  function resize() { W = canvas.width = hero.offsetWidth; H = canvas.height = hero.offsetHeight; }
-  resize();
-  new ResizeObserver(resize).observe(hero);
+  // ResizeObserver reports the hero's size after layout, so sizing the canvas never forces a reflow.
+  new ResizeObserver(([entry]) => {
+    const box = entry.borderBoxSize && entry.borderBoxSize[0];
+    W = canvas.width = Math.round(box ? box.inlineSize : entry.contentRect.width);
+    H = canvas.height = Math.round(box ? box.blockSize : entry.contentRect.height);
+  }).observe(hero);
   for (let i = 0; i < 75; i++) pts.push({
     x: Math.random() * 1400, y: Math.random() * 900,
     vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28,
@@ -1658,8 +1662,11 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
   document.querySelectorAll('.service-card, .pillar, .reach-card, .role-card').forEach(card => {
     card.style.position = 'relative';
     const shine = document.createElement('div'); shine.className = 'tilt-shine'; card.appendChild(shine);
+    let r = null; // measured once per hover; reset on scroll
+    card.addEventListener('mouseenter', () => { r = null; });
+    window.addEventListener('scroll', () => { r = null; }, { passive: true });
     card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
+      if (!r) r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - .5;
       const y = (e.clientY - r.top) / r.height - .5;
       card.style.transform = `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateZ(6px)`;
@@ -1674,8 +1681,11 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 (function () {
   if (window.matchMedia('(hover: none)').matches) return;
   document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta').forEach(btn => {
+    let r = null; // measured once per hover; reset on scroll
+    btn.addEventListener('mouseenter', () => { r = null; });
+    window.addEventListener('scroll', () => { r = null; }, { passive: true });
     btn.addEventListener('mousemove', e => {
-      const r = btn.getBoundingClientRect();
+      if (!r) r = btn.getBoundingClientRect();
       btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * .22}px, ${(e.clientY - r.top - r.height/2) * .22}px)`;
     });
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
@@ -1683,21 +1693,44 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 })();
 
 // ── NAV: frosted on scroll + active link highlight ──
+// IntersectionObserver instead of a scroll handler: the browser reports what is in view, so
+// scrolling never reads layout (no forced reflows).
 const navEl = document.querySelector('nav');
-const sections = document.querySelectorAll('section[id]');
+const sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
 const navLinks = document.querySelectorAll('.nav-links a');
-let navTick = false;
-window.addEventListener('scroll', () => {
-  if (navTick) return;
-  navTick = true;
-  requestAnimationFrame(() => {
-    navTick = false;
-    navEl.classList.toggle('scrolled', window.scrollY > 60);
-    let cur = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
-    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--cyan)' : ''; });
+
+// Frosted nav once the page has scrolled 60px: a 60px sentinel at the top leaves the viewport.
+const topSentinel = document.createElement('div');
+topSentinel.setAttribute('aria-hidden', 'true');
+topSentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:60px;pointer-events:none;';
+document.body.prepend(topSentinel);
+new IntersectionObserver(([e]) => navEl.classList.toggle('scrolled', !e.isIntersecting)).observe(topSentinel);
+
+// Active link: the last section reaching into the top 22% of the viewport (about 200px on a laptop).
+// A % margin, not innerHeight: reading the window size would itself force a layout.
+const inBand = new Set();
+let current = '';
+function highlight(id) {
+  if (id === current) return;
+  current = id;
+  navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + id ? 'var(--cyan)' : ''; });
+}
+const sectionObserver = new IntersectionObserver(entries => {
+  let fallback = null;
+  entries.forEach(e => {
+    if (e.isIntersecting) { inBand.add(e.target); return; }
+    inBand.delete(e.target);
+    // Scrolled back up past this section's top: the section before it is current again.
+    if (e.boundingClientRect.top > 0) {
+      const i = sections.indexOf(e.target);
+      fallback = i > 0 ? sections[i - 1].id : '';
+    }
   });
-}, { passive: true });
+  const visible = sections.filter(sec => inBand.has(sec));
+  if (visible.length) highlight(visible[visible.length - 1].id);
+  else if (fallback !== null) highlight(fallback);
+}, { rootMargin: '0px 0px -78% 0px' });
+sections.forEach(sec => sectionObserver.observe(sec));
 
 // ── MOBILE MENU ──
 document.getElementById('menuToggle').addEventListener('click', () => {

@@ -1,0 +1,69 @@
+---
+// Cookie consent for Google Analytics. Shown until the visitor chooses; any element with
+// data-consent-open (the footer "Cookie settings" link) reopens it. Styles use literal brand
+// colours because the homepage doesn't load site.css.
+import { GA_ID } from '../data/site';
+---
+{GA_ID && (
+  <>
+    <div class="consent" id="consentBanner" role="region" aria-label="Cookie consent" hidden>
+      <p class="consent-text">
+        We use Google Analytics cookies to see how visitors use this site. They're only set if you accept.
+        <a href="/privacy-policy#analytics-cookies">Privacy policy</a>
+      </p>
+      <div class="consent-actions">
+        <button type="button" class="consent-btn" data-consent="denied">Decline</button>
+        <button type="button" class="consent-btn" data-consent="granted">Accept</button>
+      </div>
+    </div>
+    <style is:inline>
+      .consent {
+        position: fixed; left: 16px; bottom: 16px; z-index: 10000;
+        width: min(420px, calc(100vw - 32px));
+        background: #0f2340; color: #f0f4ff;
+        border: 1px solid rgba(0,180,216,0.3); border-radius: 8px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+        padding: 1.1rem 1.2rem; font-family: 'DM Sans', sans-serif;
+      }
+      .consent[hidden] { display: none; }
+      .consent-text { font-size: 0.95rem; line-height: 1.6; color: rgba(240,244,255,0.85); margin: 0; }
+      .consent-text a { color: #48cae4; text-underline-offset: 3px; }
+      .consent-actions { display: flex; gap: 0.75rem; margin-top: 0.9rem; }
+      /* Accept and Decline look the same on purpose: refusing must be as easy as agreeing. */
+      .consent-btn {
+        flex: 1; min-height: 44px; padding: 0 1rem; cursor: pointer;
+        font: 600 0.95rem 'DM Sans', sans-serif; color: #f0f4ff;
+        background: transparent; border: 1px solid rgba(0,180,216,0.55); border-radius: 5px;
+      }
+      .consent-btn:hover { border-color: #00b4d8; color: #48cae4; }
+      .consent-btn:focus-visible { outline: 2px solid #48cae4; outline-offset: 2px; }
+    </style>
+    <script is:inline>
+      (function () {
+        var banner = document.getElementById('consentBanner');
+        if (!banner || !window.rgAnalytics) return;
+        var stored = null;
+        try { stored = localStorage.getItem('rg-consent'); } catch (e) {}
+        if (stored !== 'granted' && stored !== 'denied') banner.hidden = false;
+
+        banner.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-consent]');
+          if (!btn) return;
+          var choice = btn.getAttribute('data-consent');
+          try { localStorage.setItem('rg-consent', choice); } catch (err) {}
+          if (choice === 'granted') window.rgAnalytics.load();
+          else window.rgAnalytics.revoke();
+          banner.hidden = true;
+        });
+
+        document.addEventListener('click', function (e) {
+          var link = e.target.closest('[data-consent-open]');
+          if (!link) return;
+          e.preventDefault();
+          banner.hidden = false;
+          banner.querySelector('[data-consent]').focus();
+        });
+      })();
+    </script>
+  </>
+)}

@@ -1,0 +1,42 @@
+---
+// Google Analytics, loaded only after the visitor accepts analytics cookies in ConsentBanner.
+// Until then nothing is sent to Google and no analytics cookies are set. The choice is kept in
+// localStorage under "rg-consent" ("granted" or "denied").
+import { GA_ID } from '../data/site';
+---
+{GA_ID && (
+  <script is:inline define:vars={{ gaId: GA_ID }}>
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    var loaded = false;
+    window.rgAnalytics = {
+      load: function () {
+        if (loaded) return;
+        loaded = true;
+        gtag('consent', 'default', {
+          analytics_storage: 'granted',
+          ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+        });
+        gtag('js', new Date());
+        gtag('config', gaId);
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaId);
+        document.head.appendChild(s);
+      },
+      revoke: function () {
+        if (loaded) gtag('consent', 'update', { analytics_storage: 'denied' });
+        // Remove the GA cookies (_ga, _ga_<id>) from this domain and its parent.
+        var host = location.hostname.replace(/^www\./, '');
+        document.cookie.split(';').forEach(function (c) {
+          var name = c.split('=')[0].trim();
+          if (!/^_ga(_|$)/.test(name)) return;
+          ['', '; domain=' + host, '; domain=.' + host].forEach(function (d) {
+            document.cookie = name + '=; Max-Age=0; path=/' + d;
+          });
+        });
+      },
+    };
+    try { if (localStorage.getItem('rg-consent') === 'granted') window.rgAnalytics.load(); } catch (e) {}
+  </script>
+)}
