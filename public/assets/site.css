@@ -129,13 +129,6 @@ nav.scrolled, nav.menu-open {
     radial-gradient(ellipse 70% 60% at 80% 50%, rgba(0,119,182,0.16) 0%, transparent 70%),
     radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,180,216,0.07) 0%, transparent 60%);
 }
-.hero-grid {
-  position: absolute; inset: 0; opacity: 0.035;
-  background-image:
-    linear-gradient(var(--cyan) 1px, transparent 1px),
-    linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
 .hero-content { position: relative; z-index: 2; max-width: 780px; }
 .eyebrow {
   font-family: 'Space Mono', monospace;
@@ -146,14 +139,12 @@ nav.scrolled, nav.menu-open {
 .page-title {
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 400;
-  font-size: clamp(3.2rem, 7vw, 6.2rem);
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
   line-height: 0.95; letter-spacing: 0.03em;
   margin-bottom: 1.6rem;
 }
 .page-title span {
-  background: linear-gradient(135deg, var(--accent-text), var(--accent));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-text);
 }
 .page-sub {
   font-size: 1.1rem; line-height: 1.75;
@@ -172,9 +163,8 @@ nav.scrolled, nav.menu-open {
   margin-bottom: 1rem;
 }
 .section-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-weight: 400;
-  font-size: clamp(2rem, 4vw, 2.6rem); letter-spacing: 0.06em; color: var(--white);
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -0.01em; color: var(--white);
   line-height: 1.05;
 }
 .section-line {
@@ -197,9 +187,8 @@ nav.scrolled, nav.menu-open {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   min-height: 48px;
   padding: 0.95rem 2rem; border-radius: 5px;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.75rem; letter-spacing: 0.12em;
-  text-transform: uppercase; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
   cursor: pointer; text-decoration: none;
   transition: opacity 0.2s, transform 0.2s, background 0.2s, border-color 0.2s;
 }
@@ -236,9 +225,9 @@ nav.scrolled, nav.menu-open {
   margin-bottom: 1.2rem; position: relative;
 }
 .cta-title {
-  font-family: 'Bebas Neue', sans-serif; font-weight: 400;
-  font-size: clamp(2.2rem, 4vw, 3.8rem);
-  letter-spacing: 0.05em; line-height: 1.05;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  letter-spacing: -0.01em; line-height: 1.05;
   margin-bottom: 1.2rem; position: relative;
 }
 .cta-body {
@@ -289,9 +278,7 @@ footer {
 .metric-value {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 3.2rem; letter-spacing: 0.04em;
-  background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--cyan);
   line-height: 1;
 }
 .metric-label {
@@ -325,8 +312,8 @@ footer {
 .prose { max-width: 72ch; color: var(--text-soft); font-size: 1rem; line-height: 1.8; }
 .prose > * + * { margin-top: 1.1rem; }
 .prose h2 {
-  font-family: 'Bebas Neue', sans-serif; font-weight: 400;
-  font-size: 2rem; letter-spacing: 0.05em; line-height: 1.1;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: 1.5rem; letter-spacing: -0.01em; line-height: 1.1;
   color: var(--white); margin-top: 3rem; scroll-margin-top: 6rem;
 }
 .prose h2:first-child { margin-top: 0; }

@@ -1,0 +1,10 @@
+---
+// Links to the company's social profiles, shown in every footer. Styled by the footer's .footer-links rules.
+// A div, not <nav>: both stylesheets style every <nav> as the fixed top bar.
+import { SOCIAL_LINKS } from '../data/site';
+---
+<div class="footer-links footer-social">
+  {SOCIAL_LINKS.map((link) => (
+    <a href={link.url} target="_blank" rel="noopener me">{link.label}</a>
+  ))}
+</div>

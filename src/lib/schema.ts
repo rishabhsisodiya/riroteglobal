@@ -20,7 +20,7 @@ export function organization(): SchemaNode {
     image: absoluteUrl(SITE.defaultImage.path),
     email: SITE.email,
     description:
-      'Full-stack, AI and ERPNext engineering company in Jaipur, India: web platforms, AI agents and LLM integration, ERP integrations, and cloud infrastructure. Makers of ERPTick.',
+      'Software company in Jaipur, India: websites and web apps (full-stack development), AI assistants and automation, ERPNext integration, and cloud hosting. Makers of ERPTick.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: SITE.legal.city,
@@ -80,12 +80,12 @@ export function website(): SchemaNode {
 }
 
 /** Service page node, provided by the homepage Organization. */
-export function service(input: { name: string; description: string; path: string }): SchemaNode {
+export function service(input: { name: string; serviceType?: string; description: string; path: string }): SchemaNode {
   return {
     '@type': 'Service',
     '@id': `${absoluteUrl(input.path)}#service`,
     name: input.name,
-    serviceType: input.name,
+    serviceType: input.serviceType ?? input.name,
     description: input.description,
     url: absoluteUrl(input.path),
     provider: organizationRef(),

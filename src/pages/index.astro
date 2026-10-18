@@ -1,19 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { organization, website } from '../lib/schema';
+import { SERVICES, serviceUrl } from '../data/services';
+import SocialLinks from '../components/SocialLinks.astro';
+
+// One icon per service card; names and text come from src/data/services.ts.
+const SERVICE_ICONS: Record<string, string> = {
+  'full-stack-development': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 8l-5 4 5 4M16 8l5 4-5 4M13.5 5l-3 14\"/></svg>",
+  'ai-integration': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z\"/><path d=\"M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z\"/></svg>",
+  'erpnext-integration': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7.5\" height=\"7.5\" rx=\"1.2\"/><rect x=\"13.5\" y=\"3\" width=\"7.5\" height=\"7.5\" rx=\"1.2\"/><rect x=\"3\" y=\"13.5\" width=\"7.5\" height=\"7.5\" rx=\"1.2\"/><path d=\"M13.5 17.25h7.5M17.25 13.5V21\"/></svg>",
+  'cloud-devops': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.6a4 4 0 0 1 .2 7.9z\"/></svg>",
+  'technical-leadership': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z\"/></svg>",
+  'data-pipelines': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 20.5h18M6.5 20.5V11M12 20.5V4.5M17.5 20.5v-7\"/></svg>",
+  'dedicated-engineers': "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2.5 20a6.5 6.5 0 0 1 13 0M16 4.7a3.5 3.5 0 0 1 0 6.6M18.2 14.4A6.5 6.5 0 0 1 21.5 20\"/></svg>",
+};
 
 const seo = {
-  title: 'Rirote Global — Full-Stack, AI & ERPNext Development, Jaipur',
+  title: 'Rirote Global | Software, AI & ERPNext Development in Jaipur',
   path: '/',
   description: 'Rirote Global builds full-stack products, AI agents and ERPNext integrations for businesses in India and worldwide. Based in Jaipur. Makers of ERPTick.',
-  ogDescription: 'Full-stack products, AI integration, ERP systems, and cloud infrastructure — engineered end to end.',
-  twitterDescription: 'Full-stack engineering, AI integration, and enterprise systems built to scale.',
+  ogDescription: 'Websites, business software, AI assistants and ERPNext integration from a Jaipur team. Makers of ERPTick.',
+  twitterDescription: 'Websites, business software, AI assistants and ERPNext integration from a Jaipur team.',
   schema: [organization(), website()],
 };
 ---
 <BaseLayout seo={seo} nav={false} siteCss={false}>
 <Fragment slot="head">
-<noscript><style>.page-loader { display: none; } .hero-eyebrow, .hero-title, .hero-sub, .hero-btns, .hero-visual { opacity: 1 !important; }</style></noscript>
+<noscript><style>.hero-eyebrow, .hero-title, .hero-sub, .hero-btns, .hero-mark { opacity: 1 !important; }</style></noscript>
 <style is:inline>
   /* Self-hosted fonts (latin subset). DM Sans is a variable font covering 300–700. */
   @font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/fonts/bebas-neue-v16-latin.woff2) format('woff2'); }
@@ -113,8 +126,8 @@ const seo = {
 
   /* ── HERO ── */
   .hero {
-    min-height: 100vh;
-    display: flex; align-items: flex-start;
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 3.5rem; align-items: center;
     padding: 9rem 4rem 6rem;
     position: relative;
     overflow: hidden;
@@ -124,13 +137,7 @@ const seo = {
     background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,119,182,0.18) 0%, transparent 70%),
                 radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,180,216,0.08) 0%, transparent 60%);
   }
-  .hero-grid {
-    position: absolute; inset: 0; opacity: 0.04;
-    background-image: linear-gradient(var(--cyan) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-  .hero-content { position: relative; z-index: 2; max-width: 750px; }
+  .hero-content { position: relative; z-index: 2; }
   .hero-logo {
     height: 120px;
     margin-bottom: 2rem;
@@ -147,16 +154,13 @@ const seo = {
   }
   .hero-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 8vw, 7.5rem);
+    font-size: clamp(2.8rem, 4.4vw, 4.4rem);
     line-height: 0.95;
     letter-spacing: 0.03em;
     margin-bottom: 1.8rem;
     opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
   }
-  .hero-title span {
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  }
+  .hero-title span { color: var(--blue-light); }
   .hero-sub {
     font-size: 1.15rem;
     line-height: 1.7;
@@ -186,31 +190,29 @@ const seo = {
   }
   .btn-ghost:hover { border-color: var(--cyan); background: rgba(0,180,216,0.08); }
 
-  /* floating globe accent */
-  .hero-visual {
-    position: absolute; right: -60px; top: 50%;
-    transform: translateY(-50%);
-    width: 520px; height: 520px;
-    opacity: 0; animation: fadeIn 1s 1s forwards;
+  /* Brand mark beside the hero text, with three slowly turning rings. Each ring carries one dot so
+     the turn is visible; there are no particles or other motion. Reduced-motion users see it still. */
+  .hero-mark {
+    position: relative; z-index: 1; justify-self: center;
+    width: min(500px, 100%); aspect-ratio: 1;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
   }
-  .orbit-ring {
-    position: absolute; border-radius: 50%;
-    border: 1px solid rgba(0,180,216,0.2);
+  .hero-mark img {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 132px; height: auto; opacity: 0.3;
   }
-  .ring1 { width: 100%; height: 100%; top:0; left:0; animation: spin 20s linear infinite; }
-  .ring2 { width: 75%; height: 75%; top: 12.5%; left: 12.5%; animation: spinR 15s linear infinite; }
-  .ring3 { width: 50%; height: 50%; top: 25%; left: 25%; border-color: rgba(0,180,216,0.4); animation: spin 10s linear infinite; }
-  .orbit-dot {
-    position: absolute; width: 8px; height: 8px;
-    border-radius: 50%; background: var(--cyan);
-    box-shadow: 0 0 12px var(--cyan);
+  .orbit-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(0,180,216,0.2); }
+  .orbit-ring::after {
+    content: ''; position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; margin-left: -4px;
+    border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan);
   }
-  .center-r {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    width: 132px; height: 132px;
-    opacity: 0.3;
-  }
+  .ring1 { inset: 0; animation: spin 40s linear infinite; }
+  .ring2 { inset: 12.5%; animation: spinR 30s linear infinite; }
+  .ring2::after { width: 6px; height: 6px; margin-left: -3px; top: -3px; opacity: 0.7; }
+  .ring3 { inset: 25%; border-color: rgba(0,180,216,0.35); animation: spin 22s linear infinite; }
+  .ring3::after { width: 5px; height: 5px; margin-left: -2.5px; top: -2.5px; opacity: 0.6; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes spinR { to { transform: rotate(-360deg); } }
 
   /* ── PILLARS ── */
   .pillars {
@@ -226,28 +228,10 @@ const seo = {
     transition: background 0.3s;
   }
   .pillar:hover { background: rgba(0,119,182,0.12); }
-  .pillar-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    color: rgba(0,180,216,0.12);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
   .pillar-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.05em;
-    background: linear-gradient(135deg, var(--white), var(--blue-light));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.35rem;
+    letter-spacing: -0.01em;
     margin-bottom: 0.8rem;
-  }
-  .pillar-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--cyan);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
   }
   .pillar p { font-size: 0.95rem; color: rgba(240,244,255,0.65); line-height: 1.7; }
 
@@ -262,10 +246,9 @@ const seo = {
     margin-bottom: 1rem;
   }
   .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: 0.03em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: clamp(2rem, 3.4vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     margin-bottom: 1rem;
   }
   .section-sub {
@@ -298,8 +281,7 @@ const seo = {
   .service-icon { margin-bottom: 1.1rem; color: var(--cyan); line-height: 0; }
   .service-icon svg { width: 36px; height: 36px; }
   .service-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem; letter-spacing: 0.05em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.3rem; letter-spacing: -0.01em;
     margin-bottom: 0.6rem;
     color: var(--white);
   }
@@ -330,8 +312,8 @@ const seo = {
   }
   .teaser-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--sb); }
   .teaser-name {
-    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 4vw, 3.6rem);
-    letter-spacing: 0.04em; line-height: 1;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: clamp(2rem, 3vw, 2.6rem);
+    letter-spacing: -0.01em; line-height: 1.2;
   }
   .teaser-name span { color: var(--sb); }
   .teaser-info p { color: rgba(240,244,255,0.72); font-size: 1rem; line-height: 1.75; max-width: 52ch; }
@@ -397,11 +379,8 @@ const seo = {
     border-radius: 2px;
   }
   .client-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem; letter-spacing: 0.05em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 2.2rem; letter-spacing: -0.01em;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--white), var(--blue-light));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
   .client-tagline {
     font-family: 'Space Mono', monospace;
@@ -437,8 +416,7 @@ const seo = {
   .stat-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 3.5rem;
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--cyan);
     line-height: 1;
   }
   .stat-label {
@@ -462,8 +440,7 @@ const seo = {
     color: var(--muted); text-transform: uppercase;
   }
   .worked-with-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem; letter-spacing: 0.08em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em;
     color: rgba(240,244,255,0.55); text-decoration: none;
     transition: color 0.2s;
   }
@@ -494,8 +471,7 @@ const seo = {
     align-items: center; margin-top: 3.5rem;
   }
   .outsource-intro h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; letter-spacing: 0.04em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.01em;
     color: var(--white); margin-bottom: 1rem;
   }
   .outsource-intro p { font-size: 0.95rem; color: rgba(240,244,255,0.65); line-height: 1.8; margin-bottom: 1rem; }
@@ -522,11 +498,8 @@ const seo = {
     border-radius: 4px;
   }
   .outsource-why h4 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem; letter-spacing: 0.05em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, var(--white), var(--blue-light));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
   .why-item {
     display: flex; gap: 1rem; margin-bottom: 1.2rem;
@@ -557,11 +530,8 @@ const seo = {
   }
   .partner-info p { font-size: 0.95rem; color: rgba(240,244,255,0.65); line-height: 1.75; margin-bottom: 1rem; }
   .partner-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem; letter-spacing: 0.05em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 2.2rem; letter-spacing: -0.01em;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--white), var(--gold));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
   .partner-tagline {
     font-family: 'Space Mono', monospace;
@@ -582,8 +552,7 @@ const seo = {
   }
   .partner-stat-num {
     font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
-    background: linear-gradient(135deg, var(--gold), #ffb700);
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--gold);
     line-height: 1;
   }
   .partner-stat-label {
@@ -608,10 +577,8 @@ const seo = {
     transition: background 0.3s;
   }
   .reach-card:hover { background: rgba(0,119,182,0.12); }
-  .reach-flag { font-size: 2.5rem; margin-bottom: 1rem; }
   .reach-country {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem; letter-spacing: 0.1em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em;
     color: var(--white); margin-bottom: 0.4rem;
   }
   .reach-desc { font-size: 0.8rem; color: var(--muted); }
@@ -640,8 +607,7 @@ const seo = {
   .name-letter {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.5rem;
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--cyan);
     min-width: 60px;
   }
   .name-meaning { font-size: 0.9rem; color: rgba(240,244,255,0.7); }
@@ -659,8 +625,7 @@ const seo = {
   .about-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 3.5rem;
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--cyan);
     line-height: 1;
   }
   .about-num-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; }
@@ -747,28 +712,12 @@ const seo = {
   }
 
   /* ── TAGLINE BAND ── */
-  .tagline-band {
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    padding: 1.5rem 4rem;
-    text-align: center;
-  }
-  .tagline-band p {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.15em;
-    color: var(--navy);
-  }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-  }
-  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes spinR { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
   /* ── RESPONSIVE ── */
   /* ── OPEN SOURCE / LABS ── */
@@ -793,8 +742,7 @@ const seo = {
     margin-bottom: 1rem;
   }
   .labs-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem; letter-spacing: 0.06em;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.3rem; letter-spacing: -0.01em;
     color: var(--white); margin-bottom: 0.7rem;
   }
   .labs-desc {
@@ -846,14 +794,14 @@ const seo = {
     }
     .nav-cta-wrap { display: none; }
     .hero { padding: 6rem 1.5rem 3rem; }
-    .hero-visual { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-mark { display: none; }
     .pillars { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
     .teaser-section { padding: 0 1.5rem 4rem; }
     .teaser-card { grid-template-columns: 1fr; }
     .teaser-info { padding: 2rem 1.5rem; }
     .teaser-shot { border-left: none; border-top: 1px solid rgba(52,211,153,0.2); aspect-ratio: 16 / 10; }
     .section, .clients-section, .reach-section, .about-section, .contact-section, .outsourcing-section { padding: 4rem 1.5rem; }
-    .tagline-band { padding: 1.2rem 1.5rem; }
     .services-grid { grid-template-columns: 1fr; }
     .client-card { grid-template-columns: 1fr; }
     .client-info { border-right: none; border-bottom: 1px solid rgba(0,180,216,0.15); padding: 2rem 1.5rem; }
@@ -889,9 +837,9 @@ const seo = {
 
   @media (max-width: 480px) {
     .hero-title { font-size: 3rem; }
-    .section-title { font-size: 2.2rem; }
-    .client-name { font-size: 2.5rem; }
-    .partner-name { font-size: 2.5rem; }
+    .section-title { font-size: 1.75rem; }
+    .client-name { font-size: 1.8rem; }
+    .partner-name { font-size: 1.8rem; }
     .reach-grid { grid-template-columns: 1fr; }
     .outsource-roles { grid-template-columns: 1fr; }
     .about-nums { grid-template-columns: 1fr; }
@@ -899,65 +847,7 @@ const seo = {
     .pillar { padding: 2rem 1.5rem; }
   }
 
-  /* ═══════════ PREMIUM ANIMATIONS ═══════════ */
-
-  /* Custom cursor */
-  .cursor-dot, .cursor-ring {
-    position: fixed; left: 0; top: 0; border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-200px, -200px) translate(-50%,-50%);
-    will-change: transform;
-  }
-  .cursor-dot {
-    width: 6px; height: 6px;
-    background: var(--cyan); box-shadow: 0 0 10px var(--cyan);
-    transition: width .25s, height .25s, background .25s, box-shadow .25s;
-  }
-  .cursor-ring {
-    width: 38px; height: 38px; z-index: 9998;
-    border: 1.5px solid rgba(0,180,216,.45);
-    transition: width .45s cubic-bezier(.23,1,.32,1), height .45s cubic-bezier(.23,1,.32,1), border-color .3s;
-  }
-  .cursor-active .cursor-dot { width: 10px; height: 10px; background: var(--accent); box-shadow: 0 0 16px var(--accent); }
-  .cursor-active .cursor-ring { width: 58px; height: 58px; border-color: rgba(0,212,255,.7); }
-  @media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
-
-  /* Page loader */
-  .page-loader {
-    position: fixed; inset: 0; background: var(--navy);
-    z-index: 10000; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 1.4rem;
-    transition: opacity .4s ease, visibility .4s ease;
-  }
-  .page-loader.out { opacity: 0; visibility: hidden; pointer-events: none; }
-  .loader-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 9vw, 6rem);
-    letter-spacing: .4em;
-    background: linear-gradient(135deg, var(--electric), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    animation: loaderPulse 1.3s ease-in-out infinite alternate;
-  }
-  .loader-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: .65rem; letter-spacing: .3em;
-    color: var(--muted); text-transform: uppercase;
-    margin-top: -.8rem;
-  }
-  .loader-track {
-    width: 200px; height: 1px;
-    background: rgba(0,180,216,.12); overflow: hidden;
-  }
-  .loader-fill {
-    height: 100%; width: 0;
-    background: linear-gradient(90deg, var(--electric), var(--cyan));
-    animation: loadFill 1.4s cubic-bezier(.4,0,.2,1) forwards;
-  }
-  @keyframes loadFill { to { width: 100%; } }
-  @keyframes loaderPulse { from { opacity:.65; } to { opacity:1; } }
-
-  /* Hero canvas */
-  #hero-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  /* ═══════════ ANIMATIONS ═══════════ */
 
   /* Scroll reveal base */
   .sr {
@@ -987,17 +877,6 @@ const seo = {
     transition: width .55s ease .2s;
   }
   .section-label.in::after { width: 32px; }
-
-  /* Card tilt shine */
-  .tilt-shine {
-    position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
-    background: radial-gradient(circle at var(--sx,50%) var(--sy,50%), rgba(255,255,255,.07) 0%, transparent 60%);
-    opacity: 0; transition: opacity .3s;
-  }
-  .service-card:hover .tilt-shine,
-  .pillar:hover .tilt-shine,
-  .reach-card:hover .tilt-shine,
-  .role-card:hover .tilt-shine { opacity: 1; }
 
   /* Nav link underline */
   .nav-links a { position: relative; }
@@ -1036,7 +915,7 @@ const seo = {
   @media (max-width: 900px) {
     main p:not([class]), main li, .teaser-points li, .labs-desc, .role-desc, .reach-desc { font-size: 1rem; }
     .contact-note { font-size: 0.875rem; }
-    .hero-eyebrow, .pillar-tag, .section-label, .teaser-badge, .teaser-play, .client-badge, .partner-badge, .stat-label,
+    .hero-eyebrow, .section-label, .teaser-badge, .teaser-play, .client-badge, .partner-badge, .stat-label,
     .worked-with-label, .labs-kicker, .labs-tag, .labs-go, .contact-form-group label, .contact-info-item h3,
     .footer-links a, .footer-copy, .service-more { font-size: 0.75rem; }
     .menu-toggle { min-width: 44px; min-height: 44px; }
@@ -1045,7 +924,6 @@ const seo = {
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-    .page-loader, #hero-canvas, .cursor-dot, .cursor-ring { display: none !important; }
     .sr { opacity: 1 !important; transform: none !important; }
   }
 </style>
@@ -1053,16 +931,8 @@ const seo = {
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- PAGE LOADER -->
-<div class="page-loader" id="pageLoader" aria-hidden="true">
-  <div class="loader-brand">RIROTE</div>
-  <div class="loader-sub">Rise · Robust · Tech</div>
-  <div class="loader-track"><div class="loader-fill"></div></div>
-</div>
 
 <!-- CURSOR -->
-<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav aria-label="Main">
@@ -1099,48 +969,37 @@ const seo = {
 
 <!-- HERO -->
 <section class="hero">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Full-Stack · AI · ERPNext — Jaipur, India</div>
-    <h1 class="hero-title">Rise with<br><span>Robust Tech.</span></h1>
-    <p class="hero-sub">Rirote Global is a full-stack, AI and ERPNext engineering company in Jaipur, India. We build web platforms, connect AI agents to real business data, and integrate ERPNext — and we make ERPTick, a service desk for equipment makers.</p>
+    <div class="hero-eyebrow">Rise with Robust Tech</div>
+    <h1 class="hero-title">We Build the Software &amp; AI<br><span>Your Business Runs&nbsp;On.</span></h1>
+    <p class="hero-sub">Rirote Global is a software company in Jaipur, India. We build websites and business software, add AI that works with your own data, and connect ERPNext to the rest of your tools. We also make ERPTick, a service desk for companies that sell and service machines.</p>
     <div class="hero-btns">
       <a href="#services" class="btn-primary">Explore Services</a>
       <a href="#clients" class="btn-ghost">Case Studies</a>
     </div>
   </div>
-  <div class="hero-visual">
+  <div class="hero-mark" aria-hidden="true">
     <div class="orbit-ring ring1"></div>
     <div class="orbit-ring ring2"></div>
     <div class="orbit-ring ring3"></div>
-    <div class="orbit-dot" style="top:5%; left:45%;"></div>
-    <div class="orbit-dot" style="bottom:12%; right:20%; width:5px; height:5px; opacity:0.6;"></div>
-    <div class="orbit-dot" style="top:40%; left:2%; width:6px; height:6px; opacity:0.5;"></div>
-    <img class="center-r" src="/assets/brand/mark.svg" width="132" height="132" alt="">
+    <img src="/assets/brand/mark.svg" width="132" height="132" alt="">
   </div>
 </section>
 
 <!-- PILLARS -->
 <div class="pillars">
   <div class="pillar">
-    <div class="pillar-num">01</div>
-    <div class="pillar-tag">Ri · Rise</div>
-    <div class="pillar-title">Technical Consulting</div>
-    <p>Architecture reviews, build-vs-buy decisions and ERP roadmaps — so the system is planned right before a line of code is written.</p>
+    <div class="pillar-title">Plan Before Building</div>
+    <p>We work out what has to change for your business, and the simplest way to get there, before any code is written.</p>
   </div>
   <div class="pillar">
-    <div class="pillar-num">02</div>
-    <div class="pillar-tag">Ro · Robust</div>
-    <div class="pillar-title">Engineering & Infrastructure</div>
-    <p>Dependable, high-quality software architecture and cloud infrastructure built to withstand scale, pressure, and the demands of enterprise.</p>
+    <div class="pillar-title">Built to Keep Running</div>
+    <p>Software that stays fast, secure and online as more people use it, with monitoring so problems are caught early.</p>
   </div>
   <div class="pillar">
-    <div class="pillar-num">03</div>
-    <div class="pillar-tag">Te · Technology</div>
-    <div class="pillar-title">Innovation & Digital</div>
-    <p>Cutting-edge modern digital solutions — from AI-powered apps to seamless platforms — delivered with speed and precision.</p>
+    <div class="pillar-title">Tools That Fit the Job</div>
+    <p>Modern tools, AI included, used where they make the work faster or cheaper for you, and left out where they don't.</p>
   </div>
 </div>
 
@@ -1148,50 +1007,16 @@ const seo = {
 <section class="section" id="services">
   <div class="section-label">What We Do</div>
   <h2 class="section-title">Our Services</h2>
-  <p class="section-sub">Full-stack products, AI integration, and enterprise systems — owned end to end, from system design and APIs through deployment and production support.</p>
+  <p class="section-sub">From your first website to connecting your ERP. One team plans it, builds it and looks after it once it is live.</p>
   <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M13.5 5l-3 14"/></svg></div>
-      <div class="service-name">Full-Stack Product Development</div>
-      <p>Web platforms and SaaS products built on Next.js, React, NestJS, and Node.js — typed end to end, PWA-ready, and designed to grow from MVP to production scale.</p>
-      <a class="service-more" href="/services/full-stack-development">Learn more →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></div>
-      <div class="service-name">AI Agents &amp; LLM Integration</div>
-      <p>AI assistants, agent workflows, and LLM features wired into your product and data — with clear specs, guardrails, and verification so the output can be trusted in production.</p>
-      <a class="service-more" href="/services/ai-integration">Learn more →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.2"/><path d="M13.5 17.25h7.5M17.25 13.5V21"/></svg></div>
-      <div class="service-name">ERP &amp; Enterprise Integrations</div>
-      <p>Custom ERP modules, ERPNext integrations, and role-based executive dashboards. Idempotent APIs, retry queues, and reconciliation so data stays consistent across systems.</p>
-      <a class="service-more" href="/services/erpnext-integration">Learn more →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.6a4 4 0 0 1 .2 7.9z"/></svg></div>
-      <div class="service-name">Cloud, DevOps &amp; Performance</div>
-      <p>AWS and Digital Ocean infrastructure, Docker, CI/CD, and server hardening. We cut cloud bills, fix slow queries, and bring load times down from seconds to milliseconds.</p>
-      <a class="service-more" href="/services/cloud-devops">Learn more →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z"/></svg></div>
-      <div class="service-name">Architecture &amp; Technical Leadership</div>
-      <p>System design, microservices, and monolith-to-microservices migrations — plus hands-on technical leadership for teams that need a senior engineer owning delivery.</p>
-      <a class="service-more" href="/services/technical-leadership">Learn more →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20.5h18M6.5 20.5V11M12 20.5V4.5M17.5 20.5v-7"/></svg></div>
-      <div class="service-name">Data Pipelines &amp; Reporting</div>
-      <p>ETL pipelines into Redshift and PostgreSQL, reporting APIs, and SLA dashboards that turn operational data into decisions your leadership can act on.</p>
-      <a class="service-more" href="/services/data-pipelines">Learn more →</a>
-    </div>
-    <div class="service-card" style="grid-column: 1 / -1;">
-      <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.7a3.5 3.5 0 0 1 0 6.6M18.2 14.4A6.5 6.5 0 0 1 21.5 20"/></svg></div>
-      <div class="service-name">Resource Outsourcing</div>
-      <p>Senior engineers embedded in your team on a dedicated or part-time basis. Whether you need a full-stack developer, an AI engineer, or an ERP integration specialist — we supply vetted, experienced talent that plugs in fast and delivers from day one.</p>
-      <a class="service-more" href="/services/dedicated-engineers">Learn more →</a>
-    </div>
+    {SERVICES.map((svc, i) => (
+      <div class="service-card" style={i === SERVICES.length - 1 && SERVICES.length % 2 === 1 ? 'grid-column: 1 / -1;' : undefined}>
+        <div class="service-icon" set:html={SERVICE_ICONS[svc.slug]} />
+        <div class="service-name">{svc.name}</div>
+        <p>{svc.summary}</p>
+        <a class="service-more" href={serviceUrl(svc.slug)}>Learn more →</a>
+      </div>
+    ))}
   </div>
 </section>
 
@@ -1202,11 +1027,11 @@ const seo = {
     <div class="teaser-info">
       <span class="teaser-badge">New · Early access</span>
       <h2 class="teaser-name" id="teaser-title">ERP<span>Tick</span> Service Desk</h2>
-      <p>The service desk for equipment makers, connected to ERPNext. Tickets, field visits, AMC contracts and quotations for your service team — with customers, machines and stock read straight from your ERP.</p>
+      <p>The service desk for equipment makers that use ERPNext. Your service team handles breakdown calls, engineer visits, AMC contracts and quotations in one place, with customers, machines and stock taken straight from your ERP.</p>
       <ul class="teaser-points">
-        <li>Tickets with SLA clocks, routing and field visits</li>
+        <li>Breakdown calls with response deadlines and engineer visits</li>
         <li>AMC contracts, quotations and a customer portal</li>
-        <li>Draft invoices and stock entries written back to ERPNext</li>
+        <li>Invoices and spare parts updated in ERPNext automatically</li>
       </ul>
       <div class="teaser-actions">
         <a href="/products/erptick" class="btn-primary">Explore ERPTick</a>
@@ -1227,7 +1052,7 @@ const seo = {
 <section class="clients-section" id="clients">
   <div class="section-label">Case Studies</div>
   <h2 class="section-title">Powering Real Businesses</h2>
-  <p class="section-sub">Measured outcomes from real engagements — what changed for the business after we shipped.</p>
+  <p class="section-sub">What changed for each business after we delivered, in numbers.</p>
 
   <!-- NimNim -->
   <div class="client-card">
@@ -1318,15 +1143,15 @@ const seo = {
 <!-- OUTSOURCING SECTION -->
 <section class="outsourcing-section" id="outsourcing">
   <div class="section-label">Resource Outsourcing</div>
-  <h2 class="section-title">Your Team,<br><span style="background:linear-gradient(135deg,var(--blue-light),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Extended.</span></h2>
-  <p class="section-sub">We supply skilled, vetted developers and tech specialists to clients and agencies — on a dedicated or flexible basis. Plug in fast, deliver from day one.</p>
+  <h2 class="section-title">Your Team,<br><span>Extended.</span></h2>
+  <p class="section-sub">Experienced developers and specialists who join your team full-time or part-time. We vet them on real projects first and stay responsible for their work.</p>
 
   <div class="outsource-grid">
     <div>
       <div class="outsource-intro">
-        <h3>Skilled Talent, On Demand</h3>
-        <p>Whether you're an agency needing extra bandwidth, a startup building a product, or an enterprise expanding a team — we provide experienced professionals who integrate seamlessly into your workflow.</p>
-        <p>No long hiring cycles. No overhead. Just talent that gets to work.</p>
+        <h3>Add People Without Hiring</h3>
+        <p>Agencies use our developers when they have more work than staff. Startups use them to build a product, and larger companies to grow a team for a project.</p>
+        <p>You skip the long hiring process and the cost of a permanent hire.</p>
       </div>
       <div class="outsource-roles">
         <div class="role-card">
@@ -1362,30 +1187,30 @@ const seo = {
       </div>
     </div>
     <div class="outsource-why">
-      <h4>Why Outsource with Rirote Global?</h4>
+      <h4>Why Hire Through Rirote Global?</h4>
       <div class="why-item">
         <span class="why-check">✔</span>
-        <p><strong>Pre-vetted professionals</strong> — every resource is tested on real projects before being placed with a client.</p>
+        <p><strong>Tested first.</strong> Every developer works on real projects with us before joining a client.</p>
       </div>
       <div class="why-item">
         <span class="why-check">✔</span>
-        <p><strong>Flexible engagement models</strong> — dedicated full-time, part-time, or project-based. You decide.</p>
+        <p><strong>Flexible.</strong> Full-time, part-time or for one project, and you can change it later.</p>
       </div>
       <div class="why-item">
         <span class="why-check">✔</span>
-        <p><strong>Rapid onboarding</strong> — resources are ready to integrate within days, not months.</p>
+        <p><strong>Quick to start.</strong> Developers are usually ready within a few days.</p>
       </div>
       <div class="why-item">
         <span class="why-check">✔</span>
-        <p><strong>Agency-friendly</strong> — white-label resource supply for digital agencies who need to scale delivery without scaling headcount.</p>
+        <p><strong>Agency-friendly.</strong> Agencies can use our developers under their own brand.</p>
       </div>
       <div class="why-item">
         <span class="why-check">✔</span>
-        <p><strong>India-based, globally experienced</strong> — competitive rates with quality that meets international standards.</p>
+        <p><strong>India-based.</strong> Fair rates, with experience on projects in the US and the Middle East.</p>
       </div>
       <div class="why-item">
         <span class="why-check">✔</span>
-        <p><strong>Rirote-managed</strong> — we remain accountable. You get the talent, we ensure the standards.</p>
+        <p><strong>Managed by us.</strong> If something isn't working, we fix it.</p>
       </div>
       <div class="outsource-cta">
         <p>Looking to extend your team or fill a skills gap?</p>
@@ -1396,34 +1221,26 @@ const seo = {
 
 </section>
 
-<!-- TAGLINE BAND -->
-<div class="tagline-band">
-  <p>The Strategy to Rise. The Tech to Scale.</p>
-</div>
 
 <!-- GLOBAL REACH -->
 <section class="reach-section" id="reach">
   <div class="section-label">Where We Work</div>
-  <h2 class="section-title">India-Rooted,<br>Globally Delivered</h2>
-  <p class="section-sub">Headquartered in India, we build and deliver for clients across the globe — bringing sharp engineering and strategic thinking wherever it's needed.</p>
+  <h2 class="section-title">Where We Work</h2>
+  <p class="section-sub">We are based in Jaipur and work with clients in India, the United States and the Middle East, mostly remotely.</p>
   <div class="reach-grid">
     <div class="reach-card">
-      <div class="reach-flag">🇮🇳</div>
       <div class="reach-country">India</div>
       <div class="reach-desc">Headquarters & Engineering Hub</div>
     </div>
     <div class="reach-card">
-      <div class="reach-flag">🇺🇸</div>
       <div class="reach-country">United States</div>
       <div class="reach-desc">Serving clients across North America</div>
     </div>
     <div class="reach-card">
-      <div class="reach-flag">🇦🇪</div>
       <div class="reach-country">Middle East</div>
       <div class="reach-desc">Serving clients across UAE & GCC</div>
     </div>
     <div class="reach-card">
-      <div class="reach-flag">🌍</div>
       <div class="reach-country">Global</div>
       <div class="reach-desc">Remote-first delivery worldwide</div>
     </div>
@@ -1434,12 +1251,12 @@ const seo = {
 <section class="section" id="opensource">
   <div class="section-label">Open Source</div>
   <h2 class="section-title">Built in the Open,<br><span>Free to Use.</span></h2>
-  <p class="section-sub">Not client work — tools and teaching material we build for the wider engineering community and give away. The same standards we hold on paid engagements, in public.</p>
+  <p class="section-sub">Free tools and learning material we build for other engineers and give away.</p>
   <div class="labs-grid">
     <a class="labs-card" href="https://rishabhsisodiya.github.io/crack-the-prep/" target="_blank" rel="noopener">
       <div class="labs-kicker">Free Learning Hub</div>
       <div class="labs-name">CrackThePrep</div>
-      <p class="labs-desc">Practitioner-grade interview preparation for full-stack engineers — notes, questions and worked examples across JavaScript, React, Node.js, system design, DSA and behavioural rounds.</p>
+      <p class="labs-desc">Interview preparation for web developers: notes, questions and worked examples on JavaScript, React, Node.js, system design, data structures and behavioural rounds.</p>
       <div class="labs-tags">
         <span class="labs-tag">JavaScript</span>
         <span class="labs-tag">React</span>
@@ -1468,8 +1285,8 @@ const seo = {
   <div class="section-label">Get in Touch</div>
   <div class="contact-grid">
     <div>
-      <h2 class="section-title" style="margin-bottom:1rem;">Let's Build<br>Something Global.</h2>
-      <p class="section-sub" style="margin-bottom:2.5rem;">Ready to rise? Tell us about your project and we'll get back to you within 24 hours.</p>
+      <h2 class="section-title" style="margin-bottom:1rem;">Tell Us What<br>You Need</h2>
+      <p class="section-sub" style="margin-bottom:2.5rem;">Describe your project or the problem you want solved. We reply within 24 hours.</p>
       <div class="contact-info-item">
         <span class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg></span>
         <div>
@@ -1502,13 +1319,8 @@ const seo = {
         <label for="cf-service">Service Interest</label>
         <select id="cf-service" name="service">
           <option value="">Select a service...</option>
-          <option>Full-Stack Product Development</option>
-          <option>AI Agents &amp; LLM Integration</option>
-          <option>ERP &amp; Enterprise Integrations</option>
-          <option>Cloud, DevOps &amp; Performance</option>
-          <option>Architecture &amp; Technical Leadership</option>
-          <option>Data Pipelines &amp; Reporting</option>
-          <option>Resource Outsourcing</option>
+          {SERVICES.map((svc) => <option>{svc.name}</option>)}
+          <option>ERPTick (our product)</option>
           <option>Something Else</option>
         </select>
       </div>
@@ -1529,84 +1341,13 @@ const seo = {
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote — Rise · Robust · Tech" loading="lazy"></a>
+  <a href="#" class="footer-logo" aria-label="Rirote Global, back to top"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote Global" loading="lazy"></a>
   <div class="footer-links"><a href="/services">Services</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/privacy-policy#analytics-cookies" data-consent-open>Cookie settings</a></div>
+  <SocialLinks />
   <div class="footer-copy">© 2026 Rirote Global · riroteglobal.com</div>
 </footer>
 
 <script is:inline slot="scripts">
-// ── PAGE LOADER ──
-// Hide as soon as the page is parsed (was: full load + 1.5s).
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => document.getElementById('pageLoader').classList.add('out'), 350);
-});
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// ── CUSTOM CURSOR ──
-(function () {
-  if (window.matchMedia('(hover: none)').matches) return;
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  let mx = -200, my = -200, rx = -200, ry = -200;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    // transform, not left/top: moving the cursor never invalidates page layout.
-    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-  });
-  (function loop() {
-    rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a, button, .service-card, .pillar, .reach-card, .role-card, .labs-card').forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-  });
-})();
-
-// ── HERO PARTICLES ──
-(function () {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas || reduceMotion) return;
-  const ctx = canvas.getContext('2d');
-  const hero = canvas.parentElement;
-  let W, H, pts = [];
-  // ResizeObserver reports the hero's size after layout, so sizing the canvas never forces a reflow.
-  new ResizeObserver(([entry]) => {
-    const box = entry.borderBoxSize && entry.borderBoxSize[0];
-    W = canvas.width = Math.round(box ? box.inlineSize : entry.contentRect.width);
-    H = canvas.height = Math.round(box ? box.blockSize : entry.contentRect.height);
-  }).observe(hero);
-  for (let i = 0; i < 75; i++) pts.push({
-    x: Math.random() * 1400, y: Math.random() * 900,
-    vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28,
-    r: Math.random() * 1.3 + .3, a: Math.random() * .45 + .08
-  });
-  let visible = true;
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(hero);
-  (function draw() {
-    if (W && visible) {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,180,216,${p.a})`; ctx.fill();
-        for (let j = i + 1; j < pts.length; j++) {
-          const q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 130) {
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(0,180,216,${.05 * (1 - d / 130)})`;
-            ctx.lineWidth = .5; ctx.stroke();
-          }
-        }
-      });
-    }
-    requestAnimationFrame(draw);
-  })();
-})();
-
 // ── SCROLL REVEAL ──
 (function () {
   const simple = ['.section-label', '.section-title', '.section-sub',
@@ -1631,65 +1372,6 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.sr').forEach(el => obs.observe(el));
-})();
-
-// ── COUNTER ANIMATION ──
-(function () {
-  function run(el) {
-    const raw = el.textContent.trim();
-    const m = raw.match(/^(\d+)(.*)/);
-    if (!m || raw.includes('→')) return;
-    const end = parseInt(m[1]), suf = m[2];
-    const dur = end > 200 ? 2000 : 1400, t0 = performance.now();
-    (function tick(now) {
-      const p = Math.min((now - t0) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(end * ease) + suf;
-      if (p < 1) requestAnimationFrame(tick); else el.textContent = raw;
-    })(t0);
-  }
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { run(e.target); obs.unobserve(e.target); } });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('.stat-num, .partner-stat-num').forEach(el => {
-    if (/^\d/.test(el.textContent.trim())) obs.observe(el);
-  });
-})();
-
-// ── 3D CARD TILT ──
-(function () {
-  if (window.matchMedia('(hover: none)').matches) return;
-  document.querySelectorAll('.service-card, .pillar, .reach-card, .role-card').forEach(card => {
-    card.style.position = 'relative';
-    const shine = document.createElement('div'); shine.className = 'tilt-shine'; card.appendChild(shine);
-    let r = null; // measured once per hover; reset on scroll
-    card.addEventListener('mouseenter', () => { r = null; });
-    window.addEventListener('scroll', () => { r = null; }, { passive: true });
-    card.addEventListener('mousemove', e => {
-      if (!r) r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      card.style.transform = `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateZ(6px)`;
-      shine.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%');
-      shine.style.setProperty('--sy', ((e.clientY - r.top) / r.height * 100) + '%');
-    });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-  });
-})();
-
-// ── MAGNETIC BUTTONS ──
-(function () {
-  if (window.matchMedia('(hover: none)').matches) return;
-  document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta').forEach(btn => {
-    let r = null; // measured once per hover; reset on scroll
-    btn.addEventListener('mouseenter', () => { r = null; });
-    window.addEventListener('scroll', () => { r = null; }, { passive: true });
-    btn.addEventListener('mousemove', e => {
-      if (!r) r = btn.getBoundingClientRect();
-      btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * .22}px, ${(e.clientY - r.top - r.height/2) * .22}px)`;
-    });
-    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-  });
 })();
 
 // ── NAV: frosted on scroll + active link highlight ──

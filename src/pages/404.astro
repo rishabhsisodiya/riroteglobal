@@ -1,15 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const seo = { title: 'Page Not Found — Rirote Global', noindex: true };
+const seo = { title: 'Page Not Found | Rirote Global', noindex: true };
 ---
 <BaseLayout seo={seo} nav={false}>
 <Fragment slot="head">
 <style is:inline>
   main { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 2rem 1.25rem; text-align: center; position: relative; }
   .nf-code { font-family: 'Bebas Neue', sans-serif; font-size: clamp(6rem, 22vw, 12rem); line-height: 0.9;
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    color: var(--cyan); }
   .nf p { color: var(--text-soft); max-width: 420px; margin: 1rem auto 2rem; }
   .nf .cta-actions { justify-content: center; }
 </style>
@@ -18,7 +17,7 @@ const seo = { title: 'Page Not Found — Rirote Global', noindex: true };
 <main>
   <div class="hero-bg"></div>
   <div class="nf" style="position:relative;">
-    <p class="eyebrow">// Page not found</p>
+    <p class="eyebrow">Page not found</p>
     <h1 class="nf-code">404</h1>
     <p>That page doesn't exist or has moved. Here's where to go next.</p>
     <div class="cta-actions">

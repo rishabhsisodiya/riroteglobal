@@ -22,7 +22,7 @@ export const SITE = {
     path: '/assets/og-image.jpg',
     width: 1200,
     height: 630,
-    alt: 'Rirote Global — Rise · Robust · Tech',
+    alt: 'Rirote Global logo',
   } satisfies ShareImage,
 } as const;
 
@@ -30,14 +30,16 @@ export const SITE = {
  *  Leave empty to remove analytics and the consent banner. */
 export const GA_ID = 'G-W050S5NEBB';
 
-/** Official company profiles, used as schema.org sameAs. */
-export const SOCIAL_PROFILES = [
-  'https://www.linkedin.com/company/rirote-global/',
-  'https://www.youtube.com/channel/UCl11RgCfdXUcOZxbbplZIXA',
-  'https://www.instagram.com/riroteglobal/',
-  'https://x.com/riroteglobal',
-  'https://github.com/rirote-global',
+/** Official company profiles: linked in every footer and listed as schema.org sameAs. */
+export const SOCIAL_LINKS = [
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/company/rirote-global/' },
+  { label: 'YouTube', url: 'https://www.youtube.com/channel/UCl11RgCfdXUcOZxbbplZIXA' },
+  { label: 'Instagram', url: 'https://www.instagram.com/riroteglobal/' },
+  { label: 'X', url: 'https://x.com/riroteglobal' },
+  { label: 'GitHub', url: 'https://github.com/rirote-global' },
 ] as const;
+
+export const SOCIAL_PROFILES = SOCIAL_LINKS.map((link) => link.url);
 
 /** Company track record, shown on the About and Projects pages. */
 export const COMPANY_STATS = {

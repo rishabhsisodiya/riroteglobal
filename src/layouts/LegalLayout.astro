@@ -23,7 +23,7 @@ const updatedLabel = updatedDate.toLocaleDateString('en-GB', {
 });
 
 const seo = {
-  title: `${title} — Rirote Global`,
+  title: `${title} | Rirote Global`,
   path,
   description,
   schema: [breadcrumbs(['Home', '/'], [title, path])],
@@ -33,9 +33,8 @@ const seo = {
 <main id="main">
   <section class="page-hero">
     <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1">// Legal</p>
+      <p class="eyebrow fade-up d1">Legal</p>
       <h1 class="page-title fade-up d2">{title}</h1>
       <p class="page-sub fade-up d3">Last updated <time datetime={updatedIso}>{updatedLabel}</time></p>
     </div>

@@ -5,10 +5,10 @@ import { breadcrumbs, webPage } from '../lib/schema';
 import { COMPANY_STATS } from '../data/site';
 
 const seo = {
-  title: 'ERPNext, SaaS & E-commerce Case Studies — Rirote Global',
+  title: 'ERPNext, SaaS & E-commerce Case Studies | Rirote Global',
   path: '/projects',
   description: 'Case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce: what we built, the stack, and the measured results.',
-  ogDescription: 'Real-world engineering across enterprise ERP, e-commerce, logistics and SaaS — delivered end to end with measurable impact.',
+  ogDescription: 'Case studies in ERP, manufacturing, e-commerce, logistics and SaaS, with the results each business saw.',
   schema: [
     webPage({ path: '/projects', name: 'Case Studies', type: 'CollectionPage' }),
     breadcrumbs(['Home', '/'], ['Projects', '/projects']),
@@ -70,9 +70,8 @@ const seo = {
     border: 1px solid rgba(0,180,216,0.2);
   }
   .card-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.85rem; letter-spacing: 0.04em;
-    line-height: 1; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: -0.01em;
+    line-height: 1.2; color: var(--white);
   }
   .card-location {
     font-family: 'Space Mono', monospace;
@@ -191,11 +190,10 @@ const seo = {
 ══════════════════════════════════════════════ -->
 <section class="page-hero">
   <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
   <div class="hero-content">
-    <p class="eyebrow fade-up d1">// Client Work &amp; Case Studies</p>
+    <p class="eyebrow fade-up d1">Client Work &amp; Case Studies</p>
     <h1 class="page-title fade-up d2">Projects That<br><span>Moved the Needle</span></h1>
-    <p class="page-sub fade-up d3">Real-world engineering across enterprise ERP, manufacturing, e-commerce, logistics and SaaS — delivered end to end with measurable impact.</p>
+    <p class="page-sub fade-up d3">Software we built for businesses in ERP, manufacturing, e-commerce, logistics and SaaS, and what changed for each one.</p>
   </div>
 </section>
 
@@ -214,7 +212,7 @@ const seo = {
   </div>
   <div class="metric-item">
     <div class="metric-value">3</div>
-    <div class="metric-label">Regions — India, US &amp; Middle East</div>
+    <div class="metric-label">Regions: India, US &amp; Middle East</div>
   </div>
 </div>
 
@@ -240,19 +238,19 @@ const seo = {
         <div class="card-meta">
           <span class="industry-tag">Enterprise ERP / Infrastructure</span>
           <h3 class="card-name">Unified ERP &amp; Service Platform</h3>
-          <p class="card-location">&#x1F4CD; India · Infrastructure Services Group</p>
+          <p class="card-location">India · Infrastructure Services Group</p>
         </div>
         <div class="card-tags">
           <span class="role-tag">End-to-End Delivery</span>
         </div>
       </div>
       <div class="card-body">
-        <p class="card-overview">Unified ERP platform merging an ACE after-sales service ticketing system with 11 role-based executive dashboards — one PostgreSQL database, one auth/role system, one Next.js frontend, replacing two separate codebases and servers. Delivered end to end — architecture, backend, frontend and deployment — for 9 business entities across 5 ERPNext v15 Frappe Cloud sites.</p>
+        <p class="card-overview">Unified ERP platform merging an ACE after-sales service ticketing system with 11 role-based executive dashboards: one PostgreSQL database, one auth/role system, one Next.js frontend, replacing two separate codebases and servers. Delivered end to end (architecture, backend, frontend and deployment) for 9 business entities across 5 ERPNext v15 Frappe Cloud sites.</p>
         <ul class="achievements-list">
           <li>Ticketing engine on NestJS + Prisma: 8 creation sources → a single CreateTicketService → 9-state workflow, with a responsive/PWA Field Service Visit flow and 15 email + SMS notification triggers</li>
-          <li>Two-way ERPNext integration: read-only nightly MariaDB master pull + REST-API-only writes (Stock Entry, draft Sales Invoice) and an inbound webhook — no direct DB writes, Frappe permission engine respected</li>
+          <li>Two-way ERPNext integration: read-only nightly MariaDB master pull + REST-API-only writes (Stock Entry, draft Sales Invoice) and an inbound webhook. No direct DB writes, and the Frappe permission engine is respected</li>
           <li>11 role-specific dashboards (Sales Head, Finance Head, MD, Manufacturing Head &amp; more) on Next.js 14 App Router + React 19</li>
-          <li>Node.js middleware: ERPNext role sync, Promise.all multi-site fan-out across up to 5 sites, Redis per-widget caching — sub-500ms loads vs 5s+ sequential; mock/live toggle via single env flag</li>
+          <li>Node.js middleware: ERPNext role sync, Promise.all multi-site fan-out across up to 5 sites, Redis per-widget caching. Sub-500ms loads vs 5s+ sequential; mock/live toggle via single env flag</li>
           <li>Sales Head dashboard: Decision Band (pace-to-target), pipeline funnel with bottleneck detection, deal drawer with activity timeline</li>
         </ul>
         <div class="tech-pills">
@@ -280,19 +278,19 @@ const seo = {
         <div class="card-meta">
           <span class="industry-tag">Enterprise ERP / Manufacturing</span>
           <h3 class="card-name">Foundry Operations ERP</h3>
-          <p class="card-location">&#x1F4CD; India · Manufacturing</p>
+          <p class="card-location">India · Manufacturing</p>
         </div>
         <div class="card-tags">
           <span class="role-tag">Full Stack</span>
         </div>
       </div>
       <div class="card-body">
-        <p class="card-overview">A domain-specific foundry ERP that owns all foundry-operational data end to end — sales-order-to-dispatch, production planning, melting &amp; metallurgy, quality, inventory, maintenance and costing — across a 17-module map, with heat-number genealogy as the golden traceability key. Integrates with the client's existing ERPNext only for finance and payroll.</p>
+        <p class="card-overview">A domain-specific foundry ERP that owns all foundry-operational data end to end: sales-order-to-dispatch, production planning, melting &amp; metallurgy, quality, inventory, maintenance and costing, across a 17-module map, with heat-number genealogy as the golden traceability key. Integrates with the client's existing ERPNext only for finance and payroll.</p>
         <ul class="achievements-list">
           <li>Translated a 100+ doctype functional/solution spec into a NestJS + Prisma + PostgreSQL backend and a Next.js 16 / React 19 App Router frontend</li>
           <li>Delivered the RBAC foundation (admin-configurable roles, segregation-of-duties rules), audit logging, and 12+ master-data modules with full CRUD</li>
           <li>Short-lived JWT access tokens backed by rotating, hash-only-stored refresh tokens (rotation-on-use replay protection) with a de-duped silent-refresh interceptor</li>
-          <li>ERPNext integration boundary — REST/JSON only, no DB-to-DB — with idempotent correlation-ID calls, retry/backoff queues, and a nightly reconciliation run for one-sided records</li>
+          <li>ERPNext integration boundary (REST/JSON only, no DB-to-DB) with idempotent correlation-ID calls, retry/backoff queues, and a nightly reconciliation run for one-sided records</li>
         </ul>
         <div class="tech-pills">
           <span class="tech-pill">Next.js 16</span>
@@ -316,12 +314,12 @@ const seo = {
         <div class="card-meta">
           <span class="industry-tag">Laundry Management / SaaS</span>
           <h3 class="card-name">On-Demand Laundry SaaS</h3>
-          <p class="card-location">&#x1F4CD; USA</p>
+          <p class="card-location">USA</p>
         </div>
       </div>
       <div class="card-body">
         <p class="overview-text">
-          Took over a production-critical US-based SaaS laundry management platform with stability issues. Stabilized cloud infrastructure, resolved high-priority production bugs, and led a major platform revamp — all while maintaining uptime for active customers.
+          Took over a production-critical US-based SaaS laundry management platform with stability issues. Stabilized cloud infrastructure, resolved high-priority production bugs, and led a major platform revamp, all while maintaining uptime for active customers.
         </p>
 
         <div>
@@ -370,7 +368,7 @@ const seo = {
       </div>
       <div class="card-body">
         <p class="overview-text">
-          Built and maintained a unified multi-service platform supporting food delivery, parcel logistics, and ride-booking operations — architected on microservices for independent scaling of each service. Led the engineering team, drove product decisions, and owned features end-to-end from API design through to production deployment and support.
+          Built and maintained a unified multi-service platform supporting food delivery, parcel logistics, and ride-booking operations, architected on microservices for independent scaling of each service. Led the engineering team, drove product decisions, and owned features end-to-end from API design through to production deployment and support.
         </p>
 
         <div>
@@ -466,12 +464,12 @@ const seo = {
         <div class="card-meta">
           <span class="industry-tag">E-Commerce / Shopify</span>
           <h3 class="card-name">Shopify Store Projects</h3>
-          <p class="card-location">Multiple Clients — Fashion, Lifestyle &amp; Homeware</p>
+          <p class="card-location">Multiple Clients: Fashion, Lifestyle &amp; Homeware</p>
         </div>
       </div>
       <div class="card-body">
         <p class="overview-text">
-          Delivered end-to-end Shopify solutions for clients across fashion, lifestyle, and homeware — from bespoke theme development and custom app integrations to performance optimization and workflow automation. Each engagement was tailored to the client's specific business requirements.
+          Delivered end-to-end Shopify solutions for clients across fashion, lifestyle, and homeware, covering bespoke theme development, custom app integrations, performance optimization and workflow automation. Each engagement was tailored to the client's specific business requirements.
         </p>
 
         <div>
@@ -496,7 +494,7 @@ const seo = {
               <li>Third-party app integrations</li>
               <li>Store speed optimization</li>
               <li>Bulk product workflow automation</li>
-              <li>AMC — ongoing maintenance &amp; support contracts</li>
+              <li>AMC: ongoing maintenance &amp; support contracts</li>
             </ul>
           </div>
           <div>
@@ -523,10 +521,10 @@ const seo = {
 ══════════════════════════════════════════════ -->
 <section class="cta-section">
   <div class="cta-glow"></div>
-  <p class="cta-eyebrow">// Let's Build Something</p>
+  <p class="cta-eyebrow">Let's Build Something</p>
   <h2 class="cta-title">Have a Project <span>in Mind?</span></h2>
   <p class="cta-body">
-    Platforms, AI integrations, ERPNext work, or senior engineers on contract for your team — tell us what you're building and we'll reply within 24 hours.
+    Platforms, AI integrations, ERPNext work, or senior engineers on contract for your team. Tell us what you're building and we'll reply within 24 hours.
   </p>
   <div class="cta-actions">
     <a href="/#contact" class="btn-primary">Start a Conversation</a>

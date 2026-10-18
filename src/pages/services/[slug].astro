@@ -18,10 +18,10 @@ const seo = {
   title: service.metaTitle,
   path,
   description: service.description,
-  ogTitle: `${service.name} — Rirote Global`,
+  ogTitle: `${service.name} | Rirote Global`,
   schema: [
     webPage({ path, name: service.name }),
-    serviceNode({ name: service.name, description: service.summary, path }),
+    serviceNode({ name: service.name, serviceType: service.techName, description: service.summary, path }),
     breadcrumbs(['Home', '/'], ['Services', SERVICES_PATH], [service.name, path]),
   ],
 };
@@ -32,9 +32,8 @@ const seo = {
 <main id="main">
   <section class="page-hero">
     <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1"><a href={SERVICES_PATH} style="text-decoration:none;">Services</a> / {service.name}</p>
+      <p class="eyebrow fade-up d1"><a href={SERVICES_PATH} style="text-decoration:none;">Services</a> / {service.techName}</p>
       <h1 class="page-title fade-up d2">{service.heading[0]}<br><span>{service.heading[1]}</span></h1>
       <p class="page-sub fade-up d3">{service.intro}</p>
       <div class="hero-actions fade-up d4">
@@ -132,7 +131,7 @@ const seo = {
 
   <section class="cta-section">
     <div class="cta-glow"></div>
-    <p class="cta-eyebrow">// Let's Build Something</p>
+    <p class="cta-eyebrow">Let's Talk</p>
     <h2 class="cta-title">Have a Project <span>in Mind?</span></h2>
     <p class="cta-body">Tell us what you're building and we'll reply within 24 hours.</p>
     <div class="cta-actions">
