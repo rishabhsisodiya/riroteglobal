@@ -63,14 +63,12 @@ const principles = [
   }
   .name-item:nth-child(2) .name-letters { color: var(--cyan); }
   .name-word {
-    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.24em;
-    text-transform: uppercase; color: var(--accent-text); margin: 0.6rem 0 0.9rem;
-  }
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--accent-text); margin: 0.6rem 0 0.9rem; font-weight: 600; }
   .name-item p, .about-card p { color: var(--text-soft); line-height: 1.75; }
 
   .about-card {
     display: flex; flex-direction: column; gap: 0.9rem;
-    background: var(--navy-card); border: 1px solid var(--line); border-radius: 8px;
+    background: var(--navy-card); border: 1px solid var(--line); border-radius: var(--radius-card);
     padding: 1.8rem 1.8rem 2rem;
     transition: border-color 0.3s;
   }
@@ -81,21 +79,17 @@ const principles = [
   }
   .about-card .card-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin-top: auto; padding-top: 0.4rem; }
   .about-card .card-links a, .about-card .card-more {
-    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em;
-    text-transform: uppercase; font-weight: 700; color: var(--accent-text); text-decoration: none;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent-text); text-decoration: none;
   }
   .about-card .card-links a:hover, .about-card .card-more:hover { color: var(--white); }
   .card-index {
-    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--muted);
-  }
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
 
   .team-text { max-width: 720px; color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin: 1rem 0 2.5rem; }
   .metrics.two { grid-template-columns: repeat(2, 1fr); }
   .company-line {
     margin-top: 1.6rem; position: relative;
-    font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--muted);
-  }
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--muted); font-weight: 500; }
 
   @media (max-width: 1100px) {
     .card-grid.four { grid-template-columns: repeat(2, 1fr); }

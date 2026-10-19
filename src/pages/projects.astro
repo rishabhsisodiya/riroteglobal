@@ -25,11 +25,10 @@ const seo = {
   }
   .nda-note {
     display: flex; align-items: center; gap: 0.6rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.12em;
-    color: var(--muted); text-transform: uppercase;
-    margin-bottom: 3rem;
-  }
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 3rem; font-weight: 500; }
   .nda-note svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--cyan); }
   .projects-grid {
     display: grid;
@@ -41,7 +40,7 @@ const seo = {
   .project-card {
     background: var(--navy-card);
     border: 1px solid rgba(0,180,216,0.1);
-    border-radius: 8px;
+    border-radius: var(--radius-card);
     overflow: hidden;
     display: flex; flex-direction: column;
     transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -61,36 +60,32 @@ const seo = {
   }
   .card-meta { flex: 1; }
   .industry-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--cyan);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; color: var(--cyan);
     background: rgba(0,180,216,0.08);
-    padding: 0.2rem 0.65rem; border-radius: 3px;
+    padding: 0.2rem 0.65rem; border-radius: var(--radius-pill);
     display: inline-block; margin-bottom: 0.7rem;
-    border: 1px solid rgba(0,180,216,0.2);
-  }
+    border: 1px solid rgba(0,180,216,0.2); font-weight: 600; }
   .card-name {
     font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: -0.01em;
     line-height: 1.2; color: var(--white);
   }
   .card-location {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 0.15em;
-    color: var(--muted); text-transform: uppercase;
-    margin-top: 0.35rem;
-  }
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.35rem; font-weight: 500; }
   .card-link {
     display: flex; align-items: center; gap: 0.4rem;
     color: var(--cyan); text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.1em;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
     white-space: nowrap;
     padding: 0.4rem 0.8rem;
     border: 1px solid rgba(0,180,216,0.25);
     border-radius: 4px;
     transition: background 0.2s, border-color 0.2s;
-    flex-shrink: 0;
-  }
+    flex-shrink: 0; font-weight: 600; }
   .card-link:hover {
     background: rgba(0,180,216,0.1);
     border-color: rgba(0,180,216,0.5);
@@ -111,15 +106,13 @@ const seo = {
     color: var(--blue-light);
     background: rgba(72,202,228,0.07);
     border: 1px solid rgba(72,202,228,0.18);
-    padding: 0.22rem 0.6rem; border-radius: 3px;
+    padding: 0.22rem 0.6rem; border-radius: var(--radius-pill);
   }
 
   .card-section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 0.55rem;
-  }
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; color: var(--muted);
+    margin-bottom: 0.55rem; font-weight: 600; }
   .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
   .bullet-list li {
     font-size: 0.88rem; line-height: 1.5;
@@ -160,10 +153,10 @@ const seo = {
   .card-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue-light); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
   .card-links a:hover { color: var(--cyan); }
 
-  .metrics.three { grid-template-columns: repeat(3, 1fr); }
+  .metrics.three { grid-template-columns: repeat(3, 1fr); padding: 2.5rem 4rem 0; }
 
   @media (max-width: 900px) {
-    .metrics.three { grid-template-columns: repeat(2, 1fr); }
+    .metrics.three { grid-template-columns: repeat(2, 1fr); padding: 1.5rem 1.25rem 0; gap: 0.9rem; }
     .metrics.three .metric-item:last-child { grid-column: 1 / -1; }
     .projects-section { padding: 3.5rem 1.25rem 4rem; }
     .projects-grid { grid-template-columns: 1fr; }
@@ -211,8 +204,8 @@ const seo = {
     <div class="metric-label">{COMPANY_STATS.industries.label}</div>
   </div>
   <div class="metric-item">
-    <div class="metric-value">3</div>
-    <div class="metric-label">Regions: India, US &amp; Middle East</div>
+    <div class="metric-value">{COMPANY_STATS.regions.value}</div>
+    <div class="metric-label">{COMPANY_STATS.regions.label}</div>
   </div>
 </div>
 

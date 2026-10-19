@@ -41,10 +41,11 @@ export const SOCIAL_LINKS = [
 
 export const SOCIAL_PROFILES = SOCIAL_LINKS.map((link) => link.url);
 
-/** Company track record, shown on the About and Projects pages. */
+/** Company track record, shown on the homepage, About and Projects pages. */
 export const COMPANY_STATS = {
   projects: { value: '11+', label: 'Projects Delivered' },
   industries: { value: '5+', label: 'Industries Served' },
+  regions: { value: '3', label: 'Regions: India, US & Middle East' },
 } as const;
 
 /** Absolute URL on the live domain, e.g. absoluteUrl('/products') → https://riroteglobal.com/products */

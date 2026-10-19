@@ -4,10 +4,9 @@
 <style is:inline>
   .svc-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 2rem;
-    gap: 1px; background: var(--line);
-    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    gap: 1.25rem;
   }
-  .svc-item { background: var(--navy-mid); padding: 2rem; }
+  .svc-item { background: var(--navy-mid); padding: 2rem; border: 1px solid var(--card-line); border-radius: var(--radius-card); }
   .svc-item h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.45rem; }
   .svc-item p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.65; }
   a.svc-item { color: inherit; text-decoration: none; transition: background 0.3s; display: flex; flex-direction: column; }
@@ -15,7 +14,7 @@
   /* A lone card on the last row spans it, so no empty cells show. */
   .svc-grid > .svc-item:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
   a.svc-item h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; }
-  .svc-go { margin-top: auto; padding-top: 1.2rem; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-light); }
+  .svc-go { margin-top: auto; padding-top: 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--blue-light); font-weight: 600; }
 
   .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; counter-reset: step; }
   .step { border-top: 1px solid var(--line-strong); padding-top: 1.2rem; }
@@ -26,7 +25,7 @@
   .proofs { display: grid; gap: 1.5rem; margin-top: 2rem; }
   .proof {
     display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center;
-    background: var(--navy-card); border: 1px solid var(--line); border-radius: 8px; padding: 2rem 1.8rem;
+    background: var(--navy-card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 2rem 1.8rem;
   }
   .proof.no-stats { grid-template-columns: 1fr; }
   .proof h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: -0.01em; margin: 0.5rem 0 0.6rem; }
@@ -36,24 +35,24 @@
   .proof-stats { display: grid; gap: 1rem; }
   .proof-stat { border-left: 2px solid var(--line-strong); padding-left: 1rem; }
   .proof-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; color: var(--cyan); line-height: 1.1; }
-  .proof-stat-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .proof-stat-label { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
 
   .stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; list-style: none; }
   .stack li {
     font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--blue-light); background: rgba(72,202,228,0.07); border: 1px solid rgba(72,202,228,0.18);
-    padding: 0.35rem 0.75rem; border-radius: 3px;
+    padding: 0.35rem 0.75rem; border-radius: var(--radius-pill);
   }
 
   .related { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
   .related a {
     display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem;
-    border: 1px solid var(--line-strong); border-radius: 5px; color: var(--white); text-decoration: none; font-size: 0.95rem;
+    border: 1px solid var(--line-strong); border-radius: var(--radius-pill); color: var(--white); text-decoration: none; font-size: 0.95rem;
   }
   .related a:hover { border-color: var(--cyan); color: var(--cyan); }
 
   .ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-  .way { background: var(--navy-card); border: 1px solid var(--line); border-radius: 8px; padding: 2rem 1.8rem; }
+  .way { background: var(--navy-card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 2rem 1.8rem; }
   .way h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; margin: 0.5rem 0 0.6rem; }
   .way p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.7; }
 

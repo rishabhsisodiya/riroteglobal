@@ -32,7 +32,7 @@ const seo = {
     display: grid; grid-template-rows: auto 1fr;
     background: var(--navy-card);
     border: 1px solid var(--line);
-    border-radius: 8px; overflow: hidden;
+    border-radius: var(--radius-card); overflow: hidden;
     transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
   .product-card:hover {
@@ -48,13 +48,12 @@ const seo = {
   .product-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
   .status-badge {
     display: inline-flex; align-items: center; gap: 0.45rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
     color: var(--accent-text);
     background: var(--accent-soft);
     border: 1px solid var(--accent-line);
-    padding: 0.25rem 0.7rem; border-radius: 3px;
-  }
+    padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); font-weight: 600; }
   .status-badge::before {
     content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-text);
   }
@@ -77,15 +76,15 @@ const seo = {
   }
   .product-go {
     margin-top: auto; padding-top: 0.4rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
     color: var(--accent-text); font-weight: 700;
   }
 
   /* ── COMING SOON CARD ── */
   .soon-card {
     border: 1px dashed var(--line-strong);
-    border-radius: 8px;
+    border-radius: var(--radius-card);
     padding: 2rem;
     display: flex; flex-direction: column; justify-content: center; gap: 1rem;
     background: linear-gradient(180deg, rgba(0,180,216,0.04), transparent);
@@ -102,7 +101,7 @@ const seo = {
 
   .approach-intro { max-width: 72ch; color: var(--text-soft); line-height: 1.8; margin-top: 2rem; }
   .approach { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-  .approach-item { background: var(--navy-card); border: 1px solid var(--line); border-radius: 8px; padding: 2rem 1.8rem; }
+  .approach-item { background: var(--navy-card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 2rem 1.8rem; }
   .approach-item h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; margin: 0.5rem 0 0.6rem; }
   .approach-item p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.7; }
 
