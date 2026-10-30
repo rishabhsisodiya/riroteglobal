@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { breadcrumbs, webPage } from '../lib/schema';
+
+const path = '/contact';
+const seo = {
+  title: 'Contact Rirote Global | Software & ERPNext Company, Jaipur',
+  path,
+  description: 'Tell Rirote Global what you want to build or fix: websites, business software, AI or ERPNext. A person reads every message and replies within 24 hours.',
+  schema: [webPage({ path, name: 'Contact' }), breadcrumbs(['Home', '/'], ['Contact', path])],
+};
+---
+<BaseLayout seo={seo} nav={{ current: 'contact' }}>
+<main id="main">
+  <section class="band dark" style="border-top:none;padding-top:clamp(28px,4vw,48px)">
+    <div class="wrap">
+      <Crumbs items={[['Home', '/'], ['Contact']]} />
+      <ContactPanel eyebrow="Get in Touch" title="Tell Us What Needs Solving." asH1 socials
+        lead="Describe your project or the problem you want solved." />
+    </div>
+  </section>
+</main>
+</BaseLayout>

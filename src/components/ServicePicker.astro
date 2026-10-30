@@ -1,0 +1,22 @@
+---
+// Services as a two-pane picker on desktop: names on the left, the active service's detail on the right
+// (hover or keyboard focus, see site.js). Every name is a real link and all text stays in the HTML.
+// Phones and no-JS visitors get a plain stacked list. Use on a dark band.
+import { SERVICES, serviceUrl } from '../data/services';
+---
+<div class="svcx" data-svc>
+  {SERVICES.map((s) => (
+    <div class="svcx-item">
+      <a class="svcx-name" href={serviceUrl(s.slug)}>
+        <h3>{s.name}</h3>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 1 22 13h-6v10H8V13H2z"/></svg>
+      </a>
+      <div class="svcx-panel">
+        <p class="svcx-sum">{s.summary}</p>
+        <p class="svcx-h">What's included</p>
+        <ul class="svcx-inc">{s.includes.slice(0, 4).map((x) => <li>{x.title}</li>)}</ul>
+        <a class="btn-primary" href={serviceUrl(s.slug)}>Explore this service →</a>
+      </div>
+    </div>
+  ))}
+</div>

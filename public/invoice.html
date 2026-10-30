@@ -437,9 +437,9 @@
       <div class="divider"></div>
       <div class="sidebar-section">
         <h3>Bill To</h3>
-        <div class="field"><label>Client Name</label><input id="clientName" type="text" placeholder="NimNim" oninput="updatePreview()"></div>
-        <div class="field"><label>Company</label><input id="clientCompany" type="text" placeholder="NimNim, Inc." oninput="updatePreview()"></div>
-        <div class="field"><label>Address</label><textarea id="clientAddress" rows="3" placeholder="141 Border St, Boston, MA 02128" oninput="updatePreview()"></textarea></div>
+        <div class="field"><label>Client Name</label><input id="clientName" type="text" placeholder="Client name" oninput="updatePreview()"></div>
+        <div class="field"><label>Company</label><input id="clientCompany" type="text" placeholder="Company name" oninput="updatePreview()"></div>
+        <div class="field"><label>Address</label><textarea id="clientAddress" rows="3" placeholder="Street, city, postal code" oninput="updatePreview()"></textarea></div>
         <div class="field"><label>Country</label><input id="clientCountry" type="text" placeholder="United States" oninput="updatePreview()"></div>
         <div class="field"><label>GSTIN / Tax ID (optional)</label><input id="clientGSTIN" type="text" oninput="updatePreview()"></div>
         <div class="field"><label>Email</label><input id="clientEmail" type="email" oninput="updatePreview()"></div>
@@ -763,8 +763,6 @@ function renderClientList() {
       </div>
     </div>
   `).join('');
-
-  // Pre-populate default NimNim if no clients yet
 }
 
 // =============================================
@@ -1111,18 +1109,6 @@ function loadFromStorage() {
   try { clients = JSON.parse(localStorage.getItem('rg_clients')) || []; } catch { clients = []; }
   try { invoices = JSON.parse(localStorage.getItem('rg_invoices')) || []; } catch { invoices = []; }
 
-  // Seed default client if none
-  if (!clients.length) {
-    clients.push({
-      name: 'NimNim',
-      company: 'NimNim, Inc.',
-      address: '141 Border St, Boston, MA 02128',
-      country: 'United States',
-      gstin: '',
-      email: '',
-    });
-    saveToStorage();
-  }
 }
 
 // =============================================

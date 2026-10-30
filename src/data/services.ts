@@ -36,7 +36,6 @@ export interface Service {
   intro: string;
   includes: Array<{ title: string; text: string }>;
   proof: ServiceProof[];
-  stack: string[];
   faq: FaqItem[];
   related: string[];
 }
@@ -58,18 +57,18 @@ export const ENGAGEMENTS: Array<{ title: string; text: string; href?: string }> 
   { title: 'Ready-Built Products', text: 'Software like ERPTick, set up and adapted to the way your team works.', href: '/products' },
 ];
 
-const PROJECTS = { href: '/projects', label: 'Read the case studies →' };
+const caseLink = (slug: string) => ({ href: `/projects/${slug}`, label: 'Read the case study →' });
 
 const UNIFIED_ERP: ServiceProof = {
   kicker: 'Case study · Enterprise ERP · India',
   title: 'One platform for 9 business entities',
-  text: 'An infrastructure group ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another. Delivered with TCB Infotech, we replaced both with one platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based dashboards on a parallel multi-site middleware with Redis caching.',
+  text: 'An infrastructure group ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another. Delivered with an agency partner, we replaced both with one platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based dashboards on a parallel multi-site middleware with Redis caching.',
   stats: [
     { value: '<500ms', label: 'Dashboard loads, down from 5s+' },
     { value: '2 → 1', label: 'Apps and servers merged' },
     { value: '11', label: 'Role-based dashboards' },
   ],
-  link: PROJECTS,
+  link: caseLink('unified-erp-service-platform'),
 };
 
 const NIMNIM: ServiceProof = {
@@ -81,35 +80,35 @@ const NIMNIM: ServiceProof = {
     { value: '50%', label: 'Faster API responses' },
     { value: '1', label: 'Hardened server replacing many' },
   ],
-  link: { href: 'https://www.getnimnim.com', label: 'Visit getnimnim.com →' },
+  link: caseLink('nimnim'),
 };
 
 const FOUNDRY: ServiceProof = {
   kicker: 'Case study · Manufacturing ERP · India',
   title: 'A foundry ERP that talks to ERPNext safely',
   text: 'A domain-specific ERP for a foundry, from sales order to dispatch across a 17-module map, with heat-number genealogy as the traceability key. It integrates with the client’s existing ERPNext only for finance and payroll, through a REST-only boundary with idempotent correlation-ID calls, retry and backoff queues, and a nightly reconciliation run for one-sided records.',
-  link: PROJECTS,
+  link: caseLink('foundry-operations-erp'),
 };
 
 const MULTI_SERVICE: ServiceProof = {
   kicker: 'Case study · Logistics & delivery',
   title: 'Food, parcels and rides on one platform',
   text: 'A unified platform for food delivery, parcel logistics and ride booking, built on microservices so each vertical scales on its own. We led the engineering team, drove product decisions and owned features from API design through production support.',
-  link: PROJECTS,
+  link: caseLink('multi-service-delivery-platform'),
 };
 
 const ECOMMERCE: ServiceProof = {
   kicker: 'Case study · E-commerce · India',
   title: 'A monolith-to-microservices plan for a high-traffic store',
   text: 'For a high-traffic Indian e-commerce platform, we designed the system architecture, planned the migration from a monolith to microservices, led the redesign and improved backend performance, working directly with business stakeholders.',
-  link: PROJECTS,
+  link: caseLink('high-traffic-ecommerce-platform'),
 };
 
 const STOP_GUESSING: ServiceProof = {
   kicker: 'Open source · MIT',
   title: 'stop-guessing: guardrails for AI coding agents',
   text: 'Our open-source agent skills stop a coding agent from inventing decisions nobody made, and from calling a job done when it isn’t. Decisions get written down first, and the work survives a new session or a new machine. It is the same discipline we bring to AI features in client products.',
-  link: { href: 'https://github.com/rishabhsisodiya/stop-guessing', label: 'View on GitHub →' },
+  link: { href: '/products/stop-guessing', label: 'About stop-guessing →' },
 };
 
 const ERPTICK: ServiceProof = {
@@ -138,7 +137,6 @@ export const SERVICES: Service[] = [
       { title: 'Launch and support', text: 'We put it live, watch it and fix issues afterwards, so the people who built it are the ones who keep it running.' },
     ],
     proof: [UNIFIED_ERP, NIMNIM, MULTI_SERVICE],
-    stack: ['Next.js', 'React', 'TypeScript', 'NestJS', 'Node.js', 'FastAPI', 'Prisma', 'PostgreSQL', 'MongoDB', 'Redis', 'Tailwind CSS', 'PWA'],
     faq: [
       { question: 'Can you take over a product another team built?', answer: 'Yes. We start by stabilising what is live: infrastructure, urgent bugs and security. Then we plan improvements or a revamp that keeps the product running for its users, as we did for NimNim.' },
       { question: 'Do you build MVPs or only large platforms?', answer: 'Both. We scope a first version around the one outcome the business needs, and design the data model and APIs so the product can grow without a rewrite.' },
@@ -164,7 +162,6 @@ export const SERVICES: Service[] = [
       { title: 'Cost and quality tracking', text: 'Reports on what each AI feature costs and how often it gets things right.' },
     ],
     proof: [STOP_GUESSING],
-    stack: ['LLM APIs', 'AI agents', 'Tool calling', 'Node.js', 'NestJS', 'FastAPI', 'PostgreSQL', 'Redis', 'TypeScript'],
     faq: [
       { question: 'Which AI models do you work with?', answer: 'We choose the model for the task, its cost and where your data is allowed to go. The integration is built so the model can be changed later without rewriting the feature.' },
       { question: 'How do you stop an AI feature from making things up?', answer: 'By narrowing what it is asked to do, grounding answers in your own data with sources shown, checking outputs before they reach users, and keeping a person in the loop for decisions that matter.' },
@@ -190,7 +187,6 @@ export const SERVICES: Service[] = [
       { title: 'Service and field work', text: 'Tickets, service deadlines, AMC contracts and engineer visits, linked to the customers, machines and stock already in your ERP.' },
     ],
     proof: [UNIFIED_ERP, FOUNDRY, ERPTICK],
-    stack: ['ERPNext v15', 'Frappe', 'Frappe Cloud', 'REST API', 'Webhooks', 'NestJS', 'Next.js', 'PostgreSQL', 'MariaDB', 'Redis'],
     faq: [
       { question: 'Do you write directly to the ERPNext database?', answer: 'No. Writes go through ERPNext’s REST API so its validation and permission rules apply. We read from the database only where read-only access is agreed, for example for nightly master-data pulls.' },
       { question: 'Do you work with Frappe Cloud and self-hosted ERPNext?', answer: 'Yes. Our unified ERP platform for an infrastructure group runs across 5 ERPNext v15 sites on Frappe Cloud, and the same approach works for self-hosted installs.' },
@@ -216,7 +212,6 @@ export const SERVICES: Service[] = [
       { title: 'Monitoring and support', text: 'Uptime checks, logs and alerts, plus support when something breaks.' },
     ],
     proof: [NIMNIM, UNIFIED_ERP],
-    stack: ['AWS', 'EC2', 'DigitalOcean', 'Docker', 'CI/CD', 'Nginx', 'Cloudflare', 'Redis', 'PostgreSQL', 'MongoDB'],
     faq: [
       { question: 'Can you reduce our cloud bill without downtime?', answer: 'Usually, yes. For NimNim we consolidated several EC2 instances onto one hardened server and halved the AWS bill while customers kept ordering.' },
       { question: 'Do you only work on AWS?', answer: 'No. We work on AWS and DigitalOcean, and the same practices apply to other providers.' },
@@ -242,7 +237,6 @@ export const SERVICES: Service[] = [
       { title: 'ERP planning', text: 'Deciding what belongs inside ERPNext and what should be a connected app, before custom work starts.' },
     ],
     proof: [ECOMMERCE, MULTI_SERVICE, FOUNDRY],
-    stack: ['System design', 'Microservices', 'Node.js', 'NestJS', 'FastAPI', 'PostgreSQL', 'Redis', 'ERPNext', 'DigitalOcean', 'AWS'],
     faq: [
       { question: 'Do you only advise, or do you also build?', answer: 'Both. We can review and plan on their own, but most clients ask us to stay and lead or build the work, so the plan and the code stay in step.' },
       { question: 'Can you lead our in-house team?', answer: 'Yes. A senior engineer can lead your developers day to day: setting technical direction, reviewing code and owning releases alongside your product team.' },
@@ -268,7 +262,6 @@ export const SERVICES: Service[] = [
       { title: 'Decision views', text: 'Progress against targets, sales funnels that show where deals get stuck, and a click through to the deal or ticket behind any number.' },
     ],
     proof: [UNIFIED_ERP, ERPTICK],
-    stack: ['PostgreSQL', 'Redshift', 'MariaDB', 'ETL', 'Redis', 'Node.js', 'NestJS', 'Next.js', 'ERPNext'],
     faq: [
       { question: 'Can you report across several ERPNext sites?', answer: 'Yes. Our multi-site middleware queries up to 5 ERPNext sites in parallel and caches each widget, bringing dashboard loads under 500ms from more than 5 seconds.' },
       { question: 'Do we need a data warehouse?', answer: 'Not always. For a handful of sources, well-indexed PostgreSQL and a reporting API are often enough. A warehouse like Redshift earns its place when data volume or the number of sources grows.' },
@@ -301,7 +294,6 @@ export const SERVICES: Service[] = [
       },
       { ...UNIFIED_ERP, kicker: 'Case study · Delivered with an agency partner' },
     ],
-    stack: ['React', 'Next.js', 'Node.js', 'TypeScript', 'NestJS', 'FastAPI', 'ERPNext', 'AWS', 'Docker', 'LLM APIs'],
     faq: [
       { question: 'How quickly can an engineer start?', answer: 'Usually within days. Tell us the role, the stack and the hours you need, and we will propose someone who has already worked on similar projects.' },
       { question: 'Can agencies use your engineers under their own brand?', answer: 'Yes. We supply engineers white-label to digital agencies who need to scale delivery without scaling headcount.' },

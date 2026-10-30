@@ -1,0 +1,71 @@
+---
+// Page for a product that has no hand-built page of its own, built from src/data/products.ts.
+// A product at an earlier stage simply has less to show: no section is filled with invented content.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactPanel from '../../components/ContactPanel.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { breadcrumbs, webPage } from '../../lib/schema';
+import { serviceBySlug, serviceUrl, type Service } from '../../data/services';
+import { PRODUCTS, type Product } from '../../data/products';
+
+export function getStaticPaths() {
+  return PRODUCTS.filter((p) => p.generatedPage).map((p) => ({ params: { slug: p.id }, props: { product: p } }));
+}
+
+const { product: p } = Astro.props as { product: Product };
+const related = (p.services ?? []).map(serviceBySlug).filter((s): s is Service => Boolean(s));
+const seo = {
+  title: p.metaTitle ?? `${p.name} | Rirote Global`,
+  path: p.path,
+  description: p.description,
+  schema: [
+    webPage({ path: p.path, name: p.name }),
+    breadcrumbs(['Home', '/'], ['Products', '/products'], [p.name, p.path]),
+  ],
+};
+const heading = p.heading ?? [p.name, ''];
+const badge = p.status === 'Open source' ? 'oss' : p.status === 'In development' ? 'dev' : 'early';
+const inDev = p.status === 'In development';
+---
+<BaseLayout seo={seo} nav={{ current: 'products' }}>
+<main id="main">
+  <section class="page-hero dark">
+    <div class="hero-content">
+      <Crumbs items={[['Home', '/'], ['Products', '/products'], [p.short]]} />
+      <p style="margin:10px 0 6px"><span class:list={['badge', badge]}>{p.status}</span></p>
+      <h1 class="page-title" style="font-size:clamp(2.4rem,5.4vw,4.6rem);color:#fff">{heading[0]} <span style="color:var(--cyan)">{heading[1]}</span></h1>
+      <p class="page-sub" style="color:var(--on-dark-2)">{p.intro}</p>
+      <div class="hero-actions">
+        {p.link
+          ? <a class="btn-primary" href={p.link.href} target="_blank" rel="noopener">{p.link.label}</a>
+          : <a class="btn-primary" href="#access">{p.cta}</a>}
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="does-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="does-title">What It Does</h2></div>
+      <ul class="pts" style="max-width:62ch">{p.points.map((x) => <li style="font-size:1.05rem">{x}</li>)}</ul>
+      {p.note && <p class="note2"><b>Status.</b> {p.note}</p>}
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="band" aria-labelledby="related-title">
+      <div class="wrap">
+        <div class="sec-h" data-reveal><h2 class="section-title" id="related-title">Related Services</h2></div>
+        <div class="rel">{related.map((s) => <a href={serviceUrl(s.slug)}><b>{s.name}</b><span>{s.summary}</span></a>)}</div>
+      </div>
+    </section>
+  )}
+
+  <section class="band dark" id="access" aria-labelledby="access-title">
+    <div class="wrap">
+      <ContactPanel eyebrow={inDev ? 'Get Access' : 'Talk to Us'} title={inDev ? 'Tell us you are interested.' : 'Want this in your product?'} titleId="access-title"
+        lead={inDev ? 'We will write to you when early access opens.' : 'Tell us about your product and where AI could help.'}
+        service={p.formService} message={inDev ? `I would like to hear more about ${p.name}.` : 'I would like to talk about AI in our product.'} />
+    </div>
+  </section>
+</main>
+</BaseLayout>

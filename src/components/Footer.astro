@@ -1,11 +1,48 @@
 ---
-// Sub-page footer. Pass children to replace the default copyright line.
+// Site footer. Pass children to replace the default copyright line.
 import SocialLinks from './SocialLinks.astro';
+import { SITE } from '../data/site';
+import { SERVICES, serviceUrl } from '../data/services';
+import { PRODUCTS } from '../data/products';
+
 const year = new Date().getFullYear();
+const products = PRODUCTS.filter((p) => !p.path.startsWith('http'));
 ---
 <footer>
-  <a href="/" class="footer-brand" aria-label="Rirote Global, home"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote Global" loading="lazy"></a>
-  <div class="footer-links"><a href="/services">Services</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/privacy-policy#analytics-cookies" data-consent-open>Cookie settings</a></div>
-  <SocialLinks />
-  <span class="footer-copy"><slot>&copy; {year} Rirote Global. All rights reserved.</slot></span>
+  <div class="footer-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="/" class="footer-brand" aria-label="Rirote Global, home"><img src="/assets/brand/logo-dark.svg" width="198" height="64" alt="Rirote Global" loading="lazy"></a>
+        <p>Software, AI and ERPNext work from {SITE.legal.city}, India, for businesses around the world.</p>
+        <a class="foot-mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </div>
+      <nav class="foot-col" aria-label="Services">
+        <p class="foot-h"><a href="/services">Services</a></p>
+        {SERVICES.map((s) => <a href={serviceUrl(s.slug)}>{s.name}</a>)}
+      </nav>
+      <nav class="foot-col" aria-label="Products">
+        <p class="foot-h"><a href="/products">Products</a></p>
+        {products.map((p) => <a href={p.path}>{p.short}</a>)}
+      </nav>
+      <nav class="foot-col" aria-label="Company">
+        <p class="foot-h">Company</p>
+        <a href="/projects">Work</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
+      <div class="foot-col">
+        <p class="foot-h">Follow</p>
+        <SocialLinks />
+      </div>
+    </div>
+    <div class="foot-bar">
+      <span class="footer-copy"><slot>&copy; {year} Rirote Global. All rights reserved.</slot></span>
+      <span class="foot-legal">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/privacy-policy#analytics-cookies" data-consent-open>Cookie settings</a>
+        <a class="foot-up" href="#main">Back to top <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 1 22 13h-6v10H8V13H2z"/></svg></a>
+      </span>
+    </div>
+  </div>
+  <div class="foot-wordbox" aria-hidden="true"><div class="foot-word">RI<span>RO</span>TE</div></div>
 </footer>

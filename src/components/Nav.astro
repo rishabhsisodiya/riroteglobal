@@ -1,25 +1,24 @@
 ---
-// Sub-page navigation bar. The homepage has its own nav with a different design.
+// Site navigation. /projects keeps its address and is labelled "Work".
 export interface Props {
   /** Highlights the matching link. */
-  current?: 'services' | 'projects' | 'products' | 'about';
-  /** The call-to-action button; defaults to the contact form. */
+  current?: 'services' | 'projects' | 'products' | 'about' | 'contact';
+  /** Optional call-to-action button. */
   cta?: { href: string; label: string };
 }
 
-const { current, cta = { href: '/#contact', label: 'Get in Touch' } } = Astro.props;
+const { current, cta } = Astro.props;
 const links = [
-  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Work', key: 'projects' },
   { href: '/services', label: 'Services', key: 'services' },
-  { href: '/projects', label: 'Projects', key: 'projects' },
   { href: '/products', label: 'Products', key: 'products' },
   { href: '/about', label: 'About', key: 'about' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact', key: 'contact' },
 ];
 ---
 <nav id="navbar" aria-label="Main">
   <a href="/" class="nav-logo-link" aria-label="Rirote Global, home">
-    <img class="nav-logo-mark" src="/assets/brand/mark.svg" width="36" height="36" alt="">
+    <img class="nav-logo-mark" src="/assets/brand/mark.svg" width="32" height="32" alt="">
     <span class="nav-logo-text">
       <span class="nav-logo-brand">RI<span>RO</span>TE</span>
       <span class="nav-logo-sub">Global</span>
@@ -27,14 +26,9 @@ const links = [
   </a>
   <ul class="nav-links" id="navLinks">
     {links.map((l) => (
-      <li><a href={l.href} aria-current={l.key && l.key === current ? 'page' : undefined}>{l.label}</a></li>
+      <li><a href={l.href} aria-current={l.key === current ? 'page' : undefined}>{l.label}</a></li>
     ))}
-    <li class="mobile-only"><a href={cta.href} class="nav-cta">{cta.label}</a></li>
+    {cta && <li><a href={cta.href} class="btn-primary nav-cta">{cta.label}</a></li>}
   </ul>
-  <div class="nav-cta-wrap">
-    <a href={cta.href} class="nav-cta">{cta.label}</a>
-  </div>
-  <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="btn-outline menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
 </nav>

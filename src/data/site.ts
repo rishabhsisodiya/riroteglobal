@@ -50,3 +50,12 @@ export const COMPANY_STATS = {
 
 /** Absolute URL on the live domain, e.g. absoluteUrl('/products') → https://riroteglobal.com/products */
 export const absoluteUrl = (path: string): string => new URL(path, SITE.url).href;
+
+/** Link to the contact page with the form pre-filled (read by site.js; the page's canonical stays /contact). */
+export const contactUrl = (input: { service?: string; message?: string } = {}): string => {
+  const q = new URLSearchParams();
+  if (input.service) q.set('service', input.service);
+  if (input.message) q.set('message', input.message);
+  const qs = q.toString();
+  return qs ? `/contact?${qs}` : '/contact';
+};

@@ -1,7 +1,7 @@
 ---
 // Cookie consent for Google Analytics. Shown until the visitor chooses; any element with
 // data-consent-open (the footer "Cookie settings" link) reopens it. Styles use literal brand
-// colours because the homepage doesn't load site.css.
+// colours so the banner stays self-contained.
 import { GA_ID } from '../data/site';
 ---
 {GA_ID && (
@@ -20,23 +20,23 @@ import { GA_ID } from '../data/site';
       .consent {
         position: fixed; left: 16px; bottom: 16px; z-index: 10000;
         width: min(420px, calc(100vw - 32px));
-        background: #0f2340; color: #f0f4ff;
-        border: 1px solid rgba(0,180,216,0.3); border-radius: 16px;
+        background: #0E1B2E; color: #f0f4ff;
+        border: 1px solid rgba(39,198,230,0.5); border-radius: 0;
         box-shadow: 0 12px 32px rgba(0,0,0,0.45);
-        padding: 1.1rem 1.2rem; font-family: 'DM Sans', sans-serif;
+        padding: 1.1rem 1.2rem; font-family: 'Inter', system-ui, sans-serif;
       }
       .consent[hidden] { display: none; }
       .consent-text { font-size: 0.95rem; line-height: 1.6; color: rgba(240,244,255,0.85); margin: 0; }
-      .consent-text a { color: #48cae4; text-underline-offset: 3px; }
+      .consent-text a { color: #27C6E6; text-underline-offset: 3px; }
       .consent-actions { display: flex; gap: 0.75rem; margin-top: 0.9rem; }
       /* Accept and Decline look the same on purpose: refusing must be as easy as agreeing. */
       .consent-btn {
         flex: 1; min-height: 44px; padding: 0 1rem; cursor: pointer;
-        font: 600 0.95rem 'DM Sans', sans-serif; color: #f0f4ff;
-        background: transparent; border: 1px solid rgba(0,180,216,0.55); border-radius: 999px;
+        font: 600 0.95rem 'Inter', system-ui, sans-serif; color: #f0f4ff;
+        background: transparent; border: 1px solid rgba(0,180,216,0.55); border-radius: 0;
       }
-      .consent-btn:hover { border-color: #00b4d8; color: #48cae4; }
-      .consent-btn:focus-visible { outline: 2px solid #48cae4; outline-offset: 2px; }
+      .consent-btn:hover { border-color: #27C6E6; color: #27C6E6; }
+      .consent-btn:focus-visible { outline: 2px solid #27C6E6; outline-offset: 2px; }
     </style>
     <script is:inline>
       (function () {

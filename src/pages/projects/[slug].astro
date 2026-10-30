@@ -1,0 +1,84 @@
+---
+// One case study, built from src/data/cases.ts.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { breadcrumbs, webPage } from '../../lib/schema';
+import { contactUrl } from '../../data/site';
+import { serviceBySlug, serviceUrl, type Service } from '../../data/services';
+import { CASES, PROJECTS_PATH, caseUrl, type CaseStudy } from '../../data/cases';
+
+export function getStaticPaths() {
+  return CASES.map((c) => ({ params: { slug: c.slug }, props: { study: c } }));
+}
+
+const { study: c } = Astro.props as { study: CaseStudy };
+const path = caseUrl(c.slug);
+const i = CASES.indexOf(c);
+const prev = CASES[i - 1];
+const next = CASES[i + 1];
+const services = c.services.map(serviceBySlug).filter((s): s is Service => Boolean(s));
+
+const seo = {
+  title: c.metaTitle,
+  path,
+  description: c.description,
+  schema: [
+    webPage({ path, name: c.name }),
+    breadcrumbs(['Home', '/'], ['Projects', PROJECTS_PATH], [c.name, path]),
+  ],
+};
+---
+<BaseLayout seo={seo} nav={{ current: 'projects' }}>
+<main id="main">
+  <section class="page-hero">
+    <div class="hero-content">
+      <Crumbs items={[['Home', '/'], ['Projects', PROJECTS_PATH], [c.name]]} />
+      <p class="eyebrow">{c.sector}{c.place && ` · ${c.place}`}</p>
+      <h1 class="page-title">{c.title}</h1>
+    </div>
+  </section>
+
+  <div class="dkband dark">
+    <div class="wrap bigstats">
+      {c.results.map(([value, label]) => <div><b data-count>{value}</b><span>{label}</span></div>)}
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cols2">
+      <div><h2>The problem</h2><p>{c.problem}</p></div>
+      <div><h2>What we built</h2><p>{c.built}</p></div>
+    </div>
+
+    <div class="detail">
+      <div>
+        <h2 class="sub-h">What we delivered</h2>
+        <ul class="pts">{c.achievements.map((a) => <li>{a}</li>)}</ul>
+      </div>
+      {c.responsibilities && (
+        <div>
+          <h2 class="sub-h">Our responsibilities</h2>
+          <ul class="pts">{c.responsibilities.map((r) => <li>{r}</li>)}</ul>
+        </div>
+      )}
+    </div>
+
+    <h2 class="sub-h" style="margin-top:20px">Tech stack</h2>
+    <ul class="stackrow">{c.stack.map((t) => <li>{t}</li>)}</ul>
+    {c.via && <p class="meta2">{c.via}</p>}
+    {c.website && <p class="meta2"><a href={c.website.href} target="_blank" rel="noopener">{c.website.label} ↗</a></p>}
+
+    <h2 class="sub-h" style="margin-top:32px">Related services</h2>
+    <div class="rel">{services.map((s) => <a href={serviceUrl(s.slug)}><b>{s.name}</b><span>{s.summary}</span></a>)}</div>
+
+    <div class="docfoot" style="margin-top:36px">
+      <p>Same kind of problem?</p>
+      <a class="btn-primary" href={contactUrl({ message: `Similar to your case study "${c.title}": ` })}>Tell Us About Yours</a>
+    </div>
+    <div class="flip">
+      {prev ? <a href={caseUrl(prev.slug)}>← {prev.title}</a> : <span></span>}
+      {next && <a href={caseUrl(next.slug)}>{next.title} →</a>}
+    </div>
+  </div>
+</main>
+</BaseLayout>

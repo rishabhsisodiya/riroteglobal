@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Cta from '../components/Cta.astro';
 import { aboutPage, breadcrumbs } from '../lib/schema';
 import { COMPANY_STATS, SITE } from '../data/site';
 import { ENGAGEMENTS, SERVICES_PATH } from '../data/services';
+import { caseUrl } from '../data/cases';
 
 const path = '/about';
 const seo = {
@@ -47,177 +50,127 @@ const principles = [
   { title: 'Confidential by Default', text: 'We work under NDA when asked, and we never name a client without permission.' },
 ];
 
+// What experience adds, each tied to a real (anonymised) case study.
+const experience = [
+  { title: 'Scaling', text: 'Knowing what breaks at ten times the users, before it does.', slug: 'high-traffic-ecommerce-platform', proof: 'A high-traffic store: a plan to move from one big application to microservices' },
+  { title: 'System design', text: 'Data models, boundaries and integrations that still make sense in two years.', slug: 'foundry-operations-erp', proof: 'A foundry ERP joined to ERPNext through a safe, retry-friendly boundary' },
+  { title: 'Performance', text: 'Slow queries, caching and parallel work, found and fixed.', slug: 'unified-erp-service-platform', proof: 'Dashboards from 5s+ down to under 500ms' },
+  { title: 'Security', text: 'Logins, permissions and keys done properly from day one, not patched later.', slug: 'nimnim', proof: 'The API of a live platform, secured while customers kept ordering' },
+  { title: 'Cost', text: 'Hosting sized to what you really need, not to what was easiest to set up.', slug: 'nimnim', proof: 'A 50% lower AWS bill' },
+  { title: 'Ownership', text: 'People who have led teams and owned features all the way to production support.', slug: 'multi-service-delivery-platform', proof: 'A platform for food, parcels and rides, led from API design to support' },
+];
 ---
 <BaseLayout seo={seo} nav={{ current: 'about' }}>
-<Fragment slot="head">
-<style is:inline>
-  .name-grid, .card-grid { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
-  .name-grid { grid-template-columns: repeat(3, 1fr); }
-  .card-grid { grid-template-columns: repeat(3, 1fr); }
-  .card-grid.four { grid-template-columns: repeat(4, 1fr); }
-
-  .name-item { border-top: 1px solid var(--line-strong); padding-top: 1.5rem; }
-  .name-letters {
-    font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 0.9; letter-spacing: 0.06em;
-    color: var(--white);
-  }
-  .name-item:nth-child(2) .name-letters { color: var(--cyan); }
-  .name-word {
-    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--accent-text); margin: 0.6rem 0 0.9rem; font-weight: 600; }
-  .name-item p, .about-card p { color: var(--text-soft); line-height: 1.75; }
-
-  .about-card {
-    display: flex; flex-direction: column; gap: 0.9rem;
-    background: var(--navy-card); border: 1px solid var(--line); border-radius: var(--radius-card);
-    padding: 1.8rem 1.8rem 2rem;
-    transition: border-color 0.3s;
-  }
-  .about-card:hover { border-color: var(--line-strong); }
-  .about-card h3 {
-    font-family: 'DM Sans', sans-serif; font-weight: 700;
-    font-size: 1.3rem; letter-spacing: -0.01em; line-height: 1.05;
-  }
-  .about-card .card-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin-top: auto; padding-top: 0.4rem; }
-  .about-card .card-links a, .about-card .card-more {
-    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent-text); text-decoration: none;
-  }
-  .about-card .card-links a:hover, .about-card .card-more:hover { color: var(--white); }
-  .card-index {
-    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
-
-  .team-text { max-width: 720px; color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin: 1rem 0 2.5rem; }
-  .metrics.two { grid-template-columns: repeat(2, 1fr); }
-  .company-line {
-    margin-top: 1.6rem; position: relative;
-    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--muted); font-weight: 500; }
-
-  @media (max-width: 1100px) {
-    .card-grid.four { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 900px) {
-    .name-grid, .card-grid, .card-grid.four { grid-template-columns: 1fr; }
-    .name-letters { font-size: 3.2rem; }
-  }
-
-  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
-  @media (max-width: 900px) {
-    .company-line, .name-word, .card-index, .about-card .card-links a, .about-card .card-more { font-size: 0.75rem; }
-    .about-card .card-links a, .about-card .card-more { display: inline-flex; align-items: center; min-height: 44px; }
-  }
-</style>
-</Fragment>
-
 <main id="main">
   <section class="page-hero">
-    <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1">About Rirote Global</p>
-      <h1 class="page-title fade-up d2">A Small Software Company<br><span>in Jaipur, India.</span></h1>
-      <p class="page-sub fade-up d3">Rirote Global builds websites, business software, AI features and ERPNext systems for companies in India, the United States and the Middle East. We also build software products of our own.</p>
-      <div class="hero-actions fade-up d4">
-        <a href="/#contact" class="btn-primary">Talk to Us</a>
+      <Crumbs items={[['Home', '/'], ['About']]} />
+      <p class="eyebrow">About Rirote Global</p>
+      <h1 class="page-title">Engineers Who Have <span>Done This at Scale.</span></h1>
+      <p class="page-sub">Rirote Global is a small software company in Jaipur, India. We build websites, business software, AI features and ERPNext systems for companies in India, the United States and the Middle East, and we build software products of our own.</p>
+      <div class="hero-actions">
+        <a href="/contact" class="btn-primary">Talk to Us</a>
         <a href="/projects" class="btn-outline">See Our Work</a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="name-title">
-    <div class="section-header">
-      <h2 class="section-title" id="name-title">The Name Is the Promise</h2>
-      <div class="section-line"></div>
-    </div>
-    <p class="section-sub">Rirote comes from three words we hold every project to.</p>
-    <div class="name-grid">
-      {name.map((n) => (
-        <div class="name-item">
-          <div class="name-letters" aria-hidden="true">{n.letters}</div>
-          <h3 class="name-word">{n.word}</h3>
-          <p>{n.text}</p>
-        </div>
-      ))}
+  <section class="band">
+    <div class="wrap about">
+      <div data-reveal>
+        <h2 class="h2s">Not an agency that hands your project to AI.</h2>
+        <p>Our engineers have worked at multinational companies and built applications for large clients around the world. We have solved the problems that only appear when software meets real users, real data and real deadlines.</p>
+        <p>We understand what you need, plan the solution from that experience, and then deliver it. The people who plan the work are the people who build and run it.</p>
+      </div>
+      <div class="stats">
+        <div><b data-count>{COMPANY_STATS.projects.value}</b><span>{COMPANY_STATS.projects.label}</span></div>
+        <div><b data-count>{COMPANY_STATS.industries.value}</b><span>{COMPANY_STATS.industries.label}</span></div>
+      </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="do-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="do-title">What We Do</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="card-grid">
-      {pillars.map((p) => (
-        <article class="about-card">
-          <span class="kicker">{p.kicker}</span>
-          <h3>{p.title}</h3>
-          <p>{p.text}</p>
-          <div class="card-links">
-            {p.links.map((l) => <a href={l.href}>{l.label} →</a>)}
-          </div>
-        </article>
-      ))}
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-h" data-reveal>
+        <h2 class="section-title">Anyone can build an app with AI now. Few can make it last.</h2>
+        <p class="section-sub">AI has made the first version quick and cheap, and we use it too. But a working demo and a system your business can depend on are different things. The gap between them is experience.</p>
+      </div>
+      <div class="incl three">
+        {experience.map((x) => (
+          <a class="inc" href={caseUrl(x.slug)} data-reveal><h3>{x.title}</h3><p>{x.text}</p><span class="proof2">{x.proof} →</span></a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="how-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="how-title">How We Work</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="card-grid four">
-      {principles.map((p, i) => (
-        <article class="about-card">
-          <span class="card-index">0{i + 1}</span>
-          <h3>{p.title}</h3>
-          <p>{p.text}</p>
-        </article>
-      ))}
+  <section class="band dark">
+    <div class="wrap">
+      <h2 class="h-lg" data-reveal>How we use AI</h2>
+      <p class="lead" style="max-width:62ch" data-reveal>AI helps us write code faster. It does not decide what to build, how it should scale or what could go wrong. Engineers who answer for the result make those decisions. To keep AI honest we released stop-guessing, open-source guardrails for AI coding agents.</p>
+      <div class="cta-row"><a class="btn-outline" href="/products/stop-guessing">About stop-guessing</a><a class="btn-outline" href="/services/ai-integration">AI in your product</a></div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="ways-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="ways-title">Ways to Work With Us</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="card-grid">
-      {ENGAGEMENTS.map((e) => (
-        <article class="about-card">
-          <h3>{e.title}</h3>
-          <p>{e.text}</p>
-          {e.href && <a class="card-more" href={e.href}>Learn more →</a>}
-        </article>
-      ))}
+  <section class="band" aria-labelledby="name-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal>
+        <h2 class="section-title" id="name-title">The Name Is the Promise</h2>
+        <p class="section-sub">Rirote comes from three words we hold every project to.</p>
+      </div>
+      <div class="roles">
+        {name.map((n) => <div class="role" data-reveal><span class="kicker" aria-hidden="true">{n.letters}</span><h3>{n.word}</h3><p>{n.text}</p></div>)}
+      </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="team-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="team-title">A Small Team, Close to the Work</h2>
-      <div class="section-line"></div>
+  <section class="band" aria-labelledby="do-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="do-title">What We Do</h2></div>
+      <div class="roles">
+        {pillars.map((p) => (
+          <article class="role" data-reveal>
+            <span class="kicker">{p.kicker}</span><h3>{p.title}</h3><p>{p.text}</p>
+            <p style="margin-top:10px">{p.links.map((l) => <a href={l.href} class="more-link" style="margin-right:16px">{l.label} →</a>)}</p>
+          </article>
+        ))}
+      </div>
     </div>
-    <p class="team-text">We are a team of up to ten people, extended with vetted engineers when a project needs more hands. Staying small means you work directly with the people designing and building your software.</p>
   </section>
 
-  <div class="metrics two">
-    <div class="metric-item">
-      <div class="metric-value">{COMPANY_STATS.projects.value}</div>
-      <div class="metric-label">{COMPANY_STATS.projects.label}</div>
+  <section class="band" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="how-title">How We Work</h2></div>
+      <div class="steps">{principles.map((p) => <div class="step" data-reveal><h3>{p.title}</h3><p>{p.text}</p></div>)}</div>
     </div>
-    <div class="metric-item">
-      <div class="metric-value">{COMPANY_STATS.industries.value}</div>
-      <div class="metric-label">{COMPANY_STATS.industries.label}</div>
-    </div>
-  </div>
-
-  <section class="cta-section">
-    <div class="cta-glow"></div>
-    <p class="cta-eyebrow">Let's Talk</p>
-    <h2 class="cta-title">Have Something to Build?</h2>
-    <p class="cta-body">Tell us what you're working on. We reply within 24 hours.</p>
-    <div class="cta-actions">
-      <a href="/#contact" class="btn-primary">Start a Conversation</a>
-      <a href={`mailto:${SITE.email}`} class="btn-outline">Email Us</a>
-    </div>
-    <p class="company-line">{SITE.legal.name} · {SITE.legal.city}, {SITE.legal.state}, {SITE.legal.country}</p>
   </section>
+
+  <section class="band" aria-labelledby="ways-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="ways-title">Ways to Work With Us</h2></div>
+      <div class="roles">
+        {ENGAGEMENTS.map((e) => (
+          <article class="role" data-reveal>
+            <h3>{e.title}</h3><p>{e.text}</p>
+            {e.href && <p style="margin-top:8px"><a href={e.href} class="more-link">Learn more →</a></p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="team-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal>
+        <h2 class="section-title" id="team-title">A Small Team, Close to the Work</h2>
+        <p class="section-sub">We are a team of up to ten people, extended with vetted engineers when a project needs more hands. Staying small means you work directly with the people designing and building your software.</p>
+      </div>
+      <p class="nda-note">{SITE.legal.name} · {SITE.legal.city}, {SITE.legal.state}, {SITE.legal.country}</p>
+    </div>
+  </section>
+
+  <Cta eyebrow="Let's Talk" title="Have Something to Build?" body="Tell us what you're working on. We reply within 24 hours.">
+    <a href="/contact" class="btn-primary">Start a Conversation</a>
+    <a href={`mailto:${SITE.email}`} class="btn-outline">Email Us</a>
+  </Cta>
 </main>
 </BaseLayout>

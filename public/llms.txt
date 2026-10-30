@@ -7,6 +7,7 @@
 - [Home](https://riroteglobal.com/): services, case studies and contact form
 - [About](https://riroteglobal.com/about): who we are, how we work and ways to work with us
 - [Projects](https://riroteglobal.com/projects): case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce
+- [Contact](https://riroteglobal.com/contact): enquiry form and email
 
 ## Services
 
@@ -22,6 +23,8 @@
 ## Products
 
 - [ERPTick Service Desk](https://riroteglobal.com/products/erptick): field service desk for equipment makers on ERPNext: tickets, SLAs, field visits, AMC contracts, quotations and a customer portal (early access)
+- [Roomcraftr](https://riroteglobal.com/products/roomcraftr): quotes, orders and dealer commissions for curtain and blind shops (in development)
+- [stop-guessing](https://riroteglobal.com/products/stop-guessing): open-source guardrails for AI coding agents (MIT)
 
 ## Optional
 

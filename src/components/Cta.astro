@@ -1,0 +1,13 @@
+---
+// Closing call to action on a dark band.
+export interface Props { eyebrow: string; title: string; body: string; }
+const { eyebrow, title, body } = Astro.props;
+---
+<section class="band dark cta-band">
+  <div class="wrap">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="h-lg">{title}</h2>
+    <p class="lead">{body}</p>
+    <div class="cta-row"><slot /></div>
+  </div>
+</section>
