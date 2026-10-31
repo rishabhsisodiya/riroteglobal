@@ -9,6 +9,7 @@
   if (nav && toggle) {
     var setOpen = function (open) {
       nav.classList.toggle('menu-open', open);
+      document.documentElement.classList.toggle('menu-lock', open);
       toggle.setAttribute('aria-expanded', String(open));
     };
     toggle.addEventListener('click', function () { setOpen(!nav.classList.contains('menu-open')); });
@@ -33,6 +34,40 @@
       el.classList.remove('counting');
       el.removeAttribute('data-show');
     })(start);
+  }
+
+  // ── Headings rise word by word. The words stay in the HTML; this only wraps them for animation. ──
+  function splitWords(el) {
+    var i = 0;
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 1) { if (n.tagName !== 'BR') walk(n); return; }
+        if (n.nodeType !== 3 || !n.nodeValue.trim()) return;
+        var frag = document.createDocumentFragment();
+        n.nodeValue.split(/( +|\n+)/).forEach(function (part) {
+          if (!part.trim()) { if (part) frag.appendChild(document.createTextNode(' ')); return; }
+          var w = document.createElement('span'); w.className = 'w';
+          var wi = document.createElement('span'); wi.className = 'wi'; wi.style.setProperty('--i', i++);
+          wi.textContent = part; w.appendChild(wi); frag.appendChild(w);
+        });
+        node.replaceChild(frag, n);
+      });
+    })(el);
+    el.classList.add('split');
+  }
+  if (!reduced && 'IntersectionObserver' in window) {
+    $$('.hero0 h1, .page-title').forEach(function (el) {
+      splitWords(el);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add('rise'); }); });
+    });
+    var titleObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('rise');
+        titleObs.unobserve(en.target);
+      });
+    }, { threshold: 0.3 });
+    $$('.section-title, .h-lg, .talk-title, .h2s').forEach(function (el) { splitWords(el); titleObs.observe(el); });
   }
 
   // ── Reveal on scroll ──
@@ -112,6 +147,7 @@
   if (rail) {
     var track = rail.querySelector('.track'), climber = rail.querySelector('.climber'), fill = rail.querySelector('.fill');
     var pbar = document.querySelector('.pbar'), bar = pbar && pbar.querySelector('i');
+    var fab = document.querySelector('.fab');
     var stops = $$('.stop', rail);
     var sections = stops.map(function (s) { return document.getElementById(s.getAttribute('data-id')); });
     var lastStop = stops[stops.length - 1], lastSection = sections[sections.length - 1];
@@ -151,6 +187,7 @@
       climber.style.transform = 'translateY(' + ((1 - p) * th - 11) + 'px)';
       fill.style.transform = 'scaleY(' + p + ')';
       if (bar) bar.style.transform = 'scaleX(' + p + ')';
+      if (fab) fab.classList.toggle('show', window.scrollY > 240 && p < 0.999);
       // The lit stop is the last one the arrow has reached.
       var reached = Math.floor(p * (stops.length - 1) + 0.001);
       stops.forEach(function (st, j) { st.classList.toggle('on', j === reached); });
