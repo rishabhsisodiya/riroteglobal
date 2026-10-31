@@ -8,13 +8,13 @@ import { COMPANY_STATS } from '../data/site';
 import { CASES, PROBLEMS } from '../data/cases';
 
 const seo = {
-  title: 'ERPNext, SaaS & E-commerce Case Studies | Rirote Global',
+  title: 'ERP, SaaS & E-commerce Case Studies | Rirote Global',
   path: '/projects',
-  description: 'Case studies in enterprise ERPNext, manufacturing ERP, SaaS, logistics and e-commerce: what we built, the stack, and the measured results.',
+  description: 'Case studies in enterprise ERP, manufacturing ERP, SaaS, logistics and e-commerce: what we built, the stack, and the measured results.',
   ogDescription: 'Case studies in ERP, manufacturing, e-commerce, logistics and SaaS, with the results each business saw.',
   schema: [
     webPage({ path: '/projects', name: 'Case Studies', type: 'CollectionPage' }),
-    breadcrumbs(['Home', '/'], ['Projects', '/projects']),
+    breadcrumbs(['Home', '/'], ['Work', '/projects']),
   ],
 };
 const usedProblems = PROBLEMS.filter((p) => CASES.some((c) => c.tags.includes(p.id)));
@@ -23,9 +23,9 @@ const usedProblems = PROBLEMS.filter((p) => CASES.some((c) => c.tags.includes(p.
 <main id="main">
   <section class="page-hero">
     <div class="hero-content">
-      <Crumbs items={[['Home', '/'], ['Projects']]} />
+      <Crumbs items={[['Home', '/'], ['Work']]} />
       <p class="eyebrow">Client Work &amp; Case Studies</p>
-      <h1 class="page-title">Problems We Have <span>Already Solved.</span></h1>
+      <h1 class="page-title">Problems we have <span>already solved.</span></h1>
       <p class="page-sub">Software we built for businesses in ERP, manufacturing, e-commerce, logistics and SaaS, and what changed for each one.</p>
       <div class="stats">
         <div><b data-count>{COMPANY_STATS.projects.value}</b><span>{COMPANY_STATS.projects.label}</span></div>
@@ -36,7 +36,7 @@ const usedProblems = PROBLEMS.filter((p) => CASES.some((c) => c.tags.includes(p.
   </section>
 
   <section class="wrap" data-filters aria-labelledby="work-title" style="padding-bottom:clamp(40px,6vw,80px)">
-    <h2 class="section-title" id="work-title" style="font-size:clamp(1.6rem,3vw,2.2rem)">Selected Work</h2>
+    <h2 class="section-title" id="work-title" style="font-size:clamp(1.6rem,3vw,2.2rem)">Selected work</h2>
     <p class="nda-note" style="margin-bottom:16px">Most client names and identifying details are withheld under NDA.</p>
     <div class="filters" role="group" aria-label="Filter by problem">
       <button class="fchip" type="button" data-key="tags" data-val="" aria-pressed="true">All</button>
@@ -46,7 +46,7 @@ const usedProblems = PROBLEMS.filter((p) => CASES.some((c) => c.tags.includes(p.
     <div class="ascents">{CASES.map((c) => <CaseRow study={c} />)}</div>
   </section>
 
-  <Cta eyebrow="Your Project" title="Have a Problem Like These?" body="Tell us what you're working on and what is getting in the way. We reply within 24 hours.">
+  <Cta eyebrow="Your Project" title="Have a problem like these?" body="Tell us what you're working on and what is getting in the way. We'll get back to you as soon as we can.">
     <a href="/contact" class="btn-primary">Start a Conversation</a>
     <a href="/services" class="btn-outline">See Our Services</a>
   </Cta>

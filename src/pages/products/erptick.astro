@@ -11,7 +11,7 @@ const seo = {
   path: ERPTICK_PATH,
   description: 'Field service desk for equipment makers on ERPNext: tickets with SLAs, field visits, AMC contracts, quotations and a customer portal, synced with your ERP.',
   ogTitle: 'ERPTick: Service Desk for Equipment Makers',
-  ogDescription: 'Breakdown calls, engineer visits, AMC contracts and quotations for your service team, connected to ERPNext. Now in early access.',
+  ogDescription: 'Breakdown calls, engineer visits, AMC contracts and quotations for your service team, connected to ERPNext.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [
     webPage({ path: ERPTICK_PATH, name: 'ERPTick Service Desk' }),
@@ -22,18 +22,17 @@ const seo = {
   ],
 };
 ---
-<BaseLayout seo={seo} nav={{ current: 'products', cta: { href: '#early-access', label: 'Join Early Access' } }} rail={{ stops: [['overview', 'Overview'], ['tour', 'Tour'], ['faq', 'FAQ'], ['early-access', 'Access']], summitLabel: 'Ask for access' }}>
+<BaseLayout seo={seo} nav={{ current: 'products', cta: { href: '#get-started', label: 'Talk to Us' } }} rail={{ stops: [['overview', 'Overview'], ['tour', 'Tour'], ['faq', 'FAQ'], ['get-started', 'Talk']], summitLabel: 'Let’s talk' }}>
 <main id="main">
 
   <!-- ══ HERO ══ -->
   <section class="page-hero sb-hero" id="overview">
         <div class="hero-content">
       <p class="eyebrow fade-up d1"><a href="/products" style="text-decoration:none;">Products</a> / ERPTick Service Desk</p>
-      <span class="hero-status fade-up d1">Now in early access</span>
-      <h1 class="page-title fade-up d2">The Service Desk<br>for Equipment Makers.<br><span>Connected to ERPNext.</span></h1>
+      <h1 class="page-title fade-up d2">The service desk<br>for equipment makers.<br><span>Connected to ERPNext.</span></h1>
       <p class="page-sub fade-up d3">Tickets, field visits, AMC contracts and quotations for your service team, with customers, machines, spares and stock taken straight from ERPNext. No double entry, no spreadsheets on the side.</p>
       <div class="hero-actions fade-up d4">
-        <a href="#early-access" class="btn-primary">Join Early Access</a>
+        <a href="#get-started" class="btn-primary">Talk to Us</a>
         <a href="#promo" class="btn-outline" id="playPromo">Watch the 90-sec overview</a>
       </div>
       <p class="hero-note fade-up d4">Runs on a demo company until you connect your ERP</p>
@@ -49,29 +48,29 @@ const seo = {
   <!-- ══ WHO IT'S FOR ══ -->
   <section class="section" aria-labelledby="who">
     <div class="section-header">
-      <h2 class="section-title" id="who">One System for Everyone in Service</h2>
+      <h2 class="section-title" id="who">One system for everyone in service</h2>
       <div class="section-line"></div>
     </div>
     <p class="section-sub">Built for manufacturers who sell, install and service machines, and already run their business on ERPNext.</p>
     <div class="roles">
       <div class="role">
         <span class="kicker">Service head</span>
-        <h3>See Every Commitment</h3>
+        <h3>See every commitment</h3>
         <p>Late calls, open AMCs, pending quotations and results by region, without asking anyone for an update.</p>
       </div>
       <div class="role">
         <span class="kicker">Support desk</span>
-        <h3>Log &amp; Route in Seconds</h3>
+        <h3>Log &amp; route in seconds</h3>
         <p>Pick the customer and machine; coverage, priority and the right region are worked out for you.</p>
       </div>
       <div class="role">
         <span class="kicker">Field engineers</span>
-        <h3>Close Visits on Site</h3>
+        <h3>Close visits on site</h3>
         <p>A phone-friendly visit form with spares used, photos and the customer's signature.</p>
       </div>
       <div class="role">
         <span class="kicker">Your customers</span>
-        <h3>Self-Serve Portal</h3>
+        <h3>Self-serve portal</h3>
         <p>Customers raise tickets, follow progress, approve quotations and rate the service from their own login.</p>
       </div>
     </div>
@@ -81,7 +80,7 @@ const seo = {
   <div class="alt-bg">
   <section class="section" id="tour" aria-labelledby="tour-title">
     <div class="section-header">
-      <h2 class="section-title" id="tour-title">See It Work</h2>
+      <h2 class="section-title" id="tour-title">See it work</h2>
       <div class="section-line"></div>
     </div>
     <p class="section-sub">Want the detail? Ten short walkthroughs of the real product on demo data. Pick a module. Each video has narration and captions.</p>
@@ -109,7 +108,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Tickets &amp; SLAs</span>
-              <h3>Every Breakdown, Tracked to Closure</h3>
+              <h3>Every breakdown, tracked to closure</h3>
               <p>Log a ticket against the exact machine and ERPTick knows whether it's under AMC, under warranty or chargeable. Response and resolution clocks run on your business calendar and warn the team before a deadline is missed, not after.</p>
             </div>
             <ul class="ticks">
@@ -130,7 +129,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Field Visits</span>
-              <h3>The Whole Job, Recorded on Site</h3>
+              <h3>The whole job, recorded on site</h3>
               <p>Engineers accept the job, mark when they reach the site and log the visit from a phone or laptop: what was done, the spares fitted, photos and the customer's signature.</p>
             </div>
             <ul class="ticks">
@@ -151,7 +150,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Quotations</span>
-              <h3>Quote Chargeable Work Before It Starts</h3>
+              <h3>Quote chargeable work before it starts</h3>
               <p>When a machine is out of warranty and AMC, the ticket asks for a quotation. Build it from your ERP items, send it, and record the customer's purchase order against it.</p>
             </div>
             <ul class="ticks">
@@ -172,7 +171,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">AMC Contracts</span>
-              <h3>Contracts That Plan Their Own Visits</h3>
+              <h3>Contracts that plan their own visits</h3>
               <p>Set up an annual maintenance contract once: cover period, value, the machines it covers and the planned preventive visits. ERPTick raises the visit tickets ahead of time and reminds you before the contract ends.</p>
             </div>
             <ul class="ticks">
@@ -193,7 +192,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Customers &amp; Machines</span>
-              <h3>Know the Machine Before You Answer</h3>
+              <h3>Know the machine before you answer</h3>
               <p>Customers, sites, contacts, machines by serial number, spares, prices and stock are read from your ERP. Each machine shows its cover, so the desk knows who pays before logging the call.</p>
             </div>
             <ul class="ticks">
@@ -214,7 +213,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Dispatch &amp; Service Rules</span>
-              <h3>Your Rules, Without a Developer</h3>
+              <h3>Your rules, without a developer</h3>
               <p>Decide how tickets are routed, timed and billed from the settings screens: regions by pincode, skill tags, SLA targets, business calendars and service charges.</p>
             </div>
             <ul class="ticks">
@@ -235,7 +234,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Customer Portal &amp; Updates</span>
-              <h3>Customers Help Themselves</h3>
+              <h3>Customers help themselves</h3>
               <p>Customers sign in with an emailed link, raise tickets, follow progress and approve quotations with their PO number. After closure they rate the job, and updates go out by email or WhatsApp.</p>
             </div>
             <ul class="ticks">
@@ -256,7 +255,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Reports &amp; KPIs</span>
-              <h3>Numbers You Can Act On</h3>
+              <h3>Numbers you can act on</h3>
               <p>Run service reports on demand, compare every region with its targets in the KPI matrix, and schedule any report to arrive by email as a CSV.</p>
             </div>
             <ul class="ticks">
@@ -276,7 +275,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">ERPNext Connection</span>
-              <h3>Connected to ERPNext, on Your Terms</h3>
+              <h3>Connected to ERPNext, on your terms</h3>
               <p>An administrator adds the ERPNext connection on screen and tests it before saving. Master data flows in; draft invoices and stock entries go back only when you switch them on.</p>
             </div>
             <ul class="ticks">
@@ -297,7 +296,7 @@ const seo = {
           <div class="tour-copy">
             <div>
               <span class="kicker">Admin &amp; Security</span>
-              <h3>Control Who Sees and Does What</h3>
+              <h3>Control who sees and does what</h3>
               <p>Invite your team, shape roles with a permission grid, give partners a scoped API key and load customers in bulk, with every change recorded in an audit log.</p>
             </div>
             <ul class="ticks">
@@ -317,7 +316,7 @@ const seo = {
   <!-- ══ ERP FLOW ══ -->
   <section class="section" aria-labelledby="erp-flow">
     <div class="section-header">
-      <h2 class="section-title" id="erp-flow">How It Works with ERPNext</h2>
+      <h2 class="section-title" id="erp-flow">How it works with ERPNext</h2>
       <div class="section-line"></div>
     </div>
     <p class="section-sub">ERPTick sits next to ERPNext, not on top of it. Your ERP keeps owning customers, items and accounts. ERPTick owns the service work.</p>
@@ -339,7 +338,7 @@ const seo = {
         </ul>
       </div>
       <div class="flow-step">
-        <h3>Write Back</h3>
+        <h3>Write back</h3>
         <p>Finished work goes back to your ERP so accounts and stores stay right. This happens only when you switch it on.</p>
         <ul class="ticks">
           <li>Draft sales invoices for chargeable tickets</li>
@@ -348,13 +347,13 @@ const seo = {
       </div>
     </div>
     <p class="flow-foot"><strong>Safe by default:</strong> every write-back is off until you turn it on, invoices are always created as drafts, and each one is protected against duplicates and retried if your ERP is unreachable.</p>
-    <p class="flow-more">Built by the team behind our <a href="/services/erpnext-integration">ERPNext integration work</a>. See the <a href="/projects">case studies</a>.</p>
+    <p class="flow-more">Built by the team behind our <a href="/services/erp-integration">ERPNext integration work</a>. See the <a href="/projects">case studies</a>.</p>
   </section>
 
   <!-- ══ CAPABILITIES ══ -->
   <section class="section" aria-labelledby="caps-title" style="padding-top:0;">
     <div class="section-header">
-      <h2 class="section-title" id="caps-title">Built for Real Service Teams</h2>
+      <h2 class="section-title" id="caps-title">Built for real service teams</h2>
       <div class="section-line"></div>
     </div>
     <div class="caps" style="margin-top:2rem;">
@@ -423,23 +422,23 @@ const seo = {
   <!-- ══ DEPLOYMENT & PRICING ══ -->
   <section class="section" aria-labelledby="deploy-title" style="padding-top:0;">
     <div class="section-header">
-      <h2 class="section-title" id="deploy-title">Deployment &amp; Pricing</h2>
+      <h2 class="section-title" id="deploy-title">Deployment &amp; pricing</h2>
       <div class="section-line"></div>
     </div>
     <div class="deploy" style="margin-top:2rem;">
       <div class="deploy-card">
         <span class="kicker">Your install</span>
-        <h3>One Company, One System</h3>
+        <h3>One company, one system</h3>
         <p>Every ERPTick install belongs to a single company, so your data is never shared with anyone else's.</p>
       </div>
       <div class="deploy-card">
         <span class="kicker">Try first</span>
-        <h3>Start on Demo Data</h3>
+        <h3>Start on demo data</h3>
         <p>It runs fully on a fictional demo company until you connect your ERP, so your team can try every flow risk-free.</p>
       </div>
       <div class="deploy-card pricing">
         <span class="kicker">Pricing</span>
-        <h3>Contact for Pricing</h3>
+        <h3>Contact for pricing</h3>
         <p>Pricing depends on your setup. Tell us about your service team and we'll share the details.</p>
         <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=ERPTick%20pricing">Ask about pricing</a>
       </div>
@@ -449,18 +448,18 @@ const seo = {
   <!-- ══ FAQ ══ -->
   <section class="section" id="faq" aria-labelledby="faq-title" style="padding-top:0;">
     <div class="section-header">
-      <h2 class="section-title" id="faq-title">Frequently Asked Questions</h2>
+      <h2 class="section-title" id="faq-title">Frequently asked questions</h2>
       <div class="section-line"></div>
     </div>
     <Faq items={ERPTICK_FAQ} />
   </section>
 
-  <!-- ══ EARLY ACCESS ══ -->
-  <section class="band dark" id="early-access" aria-labelledby="ea-title">
+  <!-- ══ GET STARTED ══ -->
+  <section class="band dark" id="get-started" aria-labelledby="ea-title">
     <div class="wrap">
-      <ContactPanel eyebrow="Early Access" title="Bring ERPTick to Your Service Team" titleId="ea-title" note="You have seen how it works. Ask for early access."
-        lead="We're onboarding a small group of equipment makers running ERPNext. Tell us about your company, your ERPNext setup and the size of your service team, and we'll get back to you."
-        service="ERPTick (our product)" message="I would like early access to ERPTick. Our ERPNext version and hosting: " />
+      <ContactPanel eyebrow="Get Started" title="Bring ERPTick to your service team" titleId="ea-title" note="You have seen how it works. Let’s talk."
+        lead="Tell us about your company, your ERPNext setup and the size of your service team, and we'll get back to you."
+        service="ERPTick (our product)" message="I would like to know more about ERPTick. Our ERPNext version and hosting: " />
     </div>
   </section>
 </main>

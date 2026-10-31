@@ -24,7 +24,7 @@ const seo = {
   description: c.description,
   schema: [
     webPage({ path, name: c.name }),
-    breadcrumbs(['Home', '/'], ['Projects', PROJECTS_PATH], [c.name, path]),
+    breadcrumbs(['Home', '/'], ['Work', PROJECTS_PATH], [c.name, path]),
   ],
 };
 ---
@@ -32,7 +32,7 @@ const seo = {
 <main id="main">
   <section class="page-hero">
     <div class="hero-content">
-      <Crumbs items={[['Home', '/'], ['Projects', PROJECTS_PATH], [c.name]]} />
+      <Crumbs items={[['Home', '/'], ['Work', PROJECTS_PATH], [c.name]]} />
       <p class="eyebrow">{c.sector}{c.place && ` · ${c.place}`}</p>
       <h1 class="page-title">{c.title}</h1>
     </div>

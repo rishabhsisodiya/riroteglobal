@@ -9,7 +9,7 @@ import { caseUrl } from '../data/cases';
 
 const path = '/about';
 const seo = {
-  title: 'About Rirote Global | Software & ERPNext Company, Jaipur',
+  title: 'About Rirote Global | Software & ERP Company, Jaipur',
   path,
   description: 'Full-stack, AI and ERP engineering company in Jaipur, India, building software for businesses in India, the US and the Middle East.',
   ogTitle: 'About Rirote Global',
@@ -19,35 +19,35 @@ const seo = {
 const name = [
   { letters: 'RI', word: 'Rise', text: 'Strategy that moves a business forward. Every build starts from what has to change for the business, not from the tech stack.' },
   { letters: 'RO', word: 'Robust', text: 'Software that keeps working for real users: secure, monitored, and ready for more people over time.' },
-  { letters: 'TE', word: 'Tech', text: 'Modern, proven tools, including ERPNext, cloud hosting and AI, used where they help.' },
+  { letters: 'TE', word: 'Tech', text: 'Modern, proven tools, including ERP systems, cloud hosting and AI, used where they help.' },
 ];
 
 const pillars = [
   {
     kicker: 'Client engineering',
-    title: 'Software Built for You',
-    text: 'Websites and web apps, AI assistants, ERPNext integration and hosting, planned, built and looked after by one team.',
-    links: [{ href: SERVICES_PATH, label: 'Our services' }, { href: '/projects', label: 'Selected projects' }],
+    title: 'Software built for you',
+    text: 'Websites and web apps, AI assistants, ERP integration and hosting, planned, built and looked after by one team.',
+    links: [{ href: SERVICES_PATH, label: 'Our services' }, { href: '/projects', label: 'Selected work' }],
   },
   {
     kicker: 'Our products',
-    title: 'Software We Ship',
-    text: 'Products we build and run ourselves, starting with ERPTick: the ERPNext-connected service desk for equipment makers.',
-    links: [{ href: '/products/erptick', label: 'Explore ERPTick' }],
+    title: 'Software we ship',
+    text: 'Products we build and run ourselves, for businesses with busy operations.',
+    links: [{ href: '/products', label: 'See our products' }],
   },
   {
     kicker: 'Open source',
-    title: 'Built in the Open',
+    title: 'Built in the open',
     text: 'Free tools and learning material for engineers: the CrackThePrep interview hub, and stop-guessing, agent skills that stop AI coding tools from inventing decisions.',
     links: [{ href: '/#opensource', label: 'See our open source' }],
   },
 ];
 
 const principles = [
-  { title: 'One Team Throughout', text: 'The same people plan, build, launch and support your software, so nothing gets lost in a hand-over.' },
-  { title: 'Decisions Before Code', text: 'What the software must do is written down and agreed before building, then checked against what was asked for.' },
-  { title: 'Ready for Real Use', text: 'Security, monitoring and speed are part of the build from the start.' },
-  { title: 'Confidential by Default', text: 'We work under NDA when asked, and we never name a client without permission.' },
+  { title: 'One team throughout', text: 'The same people plan, build, launch and support your software, so nothing gets lost in a hand-over.' },
+  { title: 'Decisions before code', text: 'What the software must do is written down and agreed before building, then checked against what was asked for.' },
+  { title: 'Ready for real use', text: 'Security, monitoring and speed are part of the build from the start.' },
+  { title: 'Confidential by default', text: 'We work under NDA when asked, and we never name a client without permission.' },
 ];
 
 // What experience adds, each tied to a real (anonymised) case study.
@@ -66,8 +66,8 @@ const experience = [
     <div class="hero-content">
       <Crumbs items={[['Home', '/'], ['About']]} />
       <p class="eyebrow">About Rirote Global</p>
-      <h1 class="page-title">Engineers Who Have <span>Done This at Scale.</span></h1>
-      <p class="page-sub">Rirote Global is a small software company in Jaipur, India. We build websites, business software, AI features and ERPNext systems for companies in India, the United States and the Middle East, and we build software products of our own.</p>
+      <h1 class="page-title">Engineers who have <span>done this at scale.</span></h1>
+      <p class="page-sub">Rirote Global is a small software company in Jaipur, India. We build websites, business software, AI features and ERP systems for companies in India, the United States and the Middle East, and we build software products of our own.</p>
       <div class="hero-actions">
         <a href="/contact" class="btn-primary">Talk to Us</a>
         <a href="/projects" class="btn-outline">See Our Work</a>
@@ -114,7 +114,7 @@ const experience = [
   <section class="band" aria-labelledby="name-title">
     <div class="wrap">
       <div class="sec-h" data-reveal>
-        <h2 class="section-title" id="name-title">The Name Is the Promise</h2>
+        <h2 class="section-title" id="name-title">The name is the promise</h2>
         <p class="section-sub">Rirote comes from three words we hold every project to.</p>
       </div>
       <div class="roles">
@@ -125,7 +125,7 @@ const experience = [
 
   <section class="band" aria-labelledby="do-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="do-title">What We Do</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="do-title">What we do</h2></div>
       <div class="roles">
         {pillars.map((p) => (
           <article class="role" data-reveal>
@@ -139,14 +139,14 @@ const experience = [
 
   <section class="band" aria-labelledby="how-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="how-title">How We Work</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="how-title">How we work</h2></div>
       <div class="steps">{principles.map((p) => <div class="step" data-reveal><h3>{p.title}</h3><p>{p.text}</p></div>)}</div>
     </div>
   </section>
 
   <section class="band" aria-labelledby="ways-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="ways-title">Ways to Work With Us</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="ways-title">Ways to work with us</h2></div>
       <div class="roles">
         {ENGAGEMENTS.map((e) => (
           <article class="role" data-reveal>
@@ -161,14 +161,14 @@ const experience = [
   <section class="band" aria-labelledby="team-title">
     <div class="wrap">
       <div class="sec-h" data-reveal>
-        <h2 class="section-title" id="team-title">A Small Team, Close to the Work</h2>
+        <h2 class="section-title" id="team-title">A small team, close to the work</h2>
         <p class="section-sub">We are a team of up to ten people, extended with vetted engineers when a project needs more hands. Staying small means you work directly with the people designing and building your software.</p>
       </div>
       <p class="nda-note">{SITE.legal.name} · {SITE.legal.city}, {SITE.legal.state}, {SITE.legal.country}</p>
     </div>
   </section>
 
-  <Cta eyebrow="Let's Talk" title="Have Something to Build?" body="Tell us what you're working on. We reply within 24 hours.">
+  <Cta eyebrow="Let's Talk" title="Have something to build?" body="Tell us what you're working on. We'll get back to you as soon as we can.">
     <a href="/contact" class="btn-primary">Start a Conversation</a>
     <a href={`mailto:${SITE.email}`} class="btn-outline">Email Us</a>
   </Cta>

@@ -17,7 +17,7 @@ You can reach us about anything in this policy at [info@riroteglobal.com](mailto
 
 ### When you contact us
 
-If you use the contact form, we receive your name, your email address, your company (optional), the service you are interested in and your message. If you email us directly, including ERPTick early-access requests, we receive your email address and whatever you choose to write.
+If you use the contact form, we receive your name, your email address, your company (optional), the service you are interested in and your message. If you email us directly, including ERPTick requests, we receive your email address and whatever you choose to write.
 
 Please don't send sensitive information, such as financial, health or identity documents, through the form or by email unless we have agreed a secure way to do so.
 

@@ -13,20 +13,20 @@ export interface Props {
 const { product: p, showTags = false, shotAlt = 'ERPTick ticket screen with stage progress, SLA status and AMC coverage.' } = Astro.props;
 const external = p.path.startsWith('http');
 const linkProps = external ? { target: '_blank', rel: 'noopener' } : {};
-const badge = p.status === 'Open source' ? 'oss' : p.status === 'In development' ? 'dev' : 'early';
+const badge = p.status === 'Open source' ? 'oss' : 'dev';
 const hasShot = p.id === 'erptick';
 const label = (id: string) => PROBLEMS.find((x) => x.id === id)?.label ?? id;
 ---
-<article class:list={['prow', { solo: !hasShot && p.points.length === 0 }]} data-item data-status={p.status.replace(/ /g, '-')} data-tags={p.tags.join(' ')} data-reveal>
+<article class:list={['prow', { solo: !hasShot && p.points.length === 0 }]} data-item data-status={(p.status ?? '').replace(/ /g, '-')} data-tags={p.tags.join(' ')} data-reveal>
   <div class="prow-text">
-    <span class:list={['badge', badge]}>{p.status}</span>
+    {p.status && <span class:list={['badge', badge]}>{p.status}</span>}
     <h3><a href={p.path} {...linkProps}>{p.name}</a></h3>
     <p class="prow-line">{p.line}</p>
     {hasShot && <ul class="mini-pts">{p.points.map((x) => <li>{x}</li>)}</ul>}
     {showTags && <ul class="tagcloud" aria-label="Problems it solves">{p.tags.map((t) => <li>{label(t)}</li>)}</ul>}
     <div class="cta-row">
       <a class="btn-primary" href={p.path} {...linkProps}>Explore {p.short} {external ? '↗' : '→'}</a>
-      {hasShot && <a class="btn-outline" href="/products/erptick#early-access">Join Early Access</a>}
+      {hasShot && <a class="btn-outline" href="/products/erptick#get-started">Talk to Us</a>}
     </div>
   </div>
   {hasShot ? (

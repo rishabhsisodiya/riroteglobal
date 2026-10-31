@@ -30,7 +30,7 @@ const steps = [
     <Heading class="talk-title" id={titleId}>{title}</Heading>
     {note && <p class="summit-note">{note}</p>}
     <p class="lead">{lead}</p>
-    <div class="talk-promise"><b>24h</b><span>Reply to every enquiry, even if the answer is that someone else is a better fit.</span></div>
+    <p class="talk-promise">We get back to you as soon as we can, even if the answer is that someone else is a better fit.</p>
     <p class="sub-h talk-next">What happens next</p>
     <ul class="path">{steps.map((s) => <li>{s}</li>)}</ul>
     <a class="talk-mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>

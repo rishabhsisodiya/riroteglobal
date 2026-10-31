@@ -8,9 +8,9 @@ import { PROBLEMS } from '../data/cases';
 import { PRODUCTS, type Product } from '../data/products';
 
 const seo = {
-  title: 'ERPNext Software Products: ERPTick & More | Rirote Global',
+  title: 'Software Products for Busy Operations | Rirote Global',
   path: '/products',
-  description: 'Software products we build and run, starting with ERPTick: the ERPNext-connected service desk for equipment makers. Now in early access.',
+  description: 'Software products we build and run for businesses with busy operations, connected to the systems they already use.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [
     webPage({ path: '/products', name: 'Products', type: 'CollectionPage' }),
@@ -18,13 +18,13 @@ const seo = {
   ],
 };
 
-const statuses = [...new Set(PRODUCTS.map((p) => p.status))];
+const statuses = [...new Set(PRODUCTS.flatMap((p) => p.status ?? []))];
 const groups: Array<[Product['group'], string | null]> = [['Products', null], ['Open source', 'Free to use, and public.']];
 
 const approach = [
-  ['Connected', 'Your ERP Stays the Source', 'Customers, machines, items and stock are read from ERPNext. Nothing is written back until you switch it on, and invoices are always created as drafts.'],
-  ['Separate', 'One Company, One Install', "Every customer gets their own install and database, so your data is never mixed with anyone else's. Host it with us or on a server you control."],
-  ['Try First', 'Start on Demo Data', 'ERPTick runs on a fictional demo company until you connect your ERP, so your team can try every flow before anything touches live data.'],
+  ['Connected', 'Your ERP stays the source', 'Customers, machines, items and stock are read from ERPNext. Nothing is written back until you switch it on, and invoices are always created as drafts.'],
+  ['Separate', 'One company, one install', "Every customer gets their own install and database, so your data is never mixed with anyone else's. Host it with us or on a server you control."],
+  ['Try First', 'Start on demo data', 'ERPTick runs on a fictional demo company until you connect your ERP, so your team can try every flow before anything touches live data.'],
 ];
 ---
 <BaseLayout seo={seo} nav={{ current: 'products' }}>
@@ -33,13 +33,13 @@ const approach = [
     <div class="hero-content">
       <Crumbs items={[['Home', '/'], ['Products']]} />
       <p class="eyebrow">Products</p>
-      <h1 class="page-title">Software We Build <span>and Ship Ourselves.</span></h1>
+      <h1 class="page-title">Software we build <span>and ship ourselves.</span></h1>
       <p class="page-sub">Software for businesses with busy operations, built by the same team that builds for clients and connected to the systems you already use.</p>
     </div>
   </section>
 
   <section class="wrap" data-filters aria-labelledby="all-products" style="padding-bottom:clamp(40px,6vw,80px)">
-    <h2 class="section-title" id="all-products" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:18px">All Products</h2>
+    <h2 class="section-title" id="all-products" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:18px">All products</h2>
     <div class="filters" role="group" aria-label="Filter by status">
       <span class="fl">Status</span>
       <button class="fchip" type="button" data-key="status" data-val="" aria-pressed="true">All</button>
@@ -63,7 +63,7 @@ const approach = [
         {group === 'Products' && (
             <aside class="soon" aria-labelledby="soon-title">
               <span class="kicker">In the works</span>
-              <h3 id="soon-title">More Coming</h3>
+              <h3 id="soon-title">More coming</h3>
               <p>We're building more products for teams that run on ERP and field operations. Want to hear when the next one is ready?</p>
               <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=Notify%20me%20about%20new%20Rirote%20products">Get notified</a>
             </aside>
@@ -76,7 +76,7 @@ const approach = [
   <section class="band" aria-labelledby="approach-title">
     <div class="wrap">
       <div class="sec-h" data-reveal>
-        <h2 class="section-title" id="approach-title">How Our Products Work</h2>
+        <h2 class="section-title" id="approach-title">How our products work</h2>
         <p class="section-sub">Our products come from the same engineering we do for clients: ticketing, dashboards and integrations built on ERPNext for manufacturers and service businesses. We build them for operations-heavy teams that already run their business on an ERP and need software that fits around it, not another system to keep in sync by hand. Here is how that works in ERPTick.</p>
       </div>
       <div class="approach">

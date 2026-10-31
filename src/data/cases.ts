@@ -4,7 +4,7 @@ export const PROJECTS_PATH = '/projects';
 
 export const PROBLEMS = [
   { id: 'service', label: 'Service tickets, visits & AMC' },
-  { id: 'erp', label: 'Connect or extend ERPNext' },
+  { id: 'erp', label: 'Connect or extend your ERP' },
   { id: 'ai', label: 'AI for my documents & data' },
   { id: 'custom', label: 'A new app or product' },
   { id: 'reports', label: 'Dashboards & reports' },
@@ -46,7 +46,7 @@ export const CASES: CaseStudy[] = [
     place: 'India',
     via: 'Delivered with an agency partner',
     title: 'One platform for 9 business entities',
-    metaTitle: 'Unified ERPNext & Service Platform Case Study | Rirote Global',
+    metaTitle: 'Unified ERP & Service Platform Case Study | Rirote Global',
     description: 'One platform for 9 business entities across 5 ERPNext sites: a service ticketing engine and 11 role-based dashboards loading in under 500ms.',
     tags: ['erp', 'service', 'reports'],
     problem: 'An infrastructure group ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another.',
@@ -60,7 +60,7 @@ export const CASES: CaseStudy[] = [
     ],
     results: [['<500ms', 'Dashboard loads, down from 5s+'], ['2 → 1', 'Apps and servers merged'], ['11', 'Role-based dashboards'], ['9', 'Business entities on one platform']],
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'NestJS', 'Node.js', 'Prisma', 'PostgreSQL', 'Redis', 'MariaDB', 'ERPNext v15', 'JWT', 'PWA'],
-    services: ['erpnext-integration', 'data-pipelines'],
+    services: ['erp-integration', 'data-pipelines'],
   },
   {
     slug: 'nimnim',
@@ -99,7 +99,7 @@ export const CASES: CaseStudy[] = [
     ],
     results: [['17', 'Modules, order to dispatch'], ['100+', 'Doctype specification translated'], ['REST-only', 'Boundary with ERPNext']],
     stack: ['Next.js', 'React', 'TypeScript', 'NestJS', 'Prisma', 'PostgreSQL', 'SWR', 'Tailwind CSS', 'JWT', 'ERPNext'],
-    services: ['erpnext-integration', 'technical-leadership'],
+    services: ['erp-integration', 'technical-leadership'],
   },
   {
     slug: 'multi-service-delivery-platform',
@@ -123,7 +123,7 @@ export const CASES: CaseStudy[] = [
     sector: 'E-commerce',
     place: 'India',
     title: 'A monolith-to-microservices plan for a high-traffic store',
-    metaTitle: 'High-Traffic E-Commerce Architecture Case Study | Rirote Global',
+    metaTitle: 'High-Traffic E-Commerce Case Study | Rirote Global',
     description: 'Redesign and modernisation of a high-traffic Indian e-commerce platform: a monolith-to-microservices migration plan and better backend performance.',
     tags: ['team', 'speed', 'custom'],
     problem: 'A high-traffic Indian e-commerce platform had outgrown its monolithic stack and needed better scalability and developer velocity.',

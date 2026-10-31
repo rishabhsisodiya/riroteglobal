@@ -53,7 +53,7 @@ const seo = {
 
   <section class="band" aria-labelledby="includes-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="includes-title">What's Included</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="includes-title">What's included</h2></div>
       <div class="incl three">
         {service.includes.map((item) => <div class="inc" data-reveal><h3>{item.title}</h3><p>{item.text}</p></div>)}
       </div>
@@ -62,7 +62,7 @@ const seo = {
 
   <section class="band" aria-labelledby="proof-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="proof-title">Work That Shows It</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="proof-title">Work that shows it</h2></div>
       <div class="ascents">
         {service.proof.map((p) => (
           <article class="proof" data-reveal>
@@ -85,21 +85,21 @@ const seo = {
 
   <section class="band" aria-labelledby="steps-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="steps-title">How We Work</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="steps-title">How we work</h2></div>
       <div class="steps">{SERVICE_STEPS.map((step) => <div class="step" data-reveal><h3>{step.title}</h3><p>{step.text}</p></div>)}</div>
     </div>
   </section>
 
   <section class="band" aria-labelledby="faq-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="faq-title">Common Questions</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="faq-title">Common questions</h2></div>
       <Faq items={service.faq} />
     </div>
   </section>
 
   <section class="band" aria-labelledby="related-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="related-title">Related Services</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="related-title">Related services</h2></div>
       <div class="rel">
         {related.map((r) => <a href={serviceUrl(r.slug)}><b>{r.name}</b><span>{r.summary}</span></a>)}
       </div>
@@ -107,7 +107,7 @@ const seo = {
     </div>
   </section>
 
-  <Cta eyebrow="Let's Talk" title="Have a Project in Mind?" body="Tell us what you're building and we'll reply within 24 hours.">
+  <Cta eyebrow="Let's Talk" title="Have a project in mind?" body="Tell us what you're building and we'll get back to you as soon as we can.">
     <a href={talk} class="btn-primary">Start a Conversation</a>
     <a href="mailto:info@riroteglobal.com" class="btn-outline">Email Us</a>
   </Cta>

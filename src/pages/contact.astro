@@ -6,9 +6,9 @@ import { breadcrumbs, webPage } from '../lib/schema';
 
 const path = '/contact';
 const seo = {
-  title: 'Contact Rirote Global | Software & ERPNext Company, Jaipur',
+  title: 'Contact Rirote Global | Software & ERP Company, Jaipur',
   path,
-  description: 'Tell Rirote Global what you want to build or fix: websites, business software, AI or ERPNext. A person reads every message and replies within 24 hours.',
+  description: 'Tell Rirote Global what you want to build or fix: websites, business software, AI or ERP. A person reads every message and gets back to you as soon as possible.',
   schema: [webPage({ path, name: 'Contact' }), breadcrumbs(['Home', '/'], ['Contact', path])],
 };
 ---
@@ -17,7 +17,7 @@ const seo = {
   <section class="band dark" style="border-top:none;padding-top:clamp(28px,4vw,48px)">
     <div class="wrap">
       <Crumbs items={[['Home', '/'], ['Contact']]} />
-      <ContactPanel eyebrow="Get in Touch" title="Tell Us What Needs Solving." asH1 socials
+      <ContactPanel eyebrow="Get in Touch" title="Tell us what needs solving." asH1 socials
         lead="Describe your project or the problem you want solved." />
     </div>
   </section>

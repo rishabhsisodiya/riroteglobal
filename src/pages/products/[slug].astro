@@ -24,7 +24,7 @@ const seo = {
   ],
 };
 const heading = p.heading ?? [p.name, ''];
-const badge = p.status === 'Open source' ? 'oss' : p.status === 'In development' ? 'dev' : 'early';
+const badge = p.status === 'Open source' ? 'oss' : 'dev';
 const inDev = p.status === 'In development';
 ---
 <BaseLayout seo={seo} nav={{ current: 'products' }}>
@@ -45,7 +45,7 @@ const inDev = p.status === 'In development';
 
   <section class="band" aria-labelledby="does-title">
     <div class="wrap">
-      <div class="sec-h" data-reveal><h2 class="section-title" id="does-title">What It Does</h2></div>
+      <div class="sec-h" data-reveal><h2 class="section-title" id="does-title">What it does</h2></div>
       <ul class="pts" style="max-width:62ch">{p.points.map((x) => <li style="font-size:1.05rem">{x}</li>)}</ul>
       {p.note && <p class="note2"><b>Status.</b> {p.note}</p>}
     </div>
@@ -54,7 +54,7 @@ const inDev = p.status === 'In development';
   {related.length > 0 && (
     <section class="band" aria-labelledby="related-title">
       <div class="wrap">
-        <div class="sec-h" data-reveal><h2 class="section-title" id="related-title">Related Services</h2></div>
+        <div class="sec-h" data-reveal><h2 class="section-title" id="related-title">Related services</h2></div>
         <div class="rel">{related.map((s) => <a href={serviceUrl(s.slug)}><b>{s.name}</b><span>{s.summary}</span></a>)}</div>
       </div>
     </section>
@@ -63,7 +63,7 @@ const inDev = p.status === 'In development';
   <section class="band dark" id="access" aria-labelledby="access-title">
     <div class="wrap">
       <ContactPanel eyebrow={inDev ? 'Get Access' : 'Talk to Us'} title={inDev ? 'Tell us you are interested.' : 'Want this in your product?'} titleId="access-title"
-        lead={inDev ? 'We will write to you when early access opens.' : 'Tell us about your product and where AI could help.'}
+        lead={inDev ? 'We will write to you when it is ready.' : 'Tell us about your product and where AI could help.'}
         service={p.formService} message={inDev ? `I would like to hear more about ${p.name}.` : 'I would like to talk about AI in our product.'} />
     </div>
   </section>

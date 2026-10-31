@@ -242,7 +242,7 @@
       return res.json().catch(function () { return {}; }).then(function (body) {
         if (!res.ok || !body.success) throw new Error(body.message || 'Request failed');
         form.reset();
-        setStatus('Thanks, your message has been sent. We will get back to you within 24 hours.', 'success');
+        setStatus('Thanks, your message has been sent. We will get back to you as soon as we can.', 'success');
       });
     }).catch(function () {
       // What the visitor typed stays in the form so they can retry.
