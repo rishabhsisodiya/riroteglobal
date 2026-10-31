@@ -1,197 +1,87 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import ProductRow from '../components/ProductRow.astro';
 import { breadcrumbs, webPage } from '../lib/schema';
 import { ERPTICK_SHARE_IMAGE } from '../data/erptick';
+import { PROBLEMS } from '../data/cases';
+import { PRODUCTS, type Product } from '../data/products';
 
 const seo = {
-  title: 'ERPNext Software Products: ERPTick & More | Rirote Global',
+  title: 'Software Products for Busy Operations | Rirote Global',
   path: '/products',
-  description: 'Software products we build and run, starting with ERPTick: the ERPNext-connected service desk for equipment makers. Now in early access.',
+  description: 'Software products we build and run for businesses with busy operations, connected to the systems they already use.',
   image: ERPTICK_SHARE_IMAGE,
   schema: [
     webPage({ path: '/products', name: 'Products', type: 'CollectionPage' }),
     breadcrumbs(['Home', '/'], ['Products', '/products']),
   ],
 };
+
+const statuses = [...new Set(PRODUCTS.flatMap((p) => p.status ?? []))];
+const groups: Array<[Product['group'], string | null]> = [['Products', null], ['Open source', 'Free to use, and public.']];
+
+const approach = [
+  ['Connected', 'Your ERP stays the source', 'Customers, machines, items and stock are read from ERPNext. Nothing is written back until you switch it on, and invoices are always created as drafts.'],
+  ['Separate', 'One company, one install', "Every customer gets their own install and database, so your data is never mixed with anyone else's. Host it with us or on a server you control."],
+  ['Try First', 'Start on demo data', 'ERPTick runs on a fictional demo company until you connect your ERP, so your team can try every flow before anything touches live data.'],
+];
 ---
 <BaseLayout seo={seo} nav={{ current: 'products' }}>
-<Fragment slot="head">
-<style is:inline>
-  .products-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  /* ── PRODUCT CARD ── */
-  .product-card {
-    --accent: #10b981; --accent-text: #34d399;
-    --accent-soft: rgba(16,185,129,0.1); --accent-line: rgba(52,211,153,0.35);
-    position: relative;
-    display: grid; grid-template-rows: auto 1fr;
-    background: var(--navy-card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-card); overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  }
-  .product-card:hover {
-    border-color: var(--accent-line);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  }
-  .product-shot {
-    aspect-ratio: 16 / 10; width: 100%; object-fit: cover; object-position: top left;
-    border-bottom: 1px solid var(--line);
-  }
-  .product-body { padding: 1.8rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.1rem; }
-  .product-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
-  .status-badge {
-    display: inline-flex; align-items: center; gap: 0.45rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    color: var(--accent-text);
-    background: var(--accent-soft);
-    border: 1px solid var(--accent-line);
-    padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); font-weight: 600; }
-  .status-badge::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-text);
-  }
-  .product-name {
-    font-family: 'DM Sans', sans-serif; font-weight: 700;
-    font-size: 1.9rem; letter-spacing: -0.01em; line-height: 1.2;
-  }
-  .product-name a { text-decoration: none; }
-  /* whole card clickable via the title link */
-  .product-name a::after { content: ''; position: absolute; inset: 0; }
-  .product-pitch { color: var(--text-soft); font-size: 1rem; line-height: 1.7; max-width: 60ch; }
-  .product-points { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
-  .product-points li {
-    font-size: 0.9rem; color: rgba(240,244,255,0.82);
-    padding-left: 1.2rem; position: relative; line-height: 1.5;
-  }
-  .product-points li::before {
-    content: ''; position: absolute; left: 0; top: 0.55rem;
-    width: 6px; height: 6px; border-radius: 50%; background: var(--accent-text);
-  }
-  .product-go {
-    margin-top: auto; padding-top: 0.4rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    color: var(--accent-text); font-weight: 700;
-  }
-
-  /* ── COMING SOON CARD ── */
-  .soon-card {
-    border: 1px dashed var(--line-strong);
-    border-radius: var(--radius-card);
-    padding: 2rem;
-    display: flex; flex-direction: column; justify-content: center; gap: 1rem;
-    background: linear-gradient(180deg, rgba(0,180,216,0.04), transparent);
-  }
-  .soon-card .product-name { font-size: 1.6rem; }
-  .soon-card p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.7; }
-  .soon-card .btn-outline { align-self: flex-start; }
-
-  @media (max-width: 900px) {
-    .products-grid { grid-template-columns: 1fr; }
-    .product-body { padding: 1.5rem 1.25rem 1.75rem; }
-    .product-points { grid-template-columns: 1fr; }
-  }
-
-  .approach-intro { max-width: 72ch; color: var(--text-soft); line-height: 1.8; margin-top: 2rem; }
-  .approach { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-  .approach-item { background: var(--navy-card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 2rem 1.8rem; }
-  .approach-item h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; margin: 0.5rem 0 0.6rem; }
-  .approach-item p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.7; }
-
-  /* Phones: body copy at least 16px, small caps labels at least 12px, tap targets at least 44px. */
-  @media (max-width: 900px) {
-    .product-points li, .soon-card p, .approach-item p { font-size: 1rem; }
-    .approach { grid-template-columns: 1fr; }
-    .status-badge { font-size: 0.75rem; }
-  }
-</style>
-</Fragment>
-
 <main id="main">
   <section class="page-hero">
-    <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1">Products</p>
-      <h1 class="page-title fade-up d2">Software We Build<br><span>and Ship Ourselves.</span></h1>
-      <p class="page-sub fade-up d3">Software for businesses with busy operations, built by the same team that builds for clients and connected to the systems you already use.</p>
+      <Crumbs items={[['Home', '/'], ['Products']]} />
+      <p class="eyebrow">Products</p>
+      <h1 class="page-title">Software we build <span>and ship ourselves.</span></h1>
+      <p class="page-sub">Software for businesses with busy operations, built by the same team that builds for clients and connected to the systems you already use.</p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="all-products">
-    <div class="section-header">
-      <h2 class="section-title" id="all-products">All Products</h2>
-      <div class="section-line"></div>
+  <section class="wrap" data-filters aria-labelledby="all-products" style="padding-bottom:clamp(40px,6vw,80px)">
+    <h2 class="section-title" id="all-products" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:18px">All products</h2>
+    <div class="filters" role="group" aria-label="Filter by status">
+      <span class="fl">Status</span>
+      <button class="fchip" type="button" data-key="status" data-val="" aria-pressed="true">All</button>
+      {statuses.map((s) => <button class="fchip" type="button" data-key="status" data-val={s.replace(/ /g, '-')} aria-pressed="false">{s}</button>)}
+      <label class="fl" for="pneed" style="margin-left:8px">Problem</label>
+      <select class="fsel" id="pneed" data-key="tags">
+        <option value="">Any problem</option>
+        {PROBLEMS.map((p) => <option value={p.id}>{p.label}</option>)}
+      </select>
     </div>
+    <p class="fcount" data-filter-count data-noun="products" role="status"></p>
 
-    <div class="products-grid">
-      <article class="product-card">
-        <img class="product-shot" src="/assets/products/erptick/posters/01-tickets.webp" srcset="/assets/products/erptick/posters/01-tickets-720.webp 720w, /assets/products/erptick/posters/01-tickets.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" width="1280" height="800" alt="ERPTick ticket screen showing stage progress, SLA status and AMC coverage for a crusher breakdown.">
-        <div class="product-body">
-          <div class="product-meta">
-            <span class="status-badge">Early access</span>
-            <span class="kicker">Field Service · ERPNext</span>
-          </div>
-          <h3 class="product-name"><a href="/products/erptick">ERPTick Service Desk</a></h3>
-          <p class="product-pitch">The service desk for equipment makers, connected to ERPNext. Breakdown calls, engineer visits, AMC contracts, quotations and response deadlines in one place, with customers, machines and stock taken straight from your ERP.</p>
-          <ul class="product-points">
-            <li>Tickets with SLA clocks &amp; routing</li>
-            <li>Field visits with customer sign-off</li>
-            <li>AMC contracts &amp; quotations</li>
-            <li>Customer portal, email &amp; WhatsApp</li>
-          </ul>
-          <span class="product-go" aria-hidden="true">Explore ERPTick →</span>
+    {groups.map(([group, intro]) => (
+      <div data-group>
+        {intro && <><h3 class="group-h">{group}</h3><p class="group-d">{intro}</p></>}
+        <div class="prows">
+          {PRODUCTS.filter((p) => p.group === group).map((p) => (
+            <ProductRow product={p} showTags shotAlt="ERPTick ticket screen showing stage progress, SLA status and AMC coverage for a crusher breakdown." />
+          ))}
         </div>
-      </article>
-
-      <aside class="soon-card" aria-labelledby="soon-title">
-        <span class="kicker">In the works</span>
-        <h3 class="product-name" id="soon-title">More Coming</h3>
-        <p>We're building more products for teams that run on ERP and field operations. Want to hear when the next one is ready?</p>
-        <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=Notify%20me%20about%20new%20Rirote%20products">Get notified</a>
-      </aside>
-    </div>
+        {group === 'Products' && (
+            <aside class="soon" aria-labelledby="soon-title">
+              <span class="kicker">In the works</span>
+              <h3 id="soon-title">More coming</h3>
+              <p>We're building more products for teams that run on ERP and field operations. Want to hear when the next one is ready?</p>
+              <a class="btn-outline" href="mailto:info@riroteglobal.com?subject=Notify%20me%20about%20new%20Rirote%20products">Get notified</a>
+            </aside>
+          )}
+      </div>
+    ))}
+    <p class="note2" data-filter-empty hidden>No product matches that. Try another filter, or <a href="/contact">tell us what you need</a>. A custom build is often the answer.</p>
   </section>
 
-  <section class="section" aria-labelledby="approach-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="approach-title">How Our Products Work</h2>
-      <div class="section-line"></div>
-    </div>
-    <p class="approach-intro">Our products come from the same engineering we do for clients: ticketing, dashboards and integrations built on ERPNext for manufacturers and service businesses. We build them for operations-heavy teams that already run their business on an ERP and need software that fits around it, not another system to keep in sync by hand. Here is how that works in ERPTick.</p>
-    <div class="approach">
-      <div class="approach-item">
-        <span class="kicker">01 · Connected</span>
-        <h3>Your ERP Stays the Source</h3>
-        <p>Customers, machines, items and stock are read from ERPNext. Nothing is written back until you switch it on, and invoices are always created as drafts.</p>
+  <section class="band" aria-labelledby="approach-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal>
+        <h2 class="section-title" id="approach-title">How our products work</h2>
+        <p class="section-sub">Our products come from the same engineering we do for clients: ticketing, dashboards and integrations built on ERPNext for manufacturers and service businesses. We build them for operations-heavy teams that already run their business on an ERP and need software that fits around it, not another system to keep in sync by hand. Here is how that works in ERPTick.</p>
       </div>
-      <div class="approach-item">
-        <span class="kicker">02 · Separate</span>
-        <h3>One Company, One Install</h3>
-        <p>Every customer gets their own install and database, so your data is never mixed with anyone else's. Host it with us or on a server you control.</p>
+      <div class="approach">
+        {approach.map(([k, t, b]) => <div class="approach-item" data-reveal><span class="kicker">{k}</span><h3>{t}</h3><p>{b}</p></div>)}
       </div>
-      <div class="approach-item">
-        <span class="kicker">03 · Try First</span>
-        <h3>Start on Demo Data</h3>
-        <p>ERPTick runs on a fictional demo company until you connect your ERP, so your team can try every flow before anything touches live data.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-section">
-    <div class="cta-glow"></div>
-    <p class="cta-eyebrow">Need Something Custom?</p>
-    <h2 class="cta-title">Built for You, Not Off the Shelf</h2>
-    <p class="cta-body">If a product doesn't fit your workflow exactly, we build full-stack and AI solutions around how your business actually runs.</p>
-    <div class="cta-actions">
-      <a href="/#contact" class="btn-primary">Start a Conversation</a>
-      <a href="/services" class="btn-outline">View Services</a>
     </div>
   </section>
 </main>

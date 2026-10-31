@@ -1,0 +1,41 @@
+---
+// The contact block for a dark band: big heading, reply promise, what happens next, direct email, and the form.
+import ContactForm from './ContactForm.astro';
+import { SITE, SOCIAL_LINKS } from '../data/site';
+
+export interface Props {
+  eyebrow: string;
+  title: string;
+  titleId?: string;
+  /** Renders the title as the page's H1 (the contact page). */
+  asH1?: boolean;
+  /** Fades in when the rail reaches the top. Only for pages with a rail. */
+  note?: string;
+  lead: string;
+  service?: string;
+  message?: string;
+  socials?: boolean;
+}
+const { eyebrow, title, titleId, asH1 = false, note, lead, service, message, socials = false } = Astro.props;
+const Heading = asH1 ? 'h1' : 'h2';
+const steps = [
+  'A person reads your message.',
+  'We reply with an honest answer.',
+  'If we can help, we agree the problem and the scope before any building starts.',
+];
+---
+<div class="talk">
+  <div class="talk-intro" data-reveal>
+    <p class="eyebrow">{eyebrow}</p>
+    <Heading class="talk-title" id={titleId}>{title}</Heading>
+    {note && <p class="summit-note">{note}</p>}
+    <p class="lead">{lead}</p>
+    <p class="talk-promise">We get back to you as soon as we can, even if the answer is that someone else is a better fit.</p>
+    <p class="sub-h talk-next">What happens next</p>
+    <ul class="path">{steps.map((s) => <li>{s}</li>)}</ul>
+    <a class="talk-mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    <p class="talk-place">{SITE.legal.city}, {SITE.legal.state}, {SITE.legal.country}</p>
+    {socials && <p class="talk-social">{SOCIAL_LINKS.map((l) => <a href={l.url} target="_blank" rel="noopener me">{l.label}</a>)}</p>}
+  </div>
+  <div class="talk-form" data-reveal><ContactForm service={service} message={message} /></div>
+</div>

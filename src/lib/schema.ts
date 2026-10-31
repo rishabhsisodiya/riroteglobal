@@ -20,7 +20,7 @@ export function organization(): SchemaNode {
     image: absoluteUrl(SITE.defaultImage.path),
     email: SITE.email,
     description:
-      'Software company in Jaipur, India: websites and web apps (full-stack development), AI assistants and automation, ERPNext integration, and cloud hosting. Makers of ERPTick.',
+      'Software company in Jaipur, India: websites and web apps (full-stack development), AI assistants and automation, ERP integration, and cloud hosting. Makers of our own software products.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: SITE.legal.city,

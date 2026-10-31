@@ -1,14 +1,16 @@
 ---
 // Services hub: every service links to its own page.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ServiceStyles from '../components/ServiceStyles.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Cta from '../components/Cta.astro';
+import ServicePicker from '../components/ServicePicker.astro';
 import { breadcrumbs, itemList, webPage } from '../lib/schema';
-import { ENGAGEMENTS, SERVICES, SERVICES_PATH, serviceUrl } from '../data/services';
+import { ENGAGEMENTS, SERVICES, SERVICES_PATH, SERVICE_STEPS, serviceUrl } from '../data/services';
 
 const seo = {
-  title: 'Software, AI & ERPNext Services in Jaipur | Rirote Global',
+  title: 'Software, AI & ERP Services in Jaipur | Rirote Global',
   path: SERVICES_PATH,
-  description: 'Websites and web apps, AI assistants, ERPNext integration, hosting, reports and dedicated developers, from a software company in Jaipur.',
+  description: 'Websites and web apps, AI assistants, ERP integration, hosting, reports and dedicated developers, from a software company in Jaipur.',
   ogTitle: 'Services | Rirote Global',
   schema: [
     webPage({ path: SERVICES_PATH, name: 'Services', type: 'CollectionPage' }),
@@ -18,63 +20,51 @@ const seo = {
 };
 ---
 <BaseLayout seo={seo} nav={{ current: 'services' }}>
-<Fragment slot="head"><ServiceStyles /></Fragment>
-
 <main id="main">
   <section class="page-hero">
-    <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1">Services</p>
-      <h1 class="page-title fade-up d2">What We Can<br><span>Build for You.</span></h1>
-      <p class="page-sub fade-up d3">Websites, business software, AI assistants and ERPNext systems for companies in India, the United States and the Middle East. The same team plans it, builds it and looks after it once it is live.</p>
-      <div class="hero-actions fade-up d4">
-        <a href="/#contact" class="btn-primary">Talk to Us</a>
+      <Crumbs items={[['Home', '/'], ['Services']]} />
+      <p class="eyebrow">Services</p>
+      <h1 class="page-title">What we can <span>build for you.</span></h1>
+      <p class="page-sub">Websites, business software, AI assistants and ERP systems for companies in India, the United States and the Middle East. The same team plans it, builds it and looks after it once it is live.</p>
+      <div class="hero-actions">
+        <a href="/contact" class="btn-primary">Talk to Us</a>
         <a href="/projects" class="btn-outline">See Our Work</a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="all-services">
-    <div class="section-header">
-      <h2 class="section-title" id="all-services">What We Do</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="svc-grid">
-      {SERVICES.map((s) => (
-        <a class="svc-item" href={serviceUrl(s.slug)}>
-          <h3>{s.name}</h3>
-          <p>{s.summary}</p>
-          <span class="svc-go" aria-hidden="true">Learn more →</span>
-        </a>
-      ))}
+  <section class="band dark" aria-labelledby="all-services">
+    <div class="wrap">
+      <div class="sec-h"><h2 class="section-title" id="all-services">What we do</h2></div>
+      <ServicePicker />
     </div>
   </section>
 
-  <section class="section" aria-labelledby="ways-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="ways-title">Ways to Work With Us</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="ways">
-      {ENGAGEMENTS.map((e) => (
-        <article class="way">
-          <h3>{e.title}</h3>
-          <p>{e.text}</p>
-          {e.href && <a class="proof-link" href={e.href}>Learn more →</a>}
-        </article>
-      ))}
+  <section class="band" aria-labelledby="ways-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="ways-title">Ways to work with us</h2></div>
+      <div class="roles">
+        {ENGAGEMENTS.map((e) => (
+          <article class="role" data-reveal>
+            <h3>{e.title}</h3><p>{e.text}</p>
+            {e.href && <p style="margin-top:8px"><a href={e.href} class="more-link">Learn more →</a></p>}
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="cta-section">
-    <div class="cta-glow"></div>
-    <p class="cta-eyebrow">Not Sure Where to Start?</p>
-    <h2 class="cta-title">Tell Us the <span>Problem</span></h2>
-    <p class="cta-body">Describe what you want to change and we'll suggest where to start. We reply within 24 hours.</p>
-    <div class="cta-actions">
-      <a href="/#contact" class="btn-primary">Start a Conversation</a>
-      <a href="/products/erptick" class="btn-outline">See ERPTick</a>
+  <section class="band" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="steps-title">How every engagement runs</h2></div>
+      <div class="steps">{SERVICE_STEPS.map((s) => <div class="step" data-reveal><h3>{s.title}</h3><p>{s.text}</p></div>)}</div>
     </div>
   </section>
+
+  <Cta eyebrow="Not Sure Where to Start?" title="Tell us the problem" body="Describe what you want to change and we'll suggest where to start. We'll get back to you as soon as we can.">
+    <a href="/contact" class="btn-primary">Start a Conversation</a>
+    <a href="/products/erptick" class="btn-outline">See ERPTick</a>
+  </Cta>
 </main>
 </BaseLayout>

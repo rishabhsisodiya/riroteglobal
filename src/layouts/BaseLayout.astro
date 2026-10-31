@@ -1,41 +1,39 @@
 ---
-// Shell for every page: shared head, and for sub-pages the nav, footer and site.js.
-// Slots: "head" for page CSS, default for <main>, "footer" to replace the copyright line,
-// "scripts" for page JS. Set nav={false} for pages that bring their own chrome (home, 404),
-// and siteCss={false} for the homepage, which carries its own stylesheet.
+// Shell for every page: shared head, nav, footer and site.js.
+// Slots: "head" for page tags, default for <main>, "footer" to replace the copyright line, "scripts" for page JS.
+// Pass rail to show the climbing side rail on long pages.
 import Seo, { type Props as SeoProps } from '../components/Seo.astro';
 import Nav, { type Props as NavProps } from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Rail, { type Props as RailProps } from '../components/Rail.astro';
 import Analytics from '../components/Analytics.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 
 export interface Props {
   seo: SeoProps;
-  nav?: NavProps | false;
-  siteCss?: boolean;
+  nav?: NavProps;
+  rail?: RailProps;
 }
 
-const { seo, nav = {}, siteCss = true } = Astro.props;
+const { seo, nav = {}, rail } = Astro.props;
 const hasFooterText = Astro.slots.has('footer');
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script is:inline>document.documentElement.classList.add('js')</script>
 <Analytics />
 <Seo {...seo} />
-{siteCss && <link rel="stylesheet" href="/assets/site.css">}
+<link rel="stylesheet" href="/assets/site.css">
 <slot name="head" />
 </head>
-<body>
-{nav && (
-  <>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <Nav {...nav} />
-  </>
-)}
+<body class={rail ? 'has-rail' : undefined}>
+<a class="skip-link" href="#main">Skip to content</a>
+{rail && <Rail {...rail} />}
+<Nav {...nav} />
 <slot />
-{nav && (hasFooterText ? <Footer><slot name="footer" /></Footer> : <Footer />)}
-{nav && <script is:inline src="/assets/site.js"></script>}
+{hasFooterText ? <Footer><slot name="footer" /></Footer> : <Footer />}
+<script is:inline src="/assets/site.js"></script>
 <slot name="scripts" />
 <ConsentBanner />
 </body>

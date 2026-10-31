@@ -1,0 +1,10 @@
+---
+// Visible breadcrumb, matching each page's BreadcrumbList schema. The last item is the current page.
+export interface Props { items: Array<[label: string, href?: string]>; }
+const { items } = Astro.props;
+---
+<ol class="crumbs" aria-label="Breadcrumb">
+  {items.map(([label, href]) => (
+    <li>{href ? <a href={href}>{label}</a> : <span aria-current="page">{label}</span>}</li>
+  ))}
+</ol>

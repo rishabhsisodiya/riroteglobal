@@ -24,6 +24,8 @@ public/                 Copied to the site as-is: assets/ (CSS, JS, fonts, image
 src/data/site.ts        Site name, URL, email, legal details, default share image, social profiles (sameAs)
 src/data/services.ts    The 7 services: copy for each /services/<slug> page, shared steps and engagement models
 src/data/erptick.ts     ERPTick share image, tour videos and product schema
+src/data/cases.ts       Anonymised case studies and the problem list used by the filters
+src/data/products.ts    Every product and open-source project
 src/lib/schema.ts       schema.org builders (Organization, WebSite, Service, breadcrumbs)
 src/components/         Seo (all <head> tags), Nav and Footer for sub-pages, Faq, ServiceStyles
 src/layouts/BaseLayout.astro   Page shell used by every page
@@ -44,8 +46,7 @@ changing the URL format would break existing links and search rankings.
    picked up by the glob, so `sitemap.xml.ts` lists the service pages from `src/data/services.ts`. Add its path to `EXCLUDE` in `src/pages/sitemap.xml.ts`
    only if it must stay out of search.
 
-The homepage (`src/pages/index.astro`) keeps its own nav, footer and stylesheet by design. Do not move it onto
-`site.css`.
+Every page, including the homepage, uses `public/assets/site.css` and `site.js`. Long pages can pass `rail` to `BaseLayout` for the climbing side rail.
 
 Inline `<script>` and `<style>` tags use `is:inline` so Astro ships them exactly as written. Without it, Astro bundles
 scripts and scopes styles, which changes how they behave.
@@ -54,8 +55,13 @@ scripts and scopes styles, which changes how they behave.
 
 `/services` and the seven `/services/<slug>` pages are built from `src/data/services.ts` by
 `src/pages/services.astro` and `src/pages/services/[slug].astro`. To change a service, edit its entry there.
-Every claim must already be backed by a case study on the site: never add a client name, figure or result that
-the site doesn't state elsewhere.
+Every claim must already be backed by a case study on the site. Work is anonymised except NimNim: never add another client name, link or logo,
+or a figure or result that the site doesn't state elsewhere.
+
+## Case studies and products
+
+`src/data/cases.ts` builds `/projects` and `/projects/<slug>`. `src/data/products.ts` builds `/products` and, for entries with
+`generatedPage`, `/products/<id>`. ERPTick keeps its hand-built page. Both feed `/sitemap.xml`.
 
 ## Deploying (Cloudflare Workers)
 

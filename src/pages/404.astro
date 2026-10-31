@@ -3,27 +3,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const seo = { title: 'Page Not Found | Rirote Global', noindex: true };
 ---
-<BaseLayout seo={seo} nav={false}>
-<Fragment slot="head">
-<style is:inline>
-  main { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 2rem 1.25rem; text-align: center; position: relative; }
-  .nf-code { font-family: 'Bebas Neue', sans-serif; font-size: clamp(6rem, 22vw, 12rem); line-height: 0.9;
-    color: var(--cyan); }
-  .nf p { color: var(--text-soft); max-width: 420px; margin: 1rem auto 2rem; }
-  .nf .cta-actions { justify-content: center; }
-</style>
-</Fragment>
-
-<main>
-  <div class="hero-bg"></div>
-  <div class="nf" style="position:relative;">
-    <p class="eyebrow">Page not found</p>
-    <h1 class="nf-code">404</h1>
-    <p>That page doesn't exist or has moved. Here's where to go next.</p>
-    <div class="cta-actions">
-      <a href="/" class="btn-primary">Back to Home</a>
-      <a href="/products" class="btn-outline">Our Products</a>
+<BaseLayout seo={seo}>
+<main id="main">
+  <section class="page-hero" style="padding-block:clamp(60px,12vw,140px)">
+    <div class="hero-content">
+      <p class="eyebrow">Page not found</p>
+      <h1 class="page-title">404</h1>
+      <p class="page-sub">That page doesn't exist or has moved. Here's where to go next.</p>
+      <div class="hero-actions">
+        <a href="/" class="btn-primary">Back to Home</a>
+        <a href="/products" class="btn-outline">Our Products</a>
+      </div>
     </div>
-  </div>
+  </section>
 </main>
 </BaseLayout>

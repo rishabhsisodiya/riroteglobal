@@ -1,9 +1,11 @@
 ---
 // One page per service, built from src/data/services.ts.
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Cta from '../../components/Cta.astro';
 import Faq from '../../components/Faq.astro';
-import ServiceStyles from '../../components/ServiceStyles.astro';
 import { breadcrumbs, service as serviceNode, webPage } from '../../lib/schema';
+import { contactUrl } from '../../data/site';
 import { SERVICES, SERVICES_PATH, SERVICE_STEPS, serviceBySlug, serviceUrl, type Service } from '../../data/services';
 
 export function getStaticPaths() {
@@ -13,6 +15,7 @@ export function getStaticPaths() {
 const { service } = Astro.props as { service: Service };
 const path = serviceUrl(service.slug);
 const related = service.related.map(serviceBySlug).filter((s): s is Service => Boolean(s));
+const talk = contactUrl({ service: service.name });
 
 const seo = {
   title: service.metaTitle,
@@ -27,117 +30,86 @@ const seo = {
 };
 ---
 <BaseLayout seo={seo} nav={{ current: 'services' }}>
-<Fragment slot="head"><ServiceStyles /></Fragment>
-
 <main id="main">
   <section class="page-hero">
-    <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="eyebrow fade-up d1"><a href={SERVICES_PATH} style="text-decoration:none;">Services</a> / {service.techName}</p>
-      <h1 class="page-title fade-up d2">{service.heading[0]}<br><span>{service.heading[1]}</span></h1>
-      <p class="page-sub fade-up d3">{service.intro}</p>
-      <div class="hero-actions fade-up d4">
-        <a href="/#contact" class="btn-primary">Talk to Us</a>
+      <Crumbs items={[['Home', '/'], ['Services', SERVICES_PATH], [service.name]]} />
+      <p class="eyebrow">{service.techName}</p>
+      <h1 class="page-title">{service.heading[0]} <span>{service.heading[1]}</span></h1>
+      <p class="page-sub">{service.intro}</p>
+      <div class="hero-actions">
+        <a href={talk} class="btn-primary">Talk to Us</a>
         <a href="/projects" class="btn-outline">See Our Work</a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="includes-title">
-    <div class="section-header">
-      <h2 class="section-title" id="includes-title">What's Included</h2>
-      <div class="section-line"></div>
+  <section class="band whoband">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">Who does the work</p>
+      <p class="whotext">Engineers who have worked at multinational companies and built for large clients around the world. The people who plan your project also build and run it. <a href="/about">More about us →</a></p>
     </div>
-    <div class="svc-grid">
-      {service.includes.map((item) => (
-        <div class="svc-item">
-          <h3>{item.title}</h3>
-          <p>{item.text}</p>
-        </div>
-      ))}
-    </div>
-    <ul class="stack" aria-label="Technologies we use">
-      {service.stack.map((tech) => <li>{tech}</li>)}
-    </ul>
   </section>
 
-  <section class="section" aria-labelledby="proof-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="proof-title">Work That Shows It</h2>
-      <div class="section-line"></div>
+  <section class="band" aria-labelledby="includes-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="includes-title">What's included</h2></div>
+      <div class="incl three">
+        {service.includes.map((item) => <div class="inc" data-reveal><h3>{item.title}</h3><p>{item.text}</p></div>)}
+      </div>
     </div>
-    <div class="proofs">
-      {service.proof.map((p) => (
-        <article class={p.stats ? 'proof' : 'proof no-stats'}>
-          <div>
-            <span class="kicker">{p.kicker}</span>
-            <h3>{p.title}</h3>
-            <p>{p.text}</p>
-            {p.link && (
-              p.link.href.startsWith('http')
-                ? <a class="proof-link" href={p.link.href} target="_blank" rel="noopener">{p.link.label}</a>
-                : <a class="proof-link" href={p.link.href}>{p.link.label}</a>
-            )}
-          </div>
-          {p.stats && (
-            <div class="proof-stats">
-              {p.stats.map((stat) => (
-                <div class="proof-stat">
-                  <div class="proof-stat-num">{stat.value}</div>
-                  <div class="proof-stat-label">{stat.label}</div>
-                </div>
-              ))}
+  </section>
+
+  <section class="band" aria-labelledby="proof-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="proof-title">Work that shows it</h2></div>
+      <div class="ascents">
+        {service.proof.map((p) => (
+          <article class="proof" data-reveal>
+            <div>
+              <span class="kicker">{p.kicker}</span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+              {p.link && <a class="proof-link" href={p.link.href}>{p.link.label}</a>}
             </div>
-          )}
-        </article>
-      ))}
+            {p.stats && (
+              <div class="proof-stats">
+                {p.stats.map((stat) => <div><b data-count>{stat.value}</b><span>{stat.label}</span></div>)}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="steps-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="steps-title">How We Work</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="steps">
-      {SERVICE_STEPS.map((step, i) => (
-        <div class="step">
-          <span class="kicker">{String(i + 1).padStart(2, '0')}</span>
-          <h3>{step.title}</h3>
-          <p>{step.text}</p>
-        </div>
-      ))}
+  <section class="band" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="steps-title">How we work</h2></div>
+      <div class="steps">{SERVICE_STEPS.map((step) => <div class="step" data-reveal><h3>{step.title}</h3><p>{step.text}</p></div>)}</div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="faq-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="faq-title">Common Questions</h2>
-      <div class="section-line"></div>
-    </div>
-    <Faq items={service.faq} />
-  </section>
-
-  <section class="section" aria-labelledby="related-title" style="padding-top:0;">
-    <div class="section-header">
-      <h2 class="section-title" id="related-title">Related Services</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="related">
-      {related.map((r) => <a href={serviceUrl(r.slug)}>{r.name}</a>)}
-      <a href={SERVICES_PATH}>All services →</a>
+  <section class="band" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="faq-title">Common questions</h2></div>
+      <Faq items={service.faq} />
     </div>
   </section>
 
-  <section class="cta-section">
-    <div class="cta-glow"></div>
-    <p class="cta-eyebrow">Let's Talk</p>
-    <h2 class="cta-title">Have a Project <span>in Mind?</span></h2>
-    <p class="cta-body">Tell us what you're building and we'll reply within 24 hours.</p>
-    <div class="cta-actions">
-      <a href="/#contact" class="btn-primary">Start a Conversation</a>
-      <a href="mailto:info@riroteglobal.com" class="btn-outline">Email Us</a>
+  <section class="band" aria-labelledby="related-title">
+    <div class="wrap">
+      <div class="sec-h" data-reveal><h2 class="section-title" id="related-title">Related services</h2></div>
+      <div class="rel">
+        {related.map((r) => <a href={serviceUrl(r.slug)}><b>{r.name}</b><span>{r.summary}</span></a>)}
+      </div>
+      <p class="seeall"><a class="btn-outline" href={SERVICES_PATH}>All services →</a></p>
     </div>
   </section>
+
+  <Cta eyebrow="Let's Talk" title="Have a project in mind?" body="Tell us what you're building and we'll get back to you as soon as we can.">
+    <a href={talk} class="btn-primary">Start a Conversation</a>
+    <a href="mailto:info@riroteglobal.com" class="btn-outline">Email Us</a>
+  </Cta>
 </main>
 </BaseLayout>

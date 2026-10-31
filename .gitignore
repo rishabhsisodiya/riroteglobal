@@ -5,3 +5,4 @@ dist/
 .astro/
 .wrangler/
 node_modules
+/prototype

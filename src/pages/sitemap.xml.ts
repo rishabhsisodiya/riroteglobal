@@ -3,6 +3,8 @@
 import type { APIRoute } from 'astro';
 import { absoluteUrl } from '../data/site';
 import { SERVICES, serviceUrl } from '../data/services';
+import { CASES, caseUrl } from '../data/cases';
+import { PRODUCTS } from '../data/products';
 
 // Pages that must stay out of search (they carry noindex). /invoice lives in public/, so the glob
 // never sees it today; listing it guards against it moving into src/pages.
@@ -15,8 +17,10 @@ export const GET: APIRoute = () => {
   const urls = Object.keys(import.meta.glob('./**/*.{astro,md}'))
     .filter((file) => !file.includes('['))
     .map(toPath)
-    // Dynamic routes are skipped by the glob above, so list the service pages from their data.
+    // Dynamic routes are skipped by the glob above, so list those pages from their data.
     .concat(SERVICES.map((s) => serviceUrl(s.slug)))
+    .concat(CASES.map((c) => caseUrl(c.slug)))
+    .concat(PRODUCTS.filter((p) => p.generatedPage).map((p) => p.path))
     .filter((path) => !EXCLUDE.has(path))
     .sort((a, b) => a.localeCompare(b));
 

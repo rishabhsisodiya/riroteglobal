@@ -36,7 +36,6 @@ export interface Service {
   intro: string;
   includes: Array<{ title: string; text: string }>;
   proof: ServiceProof[];
-  stack: string[];
   faq: FaqItem[];
   related: string[];
 }
@@ -53,23 +52,23 @@ export const SERVICE_STEPS: Array<{ title: string; text: string }> = [
 
 /** Ways to work with us, shown on /about and /services. */
 export const ENGAGEMENTS: Array<{ title: string; text: string; href?: string }> = [
-  { title: 'Fixed-Scope Projects', text: 'A clear outcome, scope and timeline, from a first version to a full product.' },
-  { title: 'Dedicated Developers', text: 'Experienced developers who join your team full-time or part-time, vetted and managed by us.', href: '/services/dedicated-engineers' },
-  { title: 'Ready-Built Products', text: 'Software like ERPTick, set up and adapted to the way your team works.', href: '/products' },
+  { title: 'Fixed-scope projects', text: 'A clear outcome, scope and timeline, from a first version to a full product.' },
+  { title: 'Dedicated developers', text: 'Experienced developers who join your team full-time or part-time, vetted and managed by us.', href: '/services/dedicated-engineers' },
+  { title: 'Ready-built products', text: 'Software like ERPTick, set up and adapted to the way your team works.', href: '/products' },
 ];
 
-const PROJECTS = { href: '/projects', label: 'Read the case studies →' };
+const caseLink = (slug: string) => ({ href: `/projects/${slug}`, label: 'Read the case study →' });
 
 const UNIFIED_ERP: ServiceProof = {
   kicker: 'Case study · Enterprise ERP · India',
   title: 'One platform for 9 business entities',
-  text: 'An infrastructure group ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another. Delivered with TCB Infotech, we replaced both with one platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based dashboards on a parallel multi-site middleware with Redis caching.',
+  text: 'An infrastructure group ran service ticketing and executive reporting as two separate apps on two servers, with dashboards querying 5 ERPNext sites one after another. Delivered with an agency partner, we replaced both with one platform: a NestJS ticketing engine with a 9-state SLA workflow, two-way ERPNext sync, and 11 role-based dashboards on a parallel multi-site middleware with Redis caching.',
   stats: [
     { value: '<500ms', label: 'Dashboard loads, down from 5s+' },
     { value: '2 → 1', label: 'Apps and servers merged' },
     { value: '11', label: 'Role-based dashboards' },
   ],
-  link: PROJECTS,
+  link: caseLink('unified-erp-service-platform'),
 };
 
 const NIMNIM: ServiceProof = {
@@ -81,35 +80,35 @@ const NIMNIM: ServiceProof = {
     { value: '50%', label: 'Faster API responses' },
     { value: '1', label: 'Hardened server replacing many' },
   ],
-  link: { href: 'https://www.getnimnim.com', label: 'Visit getnimnim.com →' },
+  link: caseLink('nimnim'),
 };
 
 const FOUNDRY: ServiceProof = {
   kicker: 'Case study · Manufacturing ERP · India',
   title: 'A foundry ERP that talks to ERPNext safely',
   text: 'A domain-specific ERP for a foundry, from sales order to dispatch across a 17-module map, with heat-number genealogy as the traceability key. It integrates with the client’s existing ERPNext only for finance and payroll, through a REST-only boundary with idempotent correlation-ID calls, retry and backoff queues, and a nightly reconciliation run for one-sided records.',
-  link: PROJECTS,
+  link: caseLink('foundry-operations-erp'),
 };
 
 const MULTI_SERVICE: ServiceProof = {
   kicker: 'Case study · Logistics & delivery',
   title: 'Food, parcels and rides on one platform',
   text: 'A unified platform for food delivery, parcel logistics and ride booking, built on microservices so each vertical scales on its own. We led the engineering team, drove product decisions and owned features from API design through production support.',
-  link: PROJECTS,
+  link: caseLink('multi-service-delivery-platform'),
 };
 
 const ECOMMERCE: ServiceProof = {
   kicker: 'Case study · E-commerce · India',
   title: 'A monolith-to-microservices plan for a high-traffic store',
   text: 'For a high-traffic Indian e-commerce platform, we designed the system architecture, planned the migration from a monolith to microservices, led the redesign and improved backend performance, working directly with business stakeholders.',
-  link: PROJECTS,
+  link: caseLink('high-traffic-ecommerce-platform'),
 };
 
 const STOP_GUESSING: ServiceProof = {
   kicker: 'Open source · MIT',
   title: 'stop-guessing: guardrails for AI coding agents',
   text: 'Our open-source agent skills stop a coding agent from inventing decisions nobody made, and from calling a job done when it isn’t. Decisions get written down first, and the work survives a new session or a new machine. It is the same discipline we bring to AI features in client products.',
-  link: { href: 'https://github.com/rishabhsisodiya/stop-guessing', label: 'View on GitHub →' },
+  link: { href: '/products/stop-guessing', label: 'About stop-guessing →' },
 };
 
 const ERPTICK: ServiceProof = {
@@ -138,7 +137,6 @@ export const SERVICES: Service[] = [
       { title: 'Launch and support', text: 'We put it live, watch it and fix issues afterwards, so the people who built it are the ones who keep it running.' },
     ],
     proof: [UNIFIED_ERP, NIMNIM, MULTI_SERVICE],
-    stack: ['Next.js', 'React', 'TypeScript', 'NestJS', 'Node.js', 'FastAPI', 'Prisma', 'PostgreSQL', 'MongoDB', 'Redis', 'Tailwind CSS', 'PWA'],
     faq: [
       { question: 'Can you take over a product another team built?', answer: 'Yes. We start by stabilising what is live: infrastructure, urgent bugs and security. Then we plan improvements or a revamp that keeps the product running for its users, as we did for NimNim.' },
       { question: 'Do you build MVPs or only large platforms?', answer: 'Both. We scope a first version around the one outcome the business needs, and design the data model and APIs so the product can grow without a rewrite.' },
@@ -164,7 +162,6 @@ export const SERVICES: Service[] = [
       { title: 'Cost and quality tracking', text: 'Reports on what each AI feature costs and how often it gets things right.' },
     ],
     proof: [STOP_GUESSING],
-    stack: ['LLM APIs', 'AI agents', 'Tool calling', 'Node.js', 'NestJS', 'FastAPI', 'PostgreSQL', 'Redis', 'TypeScript'],
     faq: [
       { question: 'Which AI models do you work with?', answer: 'We choose the model for the task, its cost and where your data is allowed to go. The integration is built so the model can be changed later without rewriting the feature.' },
       { question: 'How do you stop an AI feature from making things up?', answer: 'By narrowing what it is asked to do, grounding answers in your own data with sources shown, checking outputs before they reach users, and keeping a person in the loop for decisions that matter.' },
@@ -173,24 +170,23 @@ export const SERVICES: Service[] = [
     related: ['full-stack-development', 'data-pipelines', 'dedicated-engineers'],
   },
   {
-    slug: 'erpnext-integration',
-    name: 'ERPNext & ERP Integration',
+    slug: 'erp-integration',
+    name: 'ERP Integration',
     techName: 'ERP integration and custom modules',
-    heading: ['ERPNext &', 'ERP Integration'],
-    metaTitle: 'ERPNext Integration & Custom ERP Development | Rirote Global',
-    description: 'Connect ERPNext to your other software, add custom modules and build management dashboards, from a Jaipur team that makes its own ERPNext product.',
-    summary: 'Connect ERPNext to your other software, add the modules it\'s missing, and get dashboards your management can use.',
-    intro: 'We connect ERPNext to the rest of your software, build the modules your business needs when standard ERPNext doesn\'t fit, and set up dashboards for your management team. Data moves safely between systems and stays the same everywhere. We also build ERPNext software of our own.',
+    heading: ['ERP', 'Integration'],
+    metaTitle: 'ERP Integration & Custom ERP Development | Rirote Global',
+    description: 'Connect your ERP to your other software, add custom modules and build management dashboards, from a Jaipur team that builds its own software products.',
+    summary: 'Connect your ERP to your other software, add the modules it\'s missing, and get dashboards your management can use.',
+    intro: 'We connect your ERP to the rest of your software, build the modules your business needs when your standard ERP doesn\'t fit, and set up dashboards for your management team. Data moves safely between systems and stays the same everywhere. We also build software products of our own.',
     includes: [
-      { title: 'Connecting ERPNext to your other apps', text: 'Data flows both ways between ERPNext and your other software through ERPNext\'s official connections, so its rules and permissions still apply.' },
-      { title: 'Custom modules', text: 'Modules for work standard ERPNext doesn\'t cover, such as foundry operations, service tickets or engineer visits, linked to ERPNext for accounts.' },
-      { title: 'Management dashboards', text: 'Dashboards for each head of department, pulling from one or several ERPNext sites and loading in under a second.' },
-      { title: 'Several sites or companies', text: 'One view across several ERPNext sites or companies, with user roles kept in step between them.' },
+      { title: 'Connecting your ERP to your other apps', text: 'Data flows both ways between your ERP and your other software through its official connections, so its rules and permissions still apply.' },
+      { title: 'Custom modules', text: 'Modules for work your standard ERP doesn\'t cover, such as foundry operations, service tickets or engineer visits, linked to your ERP for accounts.' },
+      { title: 'Management dashboards', text: 'Dashboards for each head of department, pulling from one or several ERP sites and loading in under a second.' },
+      { title: 'Several sites or companies', text: 'One view across several ERP sites or companies, with user roles kept in step between them.' },
       { title: 'Safe data updates', text: 'Every update is tracked, retried if it fails and checked overnight, so records are never left half-saved.' },
       { title: 'Service and field work', text: 'Tickets, service deadlines, AMC contracts and engineer visits, linked to the customers, machines and stock already in your ERP.' },
     ],
     proof: [UNIFIED_ERP, FOUNDRY, ERPTICK],
-    stack: ['ERPNext v15', 'Frappe', 'Frappe Cloud', 'REST API', 'Webhooks', 'NestJS', 'Next.js', 'PostgreSQL', 'MariaDB', 'Redis'],
     faq: [
       { question: 'Do you write directly to the ERPNext database?', answer: 'No. Writes go through ERPNext’s REST API so its validation and permission rules apply. We read from the database only where read-only access is agreed, for example for nightly master-data pulls.' },
       { question: 'Do you work with Frappe Cloud and self-hosted ERPNext?', answer: 'Yes. Our unified ERP platform for an infrastructure group runs across 5 ERPNext v15 sites on Frappe Cloud, and the same approach works for self-hosted installs.' },
@@ -216,7 +212,6 @@ export const SERVICES: Service[] = [
       { title: 'Monitoring and support', text: 'Uptime checks, logs and alerts, plus support when something breaks.' },
     ],
     proof: [NIMNIM, UNIFIED_ERP],
-    stack: ['AWS', 'EC2', 'DigitalOcean', 'Docker', 'CI/CD', 'Nginx', 'Cloudflare', 'Redis', 'PostgreSQL', 'MongoDB'],
     faq: [
       { question: 'Can you reduce our cloud bill without downtime?', answer: 'Usually, yes. For NimNim we consolidated several EC2 instances onto one hardened server and halved the AWS bill while customers kept ordering.' },
       { question: 'Do you only work on AWS?', answer: 'No. We work on AWS and DigitalOcean, and the same practices apply to other providers.' },
@@ -242,21 +237,20 @@ export const SERVICES: Service[] = [
       { title: 'ERP planning', text: 'Deciding what belongs inside ERPNext and what should be a connected app, before custom work starts.' },
     ],
     proof: [ECOMMERCE, MULTI_SERVICE, FOUNDRY],
-    stack: ['System design', 'Microservices', 'Node.js', 'NestJS', 'FastAPI', 'PostgreSQL', 'Redis', 'ERPNext', 'DigitalOcean', 'AWS'],
     faq: [
       { question: 'Do you only advise, or do you also build?', answer: 'Both. We can review and plan on their own, but most clients ask us to stay and lead or build the work, so the plan and the code stay in step.' },
       { question: 'Can you lead our in-house team?', answer: 'Yes. A senior engineer can lead your developers day to day: setting technical direction, reviewing code and owning releases alongside your product team.' },
       { question: 'Is a microservices migration always the right move?', answer: 'No. We recommend it only when parts of the system need to scale or ship independently. Often a cleaner monolith with clear modules is the cheaper answer.' },
     ],
-    related: ['full-stack-development', 'cloud-devops', 'erpnext-integration'],
+    related: ['full-stack-development', 'cloud-devops', 'erp-integration'],
   },
   {
     slug: 'data-pipelines',
     name: 'Reports & Dashboards',
     techName: 'Data pipelines and reporting',
     heading: ['Reports &', 'Dashboards'],
-    metaTitle: 'Business Dashboards, Reports & Data Pipelines | Rirote Global',
-    description: 'Dashboards and reports that bring the numbers from ERPNext and your other software into one place, defined once and fast to load.',
+    metaTitle: 'Dashboards, Reports & Data Pipelines | Rirote Global',
+    description: 'Dashboards and reports that bring the numbers from your ERP and your other software into one place, defined once and fast to load.',
     summary: 'Dashboards and reports that bring numbers from your ERP and apps into one place, so leadership can act on them.',
     intro: 'We bring the numbers from your ERP and other software into one place and turn them into dashboards and reports your management team can act on. Each figure is defined once, so every screen shows the same answer, and it loads fast.',
     includes: [
@@ -268,28 +262,27 @@ export const SERVICES: Service[] = [
       { title: 'Decision views', text: 'Progress against targets, sales funnels that show where deals get stuck, and a click through to the deal or ticket behind any number.' },
     ],
     proof: [UNIFIED_ERP, ERPTICK],
-    stack: ['PostgreSQL', 'Redshift', 'MariaDB', 'ETL', 'Redis', 'Node.js', 'NestJS', 'Next.js', 'ERPNext'],
     faq: [
       { question: 'Can you report across several ERPNext sites?', answer: 'Yes. Our multi-site middleware queries up to 5 ERPNext sites in parallel and caches each widget, bringing dashboard loads under 500ms from more than 5 seconds.' },
       { question: 'Do we need a data warehouse?', answer: 'Not always. For a handful of sources, well-indexed PostgreSQL and a reporting API are often enough. A warehouse like Redshift earns its place when data volume or the number of sources grows.' },
       { question: 'Can reports arrive by email?', answer: 'Yes. Any report can be scheduled to arrive by email, for example as a CSV each morning.' },
     ],
-    related: ['erpnext-integration', 'ai-integration', 'cloud-devops'],
+    related: ['erp-integration', 'ai-integration', 'cloud-devops'],
   },
   {
     slug: 'dedicated-engineers',
     name: 'Hire Dedicated Developers',
     techName: 'Resource outsourcing',
-    heading: ['Dedicated Developers', 'for Your Team'],
+    heading: ['Dedicated developers', 'for your team'],
     metaTitle: 'Hire Dedicated Developers from India | Rirote Global',
-    description: 'Experienced full-stack, AI, ERPNext and cloud developers who join your team full-time, part-time or per project. Vetted and managed by us.',
+    description: 'Experienced full-stack, AI, ERP and cloud developers who join your team full-time, part-time or per project. Vetted and managed by us.',
     summary: 'Experienced developers who join your team full-time or part-time, vetted and managed by us.',
     intro: 'Experienced developers and specialists who join your team full-time, part-time or for one project. They\'re tested on real projects before they start, and we stay responsible for the quality of their work. Agencies, startups and larger companies use them to add people quickly, without a long hiring process.',
     includes: [
       { title: 'Full-stack developers', text: 'Developers for websites, web apps and online products, working in React, Next.js, Node.js and TypeScript.' },
       { title: 'AI engineers', text: 'Developers who add AI assistants and automation to your software, with checks so the results can be trusted.' },
       { title: 'Backend developers', text: 'Developers for the systems behind your apps: databases, connections and data work, in NestJS or FastAPI.' },
-      { title: 'ERPNext developers', text: 'ERPNext modules, and connections between ERPNext and your other software.' },
+      { title: 'ERP developers', text: 'ERP modules, and connections between your ERP and your other software.' },
       { title: 'Cloud and DevOps engineers', text: 'Engineers who set up and look after your hosting, releases and servers on AWS and Docker.' },
       { title: 'Technical leads', text: 'Senior engineers who plan the system and lead the team on projects that need someone in charge.' },
     ],
@@ -301,13 +294,12 @@ export const SERVICES: Service[] = [
       },
       { ...UNIFIED_ERP, kicker: 'Case study · Delivered with an agency partner' },
     ],
-    stack: ['React', 'Next.js', 'Node.js', 'TypeScript', 'NestJS', 'FastAPI', 'ERPNext', 'AWS', 'Docker', 'LLM APIs'],
     faq: [
       { question: 'How quickly can an engineer start?', answer: 'Usually within days. Tell us the role, the stack and the hours you need, and we will propose someone who has already worked on similar projects.' },
       { question: 'Can agencies use your engineers under their own brand?', answer: 'Yes. We supply engineers white-label to digital agencies who need to scale delivery without scaling headcount.' },
       { question: 'What engagement models do you offer?', answer: 'Dedicated full-time, part-time or project-based. You decide, and the arrangement can change as your needs do.' },
     ],
-    related: ['full-stack-development', 'ai-integration', 'erpnext-integration'],
+    related: ['full-stack-development', 'ai-integration', 'erp-integration'],
   },
 ];
 

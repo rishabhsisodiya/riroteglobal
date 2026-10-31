@@ -3,3 +3,6 @@
 /products/servicebridge.html  /products/erptick   301
 # Share image moved into /assets
 /og-image.jpg                 /assets/og-image.jpg 301
+# ERP service renamed
+/services/erpnext-integration       /services/erp-integration   301
+/services/erpnext-integration.html  /services/erp-integration   301
