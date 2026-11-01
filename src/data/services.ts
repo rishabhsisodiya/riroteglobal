@@ -104,6 +104,13 @@ const ECOMMERCE: ServiceProof = {
   link: caseLink('high-traffic-ecommerce-platform'),
 };
 
+const SHOPIFY: ServiceProof = {
+  kicker: 'Case study · E-commerce',
+  title: 'Shopify stores built, sped up and automated',
+  text: 'End-to-end Shopify work for fashion, lifestyle and homeware brands: bespoke themes, custom apps and faster stores, with bulk product listing automated through Google Sheets to save hours of manual work.',
+  link: caseLink('shopify-store-projects'),
+};
+
 const STOP_GUESSING: ServiceProof = {
   kicker: 'Open source · MIT',
   title: 'stop-guessing: guardrails for AI coding agents',
@@ -136,7 +143,7 @@ export const SERVICES: Service[] = [
       { title: 'Taking over existing software', text: 'If another team built it, we first make it stable and fix the urgent problems, then improve it without stopping your business.' },
       { title: 'Launch and support', text: 'We put it live, watch it and fix issues afterwards, so the people who built it are the ones who keep it running.' },
     ],
-    proof: [UNIFIED_ERP, NIMNIM, MULTI_SERVICE],
+    proof: [UNIFIED_ERP, NIMNIM, MULTI_SERVICE, SHOPIFY],
     faq: [
       { question: 'Can you take over a product another team built?', answer: 'Yes. We start by stabilising what is live: infrastructure, urgent bugs and security. Then we plan improvements or a revamp that keeps the product running for its users, as we did for NimNim.' },
       { question: 'Do you build MVPs or only large platforms?', answer: 'Both. We scope a first version around the one outcome the business needs, and design the data model and APIs so the product can grow without a rewrite.' },
@@ -211,7 +218,7 @@ export const SERVICES: Service[] = [
       { title: 'Automatic releases', text: 'Repeatable, automatic builds and releases, so going live doesn\'t depend on one person\'s laptop.' },
       { title: 'Monitoring and support', text: 'Uptime checks, logs and alerts, plus support when something breaks.' },
     ],
-    proof: [NIMNIM, UNIFIED_ERP],
+    proof: [NIMNIM, UNIFIED_ERP, ECOMMERCE],
     faq: [
       { question: 'Can you reduce our cloud bill without downtime?', answer: 'Usually, yes. For NimNim we consolidated several EC2 instances onto one hardened server and halved the AWS bill while customers kept ordering.' },
       { question: 'Do you only work on AWS?', answer: 'No. We work on AWS and DigitalOcean, and the same practices apply to other providers.' },

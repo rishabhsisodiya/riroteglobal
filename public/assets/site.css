@@ -498,9 +498,9 @@ footer { background: #0A1424; color: var(--on-dark-2); border-top: 2px solid var
 /* Phones and tablets: body copy at least 16px, labels at least 12px, tap targets at least 44px. */
 @media (max-width: 900px) {
   .step p, .role p, .cap p, .inc p, .deploy-card p, .approach-item p, .flow-step p, .flow-more, .flow-foot,
-  .what p, .proof p, .why li, .pts li, .ticks li, .ways span, .rel span, .reach span, .compare td, .prose td { font-size: 16px; }
+  .what p, .proof p, .why li, .pts li, .ticks li, .ways span, .rel span, .reach span, .compare td, .prose td,
+  .path li, .hero-note, .nda-note, .proof2, .contact-note, .foot-brand p, .tour-copy p, .compare-source { font-size: 16px; }
   .kicker, .badge { font-size: 12px; }
-  .contact-note { font-size: 14px; }
   .nav-logo-link { min-height: 44px; }
   .crumbs a { display: inline-flex; align-items: center; min-height: 44px; padding: 0; }
   .prow-text h3 a, .lead a, .talk-mail, .foot-mail, .foot-h a, .meta2 a { display: inline-flex; align-items: center; min-height: 44px; }
@@ -632,13 +632,13 @@ footer { background: #0A1424; color: var(--on-dark-2); border-top: 2px solid var
   .asc .stat b { font-size: clamp(3.6rem, 18vw, 5.4rem); line-height: .9; color: var(--wire-t); }
   .asc .stat small { font-size: 14.5px; margin-top: 8px; }
   .asc h3 { font-size: 1.55rem; line-height: 1.12; }
-  .asc p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; font-size: 15.5px; }
+  .asc p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; font-size: 16px; }
 
   /* Services: bigger names */
   .svcx-name { padding-top: 24px; }
   .svcx-name h3 { font-size: 1.6rem; line-height: 1.1; letter-spacing: -.025em; }
   .svcx-panel { padding-bottom: 24px; }
-  .svcx-sum { font-size: 15.5px; }
+  .svcx-sum { font-size: 16px; }
 
   /* Products: full-bleed screenshot first */
   .prow { gap: 22px; padding: 0 0 44px; margin-bottom: 44px; }

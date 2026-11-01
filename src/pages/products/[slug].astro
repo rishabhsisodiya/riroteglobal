@@ -4,7 +4,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactPanel from '../../components/ContactPanel.astro';
 import Crumbs from '../../components/Crumbs.astro';
-import { breadcrumbs, webPage } from '../../lib/schema';
+import { breadcrumbs, softwareApplication, webPage } from '../../lib/schema';
 import { serviceBySlug, serviceUrl, type Service } from '../../data/services';
 import { PRODUCTS, type Product } from '../../data/products';
 
@@ -20,6 +20,14 @@ const seo = {
   description: p.description,
   schema: [
     webPage({ path: p.path, name: p.name }),
+    softwareApplication({
+      path: p.path,
+      name: p.name,
+      description: p.description,
+      category: p.appCategory ?? 'BusinessApplication',
+      license: p.license,
+      sameAs: p.link?.href,
+    }),
     breadcrumbs(['Home', '/'], ['Products', '/products'], [p.name, p.path]),
   ],
 };

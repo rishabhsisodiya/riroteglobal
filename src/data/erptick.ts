@@ -45,6 +45,19 @@ export const erptickSoftwareApp = (): SchemaNode => ({
   url: absoluteUrl(ERPTICK_PATH),
   image: absoluteUrl(ERPTICK_SHARE_IMAGE.path),
   description: 'Field service desk for equipment makers, connected to ERPNext: tickets, field visits, AMC contracts, quotations, customer portal and reports.',
+  featureList: [
+    'Tickets with SLA clocks on your business calendar',
+    'Field visits with spares, photos and customer signature',
+    'AMC contracts with planned preventive visits',
+    'Quotations built from ERP items, with customer PO recorded',
+    'Machines by serial number with AMC, warranty or chargeable cover',
+    'Routing by region, skill and workload',
+    'Customer portal with email and WhatsApp updates',
+    'Service reports, KPI matrix and scheduled email reports',
+    'ERPNext connection with optional draft invoice and stock entry write-back',
+    'Roles, permission grid, partner API keys and audit log',
+  ],
+  creator: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE.name, url: absoluteUrl('/') },
   publisher: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE.name, url: absoluteUrl('/') },
 });
 
@@ -100,6 +113,8 @@ export const ERPTICK_FAQ: FaqItem[] = [
 export const erptickVideoObjects = (): SchemaNode[] =>
   ERPTICK_VIDEOS.map((v) => ({
     '@type': 'VideoObject',
+    '@id': absoluteUrl(`${ERPTICK_PATH}#video-${v.slug}`),
+    about: { '@id': absoluteUrl(`${ERPTICK_PATH}#app`) },
     name: v.name,
     description: v.description,
     thumbnailUrl: absoluteUrl(`${MEDIA}/posters/${v.slug}.jpg`),

@@ -25,6 +25,10 @@ export interface Product {
   cta?: string;
   link?: { href: string; label: string };
   services?: string[];
+  /** schema.org applicationCategory for the generated page. Defaults to BusinessApplication. */
+  appCategory?: string;
+  /** Licence URL, for open-source projects. */
+  license?: string;
 }
 
 export const PRODUCTS: Product[] = [
@@ -57,6 +61,7 @@ export const PRODUCTS: Product[] = [
     metaTitle: 'stop-guessing: Open-Source Guardrails for AI Coding Agents',
     description: 'stop-guessing is a free, MIT-licensed set of Agent Skills that stops AI coding agents from inventing decisions or calling a job done when it is not.',
     cta: 'Talk about AI in your product', link: { href: 'https://github.com/rirote-global/stop-guessing', label: 'View on GitHub' }, services: ['ai-integration'],
+    appCategory: 'DeveloperApplication', license: 'https://opensource.org/licenses/MIT',
   },
   {
     id: 'crack-the-prep', name: 'CrackThePrep', short: 'CrackThePrep', status: 'Open source', group: 'Open source',

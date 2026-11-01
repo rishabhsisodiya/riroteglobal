@@ -2,7 +2,7 @@
 // One case study, built from src/data/cases.ts.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Crumbs from '../../components/Crumbs.astro';
-import { breadcrumbs, webPage } from '../../lib/schema';
+import { article, breadcrumbs, webPage } from '../../lib/schema';
 import { contactUrl } from '../../data/site';
 import { serviceBySlug, serviceUrl, type Service } from '../../data/services';
 import { CASES, PROJECTS_PATH, caseUrl, type CaseStudy } from '../../data/cases';
@@ -24,6 +24,7 @@ const seo = {
   description: c.description,
   schema: [
     webPage({ path, name: c.name }),
+    article({ path, headline: c.title, description: c.description }),
     breadcrumbs(['Home', '/'], ['Work', PROJECTS_PATH], [c.name, path]),
   ],
 };

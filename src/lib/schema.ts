@@ -79,6 +79,49 @@ export function website(): SchemaNode {
   };
 }
 
+/** Organization reference with its name, for nodes where search engines read the author or publisher directly. */
+const namedOrganization = (): SchemaNode => ({ '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE.name, url: absoluteUrl('/') });
+
+/** Case study write-up. Dates are left out on purpose: the site publishes none. */
+export function article(input: { path: string; headline: string; description: string }): SchemaNode {
+  const url = absoluteUrl(input.path);
+  return {
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: input.headline,
+    description: input.description,
+    url,
+    mainEntityOfPage: { '@id': `${url}#webpage` },
+    image: absoluteUrl(SITE.defaultImage.path),
+    author: namedOrganization(),
+    publisher: namedOrganization(),
+  };
+}
+
+/** A product of ours that has no hand-built page, using only what its page says. */
+export function softwareApplication(input: {
+  path: string;
+  name: string;
+  description?: string;
+  category: string;
+  license?: string;
+  sameAs?: string;
+}): SchemaNode {
+  const url = absoluteUrl(input.path);
+  return {
+    '@type': 'SoftwareApplication',
+    '@id': `${url}#app`,
+    name: input.name,
+    applicationCategory: input.category,
+    url,
+    ...(input.description && { description: input.description }),
+    ...(input.license && { license: input.license, isAccessibleForFree: true }),
+    ...(input.sameAs && { sameAs: input.sameAs }),
+    creator: namedOrganization(),
+    publisher: namedOrganization(),
+  };
+}
+
 /** Service page node, provided by the homepage Organization. */
 export function service(input: { name: string; serviceType?: string; description: string; path: string }): SchemaNode {
   return {
