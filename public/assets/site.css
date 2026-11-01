@@ -503,7 +503,8 @@ footer { background: #0A1424; color: var(--on-dark-2); border-top: 2px solid var
   .contact-note { font-size: 14px; }
   .nav-logo-link { min-height: 44px; }
   .crumbs a { display: inline-flex; align-items: center; min-height: 44px; padding: 0; }
-  .prow-text h3 a, .lead a { display: inline-flex; align-items: center; min-height: 44px; }
+  .prow-text h3 a, .lead a, .talk-mail, .foot-mail, .foot-h a, .meta2 a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-h { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; }
   .eyebrow a { display: inline-block; padding-block: 15px; margin-block: -15px; }
 }
 
